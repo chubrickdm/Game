@@ -1,28 +1,36 @@
 package com.game.object;
 
 import com.game.object.Messages.Message;
-import java.util.List;
-import java.util.Queue;
+import com.game.object.Messages.MessageType;
 
-public class ObjectManager implements GameObject{
-	private List <GameObject> objects;
-	private Queue <Message> messages;
+import java.util.LinkedList;
+
+
+public class ObjectManager{
+	private static LinkedList <GameObject> objects;
+	public static LinkedList <Message> messages = new LinkedList <Message> ();
 	
 	
-	@Override
-	public void update (){
+	public ObjectManager (){
+		objects = new LinkedList <GameObject> ();
+		Player player = new Player ();
+		objects.add (player);
+	}
+	
+	public static void update (){
 		for (GameObject obj : objects){
 			obj.update ();
 		}
-		for (Message mes : messages){
+		for (int i = 0; i < messages.size (); i++){
 			for (GameObject obj : objects){
-				obj.sendMessage (mes);
+				obj.sendMessage (messages.remove ());
 			}
 		}
 	}
 	
-	@Override
-	public void sendMessage (Message message){
-	
+	public static void sendMessage (Message message){
+		if (message.type == MessageType.deleting){
+			objects.remove (message.object);
+		}
 	}
 }
