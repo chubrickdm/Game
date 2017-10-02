@@ -1,15 +1,18 @@
-package com.game.object;
+package com.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.AppSystem;
-import com.game.object.Messages.Message;
-import com.game.object.Messages.MessageType;
+import com.game.objects.messages.CharacterChangeMessage;
+import com.game.objects.messages.DeleteMessage;
+import com.game.objects.messages.GameMessage;
+import com.game.objects.messages.MessageType;
 
 
-public class Player implements GameObject{
+public class Character implements GameObject{
+	private boolean iSelected = false;
 	private double deltaX;
 	private double deltaY;
 	private double speed = 100;
@@ -34,12 +37,14 @@ public class Player implements GameObject{
 			sprite.setPosition (sprite.getX (), sprite.getY () - (float) deltaY);
 		}
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
-			ObjectManager.sendMessage (new Message (MessageType.deleting, this));
+			ObjectManager.getInstance ().messages.add (new CharacterChangeMessage (this));
+			//ObjectManager.getInstance ().sendMessage (new DeleteMessage (this));
 		}
 	}
 	
 	
-	public Player (){
+	public Character (boolean iSelected){
+		this.iSelected = iSelected;
 		Texture texture = new Texture("core\\assets\\player.png");
 		sprite = new Sprite (texture);
 		sprite.setBounds (100, 100, texture.getWidth (), texture.getHeight ());
@@ -47,15 +52,24 @@ public class Player implements GameObject{
 	
 	@Override
 	public void update (){
-		inputControll ();
+		if (iSelected){
+			inputControll ();
+		}
 		
-		AppSystem.batch.begin ();
-		sprite.draw (AppSystem.batch);
-		AppSystem.batch.end ();
+		AppSystem.getInstance ().batch.begin ();
+		sprite.draw (AppSystem.getInstance ().batch);
+		AppSystem.getInstance ().batch.end ();
 	}
 	
 	@Override
-	public void sendMessage (Message message){
-	
+	public void sendMessage (GameMessage message){
+		if (message.type == MessageType.characterChange){
+			if (iSelected){
+				iSelected = false;
+			}
+			else{
+				iSelected = true;
+			}
+		}
 	}
 }

@@ -4,16 +4,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.game.object.ObjectManager;
+import com.game.objects.ObjectManager;
 
 
 public class StartGame implements Screen{
 	private Game game;
-	private ObjectManager manager;
 	
-	StartGame (Game game, ObjectManager manager){
+	StartGame (Game game){
 		this.game = game;
-		this.manager = manager;
 	}
 	
 	@Override
@@ -26,7 +24,7 @@ public class StartGame implements Screen{
 		Gdx.gl.glClearColor (0, 0, 0, 1);
 		Gdx.gl.glClear (GL20.GL_COLOR_BUFFER_BIT);
 		
-		manager.update ();
+		ObjectManager.getInstance ().update ();
 		
 		//if (Gdx.input.isTouched ()){
 		//	System.out.println (Gdx.input.getX () + " " + Gdx.input.getY ());
