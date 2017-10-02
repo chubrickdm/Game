@@ -1,4 +1,4 @@
-package com.game.objects.messages;
+package com.game.messages;
 
 import com.game.objects.GameObject;
 

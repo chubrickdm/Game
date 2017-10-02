@@ -1,8 +1,8 @@
 package com.game.objects;
 
-import com.game.objects.messages.DeleteMessage;
-import com.game.objects.messages.GameMessage;
-import com.game.objects.messages.MessageType;
+import com.game.messages.GameMessage;
+import com.game.messages.MessageType;
+import com.game.render.Render;
 
 import java.util.LinkedList;
 
@@ -52,5 +52,13 @@ public class ObjectManager implements GameObject{
 		if (message.type == MessageType.deleting){
 			objects.remove (message.object);
 		}
+	}
+	
+	@Override
+	public void draw (){
+		for (GameObject obj : objects){
+			obj.draw ();
+		}
+		Render.getInstance ().RenderScene ();
 	}
 }

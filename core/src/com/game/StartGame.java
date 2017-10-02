@@ -21,10 +21,10 @@ public class StartGame implements Screen{
 	
 	@Override
 	public void render (float delta){
-		Gdx.gl.glClearColor (0, 0, 0, 1);
-		Gdx.gl.glClear (GL20.GL_COLOR_BUFFER_BIT);
+		
 		
 		ObjectManager.getInstance ().update ();
+		ObjectManager.getInstance ().draw ();
 		
 		//if (Gdx.input.isTouched ()){
 		//	System.out.println (Gdx.input.getX () + " " + Gdx.input.getY ());
