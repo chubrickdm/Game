@@ -1,23 +1,22 @@
 package com.game.messages;
 
+import com.game.objects.BodyObject;
 import com.game.objects.GameObject;
-import com.badlogic.gdx.math.Rectangle;
+import java.awt.Rectangle;
 
 public class MoveMessage extends GameMessage{
-	public double oldX;
-	public double oldY;
-	public double newX;
-	public double newY;
-	public Rectangle rectangle;
+	public float oldX;
+	public float oldY;
+	public float newX;
+	public float newY;
+	public BodyObject body;
 	
 	
-	public MoveMessage (GameObject object, double oldX, double oldY, Rectangle rectangle){
+	public MoveMessage (GameObject object, float oldX, float oldY, BodyObject body){
+		this.type = MessageType.movement;
 		this.oldX = oldX;
 		this.oldY = oldY;
-		this.newX = rectangle.x;
-		this.newY = rectangle.y;
-		this.rectangle = rectangle;
-		this.type = MessageType.movement;
+		this.body = body;
 		this.object = object;
 	}
 }

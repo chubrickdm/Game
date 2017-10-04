@@ -1,9 +1,7 @@
 package com.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.game.objects.ObjectManager;
 
 
@@ -21,14 +19,8 @@ public class StartGame implements Screen{
 	
 	@Override
 	public void render (float delta){
-		
-		
 		ObjectManager.getInstance ().update ();
 		ObjectManager.getInstance ().draw ();
-		
-		//if (Gdx.input.isTouched ()){
-		//	System.out.println (Gdx.input.getX () + " " + Gdx.input.getY ());
-		//}
 	}
 	
 	@Override
