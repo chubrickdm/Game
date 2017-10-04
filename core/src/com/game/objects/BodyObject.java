@@ -2,31 +2,28 @@ package com.game.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.game.math.BodyRectangle;
 
-import java.awt.Rectangle;
 
 public class BodyObject{
 	public Sprite sprite;
-	public Rectangle objectBase;
-	
-	
-	
+	public BodyRectangle bodyRect;
 	
 	
 	BodyObject (String fileName, float x, float y, float w, float h){
 		Texture texture = new Texture (fileName);
 		sprite = new Sprite (texture);
 		sprite.setBounds (x, y, w, h);
-		objectBase = new Rectangle ((int) x, (int) y, (int) w, (int) h);
+		bodyRect = new BodyRectangle (x, y, w, h);
 	}
 	
 	void setPosition (float x, float y){
 		sprite.setPosition (x, y);
-		objectBase.setLocation ((int) x, (int) y);
+		bodyRect.setPosition (x, y);
 	}
 	
 	boolean intersects (BodyObject body){
-		return objectBase.intersects (body.objectBase);
+		return bodyRect.intersects (body.bodyRect);
 	}
 	
 	float getX (){
@@ -39,6 +36,6 @@ public class BodyObject{
 	
 	void move (float deltaX, float deltaY){
 		sprite.setPosition (sprite.getX () + deltaX, sprite.getY () + deltaY);
-		objectBase.setLocation ((int) (sprite.getX () + deltaX), (int) (sprite.getY () + deltaY));
+		bodyRect.move (deltaX, deltaY);
 	}
 }

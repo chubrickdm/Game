@@ -2,13 +2,11 @@ package com.game.messages;
 
 import com.game.objects.BodyObject;
 import com.game.objects.GameObject;
-import java.awt.Rectangle;
+
 
 public class MoveMessage extends GameMessage{
 	public float oldX;
 	public float oldY;
-	public float newX;
-	public float newY;
 	public BodyObject body;
 	
 	

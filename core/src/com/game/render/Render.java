@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Render{
 	private SpriteBatch batch;
-	private ArrayList <DataForRender> renderList;
+	private ArrayList <DataRender> renderList;
 	
 	
 	private static class RenderHolder{
@@ -16,7 +16,7 @@ public class Render{
 	
 	private Render (){
 		batch = new SpriteBatch ();
-		renderList = new ArrayList <DataForRender> ();
+		renderList = new ArrayList <DataRender> ();
 	}
 	
 	
@@ -29,7 +29,7 @@ public class Render{
 		Gdx.gl.glClear (GL20.GL_COLOR_BUFFER_BIT);
 		
 		batch.begin ();
-		for (DataForRender data : renderList){
+		for (DataRender data : renderList){
 			data.sprite.draw (batch);
 		}
 		batch.end ();
@@ -37,7 +37,7 @@ public class Render{
 		renderList.clear ();
 	}
 	
-	public void addDataForRender (DataForRender data){
+	public void addDataForRender (DataRender data){
 		renderList.add (data);
 	}
 }

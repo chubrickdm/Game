@@ -2,38 +2,33 @@ package com.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.messages.*;
-import com.game.render.DataForRender;
+import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
-
-import java.awt.Rectangle;
 
 
 public class Character implements GameObject{
 	private boolean iSelected = false;
 	private float deltaX;
 	private float deltaY;
-	private float speed = 100;
 	private BodyObject body;
-	private DataForRender dataForRender;
+	private DataRender dataRender;
 	
 	
 	private void inputControll (){
 		deltaY = 0; deltaX = 0;
 		if (Gdx.input.isKeyPressed (Input.Keys.D)){
-			deltaX = speed * Gdx.graphics.getDeltaTime ();
+			deltaX = Constants.CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 		else if (Gdx.input.isKeyPressed (Input.Keys.A)){
-			deltaX = -speed * Gdx.graphics.getDeltaTime ();
+			deltaX = -Constants.CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 		if (Gdx.input.isKeyPressed (Input.Keys.W)){
-			deltaY = speed * Gdx.graphics.getDeltaTime ();
+			deltaY = Constants.CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 		else if (Gdx.input.isKeyPressed (Input.Keys.S)){
-			deltaY = -speed * Gdx.graphics.getDeltaTime ();
+			deltaY = -Constants.CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 		if (deltaX != 0 || deltaY != 0){
 			body.move (deltaX, deltaY);
@@ -59,7 +54,7 @@ public class Character implements GameObject{
 			body = new BodyObject ("core\\assets\\example2.png", Constants.START_SECOND_X,
 					Constants.START_SECOND_Y, Constants.CHARACTER_W, Constants.CHARACTER_H);
 		}
-		dataForRender = new DataForRender (body.sprite, LayerType.character);
+		dataRender = new DataRender (body.sprite, LayerType.character);
 	}
 	
 	@Override
@@ -93,6 +88,6 @@ public class Character implements GameObject{
 	
 	@Override
 	public void draw (){
-		Render.getInstance ().addDataForRender (dataForRender);
+		Render.getInstance ().addDataForRender (dataRender);
 	}
 }
