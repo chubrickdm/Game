@@ -8,8 +8,9 @@ import java.util.LinkedList;
 
 
 public class ObjectManager implements GameObject{
+	private int iterator;
 	private LinkedList <GameObject> objects;
-	public LinkedList <GameMessage> messages;
+	private LinkedList <GameMessage> messages;
 	
 	
 	private void initialize (){
@@ -24,6 +25,7 @@ public class ObjectManager implements GameObject{
 	}
 	
 	private ObjectManager (){
+		iterator = 0;
 		messages = new LinkedList <GameMessage> ();
 		objects = new LinkedList <GameObject> ();
 		initialize ();
@@ -39,7 +41,8 @@ public class ObjectManager implements GameObject{
 		for (GameObject obj : objects){
 			obj.update ();
 		}
-		for (int i = 0; i < messages.size (); i++){
+		iterator = 0;
+		for (; iterator < messages.size (); iterator++){
 			GameMessage msg = messages.remove ();
 			for (GameObject obj : objects){
 				obj.sendMessage (msg);
@@ -60,5 +63,10 @@ public class ObjectManager implements GameObject{
 			obj.draw ();
 		}
 		Render.getInstance ().RenderScene ();
+	}
+	
+	public void addMessage (GameMessage msg){
+		messages.add (msg);
+		iterator--;
 	}
 }

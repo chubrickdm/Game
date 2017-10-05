@@ -32,12 +32,12 @@ public class Character implements GameObject{
 		}
 		if (deltaX != 0 || deltaY != 0){
 			body.move (deltaX, deltaY);
-			ObjectManager.getInstance ().messages.add (new MoveMessage (this,
+			ObjectManager.getInstance ().addMessage (new MoveMessage (this,
 					body.getX () - deltaX, body.getY () - deltaY, body));
 		}
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
-			ObjectManager.getInstance ().messages.add (new CharacterChangeMessage (this));
+			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (this));
 			//ObjectManager.getInstance ().sendMessage (new DeleteMessage (this));
 		}
 		
@@ -54,7 +54,7 @@ public class Character implements GameObject{
 			body = new BodyObject ("core\\assets\\example2.png", Constants.START_SECOND_X,
 					Constants.START_SECOND_Y, Constants.CHARACTER_W, Constants.CHARACTER_H);
 		}
-		dataRender = new DataRender (body.sprite, LayerType.character);
+		dataRender = new DataRender (body.getSprite (), LayerType.character);
 	}
 	
 	@Override
@@ -77,7 +77,7 @@ public class Character implements GameObject{
 		else if (message.type == MessageType.movement && message.object != this){
 			MoveMessage msg = (MoveMessage) message;
 			if (body.intersects (msg.body)){
-				ObjectManager.getInstance ().messages.add (new PushOutMessage (msg.object, msg.oldX, msg.oldY));
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldX, msg.oldY));
 			}
 		}
 		else if (message.type == MessageType.pushOut && message.object == this){
