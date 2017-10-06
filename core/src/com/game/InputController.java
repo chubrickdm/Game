@@ -1,3 +1,4 @@
+/*
 package com.game;
 
 import com.badlogic.gdx.Input;
@@ -75,3 +76,4 @@ public class InputController implements InputProcessor{
 		return true;
 	}
 }
+*/

@@ -7,23 +7,6 @@ public class BodyRectangle{
 	private float h;
 	
 	
-	private float getX (){
-		return x;
-	}
-	
-	private float getY (){
-		return y;
-	}
-	
-	private float getW (){
-		return w;
-	}
-	
-	private float getH (){
-		return h;
-	}
-	
-	
 	public BodyRectangle (float x, float y, float w, float h){
 		this.x = x;
 		this.y = y;
@@ -39,6 +22,22 @@ public class BodyRectangle{
 	public void move (float deltaX, float deltaY){
 		x += deltaX;
 		y += deltaY;
+	}
+	
+	public float getX (){
+		return x;
+	}
+	
+	public float getY (){
+		return y;
+	}
+	
+	public float getW (){
+		return w;
+	}
+	
+	public float getH (){
+		return h;
 	}
 	
 	public boolean intersects (BodyRectangle rect){
