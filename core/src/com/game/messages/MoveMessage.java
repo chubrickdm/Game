@@ -1,6 +1,6 @@
 package com.game.messages;
 
-import com.game.objects.BodyObject;
+import com.game.objects.body.BodyObject;
 import com.game.objects.GameObject;
 
 

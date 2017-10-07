@@ -2,6 +2,7 @@ package com.game.objects;
 
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
+import com.game.objects.character.Character;
 import com.game.render.Render;
 
 import java.util.LinkedList;
