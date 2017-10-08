@@ -23,6 +23,7 @@ public class CharacterInputControl{
 		deltaY = 0; deltaX = 0;
 		int tmpI = movementType;
 		movementType = -1;
+		character.action = ActionType.stand;
 		if (Gdx.input.isKeyPressed (Input.Keys.D)){
 			deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 			movementType = 2;
@@ -37,7 +38,12 @@ public class CharacterInputControl{
 				movementType = 0;
 			}
 			else{
-				movementType--;
+				if (movementType == 2){
+					movementType = 1;
+				}
+				else{
+					movementType = 7;
+				}
 			}
 		}
 		else if (Gdx.input.isKeyPressed (Input.Keys.S)){
@@ -46,10 +52,16 @@ public class CharacterInputControl{
 				movementType = 4;
 			}
 			else{
-				movementType++;
+				if (movementType == 2){
+					movementType = 3;
+				}
+				else{
+					movementType = 5;
+				}
 			}
 		}
 		if (deltaX != 0 || deltaY != 0){
+			character.action = ActionType.movement;
 			character.body.move (deltaX, deltaY);
 			ObjectManager.getInstance ().addMessage (new MoveMessage (character,
 					character.body.getX () - deltaX, character.body.getY () - deltaY, character.body));

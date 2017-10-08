@@ -17,7 +17,6 @@ public class BodyObject{
 		Texture texture = new Texture (fileName);
 		sprite = new Sprite (texture);
 		sprite.setBounds (x, y, w, h);
-		sprite.setOrigin (w / 2, h / 2);
 		bodyRect = new BodyRectangle (x, y, w, h);
 	}
 	

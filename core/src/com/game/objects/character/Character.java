@@ -22,6 +22,7 @@ public class Character implements GameObject{
 	public static final int   FRAME_COLS = 4;
 	public static final int   FRAME_ROWS = 1;
 	
+	public ActionType action;
 	public AnimatedBodyObject body;
 	private CharacterInputControl inputControl;
 	private boolean iSelected = false;
@@ -29,6 +30,7 @@ public class Character implements GameObject{
 	
 	
 	public Character (boolean iSelected){
+		action = ActionType.stand;
 		inputControl = new CharacterInputControl (this);
 		this.iSelected = iSelected;
 		if (iSelected){
@@ -73,7 +75,10 @@ public class Character implements GameObject{
 	
 	@Override
 	public void draw (){
-		body.updateCurrAnimationFrame ();
+		if (action == ActionType.movement){
+			body.updateCurrAnimationFrame ();
+		}
+		body.sprite.setOriginCenter ();
 		body.sprite.setRotation (180 - inputControl.getMovementType () * 45);
 		dataRender.sprite = body.sprite;
 		Render.getInstance ().addDataForRender (dataRender);
