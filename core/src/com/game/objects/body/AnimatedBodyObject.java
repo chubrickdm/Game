@@ -9,13 +9,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 public class AnimatedBodyObject extends BodyObject{
-	private float time = 0;
+	private float spriteW;
+	private float spriteH;
 	private Animation<TextureRegion> animation;
 	
 	
-	public AnimatedBodyObject (String fileName, float x, float y, float w, float h,
+	public AnimatedBodyObject (String fileName, float x, float y, float w, float h, float bodyW, float bodyH,
 							   int frameRows, int frameCols, float frameDuration){
-		super (fileName, x, y, w, h);
+		super (fileName, x, y, w, h, bodyW, bodyH);
+		spriteW = w;
+		spriteH = h;
 		Texture texture = new Texture (fileName);
 		int regionW = texture.getWidth () / frameCols;
 		int regionH = texture.getHeight () / frameRows;
@@ -30,9 +33,9 @@ public class AnimatedBodyObject extends BodyObject{
 		animation = new Animation <TextureRegion> (frameDuration, frames);
 	}
 	
-	public void updateCurrAnimationFrame (){
+	public void updateCurrAnimationFrame (float time){
 		time += Gdx.graphics.getDeltaTime ();
 		sprite.set (new Sprite (animation.getKeyFrame (time, true)));
-		sprite.setBounds (bodyRect.getX (), bodyRect.getY (), bodyRect.getW (), bodyRect.getH ());
+		sprite.setBounds (bodyRect.getX () - bodyShiftX, bodyRect.getY () - bodyShiftY, spriteW, spriteH);
 	}
 }
