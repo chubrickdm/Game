@@ -6,16 +6,18 @@ import com.game.messages.CharacterChangeMessage;
 import com.game.messages.MoveMessage;
 import com.game.objects.ObjectManager;
 
-import static com.game.objects.character.Character.CHARACTER_SPEED;
 
 public class CharacterInputControl{
+	private float CHARACTER_SPEED;
 	private float deltaX;
 	private float deltaY;
 	private int movementType = 0;
+	private ActionType action;
 	private Character character;
 	
 	
-	public CharacterInputControl (Character character){
+	public CharacterInputControl (Character character, float characterSpeed){
+		CHARACTER_SPEED = characterSpeed;
 		this.character = character;
 	}
 	
@@ -23,7 +25,7 @@ public class CharacterInputControl{
 		deltaY = 0; deltaX = 0;
 		int tmpI = movementType;
 		movementType = -1;
-		character.action = ActionType.stand;
+		action = ActionType.stand;
 		if (Gdx.input.isKeyPressed (Input.Keys.D)){
 			deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 			movementType = 2;
@@ -61,11 +63,13 @@ public class CharacterInputControl{
 			}
 		}
 		if (deltaX != 0 || deltaY != 0){
-			character.action = ActionType.movement;
-			character.body.move (deltaX, deltaY);
+			action = ActionType.movement;
+			character.move (deltaX, deltaY);
 			ObjectManager.getInstance ().addMessage (new MoveMessage (character,
-					character.body.getX () - deltaX, character.body.getY () - deltaY, character.body));
+					character.getBodyX () - deltaX, character.getBodyY () - deltaY, character.getBodyRectangle ()));
 		}
+		
+		character.setAction (action);
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (character));

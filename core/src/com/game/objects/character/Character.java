@@ -1,6 +1,7 @@
 package com.game.objects.character;
 
 import com.badlogic.gdx.Gdx;
+import com.game.math.BodyRectangle;
 import com.game.messages.*;
 import com.game.objects.GameObject;
 import com.game.objects.ObjectManager;
@@ -11,20 +12,20 @@ import com.game.render.Render;
 
 
 public class Character implements GameObject{
-	public static final float CHARACTER_W = 64;
-	public static final float CHARACTER_H = 64;
-	public static final float BODY_CHARACTER_W = 3 * CHARACTER_W / 4;
-	public static final float BODY_CHARACTER_H = 3 * CHARACTER_H / 4;
-	public static final float START_FIRST_X = 100;
-	public static final float START_FIRST_Y = 100;
-	public static final float START_SECOND_X = 200;
-	public static final float START_SECOND_Y = 134;
-	public static final float CHARACTER_SPEED = 100;
-	public static final int   FRAME_COLS = 4;
-	public static final int   FRAME_ROWS = 1;
+	private static final float CHARACTER_W = 64;
+	private static final float CHARACTER_H = 64;
+	private static final float BODY_CHARACTER_W = 3 * CHARACTER_W / 4;
+	private static final float BODY_CHARACTER_H = 3 * CHARACTER_H / 4;
+	private static final float START_FIRST_X = 100;
+	private static final float START_FIRST_Y = 100;
+	private static final float START_SECOND_X = 200;
+	private static final float START_SECOND_Y = 134;
+	private static final float CHARACTER_SPEED = 100;
+	private static final int   FRAME_COLS = 4;
+	private static final int   FRAME_ROWS = 1;
 	
-	public ActionType action;
-	public AnimatedBodyObject body;
+	private ActionType action;
+	private AnimatedBodyObject body;
 	private float time = 0;
 	private CharacterInputControl inputControl;
 	private boolean iSelected = false;
@@ -33,7 +34,7 @@ public class Character implements GameObject{
 	
 	public Character (boolean iSelected){
 		action = ActionType.stand;
-		inputControl = new CharacterInputControl (this);
+		inputControl = new CharacterInputControl (this, CHARACTER_SPEED);
 		this.iSelected = iSelected;
 		if (iSelected){
 			body = new AnimatedBodyObject ("core\\assets\\player.png", START_FIRST_X, START_FIRST_Y,
@@ -46,6 +47,26 @@ public class Character implements GameObject{
 					FRAME_COLS, 0.15f);
 		}
 		dataRender = new DataRender (body.sprite, LayerType.character);
+	}
+	
+	public void setAction (ActionType type){
+		action = type;
+	}
+	
+	public void move (float deltaX, float deltaY){
+		body.move (deltaX, deltaY);
+	}
+	
+	public float getBodyX (){
+		return body.getX ();
+	}
+	
+	public float getBodyY (){
+		return body.getY ();
+	}
+	
+	public BodyRectangle getBodyRectangle (){
+		return body.bodyRect;
 	}
 	
 	@Override
@@ -67,7 +88,7 @@ public class Character implements GameObject{
 		}
 		else if (message.type == MessageType.movement && message.object != this){
 			MoveMessage msg = (MoveMessage) message;
-			if (body.intersects (msg.body)){
+			if (body.intersects (msg.bodyRectangle)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldX, msg.oldY));
 			}
 		}

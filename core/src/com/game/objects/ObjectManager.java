@@ -17,6 +17,8 @@ public class ObjectManager implements GameObject{
 	private void initialize (){
 		Character firstCharacter = new Character (true);
 		Character secondCharacter = new Character (false);
+		Wall wall = new Wall (false, 400, 100);
+		objects.add (wall);
 		objects.add (firstCharacter);
 		objects.add (secondCharacter);
 	}

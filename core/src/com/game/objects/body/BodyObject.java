@@ -26,8 +26,8 @@ public class BodyObject{
 		bodyRect.setPosition (x, y);
 	}
 	
-	public boolean intersects (BodyObject body){
-		return bodyRect.intersects (body.bodyRect);
+	public boolean intersects (BodyRectangle bodyRectangle){
+		return bodyRect.intersects (bodyRectangle);
 	}
 	
 	public float getX (){
