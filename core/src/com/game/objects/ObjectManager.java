@@ -1,5 +1,7 @@
 package com.game.objects;
 
+import com.badlogic.gdx.Gdx;
+import com.game.InputController;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
 import com.game.objects.character.Character;
@@ -15,10 +17,15 @@ public class ObjectManager implements GameObject{
 	
 	
 	private void initialize (){
+		InputController inputProcessor = new InputController ();
+		Gdx.input.setInputProcessor (inputProcessor);
+		
 		Character firstCharacter = new Character (true);
 		Character secondCharacter = new Character (false);
 		Wall wall = new Wall (false, 400, 100);
+		Wall wall2 = new Wall (true, 400, 292);
 		objects.add (wall);
+		objects.add (wall2);
 		objects.add (firstCharacter);
 		objects.add (secondCharacter);
 	}

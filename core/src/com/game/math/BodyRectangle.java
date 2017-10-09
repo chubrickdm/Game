@@ -49,12 +49,12 @@ public class BodyRectangle{
 				(rect.getX () + rect.getW () >= x) && (rect.getY () >= y)){
 			return true;
 		}
-		else if ((rect.getX () <= x + w) && (rect.getY () - rect.getH () <= y + h) &&
-				(rect.getX () >= x) && (rect.getY () - rect.getH () >= y)){
+		else if ((rect.getX () <= x + w) && (rect.getY () + rect.getH () <= y + h) &&
+				(rect.getX () >= x) && (rect.getY () + rect.getH () >= y)){
 			return true;
 		}
-		else if ((rect.getX () + rect.getW () <= x + w) && (rect.getY () - rect.getH () <= y + h) &&
-				(rect.getX () + rect.getW () >= x) && (rect.getY () - rect.getH () >= y)){
+		else if ((rect.getX () + rect.getW () <= x + w) && (rect.getY () + rect.getH () <= y + h) &&
+				(rect.getX () + rect.getW () >= x) && (rect.getY () + rect.getH () >= y)){
 			return true;
 		}
 		

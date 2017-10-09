@@ -16,8 +16,8 @@ public class Character implements GameObject{
 	private static final float CHARACTER_H = 64;
 	private static final float BODY_CHARACTER_W = 3 * CHARACTER_W / 4;
 	private static final float BODY_CHARACTER_H = 3 * CHARACTER_H / 4;
-	private static final float START_FIRST_X = 100;
-	private static final float START_FIRST_Y = 100;
+	private static final float START_FIRST_X = 0;
+	private static final float START_FIRST_Y = 0;
 	private static final float START_SECOND_X = 200;
 	private static final float START_SECOND_Y = 134;
 	private static final float CHARACTER_SPEED = 100;
@@ -58,11 +58,11 @@ public class Character implements GameObject{
 	}
 	
 	public float getBodyX (){
-		return body.getX ();
+		return body.getBodyX ();
 	}
 	
 	public float getBodyY (){
-		return body.getY ();
+		return body.getBodyY ();
 	}
 	
 	public BodyRectangle getBodyRectangle (){
@@ -81,6 +81,7 @@ public class Character implements GameObject{
 		if (message.type == MessageType.characterChange){
 			if (iSelected){
 				iSelected = false;
+				action = ActionType.stand;
 			}
 			else{
 				iSelected = true;

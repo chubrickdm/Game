@@ -22,9 +22,8 @@ public class Wall implements GameObject{
 		horizont = isHorizontWall;
 		body = new StaticBodyObject ("core\\assets\\wall.png", x, y, WALL_W, WALL_H, WALL_W, WALL_H);
 		if (horizont){
-			body.sprite.rotate (90);
+			body.rotate90 ();
 		}
-		//body.sprite.setPosition (x, y - 3 * WALL_H / 4);
 		dataRender = new DataRender (body.sprite, LayerType.wall);
 	}
 	

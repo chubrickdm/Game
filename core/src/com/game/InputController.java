@@ -1,13 +1,13 @@
-/*
 package com.game;
 
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
 
 public class InputController implements InputProcessor{
 	@Override
 	public boolean touchDown (int screenX, int screenY, int pointer, int button){
+		System.out.println (screenX + " " + Math.abs (screenY - Gdx.graphics.getHeight ()));
 		return false;
 	}
 	
@@ -38,42 +38,11 @@ public class InputController implements InputProcessor{
 	
 	@Override
 	public boolean keyDown (int keycode){
-		if (Input.Keys.W == keycode){
-		
-		}
-		else if (Input.Keys.S == keycode){
-		
-		}
-		if (Input.Keys.D == keycode){
-		
-		}
-		else if (Input.Keys.A == keycode){
-		
-		}
-		if (Input.Keys.TAB == keycode){
-		
-		}
 		return true;
 	}
 	
 	@Override
 	public boolean keyUp (int keycode){
-		if (Input.Keys.W == keycode){
-		
-		}
-		else if (Input.Keys.S == keycode){
-		
-		}
-		if (Input.Keys.D == keycode){
-		
-		}
-		else if (Input.Keys.A == keycode){
-		
-		}
-		if (Input.Keys.TAB == keycode){
-		
-		}
 		return true;
 	}
 }
-*/
