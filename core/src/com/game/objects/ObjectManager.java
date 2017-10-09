@@ -22,12 +22,19 @@ public class ObjectManager implements GameObject{
 		
 		Character firstCharacter = new Character (true);
 		Character secondCharacter = new Character (false);
-		Wall wall = new Wall (false, 400, 100);
-		Wall wall2 = new Wall (true, 400, 292);
-		objects.add (wall);
-		objects.add (wall2);
 		objects.add (firstCharacter);
 		objects.add (secondCharacter);
+		
+		Wall wall = new Wall (false, Gdx.graphics.getWidth () / 2 - 32, 0);
+		objects.add (wall);
+		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - 32, 192);
+		objects.add (wall);
+		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - 32, 384);
+		objects.add (wall);
+		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - 32, 576);
+		objects.add (wall);
+		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - 32, 768);
+		objects.add (wall);
 	}
 	
 	private static class ObjectManagerHolder{
