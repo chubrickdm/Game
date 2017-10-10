@@ -10,8 +10,8 @@ import com.game.render.LayerType;
 import com.game.render.Render;
 
 public class Wall implements GameObject{
-	private static final float WALL_W = 64;
-	private static final float WALL_H = 192;
+	public static final float WALL_W = 64 * GameObject.ASPECT_RATIO;
+	public static final float WALL_H = 192 * GameObject.ASPECT_RATIO;
 	
 	private boolean horizont = false;
 	private DataRender dataRender;

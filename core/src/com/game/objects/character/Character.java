@@ -12,17 +12,17 @@ import com.game.render.Render;
 
 
 public class Character implements GameObject{
-	private static final float CHARACTER_W = 64;
-	private static final float CHARACTER_H = 64;
-	private static final float BODY_CHARACTER_W = 3 * CHARACTER_W / 4;
-	private static final float BODY_CHARACTER_H = 3 * CHARACTER_H / 4;
-	private static final float START_FIRST_X = 200;
-	private static final float START_FIRST_Y = 200;
-	private static final float START_SECOND_X = Gdx.graphics.getWidth () - 200 - CHARACTER_W;
-	private static final float START_SECOND_Y = 200;
-	private static final float CHARACTER_SPEED = 100;
-	private static final int   FRAME_COLS = 4;
-	private static final int   FRAME_ROWS = 1;
+	public static final float CHARACTER_W = 64 * GameObject.ASPECT_RATIO;
+	public static final float CHARACTER_H = 64 * GameObject.ASPECT_RATIO;
+	public static final float BODY_CHARACTER_W = 3 * CHARACTER_W / 4 * GameObject.ASPECT_RATIO;
+	public static final float BODY_CHARACTER_H = 3 * CHARACTER_H / 4 * GameObject.ASPECT_RATIO;
+	public static final float START_FIRST_X = 200 * GameObject.ASPECT_RATIO;
+	public static final float START_FIRST_Y = 200 * GameObject.ASPECT_RATIO;
+	public static final float START_SECOND_X = (Gdx.graphics.getWidth () - 200 - CHARACTER_W) * GameObject.ASPECT_RATIO;
+	public static final float START_SECOND_Y = 200 * GameObject.ASPECT_RATIO;
+	public static final float CHARACTER_SPEED = 100 * GameObject.ASPECT_RATIO;
+	public static final int   FRAME_COLS = 4;
+	public static final int   FRAME_ROWS = 1;
 	
 	private ActionType action;
 	private AnimatedBodyObject body;
