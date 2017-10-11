@@ -1,14 +1,15 @@
-package com.game;
+package com.game.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.game.MyGame;
 import com.game.objects.ObjectManager;
 
 
-public class StartGame implements Screen{
-	private Game game;
+public class PlayScreen implements Screen{
+	private MyGame game;
 	
-	StartGame (Game game){
+	
+	public PlayScreen (MyGame game){
 		this.game = game;
 	}
 	
@@ -45,5 +46,6 @@ public class StartGame implements Screen{
 	
 	@Override
 	public void dispose (){
+	
 	}
 }
