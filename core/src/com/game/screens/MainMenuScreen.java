@@ -2,6 +2,7 @@ package com.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,31 +14,31 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.MyGame;
 
 
-public class MenuScreen implements Screen{
+public class MainMenuScreen implements Screen{
 	private Stage stage;
-	private TextButton play, exit;
-	private WidgetGroup table;
 	
 	
-	public MenuScreen (){
-		stage = new Stage (new ScreenViewport ());
-		table = new Table ();
-		//table.setFillParent (true);
+	public MainMenuScreen (){
+		WidgetGroup widgetGroup = new WidgetGroup ();
+		TextButton play;
+		TextButton exit;
 		
-		Skin skin = new Skin ();
+		
+		stage = new Stage (new ScreenViewport ());
+		
+		
 		TextureAtlas buttonAtlas = new TextureAtlas ("core\\assets\\images\\button.atlas");
+		Skin skin = new Skin ();
 		skin.addRegions (buttonAtlas);
 		
 		TextButtonStyle textButtonStyle = new TextButtonStyle ();
-		textButtonStyle.font = MyGame.getInstance ().font;
-		
+		textButtonStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf",
+				MyGame.BUTTON_FONT_SIZE, Color.WHITE);
 		textButtonStyle.up = skin.getDrawable ("button_up");
 		textButtonStyle.over = skin.getDrawable ("button_checked");
 		textButtonStyle.down = skin.getDrawable ("button_checked");
 		
 		
-		//Кнопка играть. Добавляем новый listener, чтобы слушать события касания.
-		//После касания, переключает на экран выбора уровней, а этот экран уничтожается
 		play = new TextButton ("Играть", textButtonStyle);
 		play.addListener (new ClickListener (){
 			@Override
@@ -45,10 +46,10 @@ public class MenuScreen implements Screen{
 				MyGame.getInstance ().setScreen (new PlayScreen ());
 			}
 		});
-		//play.setPosition (Gdx.graphics.getWidth () / 2, Gdx.graphics.getHeight () / 2);
-		play.setBounds (100, 100, 340, 43);
+		play.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2, Gdx.graphics.getHeight () / 2,
+				MyGame.BUTTON_W, MyGame.BUTTON_H);
 		
-		// Кнопка выхода.
+		
 		exit = new TextButton ("Выход", textButtonStyle);
 		exit.addListener (new ClickListener (){
 			@Override
@@ -56,16 +57,15 @@ public class MenuScreen implements Screen{
 				Gdx.app.exit ();
 			}
 		});
-		exit.setBounds (400, 500, 186, 43);
+		exit.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
+				Gdx.graphics.getHeight () / 2 - MyGame.BUTTON_H - MyGame.DISTANCE_BETWEEN_BUTTONS,
+				MyGame.BUTTON_W, MyGame.BUTTON_H);
 		
-		table.addActor (play);
-		//table.row ();
-		table.addActor (exit);
-		//table.setPosition (700, 500);
-		//table.setFillParent (false);
-		stage.addActor (table);
+		widgetGroup.addActor (play);
+		widgetGroup.addActor (exit);
+		stage.addActor (widgetGroup);
 		
-		// Устанавливаем нашу сцену основным процессором для ввода (нажатия, касания, клавиатура etc.)
+		// Устанавливаем нашу сцену основным процессором для ввода
 		Gdx.input.setInputProcessor (stage);
 	}
 	
@@ -105,7 +105,6 @@ public class MenuScreen implements Screen{
 	
 	@Override
 	public void dispose (){
-		// Уничтожаем сцену и объект game.
 		stage.dispose ();
 	}
 }

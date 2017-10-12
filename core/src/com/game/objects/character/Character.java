@@ -12,15 +12,15 @@ import com.game.render.Render;
 
 
 public class Character implements GameObject{
-	public static final float CHARACTER_W = 64 * GameObject.ASPECT_RATIO;
-	public static final float CHARACTER_H = 64 * GameObject.ASPECT_RATIO;
-	public static final float BODY_CHARACTER_W = 3 * CHARACTER_W / 4 * GameObject.ASPECT_RATIO;
-	public static final float BODY_CHARACTER_H = 3 * CHARACTER_H / 4 * GameObject.ASPECT_RATIO;
-	public static final float START_FIRST_X = 200 * GameObject.ASPECT_RATIO;
-	public static final float START_FIRST_Y = 200 * GameObject.ASPECT_RATIO;
-	public static final float START_SECOND_X = (Gdx.graphics.getWidth () - 200 - CHARACTER_W) * GameObject.ASPECT_RATIO;
-	public static final float START_SECOND_Y = 200 * GameObject.ASPECT_RATIO;
-	public static final float CHARACTER_SPEED = 100 * GameObject.ASPECT_RATIO;
+	public static final float CHARACTER_W = 64 * ASPECT_RATIO;
+	public static final float CHARACTER_H = 64 * ASPECT_RATIO;
+	public static final float BODY_CHARACTER_W = 3 * CHARACTER_W / 4 * ASPECT_RATIO;
+	public static final float BODY_CHARACTER_H = 3 * CHARACTER_H / 4 * ASPECT_RATIO;
+	public static final float START_FIRST_X = 200 * ASPECT_RATIO;
+	public static final float START_FIRST_Y = 200 * ASPECT_RATIO;
+	public static final float START_SECOND_X = (Gdx.graphics.getWidth () - 200 - CHARACTER_W) * ASPECT_RATIO;
+	public static final float START_SECOND_Y = 200 * ASPECT_RATIO;
+	public static final float CHARACTER_SPEED = 100 * ASPECT_RATIO;
 	public static final int   FRAME_COLS = 4;
 	public static final int   FRAME_ROWS = 1;
 	

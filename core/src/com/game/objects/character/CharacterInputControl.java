@@ -2,9 +2,11 @@ package com.game.objects.character;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.game.MyGame;
 import com.game.messages.CharacterChangeMessage;
 import com.game.messages.MoveMessage;
 import com.game.objects.ObjectManager;
+import com.game.screens.MainMenuScreen;
 
 
 public class CharacterInputControl{
@@ -73,6 +75,9 @@ public class CharacterInputControl{
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (character));
+		}
+		else if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
+			MyGame.getInstance ().setScreen (new MainMenuScreen ());
 		}
 		
 		if (movementType == -1){
