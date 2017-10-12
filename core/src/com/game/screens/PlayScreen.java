@@ -1,18 +1,10 @@
 package com.game.screens;
 
 import com.badlogic.gdx.Screen;
-import com.game.MyGame;
 import com.game.objects.ObjectManager;
 
 
 public class PlayScreen implements Screen{
-	private MyGame game;
-	
-	
-	public PlayScreen (MyGame game){
-		this.game = game;
-	}
-	
 	@Override
 	public void show (){
 	
