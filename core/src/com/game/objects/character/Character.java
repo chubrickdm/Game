@@ -16,10 +16,6 @@ public class Character implements GameObject{
 	public static final float CHARACTER_H = 64 * ASPECT_RATIO;
 	public static final float BODY_CHARACTER_W = 3 * CHARACTER_W / 4 * ASPECT_RATIO;
 	public static final float BODY_CHARACTER_H = 3 * CHARACTER_H / 4 * ASPECT_RATIO;
-	public static final float START_FIRST_X = 200 * ASPECT_RATIO;
-	public static final float START_FIRST_Y = 200 * ASPECT_RATIO;
-	public static final float START_SECOND_X = (Gdx.graphics.getWidth () - 200 - CHARACTER_W) * ASPECT_RATIO;
-	public static final float START_SECOND_Y = 200 * ASPECT_RATIO;
 	public static final float CHARACTER_SPEED = 100 * ASPECT_RATIO;
 	public static final int   FRAME_COLS = 4;
 	public static final int   FRAME_ROWS = 1;
@@ -32,19 +28,17 @@ public class Character implements GameObject{
 	private DataRender dataRender;
 	
 	
-	public Character (boolean iSelected){
+	public Character (boolean iSelected, float x, float y){
 		action = ActionType.stand;
 		inputControl = new CharacterInputControl (this, CHARACTER_SPEED);
 		this.iSelected = iSelected;
 		if (iSelected){
-			body = new AnimatedBodyObject ("core\\assets\\player.png", START_FIRST_X, START_FIRST_Y,
-					CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H, FRAME_ROWS,
-					FRAME_COLS, 0.15f);
+			body = new AnimatedBodyObject ("core\\assets\\player.png", x, y, CHARACTER_W, CHARACTER_H,
+					BODY_CHARACTER_W, BODY_CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		}
 		else{
-			body = new AnimatedBodyObject ("core\\assets\\player.png", START_SECOND_X, START_SECOND_Y,
-					CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H, FRAME_ROWS,
-					FRAME_COLS, 0.15f);
+			body = new AnimatedBodyObject ("core\\assets\\player.png", x, y, CHARACTER_W, CHARACTER_H,
+					BODY_CHARACTER_W, BODY_CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		}
 		dataRender = new DataRender (body.sprite, LayerType.character);
 	}

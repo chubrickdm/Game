@@ -13,15 +13,15 @@ public class Wall implements GameObject{
 	public static final float WALL_W = 64 * GameObject.ASPECT_RATIO;
 	public static final float WALL_H = 192 * GameObject.ASPECT_RATIO;
 	
-	private boolean horizont = false;
+	private boolean horizon = false;
 	private DataRender dataRender;
 	private StaticBodyObject body;
 	
 	
-	public Wall (boolean isHorizontWall, float x, float y){
-		horizont = isHorizontWall;
+	public Wall (boolean isHorizonWall, float x, float y){
+		horizon = isHorizonWall;
 		body = new StaticBodyObject ("core\\assets\\wall.png", x, y, WALL_W, WALL_H, WALL_W, WALL_H);
-		if (horizont){
+		if (horizon){
 			body.rotate90 ();
 		}
 		dataRender = new DataRender (body.sprite, LayerType.wall);

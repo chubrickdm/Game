@@ -5,7 +5,6 @@ import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
 import com.game.objects.character.Character;
 import com.game.render.Render;
-
 import java.util.LinkedList;
 
 
@@ -16,12 +15,14 @@ public class ObjectManager implements GameObject{
 	
 	
 	private void initialize (){
-		Character firstCharacter = new Character (true);
-		Character secondCharacter = new Character (false);
+		Character firstCharacter = new Character (true, 200 * ASPECT_RATIO, 200 * ASPECT_RATIO);
+		Character secondCharacter = new Character (false, (Gdx.graphics.getWidth () -
+				200 - Character.CHARACTER_W) * ASPECT_RATIO, 200 * ASPECT_RATIO);
 		objects.add (firstCharacter);
 		objects.add (secondCharacter);
 		
-		Wall wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W, Wall.WALL_H * 0);
+		Wall wall;
+		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W, Wall.WALL_H * 0);
 		objects.add (wall);
 		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W, Wall.WALL_H * 1);
 		objects.add (wall);
