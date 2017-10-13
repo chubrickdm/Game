@@ -1,6 +1,7 @@
 package com.game.objects;
 
 import com.badlogic.gdx.Gdx;
+import com.game.InputController;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
 import com.game.objects.character.Character;
@@ -52,6 +53,8 @@ public class ObjectManager implements GameObject{
 	
 	@Override
 	public void update (){
+		Gdx.input.setInputProcessor (InputController.getInstance ());
+		
 		for (GameObject obj : objects){
 			obj.update ();
 		}
