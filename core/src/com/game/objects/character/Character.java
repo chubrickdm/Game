@@ -23,85 +23,31 @@ public class Character implements GameObject{
 	public static final int FRAME_COLS = 4;
 	public static final int FRAME_ROWS = 1;
 	
+	private boolean iSelected = false;
 	private float deltaX;
 	private float deltaY;
-	private int amountPressedKeys = 0;
-	private int movementType = 0;
-	private ActionType action;
-	private AnimatedBodyObject body;
 	private float time = 0;
-	private boolean iSelected = false;
+	//private int amountPressedKeys = 0;
+	private int angleMove = 0;
+	private int[] pressedKeys = new int[4]; //0-W, 1-D, 2-S, 3-A, 1-значит зажата кнопка
+	private ActionType action;
 	private DataRender dataRender;
+	private AnimatedBodyObject body;
 	
 	
 	private void processKeyDown (int keyCode){
 		switch (keyCode){
 		case Input.Keys.D:
-			action = ActionType.movement;
-			if (amountPressedKeys <= 1){
-				deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
-				if (amountPressedKeys == 0){
-					movementType = 2;
-				}
-				else if (movementType == 0){
-					movementType = 1;
-				}
-				else if (movementType == 4){
-					movementType = 3;
-				}
-			}
-			amountPressedKeys++;
+			pressedKeys[1] = 1;
 			break;
 		case Input.Keys.A:
-			action = ActionType.movement;
-			if (amountPressedKeys <= 1){
-				deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
-				if (amountPressedKeys == 0){
-					movementType = 6;
-				}
-				else if (movementType == 0){
-					movementType = 7;
-				}
-				else if (movementType == 4){
-					movementType = 5;
-				}
-			}
-			amountPressedKeys++;
+			pressedKeys[3] = 1;
 			break;
 		case Input.Keys.W:
-			action = ActionType.movement;
-			if (amountPressedKeys <= 1){
-				deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
-				if (amountPressedKeys == 0){
-					movementType = 0;
-				}
-				else if (movementType == 2){
-					movementType = 1;
-				}
-				else if (movementType == 6){
-					movementType = 7;
-				}
-			}
-			amountPressedKeys++;
+			pressedKeys[0] = 1;
 			break;
 		case Input.Keys.S:
-			action = ActionType.movement;
-			if (amountPressedKeys <= 1){
-				deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
-				if (amountPressedKeys == 0){
-					movementType = 4;
-				}
-				else if (movementType == 2){
-					movementType = 3;
-				}
-				else if (movementType == 4){
-					movementType = 5;
-				}
-			}
-			amountPressedKeys++;
-			break;
-		case Input.Keys.ESCAPE:
-			MyGame.getInstance ().setScreen (new MainMenuScreen ());
+			pressedKeys[2] = 1;
 			break;
 		}
 	}
@@ -109,67 +55,22 @@ public class Character implements GameObject{
 	private void processKeyUp (int keyCode){
 		switch (keyCode){
 		case Input.Keys.D:
-			amountPressedKeys--;
-			if (amountPressedKeys == 0){
-				action = ActionType.stand;
-				deltaX = 0;
-			}
-			else if (movementType == 1){
-				movementType = 0;
-				deltaX = 0;
-			}
-			else if (movementType == 3){
-				movementType = 4;
-				deltaX = 0;
-			}
+			pressedKeys[1] = 0;
 			break;
 		case Input.Keys.A:
-			amountPressedKeys--;
-			if (amountPressedKeys == 0){
-				action = ActionType.stand;
-				deltaX = 0;
-			}
-			else if (movementType == 7){
-				movementType = 0;
-				deltaX = 0;
-			}
-			else if (movementType == 5){
-				movementType = 4;
-				deltaX = 0;
-			}
+			pressedKeys[3] = 0;
 			break;
 		case Input.Keys.W:
-			amountPressedKeys--;
-			if (amountPressedKeys == 0){
-				action = ActionType.stand;
-				deltaY = 0;
-			}
-			else if (movementType == 1){
-				movementType = 2;
-				deltaY = 0;
-			}
-			else if (movementType == 7){
-				movementType = 6;
-				deltaY = 0;
-			}
+			pressedKeys[0] = 0;
 			break;
 		case Input.Keys.S:
-			amountPressedKeys--;
-			if (amountPressedKeys == 0){
-				action = ActionType.stand;
-				deltaY = 0;
-			}
-			else if (movementType == 3){
-				movementType = 2;
-				deltaY = 0;
-			}
-			else if (movementType == 5){
-				movementType = 6;
-				deltaY = 0;
-			}
+			pressedKeys[2] = 0;
 			break;
 		case Input.Keys.TAB:
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (this));
+			break;
+		case Input.Keys.ESCAPE:
+			MyGame.getInstance ().setScreen (new MainMenuScreen ());
 			break;
 		}
 	}
@@ -181,6 +82,8 @@ public class Character implements GameObject{
 		else{
 			processKeyUp (keyCode);
 		}
+		
+		
 	}
 	
 	
@@ -198,7 +101,56 @@ public class Character implements GameObject{
 	
 	@Override
 	public void update (){
-	
+		deltaY = 0; deltaX = 0;
+		int tmpI = angleMove;
+		angleMove = -1;
+		action = ActionType.stand;
+		if (pressedKeys[1] == 1){
+			deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+			angleMove = 2;
+		}
+		else if (pressedKeys[3] == 1){
+			deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+			angleMove = 6;
+		}
+		if (pressedKeys[0] == 1){
+			deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+			if (angleMove == -1){
+				angleMove = 0;
+			}
+			else{
+				if (angleMove == 2){
+					angleMove = 1;
+				}
+				else{
+					angleMove = 7;
+				}
+			}
+		}
+		else if (pressedKeys[2] == 1){
+			deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+			if (angleMove == -1){
+				angleMove = 4;
+			}
+			else{
+				if (angleMove == 2){
+					angleMove = 3;
+				}
+				else{
+					angleMove = 5;
+				}
+			}
+		}
+		if (deltaX != 0 || deltaY != 0){
+			action = ActionType.movement;
+			body.move (deltaX, deltaY);
+			ObjectManager.getInstance ().addMessage (new MoveMessage (this,
+					body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect));
+		}
+		
+		if (angleMove == -1){
+			angleMove = tmpI;
+		}
 	}
 	
 	@Override
@@ -235,8 +187,6 @@ public class Character implements GameObject{
 	@Override
 	public void draw (){
 		if (action == ActionType.movement){
-			body.move (deltaX, deltaY);
-			ObjectManager.getInstance ().addMessage (new MoveMessage (this, body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect));
 			time += Gdx.graphics.getDeltaTime ();
 			body.updateCurrAnimationFrame (time);
 		}
@@ -244,7 +194,7 @@ public class Character implements GameObject{
 			body.updateCurrAnimationFrame (0);
 		}
 		body.sprite.setOriginCenter ();
-		body.sprite.setRotation (180 - movementType * 45);
+		body.sprite.setRotation (180 - angleMove * 45);
 		dataRender.sprite = body.sprite;
 		Render.getInstance ().addDataForRender (dataRender);
 	}

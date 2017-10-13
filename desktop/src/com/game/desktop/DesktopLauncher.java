@@ -10,12 +10,12 @@ public class DesktopLauncher{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration ();
 		
 		config.title = "Project 6";
-		config.fullscreen = true;
+		//config.fullscreen = true;
 		java.awt.Dimension size = java.awt.Toolkit.getDefaultToolkit ().getScreenSize ();
-		config.width = size.width;
-		config.height = size.height;
-		//config.width = 800;
-		//config.height = 600;
+		//config.width = size.width;
+		//config.height = size.height;
+		config.width = 800;
+		config.height = 600;
 		
 		new LwjglApplication (MyGame.getInstance (), config);
 	}
