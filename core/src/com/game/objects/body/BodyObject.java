@@ -45,9 +45,9 @@ public class BodyObject{
 	}
 	
 	public void rotate90 (){
-		sprite.setPosition (sprite.getX () + sprite.getWidth (), sprite.getY () - sprite.getWidth ());
-		sprite.rotate (90);
+		sprite.rotate90 (true);
+		sprite.setSize (sprite.getHeight (), sprite.getWidth ());
 		bodyRect = new BodyRectangle (bodyRect.getX () + bodyShiftX, bodyRect.getY () + bodyShiftY,
-				sprite.getHeight (), sprite.getWidth ());
+				sprite.getWidth (), sprite.getHeight ());
 	}
 }

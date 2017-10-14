@@ -34,7 +34,14 @@ public class ObjectManager implements GameObject{
 		objects.add (wall);
 		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W, Wall.WALL_H * 3);
 		objects.add (wall);
-		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W, Wall.WALL_H * 4);
+		wall = new Wall (true, 0, 0);
+		objects.add (wall);
+		
+		wall = new Wall (true, Gdx.graphics.getWidth () / 2 - Wall.WALL_W - 1 * Wall.WALL_H, Gdx.graphics.getHeight () / 2);
+		objects.add (wall);
+		wall = new Wall (true, Gdx.graphics.getWidth () / 2 - Wall.WALL_W - 2 * Wall.WALL_H, Gdx.graphics.getHeight () / 2);
+		objects.add (wall);
+		wall = new Wall (true, Gdx.graphics.getWidth () / 2 - Wall.WALL_W - 3 * Wall.WALL_H, Gdx.graphics.getHeight () / 2);
 		objects.add (wall);
 	}
 	

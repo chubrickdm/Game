@@ -112,7 +112,6 @@ public class Character implements GameObject{
 		if (Gdx.input.isKeyPressed (Input.Keys.S)) keySPressed ();
 		if (Gdx.input.isKeyPressed (Input.Keys.A)) keyAPressed ();
 		
-		
 		if (deltaX != 0 || deltaY != 0){
 			action = ActionType.movement;
 			body.move (deltaX, deltaY);

@@ -3,6 +3,7 @@ package com.game.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.game.MyGame;
+import com.game.objects.GameObject;
 
 
 public class DesktopLauncher{
@@ -11,11 +12,8 @@ public class DesktopLauncher{
 		
 		config.title = "Project 6";
 		config.fullscreen = true;
-		java.awt.Dimension size = java.awt.Toolkit.getDefaultToolkit ().getScreenSize ();
-		config.width = size.width;
-		config.height = size.height;
-		//config.width = 800;
-		//config.height = 600;
+		config.width = (int) GameObject.SCREEN_W;
+		config.height = (int) GameObject.SCREEN_H;
 		
 		new LwjglApplication (MyGame.getInstance (), config);
 	}
