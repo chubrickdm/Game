@@ -27,63 +27,102 @@ public class Character implements GameObject{
 	private float deltaX;
 	private float deltaY;
 	private float time = 0;
-	//private int amountPressedKeys = 0;
 	private int angleMove = 0;
-	private int[] pressedKeys = new int[4]; //0-W, 1-D, 2-S, 3-A, 1-значит зажата кнопка
 	private ActionType action;
 	private DataRender dataRender;
 	private AnimatedBodyObject body;
 	
 	
-	private void processKeyDown (int keyCode){
-		switch (keyCode){
-		case Input.Keys.D:
-			pressedKeys[1] = 1;
-			break;
-		case Input.Keys.A:
-			pressedKeys[3] = 1;
-			break;
-		case Input.Keys.W:
-			pressedKeys[0] = 1;
-			break;
-		case Input.Keys.S:
-			pressedKeys[2] = 1;
-			break;
+	private void keyWPressed (){
+		if (!Gdx.input.isKeyPressed (Input.Keys.S)){
+			if (angleMove == -1){
+				angleMove = 0;
+				deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+			}
+			else if (angleMove == 2){
+				deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+				angleMove = 1;
+			}
+			else if (angleMove == 6){
+				deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+				angleMove = 7;
+			}
 		}
 	}
 	
-	private void processKeyUp (int keyCode){
-		switch (keyCode){
-		case Input.Keys.D:
-			pressedKeys[1] = 0;
-			break;
-		case Input.Keys.A:
-			pressedKeys[3] = 0;
-			break;
-		case Input.Keys.W:
-			pressedKeys[0] = 0;
-			break;
-		case Input.Keys.S:
-			pressedKeys[2] = 0;
-			break;
-		case Input.Keys.TAB:
+	private void keyDPressed (){
+		if (!Gdx.input.isKeyPressed (Input.Keys.A)){
+			if (angleMove == -1){
+				angleMove = 2;
+				deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+			}
+			else if (angleMove == 0){
+				deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+				angleMove = 1;
+			}
+			else if (angleMove == 4){
+				deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+				angleMove = 3;
+			}
+		}
+	}
+	
+	private void keySPressed (){
+		if (!Gdx.input.isKeyPressed (Input.Keys.W)){
+			if (angleMove == -1){
+				angleMove = 4;
+				deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+			}
+			else if (angleMove == 2){
+				deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+				angleMove = 3;
+			}
+			else if (angleMove == 4){
+				deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+				angleMove = 5;
+			}
+		}
+	}
+	
+	private void keyAPressed (){
+		if (!Gdx.input.isKeyPressed (Input.Keys.D)){
+			if (angleMove == -1){
+				angleMove = 6;
+				deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+			}
+			else if (angleMove == 0){
+				deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+				angleMove = 7;
+			}
+			else if (angleMove == 4){
+				deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+				angleMove = 5;
+			}
+		}
+	}
+	
+	private void updateControl (){
+		deltaY = 0;
+		deltaX = 0;
+		int tmpI = angleMove;
+		angleMove = -1;
+		action = ActionType.stand;
+		if (Gdx.input.isKeyPressed (Input.Keys.W)) keyWPressed ();
+		if (Gdx.input.isKeyPressed (Input.Keys.D)) keyDPressed ();
+		if (Gdx.input.isKeyPressed (Input.Keys.S)) keySPressed ();
+		if (Gdx.input.isKeyPressed (Input.Keys.A)) keyAPressed ();
+		
+		
+		if (deltaX != 0 || deltaY != 0){
+			action = ActionType.movement;
+			body.move (deltaX, deltaY);
+			ObjectManager.getInstance ().addMessage (new MoveMessage (this, body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect));
+		}
+		
+		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB))
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (this));
-			break;
-		case Input.Keys.ESCAPE:
-			MyGame.getInstance ().setScreen (new MainMenuScreen ());
-			break;
-		}
-	}
-	
-	private void processKeyPress (int keyCode, boolean keyDown){
-		if (keyDown){
-			processKeyDown (keyCode);
-		}
-		else{
-			processKeyUp (keyCode);
-		}
 		
-		
+		if (angleMove == -1) angleMove = tmpI;
 	}
 	
 	
@@ -101,55 +140,8 @@ public class Character implements GameObject{
 	
 	@Override
 	public void update (){
-		deltaY = 0; deltaX = 0;
-		int tmpI = angleMove;
-		angleMove = -1;
-		action = ActionType.stand;
-		if (pressedKeys[1] == 1){
-			deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
-			angleMove = 2;
-		}
-		else if (pressedKeys[3] == 1){
-			deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
-			angleMove = 6;
-		}
-		if (pressedKeys[0] == 1){
-			deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
-			if (angleMove == -1){
-				angleMove = 0;
-			}
-			else{
-				if (angleMove == 2){
-					angleMove = 1;
-				}
-				else{
-					angleMove = 7;
-				}
-			}
-		}
-		else if (pressedKeys[2] == 1){
-			deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
-			if (angleMove == -1){
-				angleMove = 4;
-			}
-			else{
-				if (angleMove == 2){
-					angleMove = 3;
-				}
-				else{
-					angleMove = 5;
-				}
-			}
-		}
-		if (deltaX != 0 || deltaY != 0){
-			action = ActionType.movement;
-			body.move (deltaX, deltaY);
-			ObjectManager.getInstance ().addMessage (new MoveMessage (this,
-					body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect));
-		}
-		
-		if (angleMove == -1){
-			angleMove = tmpI;
+		if (iSelected){
+			updateControl ();
 		}
 	}
 	
@@ -173,14 +165,6 @@ public class Character implements GameObject{
 		else if (message.type == MessageType.pushOut && message.object == this){
 			PushOutMessage msg = (PushOutMessage) message;
 			body.setBodyPosition (msg.whereX, msg.whereY);
-		}
-		else if (message.type == MessageType.keyDown && iSelected){
-			KeyDownMessage msg = (KeyDownMessage) message;
-			processKeyPress (msg.getKeyCode (), true);
-		}
-		else if (message.type == MessageType.keyUp && iSelected){
-			KeyUpMessage msg = (KeyUpMessage) message;
-			processKeyPress (msg.getKeyCode (), false);
 		}
 	}
 	

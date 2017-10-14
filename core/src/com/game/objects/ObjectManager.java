@@ -1,11 +1,14 @@
 package com.game.objects;
 
 import com.badlogic.gdx.Gdx;
-import com.game.InputController;
+import com.badlogic.gdx.Input;
+import com.game.MyGame;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
 import com.game.objects.character.Character;
 import com.game.render.Render;
+import com.game.screens.MainMenuScreen;
+
 import java.util.LinkedList;
 
 
@@ -53,7 +56,9 @@ public class ObjectManager implements GameObject{
 	
 	@Override
 	public void update (){
-		Gdx.input.setInputProcessor (InputController.getInstance ());
+		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
+			MyGame.getInstance ().setScreen (new MainMenuScreen ());
+		}
 		
 		for (GameObject obj : objects){
 			obj.update ();
