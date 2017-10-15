@@ -24,6 +24,7 @@ public class Character implements GameObject{
 	public static final int FRAME_ROWS = 1;
 	
 	private boolean iSelected = false;
+	private boolean isPushOut = false;
 	private float deltaX;
 	private float deltaY;
 	private float time = 0;
@@ -107,10 +108,14 @@ public class Character implements GameObject{
 		int tmpI = angleMove;
 		angleMove = -1;
 		action = ActionType.stand;
-		if (Gdx.input.isKeyPressed (Input.Keys.W)) keyWPressed ();
-		if (Gdx.input.isKeyPressed (Input.Keys.D)) keyDPressed ();
-		if (Gdx.input.isKeyPressed (Input.Keys.S)) keySPressed ();
-		if (Gdx.input.isKeyPressed (Input.Keys.A)) keyAPressed ();
+		if (Gdx.input.isKeyPressed (Input.Keys.W))
+			keyWPressed ();
+		if (Gdx.input.isKeyPressed (Input.Keys.D))
+			keyDPressed ();
+		if (Gdx.input.isKeyPressed (Input.Keys.S))
+			keySPressed ();
+		if (Gdx.input.isKeyPressed (Input.Keys.A))
+			keyAPressed ();
 		
 		if (deltaX != 0 || deltaY != 0){
 			action = ActionType.movement;
@@ -121,7 +126,8 @@ public class Character implements GameObject{
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB))
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (this));
 		
-		if (angleMove == -1) angleMove = tmpI;
+		if (angleMove == -1)
+			angleMove = tmpI;
 	}
 	
 	
@@ -141,6 +147,7 @@ public class Character implements GameObject{
 	public void update (){
 		if (iSelected){
 			updateControl ();
+			isPushOut = false;
 		}
 	}
 	
@@ -162,6 +169,7 @@ public class Character implements GameObject{
 			}
 		}
 		else if (message.type == MessageType.pushOut && message.object == this){
+			isPushOut = true;
 			PushOutMessage msg = (PushOutMessage) message;
 			body.setBodyPosition (msg.whereX, msg.whereY);
 		}
@@ -169,7 +177,7 @@ public class Character implements GameObject{
 	
 	@Override
 	public void draw (){
-		if (action == ActionType.movement){
+		if (action == ActionType.movement && !isPushOut){
 			time += Gdx.graphics.getDeltaTime ();
 			body.updateCurrAnimationFrame (time);
 		}

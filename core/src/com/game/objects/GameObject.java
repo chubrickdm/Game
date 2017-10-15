@@ -6,8 +6,8 @@ import static java.awt.Toolkit.getDefaultToolkit;
 public interface GameObject{
 	float SCREEN_W = getDefaultToolkit ().getScreenSize ().width;
 	float SCREEN_H = getDefaultToolkit ().getScreenSize ().height;
-	//float SCREEN_W = 1100;
-	//float SCREEN_H = 600;
+	//float SCREEN_W = 650;
+	//float SCREEN_H = 650;
 	float ASPECT_RATIO = (float) ((SCREEN_W / 2 < SCREEN_H) ? SCREEN_W / 1366 : SCREEN_H / 768);
 	
 	

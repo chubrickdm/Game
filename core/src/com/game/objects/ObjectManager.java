@@ -20,8 +20,8 @@ public class ObjectManager implements GameObject{
 	
 	private void initialize (){
 		Character firstCharacter = new Character (true, 200 * ASPECT_RATIO, 200 * ASPECT_RATIO);
-		Character secondCharacter = new Character (false, (Gdx.graphics.getWidth () -
-				200 - Character.CHARACTER_W) * ASPECT_RATIO, 200 * ASPECT_RATIO);
+		Character secondCharacter = new Character (false, Gdx.graphics.getWidth () -
+				200 * ASPECT_RATIO - Character.CHARACTER_W, 200 * ASPECT_RATIO);
 		objects.add (firstCharacter);
 		objects.add (secondCharacter);
 		
