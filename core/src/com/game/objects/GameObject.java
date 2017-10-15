@@ -1,13 +1,11 @@
 package com.game.objects;
 
 import com.game.messages.GameMessage;
-import static java.awt.Toolkit.getDefaultToolkit;
+import static com.game.GameSystem.SCREEN_H;
+import static com.game.GameSystem.SCREEN_W;
+
 
 public interface GameObject{
-	float SCREEN_W = getDefaultToolkit ().getScreenSize ().width;
-	float SCREEN_H = getDefaultToolkit ().getScreenSize ().height;
-	//float SCREEN_W = 650;
-	//float SCREEN_H = 650;
 	float ASPECT_RATIO = (float) ((SCREEN_W / 2 < SCREEN_H) ? SCREEN_W / 1366 : SCREEN_H / 768);
 	
 	

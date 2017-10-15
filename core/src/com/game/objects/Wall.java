@@ -2,9 +2,9 @@ package com.game.objects;
 
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
-import com.game.messages.MoveMessage;
+import com.game.messages.CharacterMoveMessage;
 import com.game.messages.PushOutMessage;
-import com.game.objects.body.StaticBodyObject;
+import com.game.objects.body.BodyObject;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
@@ -15,12 +15,12 @@ public class Wall implements GameObject{
 	
 	private boolean horizon = false;
 	private DataRender dataRender;
-	private StaticBodyObject body;
+	private BodyObject body;
 	
 	
 	public Wall (boolean isHorizonWall, float x, float y){
 		horizon = isHorizonWall;
-		body = new StaticBodyObject ("core\\assets\\images\\wall.png", x, y, WALL_W, WALL_H, WALL_W, WALL_H);
+		body = new BodyObject ("core\\assets\\images\\wall.png", x, y, WALL_W, WALL_H, WALL_W, WALL_H);
 		if (horizon){
 			body.rotate90 ();
 		}
@@ -34,8 +34,8 @@ public class Wall implements GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.movement){
-			MoveMessage msg = (MoveMessage) message;
+		if (message.type == MessageType.characterMove){
+			CharacterMoveMessage msg = (CharacterMoveMessage) message;
 			if (body.intersects (msg.bodyRectangle)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldX, msg.oldY));
 			}

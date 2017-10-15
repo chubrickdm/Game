@@ -11,11 +11,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class AnimatedBodyObject extends BodyObject{
 	private float spriteW;
 	private float spriteH;
-	private Animation<TextureRegion> animation;
+	private Animation <TextureRegion> animation;
 	
 	
-	public AnimatedBodyObject (String fileName, float x, float y, float w, float h, float bodyW, float bodyH,
-							   int frameRows, int frameCols, float frameDuration){
+	public AnimatedBodyObject (String fileName, float x, float y, float w, float h, float bodyW, float bodyH, int frameRows, int frameCols, float frameDuration){
 		super (fileName, x, y, w, h, bodyW, bodyH);
 		spriteW = w;
 		spriteH = h;

@@ -2,7 +2,6 @@ package com.game.objects.character;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.game.MyGame;
 import com.game.math.BodyRectangle;
 import com.game.messages.*;
 import com.game.objects.GameObject;
@@ -11,7 +10,8 @@ import com.game.objects.body.AnimatedBodyObject;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
-import com.game.screens.MainMenuScreen;
+
+import java.awt.*;
 
 
 public class Character implements GameObject{
@@ -23,7 +23,7 @@ public class Character implements GameObject{
 	public static final int FRAME_COLS = 4;
 	public static final int FRAME_ROWS = 1;
 	
-	private boolean iSelected = false;
+	private boolean isSelected = false;
 	private boolean isPushOut = false;
 	private float deltaX;
 	private float deltaY;
@@ -120,7 +120,7 @@ public class Character implements GameObject{
 		if (deltaX != 0 || deltaY != 0){
 			action = ActionType.movement;
 			body.move (deltaX, deltaY);
-			ObjectManager.getInstance ().addMessage (new MoveMessage (this, body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect));
+			ObjectManager.getInstance ().addMessage (new CharacterMoveMessage (this, body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect));
 		}
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB))
@@ -131,21 +131,31 @@ public class Character implements GameObject{
 	}
 	
 	
-	public Character (boolean iSelected, float x, float y){
+	public Character (boolean isSelected, float x, float y){
 		action = ActionType.stand;
-		this.iSelected = iSelected;
-		if (iSelected){
-			body = new AnimatedBodyObject ("core\\assets\\images\\player.png", x, y, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
+		this.isSelected = isSelected;
+		if (isSelected){
+			body = new AnimatedBodyObject ("core\\assets\\images\\player.png", x, y, CHARACTER_W, CHARACTER_H,
+					BODY_CHARACTER_W, BODY_CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		}
 		else{
-			body = new AnimatedBodyObject ("core\\assets\\images\\player.png", x, y, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
+			body = new AnimatedBodyObject ("core\\assets\\images\\player.png", x, y, CHARACTER_W, CHARACTER_H,
+					BODY_CHARACTER_W, BODY_CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		}
 		dataRender = new DataRender (body.sprite, LayerType.character);
 	}
 	
+	public float getSpriteX (){
+		return body.sprite.getX ();
+	}
+	
+	public float getSpriteY (){
+		return body.sprite.getY ();
+	}
+	
 	@Override
 	public void update (){
-		if (iSelected){
+		if (isSelected){
 			updateControl ();
 			isPushOut = false;
 		}
@@ -154,16 +164,17 @@ public class Character implements GameObject{
 	@Override
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.characterChange){
-			if (iSelected){
-				iSelected = false;
+			if (isSelected){
+				isSelected = false;
 				action = ActionType.stand;
 			}
 			else{
-				iSelected = true;
+				ObjectManager.getInstance ().addMessage (new CharacterSelectedMessage (this));
+				isSelected = true;
 			}
 		}
-		else if (message.type == MessageType.movement && message.object != this){
-			MoveMessage msg = (MoveMessage) message;
+		else if (message.type == MessageType.characterMove && message.object != this){
+			CharacterMoveMessage msg = (CharacterMoveMessage) message;
 			if (body.intersects (msg.bodyRectangle)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldX, msg.oldY));
 			}
@@ -172,6 +183,9 @@ public class Character implements GameObject{
 			isPushOut = true;
 			PushOutMessage msg = (PushOutMessage) message;
 			body.setBodyPosition (msg.whereX, msg.whereY);
+		}
+		else if (message.type == MessageType.findSelCharacter && isSelected){
+			ObjectManager.getInstance ().addMessage (new CharacterSelectedMessage (this));
 		}
 	}
 	

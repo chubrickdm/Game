@@ -5,14 +5,14 @@ import com.game.objects.body.BodyObject;
 import com.game.objects.GameObject;
 
 
-public class MoveMessage extends GameMessage{
+public class CharacterMoveMessage extends GameMessage{
 	public float oldX;
 	public float oldY;
 	public BodyRectangle bodyRectangle;
 	
 	
-	public MoveMessage (GameObject object, float oldX, float oldY, BodyRectangle bodyRectangle){
-		this.type = MessageType.movement;
+	public CharacterMoveMessage (GameObject object, float oldX, float oldY, BodyRectangle bodyRectangle){
+		this.type = MessageType.characterMove;
 		this.oldX = oldX;
 		this.oldY = oldY;
 		this.bodyRectangle = bodyRectangle;

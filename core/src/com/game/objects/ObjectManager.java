@@ -2,6 +2,7 @@ package com.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.game.GameSystem;
 import com.game.MyGame;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
@@ -13,12 +14,14 @@ import java.util.LinkedList;
 
 
 public class ObjectManager implements GameObject{
-	private int iterator;
+	private int iterator = 0;
 	private LinkedList <GameObject> objects;
 	private LinkedList <GameMessage> messages;
 	
 	
 	private void initialize (){
+		objects.add (ActionWheel.getInstance ());
+		
 		Character firstCharacter = new Character (true, 200 * ASPECT_RATIO, 200 * ASPECT_RATIO);
 		Character secondCharacter = new Character (false, Gdx.graphics.getWidth () -
 				200 * ASPECT_RATIO - Character.CHARACTER_W, 200 * ASPECT_RATIO);
@@ -63,9 +66,7 @@ public class ObjectManager implements GameObject{
 	
 	@Override
 	public void update (){
-		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
-			MyGame.getInstance ().setScreen (new MainMenuScreen ());
-		}
+		GameSystem.update ();
 		
 		for (GameObject obj : objects){
 			obj.update ();
