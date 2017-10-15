@@ -5,12 +5,24 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Render{
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private ArrayList <DataRender> renderList;
 	
+	//interface Compare{
+	//	int compare (int tmp1, int tmp2);
+	//}
+	
+	private void sortedScene (){
+		//Compare comp = (tmp1, tmp2) -> {return tmp1 - tmp2;}
+		//Comparator <String> comp = (firstStr, secondStr) -> Integer.compare(firstStr.length(),secondStr.length());
+		//Comparator <DataRender> comp = (tmp1, tmp2) -> tmp1.layerType.getValue () - tmp2.layerType.getValue ();
+		//Collections.sort (renderList, comp);
+	}
 	
 	private static class RenderHolder{
 		private final static Render instance = new Render ();
@@ -28,9 +40,11 @@ public class Render{
 		return RenderHolder.instance;
 	}
 	
-	public void RenderScene (){
+	public void renderScene (){
 		Gdx.gl.glClearColor (0, 0, 0, 1);
 		Gdx.gl.glClear (GL20.GL_COLOR_BUFFER_BIT);
+		
+		sortedScene ();
 		
 		camera.update ();
 		batch.setProjectionMatrix (camera.combined);

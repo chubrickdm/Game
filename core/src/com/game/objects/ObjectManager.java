@@ -92,7 +92,7 @@ public class ObjectManager implements GameObject{
 		for (GameObject obj : objects){
 			obj.draw ();
 		}
-		Render.getInstance ().RenderScene ();
+		Render.getInstance ().renderScene ();
 	}
 	
 	public void addMessage (GameMessage msg){
