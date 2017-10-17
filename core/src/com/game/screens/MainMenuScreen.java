@@ -28,7 +28,7 @@ public class MainMenuScreen implements Screen{
 		stage = new Stage (new ScreenViewport ());
 		
 		
-		TextureAtlas buttonAtlas = new TextureAtlas ("core\\assets\\images\\button.atlas");
+		TextureAtlas buttonAtlas = new TextureAtlas ("core/assets/images/button.atlas");
 		Skin skin = new Skin ();
 		skin.addRegions (buttonAtlas);
 		

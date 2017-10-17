@@ -2,7 +2,6 @@ package com.game.objects.character;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.game.math.BodyRectangle;
 import com.game.messages.*;
 import com.game.objects.GameObject;
 import com.game.objects.ObjectManager;
@@ -10,8 +9,6 @@ import com.game.objects.body.AnimatedBodyObject;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
-
-import java.awt.*;
 
 
 public class Character implements GameObject{
@@ -103,10 +100,14 @@ public class Character implements GameObject{
 	}
 	
 	private void updateControl (){
+		boolean isStopped = false;
+		int tmpI = angleMove;
 		deltaY = 0;
 		deltaX = 0;
-		int tmpI = angleMove;
 		angleMove = -1;
+		if (action == ActionType.movement){
+			isStopped = true; //Персонаж может стать только в 4 положения
+		}
 		action = ActionType.stand;
 		if (Gdx.input.isKeyPressed (Input.Keys.W))
 			keyWPressed ();
@@ -122,12 +123,16 @@ public class Character implements GameObject{
 			body.move (deltaX, deltaY);
 			ObjectManager.getInstance ().addMessage (new CharacterMoveMessage (this, body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect));
 		}
+		else if (isStopped){ //если он стал в "нечетное" положение, то приводим его к одному из 4
+			tmpI += tmpI % 2; //если мы шли, и остановились.
+		}
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB))
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (this));
 		
-		if (angleMove == -1)
+		if (angleMove == -1){
 			angleMove = tmpI;
+		}
 	}
 	
 	
@@ -135,11 +140,11 @@ public class Character implements GameObject{
 		action = ActionType.stand;
 		this.isSelected = isSelected;
 		if (isSelected){
-			body = new AnimatedBodyObject ("core\\assets\\images\\player.png", x, y, CHARACTER_W, CHARACTER_H,
+			body = new AnimatedBodyObject ("core/assets/images/player.png", x, y, CHARACTER_W, CHARACTER_H,
 					BODY_CHARACTER_W, BODY_CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		}
 		else{
-			body = new AnimatedBodyObject ("core\\assets\\images\\player.png", x, y, CHARACTER_W, CHARACTER_H,
+			body = new AnimatedBodyObject ("core/assets/images/player.png", x, y, CHARACTER_W, CHARACTER_H,
 					BODY_CHARACTER_W, BODY_CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		}
 		dataRender = new DataRender (body.sprite, LayerType.character);

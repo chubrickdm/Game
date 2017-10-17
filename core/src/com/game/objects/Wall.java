@@ -20,7 +20,7 @@ public class Wall implements GameObject{
 	
 	public Wall (boolean isHorizonWall, float x, float y){
 		horizon = isHorizonWall;
-		body = new BodyObject ("core\\assets\\images\\wall.png", x, y, WALL_W, WALL_H, WALL_W, WALL_H);
+		body = new BodyObject ("core/assets/images/wall.png", x, y, WALL_W, WALL_H, WALL_W, WALL_H);
 		if (horizon){
 			body.rotate90 ();
 		}

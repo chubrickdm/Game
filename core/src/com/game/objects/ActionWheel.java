@@ -36,7 +36,7 @@ public class ActionWheel implements GameObject{
 	}
 	
 	private ActionWheel (){
-		body = new NoBodyObject ("core\\assets\\images\\action_wheel.png", 0, 0, WHEEL_W, WHEEL_H);
+		body = new NoBodyObject ("core/assets/images/action_wheel.png", 0, 0, WHEEL_W, WHEEL_H);
 		body.setOrigin (WHEEL_H / 2, WHEEL_H / 2);
 		dataRender = new DataRender (body.sprite, LayerType.actionWheel);
 	}
