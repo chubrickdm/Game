@@ -100,14 +100,10 @@ public class Character implements GameObject{
 	}
 	
 	private void updateControl (){
-		boolean isStopped = false;
 		int tmpI = angleMove;
 		deltaY = 0;
 		deltaX = 0;
 		angleMove = -1;
-		if (action == ActionType.movement){
-			isStopped = true; //Персонаж может стать только в 4 положения
-		}
 		action = ActionType.stand;
 		if (Gdx.input.isKeyPressed (Input.Keys.W))
 			keyWPressed ();
@@ -122,9 +118,6 @@ public class Character implements GameObject{
 			action = ActionType.movement;
 			body.move (deltaX, deltaY);
 			ObjectManager.getInstance ().addMessage (new CharacterMoveMessage (this, body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect));
-		}
-		else if (isStopped){ //если он стал в "нечетное" положение, то приводим его к одному из 4
-			tmpI += tmpI % 2; //если мы шли, и остановились.
 		}
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB))
