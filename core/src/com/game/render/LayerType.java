@@ -1,7 +1,7 @@
 package com.game.render;
 
 public enum LayerType{
-	actionWheel (2), character (1), wall (1), floor (0),  unknown (-1);
+	unknown (-1), floor (0), character (1), wall (2), actionWheel (3);
 	
 	private int value;
 	

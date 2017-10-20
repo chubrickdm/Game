@@ -13,15 +13,8 @@ public class Render{
 	private OrthographicCamera camera;
 	private ArrayList <DataRender> renderList;
 	
-	//interface Compare{
-	//	int compare (int tmp1, int tmp2);
-	//}
-	
 	private void sortedScene (){
-		//Compare comp = (tmp1, tmp2) -> {return tmp1 - tmp2;}
-		//Comparator <String> comp = (firstStr, secondStr) -> Integer.compare(firstStr.length(),secondStr.length());
-		//Comparator <DataRender> comp = (tmp1, tmp2) -> tmp1.layerType.getValue () - tmp2.layerType.getValue ();
-		//Collections.sort (renderList, comp);
+		renderList.sort ((tmp1, tmp2) -> tmp1.layerType.getValue () - tmp2.layerType.getValue ());
 	}
 	
 	private static class RenderHolder{
