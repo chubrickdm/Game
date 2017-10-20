@@ -14,20 +14,48 @@ public class ActionWheel implements GameObject{
 	public static final float WHEEL_W = 128 * ASPECT_RATIO;
 	public static final float WHEEL_H = 128 * ASPECT_RATIO;
 	
-	private boolean firstTime = true;
+	private boolean useAnimation = false;
+	private boolean isFirstPressure = true;
 	private boolean isVisibale = false;
+	private float percentIncrease = 1;
 	private DataRender dataRender;
 	private NoBodyObject body;
+	private Character currCharacter;
 	
+	
+	private void updateIncreaseAnimation (){
+		if ((Gdx.input.isKeyPressed (Input.Keys.F)) && isFirstPressure){
+			useAnimation = true;
+		}
+		else if (isFirstPressure){
+			percentIncrease = 1;
+			body.sprite.setScale (percentIncrease / 100);
+		}
+		
+		if (useAnimation){
+			if (percentIncrease >= 100){
+				body.sprite.setScale (1);
+				useAnimation = false;
+				percentIncrease = 1;
+			}
+			else{
+				body.sprite.setScale (percentIncrease / 100);
+				percentIncrease += 1;
+			}
+		}
+	}
 	
 	private void updateControl (){
 		isVisibale = false;
 		if (Gdx.input.isKeyPressed (Input.Keys.F)){
-			if (firstTime){
+			if (isFirstPressure){
 				ObjectManager.getInstance ().addMessage (new FindSelCharacterMessage (this));
-				firstTime = false;
+				isFirstPressure = false;
 			}
 			isVisibale = true;
+		}
+		else{
+			isFirstPressure = true;
 		}
 	}
 	
@@ -38,6 +66,7 @@ public class ActionWheel implements GameObject{
 	private ActionWheel (){
 		body = new NoBodyObject ("core/assets/images/action_wheel.png", 0, 0, WHEEL_W, WHEEL_H);
 		body.setOrigin (WHEEL_H / 2, WHEEL_H / 2);
+		body.sprite.setScale (percentIncrease / 100);
 		dataRender = new DataRender (body.sprite, LayerType.actionWheel);
 	}
 	
@@ -48,20 +77,22 @@ public class ActionWheel implements GameObject{
 	
 	@Override
 	public void update (){
+		//именно в таком порядке должны быть функции
+		updateIncreaseAnimation ();
 		updateControl ();
 	}
 	
 	@Override
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.characterMove){
-			Character ch = (Character) message.object;
-			body.setPosition (ch.getSpriteX () + ch.CHARACTER_W / 2,
-					ch.getSpriteY () + ch.CHARACTER_H / 2);
+			currCharacter = (Character) message.object;
+			body.setPosition (currCharacter.getSpriteX () + currCharacter.CHARACTER_W / 2,
+					currCharacter.getSpriteY () + currCharacter.CHARACTER_H / 2);
 		}
 		else if (message.type == MessageType.characterSelected){
-			Character ch = (Character) message.object;
-			body.setPosition (ch.getSpriteX () + ch.CHARACTER_W / 2,
-					ch.getSpriteY () + ch.CHARACTER_H / 2);
+			currCharacter = (Character) message.object;
+			body.setPosition (currCharacter.getSpriteX () + currCharacter.CHARACTER_W / 2,
+					currCharacter.getSpriteY () + currCharacter.CHARACTER_H / 2);
 		}
 	}
 	
