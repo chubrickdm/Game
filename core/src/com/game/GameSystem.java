@@ -2,6 +2,7 @@ package com.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
 import com.game.screens.MainMenuScreen;
 
 import static java.awt.Toolkit.getDefaultToolkit;

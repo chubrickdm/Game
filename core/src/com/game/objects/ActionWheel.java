@@ -2,6 +2,7 @@ package com.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
 import com.game.messages.*;
 import com.game.objects.body.NoBodyObject;
 import com.game.objects.character.Character;
@@ -62,6 +63,11 @@ public class ActionWheel implements GameObject{
 		return ActionWheelHolder.instance;
 	}
 	
+	public void initializePosition (float coordCharacterX, float coordCharacterY){
+		body.setSpritePosition (coordCharacterX + Character.CHARACTER_W / 2,
+				coordCharacterY + Character.CHARACTER_H / 2);
+	}
+	
 	@Override
 	public void update (){
 		updateSizeAnimation ();
@@ -86,10 +92,5 @@ public class ActionWheel implements GameObject{
 		if (isVisible){
 			Render.getInstance ().addDataForRender (dataRender);
 		}
-	}
-	
-	public void initializePosition (float coordCharacterX, float coordCharacterY){
-		body.setSpritePosition (coordCharacterX + Character.CHARACTER_W / 2,
-				coordCharacterY + Character.CHARACTER_H / 2);
 	}
 }

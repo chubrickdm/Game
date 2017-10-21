@@ -2,11 +2,13 @@ package com.game.objects.body;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import com.game.math.BodyRectangle;
 
 public class NoBodyObject implements Body{
-	public float originX = 0;
-	public float originY = 0;
+	private float originX = 0;
+	private float originY = 0;
+	
 	public Sprite sprite;
 	
 	
@@ -27,7 +29,11 @@ public class NoBodyObject implements Body{
 	}
 	
 	public void setScale (float scale){
+		
 		sprite.setScale (scale);
+		sprite.setOriginCenter ();
+		//originX *= scale;
+		//originY *= scale;
 		//setOrigin (originX * scale, originY * scale);
 	}
 	

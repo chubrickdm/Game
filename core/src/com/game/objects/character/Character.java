@@ -3,6 +3,7 @@ package com.game.objects.character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import com.game.messages.*;
 import com.game.objects.GameObject;
 import com.game.objects.ObjectAnimation;

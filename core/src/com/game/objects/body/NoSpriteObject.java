@@ -7,6 +7,7 @@ public class NoSpriteObject implements Body{
 	private float spriteY;
 	private float bodyShiftX;
 	private float bodyShiftY;
+	
 	public BodyRectangle bodyRect;
 	
 	

@@ -6,8 +6,9 @@ import com.game.math.BodyRectangle;
 
 
 public class BodyObject implements Body{
-	public float bodyShiftX;
-	public float bodyShiftY;
+	private float bodyShiftX;
+	private float bodyShiftY;
+	
 	public Sprite sprite;
 	public BodyRectangle bodyRect;
 	
