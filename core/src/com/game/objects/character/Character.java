@@ -2,10 +2,12 @@ package com.game.objects.character;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.messages.*;
 import com.game.objects.GameObject;
+import com.game.objects.ObjectAnimation;
 import com.game.objects.ObjectManager;
-import com.game.objects.body.AnimatedBodyObject;
+import com.game.objects.body.NoSpriteObject;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
@@ -22,13 +24,15 @@ public class Character implements GameObject{
 	
 	private boolean isSelected = false;
 	private boolean isPushOut = false;
-	private float deltaX;
-	private float deltaY;
+	private float deltaX = 0;
+	private float deltaY = 0;
 	private float time = 0;
 	private int angleMove = 0;
 	private ActionType action;
+	private Sprite currSprite;
 	private DataRender dataRender;
-	private AnimatedBodyObject body;
+	private NoSpriteObject body;
+	private ObjectAnimation moveAnimation;
 	
 	
 	private void keyWPressed (){
@@ -128,31 +132,45 @@ public class Character implements GameObject{
 		}
 	}
 	
+	private void updateMoveAnimation (){
+		if (action == ActionType.movement && !isPushOut){
+			time += Gdx.graphics.getDeltaTime ();
+			currSprite = moveAnimation.getCurrSprite (time);
+			body.setBodyPosition (body.getBodyX (), body.getBodyY ());
+		}
+		else{
+			currSprite = moveAnimation.getCurrSprite (0);
+			body.setBodyPosition (body.getBodyX (), body.getBodyY ());
+		}
+		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
+		currSprite.setOriginCenter ();
+		currSprite.setRotation (180 - angleMove * 45);
+	}
+	
 	
 	public Character (boolean isSelected, float x, float y){
 		action = ActionType.stand;
 		this.isSelected = isSelected;
-		if (isSelected){
-			body = new AnimatedBodyObject ("core/assets/images/player.png", x, y, CHARACTER_W, CHARACTER_H,
-					BODY_CHARACTER_W, BODY_CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
-		}
-		else{
-			body = new AnimatedBodyObject ("core/assets/images/player.png", x, y, CHARACTER_W, CHARACTER_H,
-					BODY_CHARACTER_W, BODY_CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
-		}
-		dataRender = new DataRender (body.sprite, LayerType.character);
+		
+		body = new NoSpriteObject (x, y, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
+		
+		moveAnimation = new ObjectAnimation ("core/assets/images/player.png", CHARACTER_W, CHARACTER_H,
+				FRAME_ROWS, FRAME_COLS, 0.15f);
+		currSprite = moveAnimation.getCurrSprite (0);
+		dataRender = new DataRender (currSprite, LayerType.character);
 	}
 	
 	public float getSpriteX (){
-		return body.sprite.getX ();
+		return body.getSpriteX ();
 	}
 	
 	public float getSpriteY (){
-		return body.sprite.getY ();
+		return body.getSpriteY ();
 	}
 	
 	@Override
 	public void update (){
+		updateMoveAnimation ();
 		if (isSelected){
 			updateControl ();
 			isPushOut = false;
@@ -189,16 +207,7 @@ public class Character implements GameObject{
 	
 	@Override
 	public void draw (){
-		if (action == ActionType.movement && !isPushOut){
-			time += Gdx.graphics.getDeltaTime ();
-			body.updateCurrAnimationFrame (time);
-		}
-		else{
-			body.updateCurrAnimationFrame (0);
-		}
-		body.sprite.setOriginCenter ();
-		body.sprite.setRotation (180 - angleMove * 45);
-		dataRender.sprite = body.sprite;
+		dataRender.sprite = currSprite;
 		Render.getInstance ().addDataForRender (dataRender);
 	}
 }

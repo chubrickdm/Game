@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.math.BodyRectangle;
 
 
-public class BodyObject{
+public class BodyObject implements Body{
 	public float bodyShiftX;
 	public float bodyShiftY;
 	public Sprite sprite;

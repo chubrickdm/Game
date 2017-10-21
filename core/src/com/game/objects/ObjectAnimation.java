@@ -1,23 +1,19 @@
-package com.game.objects.body;
+package com.game.objects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-
-public class AnimatedBodyObject extends BodyObject{
-	private float spriteW;
-	private float spriteH;
+public class ObjectAnimation{
+	private float frameW;
+	private float frameH;
 	private Animation <TextureRegion> animation;
 	
 	
-	public AnimatedBodyObject (String fileName, float x, float y, float w, float h, float bodyW, float bodyH, int frameRows, int frameCols, float frameDuration){
-		super (fileName, x, y, w, h, bodyW, bodyH);
-		spriteW = w;
-		spriteH = h;
+	public ObjectAnimation (String fileName, float frameW, float frameH, int frameRows, int frameCols, float frameDuration){
+		this.frameW = frameW;
+		this.frameH = frameH;
 		Texture texture = new Texture (fileName);
 		int regionW = texture.getWidth () / frameCols;
 		int regionH = texture.getHeight () / frameRows;
@@ -32,9 +28,9 @@ public class AnimatedBodyObject extends BodyObject{
 		animation = new Animation <TextureRegion> (frameDuration, frames);
 	}
 	
-	public void updateCurrAnimationFrame (float time){
-		time += Gdx.graphics.getDeltaTime ();
-		sprite.set (new Sprite (animation.getKeyFrame (time, true)));
-		sprite.setBounds (bodyRect.getX () - bodyShiftX, bodyRect.getY () - bodyShiftY, spriteW, spriteH);
+	public Sprite getCurrSprite (float time){
+		Sprite currSprite = new Sprite (animation.getKeyFrame (time, true));
+		currSprite.setBounds (0, 0, frameW, frameH);
+		return currSprite;
 	}
 }

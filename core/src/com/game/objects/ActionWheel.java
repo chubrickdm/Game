@@ -53,7 +53,7 @@ public class ActionWheel implements GameObject{
 		body = new NoBodyObject ("core/assets/images/action_wheel.png", 0, 0, WHEEL_W, WHEEL_H);
 		body.setOrigin (WHEEL_H / 2, WHEEL_H / 2);
 		body.setScale (percentSize / 100);
-		body.setPosition (WHEEL_H / 2, WHEEL_H / 2);
+		body.setSpritePosition (WHEEL_H / 2, WHEEL_H / 2);
 		dataRender = new DataRender (body.sprite, LayerType.actionWheel);
 	}
 	
@@ -71,12 +71,12 @@ public class ActionWheel implements GameObject{
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.characterMove){
 			Character character = (Character) message.object;
-			body.setPosition (character.getSpriteX () + Character.CHARACTER_W / 2,
+			body.setSpritePosition (character.getSpriteX () + Character.CHARACTER_W / 2,
 					character.getSpriteY () + Character.CHARACTER_H / 2);
 		}
 		else if (message.type == MessageType.characterSelected){
 			Character character = (Character) message.object;
-			body.setPosition (character.getSpriteX () + Character.CHARACTER_W / 2,
+			body.setSpritePosition (character.getSpriteX () + Character.CHARACTER_W / 2,
 					character.getSpriteY () + Character.CHARACTER_H / 2);
 		}
 	}
@@ -89,7 +89,7 @@ public class ActionWheel implements GameObject{
 	}
 	
 	public void initializePosition (float coordCharacterX, float coordCharacterY){
-		body.setPosition (coordCharacterX + Character.CHARACTER_W / 2,
+		body.setSpritePosition (coordCharacterX + Character.CHARACTER_W / 2,
 				coordCharacterY + Character.CHARACTER_H / 2);
 	}
 }
