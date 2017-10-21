@@ -11,51 +11,37 @@ import com.game.render.Render;
 
 
 public class ActionWheel implements GameObject{
+	public static final float percentPerTick = 2;
 	public static final float WHEEL_W = 128 * ASPECT_RATIO;
 	public static final float WHEEL_H = 128 * ASPECT_RATIO;
 	
-	private boolean useAnimation = false;
-	private boolean isFirstPressure = true;
-	private boolean isVisibale = false;
-	private float percentIncrease = 1;
+	private boolean isVisible = false;
+	private float percentSize = 1;
 	private DataRender dataRender;
 	private NoBodyObject body;
-	private Character currCharacter;
 	
 	
-	private void updateIncreaseAnimation (){
-		if ((Gdx.input.isKeyPressed (Input.Keys.F)) && isFirstPressure){
-			useAnimation = true;
-		}
-		else if (isFirstPressure){
-			percentIncrease = 1;
-			body.sprite.setScale (percentIncrease / 100);
-		}
-		
-		if (useAnimation){
-			if (percentIncrease >= 100){
-				body.sprite.setScale (1);
-				useAnimation = false;
-				percentIncrease = 1;
+	private void updateSizeAnimation (){
+		if (Gdx.input.isKeyPressed (Input.Keys.F)){
+			isVisible = true;
+			if (percentSize >= 100){
+				body.setScale (1);
 			}
 			else{
-				body.sprite.setScale (percentIncrease / 100);
-				percentIncrease += 1;
+				body.setScale (percentSize / 100);
+				percentSize += percentPerTick;
 			}
-		}
-	}
-	
-	private void updateControl (){
-		isVisibale = false;
-		if (Gdx.input.isKeyPressed (Input.Keys.F)){
-			if (isFirstPressure){
-				ObjectManager.getInstance ().addMessage (new FindSelCharacterMessage (this));
-				isFirstPressure = false;
-			}
-			isVisibale = true;
 		}
 		else{
-			isFirstPressure = true;
+			if (percentSize <= 1 + percentPerTick){
+				isVisible = false;
+				body.setScale (percentSize / 100);
+			}
+			else{
+				isVisible = true;
+				body.setScale (percentSize / 100);
+				percentSize -= percentPerTick;
+			}
 		}
 	}
 	
@@ -66,7 +52,8 @@ public class ActionWheel implements GameObject{
 	private ActionWheel (){
 		body = new NoBodyObject ("core/assets/images/action_wheel.png", 0, 0, WHEEL_W, WHEEL_H);
 		body.setOrigin (WHEEL_H / 2, WHEEL_H / 2);
-		body.sprite.setScale (percentIncrease / 100);
+		body.setScale (percentSize / 100);
+		body.setPosition (WHEEL_H / 2, WHEEL_H / 2);
 		dataRender = new DataRender (body.sprite, LayerType.actionWheel);
 	}
 	
@@ -77,29 +64,32 @@ public class ActionWheel implements GameObject{
 	
 	@Override
 	public void update (){
-		//именно в таком порядке должны быть функции
-		updateIncreaseAnimation ();
-		updateControl ();
+		updateSizeAnimation ();
 	}
 	
 	@Override
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.characterMove){
-			currCharacter = (Character) message.object;
-			body.setPosition (currCharacter.getSpriteX () + currCharacter.CHARACTER_W / 2,
-					currCharacter.getSpriteY () + currCharacter.CHARACTER_H / 2);
+			Character character = (Character) message.object;
+			body.setPosition (character.getSpriteX () + Character.CHARACTER_W / 2,
+					character.getSpriteY () + Character.CHARACTER_H / 2);
 		}
 		else if (message.type == MessageType.characterSelected){
-			currCharacter = (Character) message.object;
-			body.setPosition (currCharacter.getSpriteX () + currCharacter.CHARACTER_W / 2,
-					currCharacter.getSpriteY () + currCharacter.CHARACTER_H / 2);
+			Character character = (Character) message.object;
+			body.setPosition (character.getSpriteX () + Character.CHARACTER_W / 2,
+					character.getSpriteY () + Character.CHARACTER_H / 2);
 		}
 	}
 	
 	@Override
 	public void draw (){
-		if (isVisibale){
+		if (isVisible){
 			Render.getInstance ().addDataForRender (dataRender);
 		}
+	}
+	
+	public void initializePosition (float coordCharacterX, float coordCharacterY){
+		body.setPosition (coordCharacterX + Character.CHARACTER_W / 2,
+				coordCharacterY + Character.CHARACTER_H / 2);
 	}
 }

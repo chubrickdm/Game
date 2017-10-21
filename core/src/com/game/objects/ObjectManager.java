@@ -21,6 +21,8 @@ public class ObjectManager implements GameObject{
 	
 	private void initialize (){
 		objects.add (ActionWheel.getInstance ());
+		ActionWheel.getInstance ().initializePosition (200 * ASPECT_RATIO, 200 * ASPECT_RATIO);
+		//Обязательно надо установить позицию колеса, а то будет ошибка!
 		
 		Character firstCharacter = new Character (true, 200 * ASPECT_RATIO, 200 * ASPECT_RATIO);
 		Character secondCharacter = new Character (false, Gdx.graphics.getWidth () -

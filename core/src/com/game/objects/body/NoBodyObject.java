@@ -24,4 +24,9 @@ public class NoBodyObject{
 		this.originY = originY;
 		setPosition (sprite.getX (), sprite.getY ());
 	}
+	
+	public void setScale (float scale){
+		sprite.setScale (scale);
+		//setOrigin (originX * scale, originY * scale);
+	}
 }
