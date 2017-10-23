@@ -15,8 +15,8 @@ import com.game.render.Render;
 
 
 public class Character implements GameObject{
-	public static final float CHARACTER_W = 64 * ASPECT_RATIO;
-	public static final float CHARACTER_H = 64 * ASPECT_RATIO;
+	public static final float CHARACTER_W = UNIT;
+	public static final float CHARACTER_H = UNIT;
 	public static final float BODY_CHARACTER_W = 3 * CHARACTER_W / 4 * ASPECT_RATIO;
 	public static final float BODY_CHARACTER_H = 3 * CHARACTER_H / 4 * ASPECT_RATIO;
 	public static final float CHARACTER_SPEED = 100 * ASPECT_RATIO;

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<objects>
+	<object>
+		<type>character</type>
+		<state>selected</state>
+		<size w = "1" h = "1"></size>
+		<position x = "3" y = "1"></position>
+	</object>
+	<object>
+		<type>character</type>
+		<state>not selected</state>
+		<size w = "1" h = "1"></size>
+		<position x = "16" y = "1"></position>
+	</object>
+	<object>
+		<type>wall</type>
+		<state>vertical</state>
+		<size w = "1" h = "3"></size>
+		<position x = "9" y = "3"></position>
+	</object>
+	<object>
+		<type>wall</type>
+		<state>horizont</state>
+		<size w = "3" h = "1"></size>
+		<position x = "9" y = "2"></position>
+	</object>
+</objects>

@@ -7,6 +7,7 @@ import static com.game.GameSystem.SCREEN_W;
 
 public interface GameObject{
 	float ASPECT_RATIO = (float) ((SCREEN_W / 2 < SCREEN_H) ? SCREEN_W / 1366 : SCREEN_H / 768);
+	float UNIT = 64 * ASPECT_RATIO;
 	
 	
 	void update ();

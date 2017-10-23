@@ -13,8 +13,8 @@ import com.game.render.Render;
 
 public class ActionWheel implements GameObject{
 	public static final float percentPerTick = 2;
-	public static final float WHEEL_W = 128 * ASPECT_RATIO;
-	public static final float WHEEL_H = 128 * ASPECT_RATIO;
+	public static final float WHEEL_W = UNIT * 2;
+	public static final float WHEEL_H = UNIT * 2;
 	
 	private boolean isVisible = false;
 	private float percentSize = 1;
