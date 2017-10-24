@@ -74,17 +74,12 @@ public class Camera implements GameObject{
 				if ((Math.abs (msg.oldX - firstCharacterBodyX) < 1) && (Math.abs (msg.oldY - firstCharacterBodyY) < 1)){
 					firstCharacterBodyX = msg.bodyRectangle.getX ();
 					firstCharacterBodyY = msg.bodyRectangle.getY ();
-					//System.out.println ("First.");
-					//camera.setPositionY (firstCharacterBodyY);
 				}
 				else{
 					secondCharacterBodyX = msg.bodyRectangle.getX ();
 					secondCharacterBodyY = msg.bodyRectangle.getY ();
-					//System.out.println ("Second.");
-					//camera.setPositionY (secondCharacterBodyY);
 				}
 				camera.moveY (msg.bodyRectangle.getY () - msg.oldY);
-				//camera.translate (0, msg.bodyRectangle.getY () - msg.oldY);
 			}
 		}
 		else if (message.type == MessageType.characterSelected){

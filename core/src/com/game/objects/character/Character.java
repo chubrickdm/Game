@@ -118,14 +118,16 @@ public class Character implements GameObject{
 		if (Gdx.input.isKeyPressed (Input.Keys.A))
 			keyAPressed ();
 		
-		if (deltaX != 0 || deltaY != 0){
+		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
+			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (this));
+		}
+		else if (deltaX != 0 || deltaY != 0){
 			action = ActionType.movement;
 			body.move (deltaX, deltaY);
 			ObjectManager.getInstance ().addMessage (new CharacterMoveMessage (this, body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect));
 		}
 		
-		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB))
-			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (this));
+		
 		
 		if (angleMove == -1){
 			angleMove = tmpI;
