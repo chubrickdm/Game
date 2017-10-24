@@ -2,15 +2,13 @@ package com.game.render;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.game.objects.camera.Camera;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class Render{
 	private SpriteBatch batch;
-	private OrthographicCamera camera;
 	private ArrayList <DataRender> renderList;
 	
 	private void sortedScene (){
@@ -22,8 +20,6 @@ public class Render{
 	}
 	
 	private Render (){
-		camera = new OrthographicCamera (Gdx.graphics.getWidth (), Gdx.graphics.getHeight ());
-		camera.setToOrtho (false);
 		batch = new SpriteBatch ();
 		renderList = new ArrayList <DataRender> ();
 	}
@@ -39,8 +35,8 @@ public class Render{
 		
 		sortedScene ();
 		
-		camera.update ();
-		batch.setProjectionMatrix (camera.combined);
+		Camera.getInstance ().update ();
+		batch.setProjectionMatrix (Camera.getInstance ().getProjectionMatrix ());
 		
 		batch.begin ();
 		for (DataRender data : renderList){

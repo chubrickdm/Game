@@ -1,11 +1,9 @@
 package com.game.objects;
 
-import com.badlogic.gdx.Gdx;
-
 import com.game.GameSystem;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
-import com.game.objects.character.Character;
+import com.game.objects.camera.Camera;
 import com.game.render.Render;
 
 import java.util.LinkedList;
@@ -18,44 +16,8 @@ public class ObjectManager implements GameObject{
 	
 	
 	private void initialize (){
-		objects.add (ActionWheel.getInstance ());
-		ActionWheel.getInstance ().initializePosition (200 * ASPECT_RATIO, 200 * ASPECT_RATIO);
-		//Обязательно надо установить позицию колеса, а то будет ошибка!
-		
-		//ParseXML.parseLVL (1);
-		
-		
-		/*Character firstCharacter = new Character (true, 200 * ASPECT_RATIO, 200 * ASPECT_RATIO);
-		Character secondCharacter = new Character (false, Gdx.graphics.getWidth () -
-				200 * ASPECT_RATIO - Character.CHARACTER_W, 200 * ASPECT_RATIO);
-		objects.add (firstCharacter);
-		objects.add (secondCharacter);
-		
-		Wall wall;
-		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W / 2, Wall.WALL_H * 0);
-		objects.add (wall);
-		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W / 2, Wall.WALL_H * 1);
-		objects.add (wall);
-		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W / 2, Wall.WALL_H * 2);
-		objects.add (wall);
-		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W / 2, Wall.WALL_H * 3);
-		objects.add (wall);
-		wall = new Wall (true, 0, 0);
-		objects.add (wall);
-		
-		wall = new Wall (true, Gdx.graphics.getWidth () / 2 - Wall.WALL_W / 2 - 1 * Wall.WALL_H, Gdx.graphics.getHeight () / 2);
-		objects.add (wall);
-		wall = new Wall (true, Gdx.graphics.getWidth () / 2 - Wall.WALL_W / 2 - 2 * Wall.WALL_H, Gdx.graphics.getHeight () / 2);
-		objects.add (wall);
-		wall = new Wall (true, Gdx.graphics.getWidth () / 2 - Wall.WALL_W / 2 - 3 * Wall.WALL_H, Gdx.graphics.getHeight () / 2);
-		objects.add (wall);
-		
-		wall = new Wall (true, Gdx.graphics.getWidth () / 2 + Wall.WALL_W / 2 + 0 * Wall.WALL_H, Gdx.graphics.getHeight () / 2);
-		objects.add (wall);
-		wall = new Wall (true, Gdx.graphics.getWidth () / 2 + Wall.WALL_W / 2 + 1 * Wall.WALL_H, Gdx.graphics.getHeight () / 2);
-		objects.add (wall);
-		wall = new Wall (true, Gdx.graphics.getWidth () / 2 + Wall.WALL_W / 2 + 2 * Wall.WALL_H, Gdx.graphics.getHeight () / 2);
-		objects.add (wall);*/
+		objects.add (ActionWheel.getInstance ()); //начальная позиция инициализируется в классе Character
+		objects.add (Camera.getInstance ()); //инициализируются позиции персонажей в классе Character
 	}
 	
 	private static class ObjectManagerHolder{

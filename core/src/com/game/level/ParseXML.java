@@ -1,11 +1,14 @@
-package com.game.objects;
+package com.game.level;
 
-import com.game.GameSystem;
+import com.game.objects.GameObject;
+import com.game.objects.ObjectManager;
+import com.game.objects.Wall;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.game.GameSystem;
 import com.game.objects.character.Character;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,7 +16,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
 
 public abstract class ParseXML{
 	private static boolean characterIsSelected = true;

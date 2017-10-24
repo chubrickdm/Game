@@ -5,10 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import com.game.messages.*;
-import com.game.objects.GameObject;
-import com.game.objects.ObjectAnimation;
-import com.game.objects.ObjectManager;
+import com.game.objects.*;
 import com.game.objects.body.NoSpriteObject;
+import com.game.objects.camera.Camera;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
@@ -154,6 +153,15 @@ public class Character implements GameObject{
 		this.isSelected = isSelected;
 		
 		body = new NoSpriteObject (x, y, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
+		
+		if (isSelected){
+			//Обязательно надо установить позицию колеса, а то оно будет появляться не в том месте!
+			ActionWheel.getInstance ().initializePosition (x, y);
+			Camera.getInstance ().setFirstCharacterBodyPosition (body.getBodyX (), body.getBodyY ());
+		}
+		else{
+			Camera.getInstance ().setSecondCharacterBodyPosition (body.getBodyX (), body.getBodyY ());
+		}
 		
 		moveAnimation = new ObjectAnimation ("core/assets/images/player.png", CHARACTER_W, CHARACTER_H,
 				FRAME_ROWS, FRAME_COLS, 0.15f);

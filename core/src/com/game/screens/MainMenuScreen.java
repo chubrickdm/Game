@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.MyGame;
 import com.game.objects.ObjectManager;
-import com.game.objects.ParseXML;
+import com.game.level.ParseXML;
 
 
 public class MainMenuScreen implements Screen{
