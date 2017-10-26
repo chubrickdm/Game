@@ -1,6 +1,7 @@
 package com.game.objects.camera;
 
 import com.badlogic.gdx.math.Matrix4;
+
 import com.game.GameSystem;
 import com.game.messages.CharacterMoveMessage;
 import com.game.messages.GameMessage;
@@ -9,6 +10,7 @@ import com.game.messages.PushOutMessage;
 import com.game.objects.GameObject;
 import com.game.objects.ObjectManager;
 import com.game.objects.character.Character;
+
 
 public class Camera implements GameObject{
 	private float firstCharacterBodyX = -1;
@@ -37,7 +39,6 @@ public class Camera implements GameObject{
 		
 		if (firstCharacterBodyY > secondCharacterBodyY){
 			camera.setPositionY (spriteY + Character.CHARACTER_H / 2);
-			//camera.translate (0, -GameSystem.SCREEN_H / 2 + firstCharacterBodyY + Character.CHARACTER_H / 2);
 		}
 	}
 	
@@ -47,7 +48,6 @@ public class Camera implements GameObject{
 		
 		if (secondCharacterBodyY > firstCharacterBodyY){
 			camera.setPositionY (spriteY + Character.CHARACTER_H / 2);
-			//camera.translate (0, -GameSystem.SCREEN_H / 2 + secondCharacterBodyY + Character.CHARACTER_H / 2);
 		}
 	}
 	

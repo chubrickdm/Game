@@ -1,13 +1,15 @@
 package com.game.screens;
 
 import com.badlogic.gdx.Screen;
+import com.game.ParseXML;
 import com.game.objects.ObjectManager;
 
 
 public class PlayScreen implements Screen{
 	@Override
 	public void show (){
-	
+		ObjectManager.getInstance ();
+		ParseXML.parseLVL (1);
 	}
 	
 	@Override

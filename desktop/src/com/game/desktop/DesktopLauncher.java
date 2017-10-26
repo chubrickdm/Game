@@ -4,8 +4,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.game.GameSystem;
 import com.game.MyGame;
-import com.game.level.ParseXML;
-import com.game.objects.ObjectManager;
 
 
 public class DesktopLauncher{

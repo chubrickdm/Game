@@ -11,12 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.game.GameSystem;
 import com.game.MyGame;
-import com.game.objects.ObjectManager;
-import com.game.level.ParseXML;
-
-import java.net.URLDecoder;
 
 
 public class MainMenuScreen implements Screen{

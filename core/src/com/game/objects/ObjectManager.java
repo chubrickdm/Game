@@ -21,31 +21,7 @@ public class ObjectManager implements GameObject{
 	private void initialize (){
 		objects.add (ActionWheel.getInstance ()); //начальная позиция инициализируется в классе Character
 		objects.add (Camera.getInstance ()); //инициализируются позиции персонажей в классе Character
-		
-		/*Character firstCharacter = new Character (true, 200 * ASPECT_RATIO, 200 * ASPECT_RATIO);
-		Character secondCharacter = new Character (false, Gdx.graphics.getWidth () -
-				200 * ASPECT_RATIO - Character.CHARACTER_W, 200 * ASPECT_RATIO);
-		objects.add (firstCharacter);
-		objects.add (secondCharacter);
-		
-		Wall wall;
-		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W, Wall.WALL_H * 0);
-		objects.add (wall);
-		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W, Wall.WALL_H * 1);
-		objects.add (wall);
-		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W, Wall.WALL_H * 2);
-		objects.add (wall);
-		wall = new Wall (false, Gdx.graphics.getWidth () / 2 - Wall.WALL_W, Wall.WALL_H * 3);
-		objects.add (wall);
-		wall = new Wall (true, 0, 0);
-		objects.add (wall);
-		
-		wall = new Wall (true, Gdx.graphics.getWidth () / 2 - Wall.WALL_W - 1 * Wall.WALL_H, Gdx.graphics.getHeight () / 2);
-		objects.add (wall);
-		wall = new Wall (true, Gdx.graphics.getWidth () / 2 - Wall.WALL_W - 2 * Wall.WALL_H, Gdx.graphics.getHeight () / 2);
-		objects.add (wall);
-		wall = new Wall (true, Gdx.graphics.getWidth () / 2 - Wall.WALL_W - 3 * Wall.WALL_H, Gdx.graphics.getHeight () / 2);
-		objects.add (wall);*/
+		objects.add (LevelManager.getInstance ());
 	}
 	
 	private static class ObjectManagerHolder{
@@ -66,8 +42,6 @@ public class ObjectManager implements GameObject{
 	
 	@Override
 	public void update (){
-		GameSystem.update ();
-		
 		for (GameObject obj : objects){
 			obj.update ();
 		}
