@@ -1,7 +1,9 @@
 package com.game;
 
 import com.badlogic.gdx.Game;
+import com.game.level.ParseXML;
 import com.game.objects.GameObject;
+import com.game.objects.ObjectManager;
 import com.game.screens.MainMenuScreen;
 
 public class MyGame extends Game{
@@ -24,6 +26,8 @@ public class MyGame extends Game{
 	
 	@Override
 	public void create (){
+		ObjectManager.getInstance ();
+		ParseXML.parseLVL (1);
 		setScreen (new MainMenuScreen ());
 	}
 }

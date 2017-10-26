@@ -11,6 +11,7 @@ public class Render{
 	private SpriteBatch batch;
 	private ArrayList <DataRender> renderList;
 	
+	
 	private void sortedScene (){
 		renderList.sort ((tmp1, tmp2) -> tmp1.layerType.getValue () - tmp2.layerType.getValue ());
 	}

@@ -8,14 +8,15 @@ buildscript {
         jcenter()
     }
     dependencies {
-        
-
+        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
     }
 }
+
 
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+
 
     version = '1.0'
     ext {
@@ -37,6 +38,7 @@ allprojects {
 
 project(":core") {
     apply plugin: "java"
+    apply plugin: 'me.tatarka.retrolambda'
 
 
     dependencies {
@@ -49,6 +51,7 @@ project(":core") {
 
 project(":desktop") {
     apply plugin: "java"
+    apply plugin: 'me.tatarka.retrolambda'
 
 
     dependencies {
