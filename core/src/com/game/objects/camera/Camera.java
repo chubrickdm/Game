@@ -13,10 +13,10 @@ import com.game.objects.character.Character;
 
 
 public class Camera implements GameObject{
-	private float firstCharacterBodyX = -1;
-	private float firstCharacterBodyY = -1;
-	private float secondCharacterBodyX = -1;
-	private float secondCharacterBodyY = -1;
+	private float firstCharacterSpriteX = -1;
+	private float firstCharacterSpriteY = -1;
+	private float secondCharacterSpriteX = -1;
+	private float secondCharacterSpriteY = -1;
 	private BodyCamera camera;
 	
 	
@@ -33,20 +33,20 @@ public class Camera implements GameObject{
 		return CameraHolder.instance;
 	}
 	
-	public void setFirstCharacterBodyPosition (float spriteY, float bodyX, float bodyY){
-		firstCharacterBodyX = bodyX;
-		firstCharacterBodyY = bodyY;
+	public void setFirstCharacterBodyPosition (float spriteX, float spriteY){
+		firstCharacterSpriteX = spriteX;
+		firstCharacterSpriteY = spriteY;
 		
-		if (firstCharacterBodyY > secondCharacterBodyY){
+		if (firstCharacterSpriteY > secondCharacterSpriteY){
 			camera.setPositionY (spriteY + Character.CHARACTER_H / 2);
 		}
 	}
 	
-	public void setSecondCharacterBodyPosition (float spriteY, float bodyX, float bodyY){
-		secondCharacterBodyX = bodyX;
-		secondCharacterBodyY = bodyY;
+	public void setSecondCharacterBodyPosition (float spriteX, float spriteY){
+		secondCharacterSpriteX = spriteX;
+		secondCharacterSpriteY = spriteY;
 		
-		if (secondCharacterBodyY > firstCharacterBodyY){
+		if (secondCharacterSpriteY > firstCharacterSpriteY){
 			camera.setPositionY (spriteY + Character.CHARACTER_H / 2);
 		}
 	}
@@ -63,23 +63,25 @@ public class Camera implements GameObject{
 	@Override
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.characterMove){
+			Character character = (Character) message.object;
 			CharacterMoveMessage msg = (CharacterMoveMessage) message;
-			if (Math.abs (msg.bodyRectangle.getY () - firstCharacterBodyY) > GameSystem.SCREEN_H / 2 - GameObject.UNIT){
+			if (Math.abs (character.getSpriteY () - firstCharacterSpriteY) > GameSystem.SCREEN_H / 2 - GameObject.UNIT){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldX, msg.oldY));
 			}
-			else if (Math.abs (msg.bodyRectangle.getY () - secondCharacterBodyY) > GameSystem.SCREEN_H / 2 - GameObject.UNIT){
+			else if (Math.abs (character.getSpriteY () - secondCharacterSpriteY) > GameSystem.SCREEN_H / 2 - GameObject.UNIT){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldX, msg.oldY));
 			}
 			else{
-				if ((Math.abs (msg.oldX - firstCharacterBodyX) < 1) && (Math.abs (msg.oldY - firstCharacterBodyY) < 1)){
-					firstCharacterBodyX = msg.bodyRectangle.getX ();
-					firstCharacterBodyY = msg.bodyRectangle.getY ();
+				if ((Math.abs (msg.spriteOldX - firstCharacterSpriteX) < 1) && (Math.abs (msg.spriteOldY - firstCharacterSpriteY) < 1)){
+					camera.moveY (character.getSpriteY () - firstCharacterSpriteY);
+					firstCharacterSpriteX = character.getSpriteX ();
+					firstCharacterSpriteY = character.getSpriteY ();
 				}
 				else{
-					secondCharacterBodyX = msg.bodyRectangle.getX ();
-					secondCharacterBodyY = msg.bodyRectangle.getY ();
+					camera.moveY (character.getSpriteY () - secondCharacterSpriteY);
+					secondCharacterSpriteX = character.getSpriteX ();
+					secondCharacterSpriteY = character.getSpriteY ();
 				}
-				camera.moveY (msg.bodyRectangle.getY () - msg.oldY);
 			}
 		}
 		else if (message.type == MessageType.characterSelected){

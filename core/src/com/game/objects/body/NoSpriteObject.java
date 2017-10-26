@@ -47,5 +47,7 @@ public class NoSpriteObject implements Body{
 	
 	public void move (float deltaX, float deltaY){
 		bodyRect.move (deltaX, deltaY);
+		spriteX += deltaX;
+		spriteY += deltaY;
 	}
 }

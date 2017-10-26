@@ -124,7 +124,9 @@ public class Character implements GameObject{
 		else if (deltaX != 0 || deltaY != 0){
 			action = ActionType.movement;
 			body.move (deltaX, deltaY);
-			ObjectManager.getInstance ().addMessage (new CharacterMoveMessage (this, body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect));
+			ObjectManager.getInstance ().addMessage (new CharacterMoveMessage (this,
+					body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect,
+					body.getSpriteX () - deltaX, body.getSpriteY () - deltaY));
 		}
 		
 		
@@ -159,10 +161,10 @@ public class Character implements GameObject{
 		if (isSelected){
 			//Обязательно надо установить позицию колеса, а то оно будет появляться не в том месте!
 			ActionWheel.getInstance ().initializePosition (x, y);
-			Camera.getInstance ().setFirstCharacterBodyPosition (y, body.getBodyX (), body.getBodyY ());
+			Camera.getInstance ().setFirstCharacterBodyPosition (x, y);
 		}
 		else{
-			Camera.getInstance ().setSecondCharacterBodyPosition (y, body.getBodyX (), body.getBodyY ());
+			Camera.getInstance ().setSecondCharacterBodyPosition (x, y);
 		}
 		
 		moveAnimation = new ObjectAnimation ("core/assets/images/player.png", CHARACTER_W, CHARACTER_H,
