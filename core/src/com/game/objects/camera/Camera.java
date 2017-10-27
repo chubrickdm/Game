@@ -3,16 +3,14 @@ package com.game.objects.camera;
 import com.badlogic.gdx.math.Matrix4;
 
 import com.game.GameSystem;
-import com.game.messages.CharacterMoveMessage;
-import com.game.messages.GameMessage;
-import com.game.messages.MessageType;
-import com.game.messages.PushOutMessage;
+import com.game.messages.*;
 import com.game.objects.GameObject;
 import com.game.objects.ObjectManager;
+import com.game.objects.ObjectType;
 import com.game.objects.character.Character;
 
 
-public class Camera implements GameObject{
+public class Camera extends GameObject{
 	private float cameraDeltaY = 0;
 	private float firstCharacterSpriteX = -1;
 	private float firstCharacterSpriteY = -1;
@@ -26,6 +24,7 @@ public class Camera implements GameObject{
 	}
 	
 	private Camera (){
+		objectType = ObjectType.camera;
 		camera = BodyCamera.getInstance ();
 	}
 	
@@ -63,9 +62,9 @@ public class Camera implements GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.characterMove){
+		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			Character character = (Character) message.object;
-			CharacterMoveMessage msg = (CharacterMoveMessage) message;
+			MoveMessage msg = (MoveMessage) message;
 			if (Math.abs (character.getSpriteY () - firstCharacterSpriteY) > GameSystem.SCREEN_H / 2 - GameObject.UNIT){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
 			}

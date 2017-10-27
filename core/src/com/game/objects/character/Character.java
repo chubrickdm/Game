@@ -13,7 +13,7 @@ import com.game.render.LayerType;
 import com.game.render.Render;
 
 
-public class Character implements GameObject{
+public class Character extends GameObject{
 	public static final float CHARACTER_W = UNIT;
 	public static final float CHARACTER_H = UNIT;
 	public static final float BODY_CHARACTER_W = 3 * CHARACTER_W / 4 * ASPECT_RATIO;
@@ -30,8 +30,7 @@ public class Character implements GameObject{
 	private int angleMove = 0;
 	private ActionType action;
 	private Sprite currSprite;
-	private DataRender dataRender;
-	private NoSpriteObject body;
+	//private NoSpriteObject body;
 	private ObjectAnimation moveAnimation;
 	
 	
@@ -124,9 +123,9 @@ public class Character implements GameObject{
 		else if (deltaX != 0 || deltaY != 0){
 			action = ActionType.movement;
 			body.move (deltaX, deltaY);
-			ObjectManager.getInstance ().addMessage (new CharacterMoveMessage (this,
+			ObjectManager.getInstance ().addMessage (new MoveMessage (this,
 					body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect,
-					body.getSpriteX () - deltaX, body.getSpriteY () - deltaY));
+					body.getSpriteX () - deltaX, body.getSpriteY () - deltaY, objectType));
 		}
 		
 		
@@ -153,6 +152,7 @@ public class Character implements GameObject{
 	
 	
 	public Character (boolean isSelected, float x, float y){
+		objectType = ObjectType.character;
 		action = ActionType.stand;
 		this.isSelected = isSelected;
 		
@@ -202,8 +202,9 @@ public class Character implements GameObject{
 				isSelected = true;
 			}
 		}
-		else if (message.type == MessageType.characterMove && message.object != this){
-			CharacterMoveMessage msg = (CharacterMoveMessage) message;
+		else if (message.type == MessageType.move && message.object != this
+				&& message.objectType == ObjectType.character){
+			MoveMessage msg = (MoveMessage) message;
 			if (body.intersects (msg.bodyRectangle)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
 			}

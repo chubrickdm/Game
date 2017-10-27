@@ -12,7 +12,7 @@ import com.game.objects.character.Character;
 import java.util.LinkedList;
 
 
-public class ObjectManager implements GameObject{
+public class ObjectManager extends GameObject{
 	private int iterator = 0;
 	private LinkedList <GameObject> objects;
 	private LinkedList <GameMessage> messages;

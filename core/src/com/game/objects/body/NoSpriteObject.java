@@ -2,13 +2,11 @@ package com.game.objects.body;
 
 import com.game.math.BodyRectangle;
 
-public class NoSpriteObject implements Body{
+public class NoSpriteObject extends Body{
 	private float spriteX;
 	private float spriteY;
 	private float bodyShiftX;
 	private float bodyShiftY;
-	
-	public BodyRectangle bodyRect;
 	
 	
 	public NoSpriteObject (float x, float y, float w, float h, float bodyW, float bodyH){
@@ -19,32 +17,24 @@ public class NoSpriteObject implements Body{
 		bodyRect = new BodyRectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
 	}
 	
+	@Override
 	public void setBodyPosition (float x, float y){
 		spriteX = x - bodyShiftX;
 		spriteY = y - bodyShiftY;
 		bodyRect.setPosition (x, y);
 	}
 	
+	@Override
 	public float getSpriteX (){
 		return spriteX;
 	}
 	
+	@Override
 	public float getSpriteY (){
 		return spriteY;
 	}
 	
-	public boolean intersects (BodyRectangle bodyRectangle){
-		return bodyRect.intersects (bodyRectangle);
-	}
-	
-	public float getBodyX (){
-		return bodyRect.getX ();
-	}
-	
-	public float getBodyY (){
-		return bodyRect.getY ();
-	}
-	
+	@Override
 	public void move (float deltaX, float deltaY){
 		bodyRect.move (deltaX, deltaY);
 		spriteX += deltaX;

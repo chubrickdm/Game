@@ -11,15 +11,14 @@ import com.game.render.LayerType;
 import com.game.render.Render;
 
 
-public class ActionWheel implements GameObject{
+public class ActionWheel extends GameObject{
 	public static final float percentPerTick = 2;
 	public static final float WHEEL_W = UNIT * 2;
 	public static final float WHEEL_H = UNIT * 2;
 	
 	private boolean isVisible = false;
 	private float percentSize = 1;
-	private DataRender dataRender;
-	private NoBodyObject body;
+	//private NoBodyObject body;
 	
 	
 	private void updateSizeAnimation (){
@@ -51,6 +50,7 @@ public class ActionWheel implements GameObject{
 	}
 	
 	private ActionWheel (){
+		objectType = ObjectType.actionWheel;
 		body = new NoBodyObject ("core/assets/images/action_wheel.png", 0, 0, WHEEL_W, WHEEL_H);
 		body.setOrigin (WHEEL_H / 2, WHEEL_H / 2);
 		body.setScale (percentSize / 100);
@@ -75,7 +75,7 @@ public class ActionWheel implements GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.characterMove){
+		if (message.type == MessageType.move){
 			Character character = (Character) message.object;
 			body.setSpritePosition (character.getSpriteX () + Character.CHARACTER_W / 2,
 					character.getSpriteY () + Character.CHARACTER_H / 2);

@@ -5,11 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import com.game.math.BodyRectangle;
 
-public class NoBodyObject implements Body{
+public class NoBodyObject extends Body{
 	private float originX = 0;
 	private float originY = 0;
-	
-	public Sprite sprite;
 	
 	
 	public NoBodyObject (String fileName, float x, float y, float w, float h){
@@ -18,23 +16,22 @@ public class NoBodyObject implements Body{
 		sprite.setBounds (x, y, w, h);
 	}
 	
+	@Override
 	public void setSpritePosition (float x, float y){
 		sprite.setPosition (x - originX, y - originY);
 	}
 	
+	@Override
 	public void setOrigin (float originX, float originY){
 		this.originX = originX;
 		this.originY = originY;
 		setSpritePosition (sprite.getX (), sprite.getY ());
 	}
 	
+	@Override
 	public void setScale (float scale){
-		
 		sprite.setScale (scale);
 		sprite.setOriginCenter ();
-		//originX *= scale;
-		//originY *= scale;
-		//setOrigin (originX * scale, originY * scale);
 	}
 	
 	@Override
@@ -48,11 +45,6 @@ public class NoBodyObject implements Body{
 	}
 	
 	@Override
-	public boolean intersects (BodyRectangle bodyRectangle){
-		return false;
-	}
-	
-	@Override
 	public float getBodyX (){
 		return sprite.getX ();
 	}
@@ -61,4 +53,5 @@ public class NoBodyObject implements Body{
 	public float getBodyY (){
 		return sprite.getY ();
 	}
+	
 }

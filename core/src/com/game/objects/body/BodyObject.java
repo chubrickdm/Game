@@ -5,12 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.math.BodyRectangle;
 
 
-public class BodyObject implements Body{
+public class BodyObject extends Body{
 	private float bodyShiftX;
 	private float bodyShiftY;
-	
-	public Sprite sprite;
-	public BodyRectangle bodyRect;
 	
 	
 	public BodyObject (String fileName, float x, float y, float w, float h, float bodyW, float bodyH){
@@ -23,28 +20,13 @@ public class BodyObject implements Body{
 		bodyRect = new BodyRectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
 	}
 	
+	@Override
 	public void setBodyPosition (float x, float y){
 		sprite.setPosition (x - bodyShiftX, y - bodyShiftY);
 		bodyRect.setPosition (x, y);
 	}
 	
-	public boolean intersects (BodyRectangle bodyRectangle){
-		return bodyRect.intersects (bodyRectangle);
-	}
-	
-	public float getBodyX (){
-		return bodyRect.getX ();
-	}
-	
-	public float getBodyY (){
-		return bodyRect.getY ();
-	}
-	
-	public void move (float deltaX, float deltaY){
-		sprite.setPosition (sprite.getX () + deltaX, sprite.getY () + deltaY);
-		bodyRect.move (deltaX, deltaY);
-	}
-	
+	@Override
 	public void rotate90 (){
 		sprite.rotate90 (true);
 		sprite.setSize (sprite.getHeight (), sprite.getWidth ());

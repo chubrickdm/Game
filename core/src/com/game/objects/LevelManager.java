@@ -8,7 +8,7 @@ import com.game.messages.GameMessage;
 import com.game.screens.MainMenuScreen;
 
 
-public class LevelManager implements GameObject{
+public class LevelManager extends GameObject{
 	private static class LevelManagerHolder{
 		private final static LevelManager instance = new LevelManager ();
 	}

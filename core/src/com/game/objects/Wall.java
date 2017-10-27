@@ -1,24 +1,21 @@
 package com.game.objects;
 
-import com.game.messages.GameMessage;
-import com.game.messages.MessageType;
-import com.game.messages.CharacterMoveMessage;
-import com.game.messages.PushOutMessage;
+import com.game.messages.*;
 import com.game.objects.body.BodyObject;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
 
-public class Wall implements GameObject{
+public class Wall extends GameObject{
 	public static final float WALL_W = UNIT;
 	public static final float WALL_H = UNIT * 3;
 	
 	private boolean horizon = false;
-	private DataRender dataRender;
-	private BodyObject body;
+	//private BodyObject body;
 	
 	
 	public Wall (boolean isHorizonWall, float x, float y){
+		objectType = ObjectType.wall;
 		horizon = isHorizonWall;
 		body = new BodyObject ("core/assets/images/wall.png", x, y, WALL_W, WALL_H, WALL_W, WALL_H);
 		if (horizon){
@@ -34,8 +31,8 @@ public class Wall implements GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.characterMove){
-			CharacterMoveMessage msg = (CharacterMoveMessage) message;
+		if (message.type == MessageType.move && message.objectType == ObjectType.character){
+			MoveMessage msg = (MoveMessage) message;
 			if (body.intersects (msg.bodyRectangle)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
 			}
