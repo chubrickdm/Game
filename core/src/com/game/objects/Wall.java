@@ -37,7 +37,7 @@ public class Wall implements GameObject{
 		if (message.type == MessageType.characterMove){
 			CharacterMoveMessage msg = (CharacterMoveMessage) message;
 			if (body.intersects (msg.bodyRectangle)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldX, msg.oldY));
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
 			}
 		}
 	}

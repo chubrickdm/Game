@@ -7,18 +7,18 @@ import com.game.objects.GameObject;
 public class CharacterMoveMessage extends GameMessage{
 	public float spriteOldX;
 	public float spriteOldY;
-	public float oldX;
-	public float oldY;
+	public float oldBodyX;
+	public float oldBodyY;
 	public BodyRectangle bodyRectangle;
 	
 	
-	public CharacterMoveMessage (GameObject object, float oldX, float oldY, BodyRectangle bodyRectangle, float spriteOldX,
+	public CharacterMoveMessage (GameObject object, float oldBodyX, float oldBodyY, BodyRectangle bodyRectangle, float spriteOldX,
 								 float spriteOldY){
 		this.spriteOldX = spriteOldX;
 		this.spriteOldY = spriteOldY;
 		this.type = MessageType.characterMove;
-		this.oldX = oldX;
-		this.oldY = oldY;
+		this.oldBodyX = oldBodyX;
+		this.oldBodyY = oldBodyY;
 		this.bodyRectangle = bodyRectangle;
 		this.object = object;
 	}

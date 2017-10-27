@@ -205,13 +205,13 @@ public class Character implements GameObject{
 		else if (message.type == MessageType.characterMove && message.object != this){
 			CharacterMoveMessage msg = (CharacterMoveMessage) message;
 			if (body.intersects (msg.bodyRectangle)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldX, msg.oldY));
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
 			}
 		}
 		else if (message.type == MessageType.pushOut && message.object == this){
 			isPushOut = true;
 			PushOutMessage msg = (PushOutMessage) message;
-			body.setBodyPosition (msg.whereX, msg.whereY);
+			body.setBodyPosition (msg.whereBodyX, msg.whereBodyY);
 		}
 		else if (message.type == MessageType.findSelCharacter && isSelected){
 			ObjectManager.getInstance ().addMessage (new CharacterSelectedMessage (this));

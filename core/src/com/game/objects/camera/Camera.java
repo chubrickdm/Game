@@ -13,6 +13,7 @@ import com.game.objects.character.Character;
 
 
 public class Camera implements GameObject{
+	private float cameraDeltaY = 0;
 	private float firstCharacterSpriteX = -1;
 	private float firstCharacterSpriteY = -1;
 	private float secondCharacterSpriteX = -1;
@@ -66,19 +67,23 @@ public class Camera implements GameObject{
 			Character character = (Character) message.object;
 			CharacterMoveMessage msg = (CharacterMoveMessage) message;
 			if (Math.abs (character.getSpriteY () - firstCharacterSpriteY) > GameSystem.SCREEN_H / 2 - GameObject.UNIT){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldX, msg.oldY));
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
 			}
 			else if (Math.abs (character.getSpriteY () - secondCharacterSpriteY) > GameSystem.SCREEN_H / 2 - GameObject.UNIT){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldX, msg.oldY));
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
 			}
 			else{
-				if ((Math.abs (msg.spriteOldX - firstCharacterSpriteX) < 1) && (Math.abs (msg.spriteOldY - firstCharacterSpriteY) < 1)){
-					camera.moveY (character.getSpriteY () - firstCharacterSpriteY);
+				if ((Math.abs (msg.spriteOldX - firstCharacterSpriteX) < 2) && (Math.abs (msg.spriteOldY - firstCharacterSpriteY) < 2)){
+					//System.out.println ("First moved.");
+					cameraDeltaY = character.getSpriteY () - firstCharacterSpriteY;
+					camera.moveY (cameraDeltaY);
 					firstCharacterSpriteX = character.getSpriteX ();
 					firstCharacterSpriteY = character.getSpriteY ();
 				}
 				else{
-					camera.moveY (character.getSpriteY () - secondCharacterSpriteY);
+					//System.out.println ("Second moved.");
+					cameraDeltaY = character.getSpriteY () - secondCharacterSpriteY;
+					camera.moveY (cameraDeltaY);
 					secondCharacterSpriteX = character.getSpriteX ();
 					secondCharacterSpriteY = character.getSpriteY ();
 				}
@@ -88,8 +93,13 @@ public class Camera implements GameObject{
 			Character character = (Character) message.object;
 			camera.setPositionY (character.getSpriteY () + Character.CHARACTER_H / 2);
 		}
+		else if (message.type == MessageType.pushOut){
+			camera.moveY (-cameraDeltaY);
+		}
 	}
 	
 	@Override
-	public void draw (){ }
+	public void draw (){
+		cameraDeltaY = 0;
+	}
 }
