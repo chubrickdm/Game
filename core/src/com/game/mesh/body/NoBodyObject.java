@@ -1,9 +1,7 @@
-package com.game.objects.body;
+package com.game.mesh.body;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
-import com.game.math.BodyRectangle;
 
 public class NoBodyObject extends Body{
 	private float originX = 0;

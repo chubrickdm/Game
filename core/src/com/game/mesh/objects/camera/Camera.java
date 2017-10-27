@@ -1,13 +1,13 @@
-package com.game.objects.camera;
+package com.game.mesh.objects.camera;
 
 import com.badlogic.gdx.math.Matrix4;
 
 import com.game.GameSystem;
 import com.game.messages.*;
-import com.game.objects.GameObject;
-import com.game.objects.ObjectManager;
-import com.game.objects.ObjectType;
-import com.game.objects.character.Character;
+import com.game.mesh.objects.GameObject;
+import com.game.mesh.objects.special.ObjectManager;
+import com.game.mesh.objects.ObjectType;
+import com.game.mesh.objects.character.Character;
 
 
 public class Camera extends GameObject{
@@ -92,7 +92,7 @@ public class Camera extends GameObject{
 			Character character = (Character) message.object;
 			camera.setPositionY (character.getSpriteY () + Character.CHARACTER_H / 2);
 		}
-		else if (message.type == MessageType.pushOut){
+		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
 			camera.moveY (-cameraDeltaY);
 		}
 	}

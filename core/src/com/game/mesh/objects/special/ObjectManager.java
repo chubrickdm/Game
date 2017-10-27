@@ -1,16 +1,13 @@
-package com.game.objects;
+package com.game.mesh.objects.special;
 
-import com.badlogic.gdx.Gdx;
-
-import com.game.GameSystem;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
-import com.game.objects.camera.Camera;
+import com.game.mesh.objects.ActionWheel;
+import com.game.mesh.objects.GameObject;
+import com.game.mesh.objects.camera.Camera;
 import com.game.render.Render;
-import com.game.objects.character.Character;
 
 import java.util.LinkedList;
-
 
 public class ObjectManager extends GameObject{
 	private int iterator = 0;

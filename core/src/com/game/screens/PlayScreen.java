@@ -1,8 +1,8 @@
 package com.game.screens;
 
 import com.badlogic.gdx.Screen;
-import com.game.ParseXML;
-import com.game.objects.ObjectManager;
+import com.game.addition.ParseXML;
+import com.game.mesh.objects.special.ObjectManager;
 
 
 public class PlayScreen implements Screen{

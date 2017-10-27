@@ -1,11 +1,11 @@
-package com.game.objects;
+package com.game.mesh.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import com.game.messages.*;
-import com.game.objects.body.NoBodyObject;
-import com.game.objects.character.Character;
+import com.game.mesh.body.NoBodyObject;
+import com.game.mesh.objects.character.Character;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
@@ -18,7 +18,6 @@ public class ActionWheel extends GameObject{
 	
 	private boolean isVisible = false;
 	private float percentSize = 1;
-	//private NoBodyObject body;
 	
 	
 	private void updateSizeAnimation (){
@@ -75,7 +74,7 @@ public class ActionWheel extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move){
+		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			Character character = (Character) message.object;
 			body.setSpritePosition (character.getSpriteX () + Character.CHARACTER_W / 2,
 					character.getSpriteY () + Character.CHARACTER_H / 2);

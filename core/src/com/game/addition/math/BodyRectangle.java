@@ -1,4 +1,4 @@
-package com.game.math;
+package com.game.addition.math;
 
 public class BodyRectangle{
 	private float x;

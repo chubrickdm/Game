@@ -1,8 +1,7 @@
 package com.game.messages;
 
-import com.game.math.BodyRectangle;
-import com.game.objects.GameObject;
-import com.game.objects.ObjectType;
+import com.game.addition.math.BodyRectangle;
+import com.game.mesh.objects.GameObject;
 
 public class MoveMessage extends GameMessage{
 	public float spriteOldX;
@@ -13,9 +12,9 @@ public class MoveMessage extends GameMessage{
 	
 	
 	public MoveMessage (GameObject object, float oldBodyX, float oldBodyY, BodyRectangle bodyRectangle, float spriteOldX,
-						float spriteOldY, ObjectType objectType){
+						float spriteOldY){
 		this.type = MessageType.move;
-		this.objectType = objectType;
+		this.objectType = object.objectType;
 		this.spriteOldX = spriteOldX;
 		this.spriteOldY = spriteOldY;
 		this.oldBodyX = oldBodyX;

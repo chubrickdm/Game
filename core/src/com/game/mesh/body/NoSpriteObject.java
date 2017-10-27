@@ -1,6 +1,6 @@
-package com.game.objects.body;
+package com.game.mesh.body;
 
-import com.game.math.BodyRectangle;
+import com.game.addition.math.BodyRectangle;
 
 public class NoSpriteObject extends Body{
 	private float spriteX;

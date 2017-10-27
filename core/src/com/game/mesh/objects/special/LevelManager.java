@@ -1,10 +1,11 @@
-package com.game.objects;
+package com.game.mesh.objects.special;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import com.game.MyGame;
 import com.game.messages.GameMessage;
+import com.game.mesh.objects.GameObject;
 import com.game.screens.MainMenuScreen;
 
 

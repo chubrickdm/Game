@@ -1,13 +1,17 @@
-package com.game.objects.character;
+package com.game.mesh.objects.character;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import com.game.mesh.objects.ObjectType;
+import com.game.mesh.objects.ActionWheel;
+import com.game.mesh.objects.GameObject;
 import com.game.messages.*;
-import com.game.objects.*;
-import com.game.objects.body.NoSpriteObject;
-import com.game.objects.camera.Camera;
+import com.game.mesh.animation.ObjectAnimation;
+import com.game.mesh.body.NoSpriteObject;
+import com.game.mesh.objects.camera.Camera;
+import com.game.mesh.objects.special.ObjectManager;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
@@ -30,7 +34,6 @@ public class Character extends GameObject{
 	private int angleMove = 0;
 	private ActionType action;
 	private Sprite currSprite;
-	//private NoSpriteObject body;
 	private ObjectAnimation moveAnimation;
 	
 	
@@ -125,7 +128,7 @@ public class Character extends GameObject{
 			body.move (deltaX, deltaY);
 			ObjectManager.getInstance ().addMessage (new MoveMessage (this,
 					body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect,
-					body.getSpriteX () - deltaX, body.getSpriteY () - deltaY, objectType));
+					body.getSpriteX () - deltaX, body.getSpriteY () - deltaY));
 		}
 		
 		
@@ -202,8 +205,7 @@ public class Character extends GameObject{
 				isSelected = true;
 			}
 		}
-		else if (message.type == MessageType.move && message.object != this
-				&& message.objectType == ObjectType.character){
+		else if (message.type == MessageType.move && message.object != this && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
 			if (body.intersects (msg.bodyRectangle)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
@@ -213,9 +215,6 @@ public class Character extends GameObject{
 			isPushOut = true;
 			PushOutMessage msg = (PushOutMessage) message;
 			body.setBodyPosition (msg.whereBodyX, msg.whereBodyY);
-		}
-		else if (message.type == MessageType.findSelCharacter && isSelected){
-			ObjectManager.getInstance ().addMessage (new CharacterSelectedMessage (this));
 		}
 	}
 	

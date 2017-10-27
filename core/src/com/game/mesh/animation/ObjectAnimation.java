@@ -1,4 +1,4 @@
-package com.game.objects;
+package com.game.mesh.animation;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;

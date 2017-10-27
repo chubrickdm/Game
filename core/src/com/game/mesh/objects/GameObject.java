@@ -1,7 +1,7 @@
-package com.game.objects;
+package com.game.mesh.objects;
 
 import com.game.messages.GameMessage;
-import com.game.objects.body.Body;
+import com.game.mesh.body.Body;
 import com.game.render.DataRender;
 
 import static com.game.GameSystem.SCREEN_H;

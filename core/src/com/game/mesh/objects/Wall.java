@@ -1,7 +1,8 @@
-package com.game.objects;
+package com.game.mesh.objects;
 
 import com.game.messages.*;
-import com.game.objects.body.BodyObject;
+import com.game.mesh.body.BodyObject;
+import com.game.mesh.objects.special.ObjectManager;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
@@ -11,7 +12,6 @@ public class Wall extends GameObject{
 	public static final float WALL_H = UNIT * 3;
 	
 	private boolean horizon = false;
-	//private BodyObject body;
 	
 	
 	public Wall (boolean isHorizonWall, float x, float y){
@@ -25,13 +25,11 @@ public class Wall extends GameObject{
 	}
 	
 	@Override
-	public void update (){
-	
-	}
+	public void update (){ }
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move && message.objectType == ObjectType.character){
+		if (message.type == MessageType.move){
 			MoveMessage msg = (MoveMessage) message;
 			if (body.intersects (msg.bodyRectangle)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));

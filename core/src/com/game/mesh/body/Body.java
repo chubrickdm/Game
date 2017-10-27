@@ -1,7 +1,7 @@
-package com.game.objects.body;
+package com.game.mesh.body;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.game.math.BodyRectangle;
+import com.game.addition.math.BodyRectangle;
 
 public class Body{
 	public BodyRectangle bodyRect;

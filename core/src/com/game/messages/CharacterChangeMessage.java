@@ -1,6 +1,6 @@
 package com.game.messages;
 
-import com.game.objects.GameObject;
+import com.game.mesh.objects.GameObject;
 
 public class CharacterChangeMessage extends GameMessage{
 	public CharacterChangeMessage (GameObject object){

@@ -1,8 +1,7 @@
 package com.game;
 
 import com.badlogic.gdx.Game;
-import com.game.objects.GameObject;
-import com.game.objects.ObjectManager;
+import com.game.mesh.objects.GameObject;
 import com.game.screens.MainMenuScreen;
 
 public class MyGame extends Game{
