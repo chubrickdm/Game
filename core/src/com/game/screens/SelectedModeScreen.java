@@ -14,11 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.GameSystem;
 import com.game.MyGame;
+import com.game.addition.Font;
 
 public class SelectedModeScreen implements Screen{
-	private Stage stage;
 	private TextButton.TextButtonStyle normalStyle;
 	private TextButton.TextButtonStyle closedStyle;
+	private WidgetGroup widgetGroup = new WidgetGroup ();
+	private Stage stage = new Stage (new ScreenViewport ());
 	
 	
 	private void createButtonStyle (){
@@ -38,18 +40,8 @@ public class SelectedModeScreen implements Screen{
 		closedStyle.up = skin.getDrawable ("button_closed");
 	}
 	
-	private void createButton (){
-		createButtonStyle ();
-		
-		WidgetGroup widgetGroup = new WidgetGroup ();
+	private void createNewGameButton (){
 		TextButton newGame;
-		TextButton continueGame;
-		TextButton selectedLVL;
-		TextButton back;
-		
-		stage = new Stage (new ScreenViewport ());
-		
-		
 		newGame = new TextButton ("Новая игра", normalStyle);
 		newGame.addListener (new ClickListener (){
 			@Override
@@ -58,8 +50,11 @@ public class SelectedModeScreen implements Screen{
 			}
 		});
 		newGame.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2, Gdx.graphics.getHeight () / 2 + 2 * MyGame.BUTTON_H + 2 * MyGame.DISTANCE_BETWEEN_BUTTONS, MyGame.BUTTON_W, MyGame.BUTTON_H);
-		
-		
+		widgetGroup.addActor (newGame);
+	}
+	
+	private void createContinueGameButton (){
+		TextButton continueGame;
 		continueGame = new TextButton ("Продолжить", normalStyle);
 		if (GameSystem.IS_FIRST_GAME_START){
 			continueGame.setStyle (closedStyle);
@@ -75,8 +70,11 @@ public class SelectedModeScreen implements Screen{
 		continueGame.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
 				Gdx.graphics.getHeight () / 2 + MyGame.BUTTON_H + MyGame.DISTANCE_BETWEEN_BUTTONS, MyGame.BUTTON_W,
 				MyGame.BUTTON_H);
-		
-		
+		widgetGroup.addActor (continueGame);
+	}
+	
+	private void createSelectedLVLButton (){
+		TextButton selectedLVL;
 		selectedLVL = new TextButton ("Уровни", normalStyle);
 		if (GameSystem.IS_FIRST_GAME_START){
 			selectedLVL.setStyle (closedStyle);
@@ -91,8 +89,11 @@ public class SelectedModeScreen implements Screen{
 		});
 		selectedLVL.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2, Gdx.graphics.getHeight () / 2,
 				MyGame.BUTTON_W, MyGame.BUTTON_H);
-		
-		
+		widgetGroup.addActor (selectedLVL);
+	}
+	
+	private void createBackButton (){
+		TextButton back;
 		back = new TextButton ("Назад", normalStyle);
 		back.addListener (new ClickListener (){
 			@Override
@@ -101,12 +102,17 @@ public class SelectedModeScreen implements Screen{
 			}
 		});
 		back.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2, Gdx.graphics.getHeight () / 2 - MyGame.BUTTON_H - MyGame.DISTANCE_BETWEEN_BUTTONS, MyGame.BUTTON_W, MyGame.BUTTON_H);
-		
-		
-		widgetGroup.addActor (newGame);
-		widgetGroup.addActor (continueGame);
-		widgetGroup.addActor (selectedLVL);
 		widgetGroup.addActor (back);
+	}
+	
+	private void createButton (){
+		createButtonStyle ();
+		
+		createNewGameButton ();
+		createContinueGameButton ();
+		createSelectedLVLButton ();
+		createBackButton ();
+		
 		stage.addActor (widgetGroup);
 	}
 	

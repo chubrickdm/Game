@@ -1,5 +1,7 @@
 package com.game.screens;
 
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.game.MyGame;
 
 import com.badlogic.gdx.Gdx;
@@ -9,18 +11,21 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.addition.Font;
 
-public class MainMenuScreen implements Screen{
+public class QuitGameScreen implements Screen{
+	private Label.LabelStyle labelStyle;
 	private TextButton.TextButtonStyle normalStyle;
 	private WidgetGroup widgetGroup = new WidgetGroup ();
 	private Stage stage = new Stage (new ScreenViewport ());
 	
 	
-	private void createButtonStyle (){
+	private void createStyle (){
 		TextureAtlas buttonAtlas = new TextureAtlas ("core/assets/images/button.atlas");
 		Skin skin = new Skin ();
 		skin.addRegions (buttonAtlas);
@@ -31,58 +36,54 @@ public class MainMenuScreen implements Screen{
 		normalStyle.up = skin.getDrawable ("button_up");
 		normalStyle.over = skin.getDrawable ("button_checked");
 		normalStyle.down = skin.getDrawable ("button_checked");
+		
+		labelStyle = new Label.LabelStyle ();
+		labelStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
 	}
 	
-	private void createPlayButton (){
-		TextButton play;
-		play = new TextButton ("Играть", normalStyle);
-		play.addListener (new ClickListener (){
-			@Override
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (new SelectedModeScreen ());
-			}
-		});
-		play.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
-				Gdx.graphics.getHeight () / 2 + MyGame.BUTTON_H + MyGame.DISTANCE_BETWEEN_BUTTONS,
-				MyGame.BUTTON_W, MyGame.BUTTON_H);
-		widgetGroup.addActor (play);
+	private void createQuestionLabel (){
+		Label question = new Label ("Вы действительно хотите выйти", labelStyle);
+		question.setPosition (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_FONT_SIZE * 8,
+				Gdx.graphics.getHeight () / 2);
+		widgetGroup.addActor (question);
 	}
 	
-	private void createSettingsButton (){
-		TextButton settings;
-		settings = new TextButton ("Настройки", normalStyle);
-		settings.addListener (new ClickListener (){
+	private void createReturnButton (){
+		TextButton returnn;
+		returnn = new TextButton ("Вернуться", normalStyle);
+		returnn.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (new SettingsScreen ());
+				MyGame.getInstance ().setScreen (new MainMenuScreen ());
 			}
 		});
-		settings.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
-				Gdx.graphics.getHeight () / 2, MyGame.BUTTON_W, MyGame.BUTTON_H);
-		widgetGroup.addActor (settings);
-	}
-	
-	private void createExitButton (){
-		TextButton exit;
-		exit = new TextButton ("Выход", normalStyle);
-		exit.addListener (new ClickListener (){
-			@Override
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (new QuitGameScreen ());
-			}
-		});
-		exit.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
+		returnn.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
 				Gdx.graphics.getHeight () / 2 - MyGame.BUTTON_H - MyGame.DISTANCE_BETWEEN_BUTTONS,
 				MyGame.BUTTON_W, MyGame.BUTTON_H);
-		widgetGroup.addActor (exit);
+		widgetGroup.addActor (returnn);
+	}
+	
+	private void createQuitButton (){
+		TextButton quit;
+		quit = new TextButton ("Выйти", normalStyle);
+		quit.addListener (new ClickListener (){
+			@Override
+			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
+				Gdx.app.exit ();
+			}
+		});
+		quit.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
+				Gdx.graphics.getHeight () / 2 - 2 * (MyGame.BUTTON_H + MyGame.DISTANCE_BETWEEN_BUTTONS),
+				MyGame.BUTTON_W, MyGame.BUTTON_H);
+		widgetGroup.addActor (quit);
 	}
 	
 	private void createButton (){
-		createButtonStyle ();
+		createStyle ();
 		
-		createPlayButton ();
-		createSettingsButton ();
-		createExitButton ();
+		createQuestionLabel ();
+		createReturnButton ();
+		createQuitButton ();
 		
 		stage.addActor (widgetGroup);
 	}
@@ -101,6 +102,10 @@ public class MainMenuScreen implements Screen{
 		Gdx.gl.glClearColor (0, 0, 0, 1);
 		Gdx.gl.glClear (GL20.GL_COLOR_BUFFER_BIT);
 		
+		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
+			Gdx.app.exit ();
+		}
+		
 		stage.act (delta);
 		stage.draw ();
 	}
@@ -118,7 +123,5 @@ public class MainMenuScreen implements Screen{
 	public void hide (){ }
 	
 	@Override
-	public void dispose (){
-		stage.dispose ();
-	}
+	public void dispose (){ }
 }

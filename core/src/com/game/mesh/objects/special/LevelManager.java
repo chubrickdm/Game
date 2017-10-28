@@ -7,6 +7,7 @@ import com.game.MyGame;
 import com.game.messages.GameMessage;
 import com.game.mesh.objects.GameObject;
 import com.game.screens.MainMenuScreen;
+import com.game.screens.SelectedModeScreen;
 
 
 public class LevelManager extends GameObject{
@@ -24,7 +25,7 @@ public class LevelManager extends GameObject{
 	@Override
 	public void update (){
 		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
-			MyGame.getInstance ().setScreen (new MainMenuScreen ());
+			MyGame.getInstance ().setScreen (new SelectedModeScreen ());
 		}
 	}
 	
