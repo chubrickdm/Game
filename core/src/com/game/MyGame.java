@@ -2,6 +2,7 @@ package com.game;
 
 import com.badlogic.gdx.Game;
 
+import com.game.addition.ParseXML;
 import com.game.mesh.objects.GameObject;
 import com.game.screens.MainMenuScreen;
 
@@ -25,6 +26,7 @@ public class MyGame extends Game{
 	
 	@Override
 	public void create (){
+		ParseXML.parseSettings ();
 		setScreen (new MainMenuScreen ());
 	}
 }

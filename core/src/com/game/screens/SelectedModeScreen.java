@@ -12,13 +12,35 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.game.GameSystem;
 import com.game.MyGame;
 
 public class SelectedModeScreen implements Screen{
 	private Stage stage;
+	private TextButton.TextButtonStyle normalStyle;
+	private TextButton.TextButtonStyle closedStyle;
 	
+	
+	private void createButtonStyle (){
+		TextureAtlas buttonAtlas = new TextureAtlas ("core/assets/images/button.atlas");
+		Skin skin = new Skin ();
+		skin.addRegions (buttonAtlas);
+		
+		
+		normalStyle = new TextButton.TextButtonStyle ();
+		normalStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
+		normalStyle.up = skin.getDrawable ("button_up");
+		normalStyle.over = skin.getDrawable ("button_checked");
+		normalStyle.down = skin.getDrawable ("button_checked");
+		
+		closedStyle = new TextButton.TextButtonStyle ();
+		closedStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
+		closedStyle.up = skin.getDrawable ("button_closed");
+	}
 	
 	private void createButton (){
+		createButtonStyle ();
+		
 		WidgetGroup widgetGroup = new WidgetGroup ();
 		TextButton newGame;
 		TextButton continueGame;
@@ -28,64 +50,57 @@ public class SelectedModeScreen implements Screen{
 		stage = new Stage (new ScreenViewport ());
 		
 		
-		TextureAtlas buttonAtlas = new TextureAtlas ("core/assets/images/button.atlas");
-		Skin skin = new Skin ();
-		skin.addRegions (buttonAtlas);
-		
-		TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle ();
-		textButtonStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf",
-				MyGame.BUTTON_FONT_SIZE, Color.WHITE);
-		textButtonStyle.up = skin.getDrawable ("button_up");
-		textButtonStyle.over = skin.getDrawable ("button_checked");
-		textButtonStyle.down = skin.getDrawable ("button_checked");
-		
-		
-		newGame = new TextButton ("Новая игра", textButtonStyle);
+		newGame = new TextButton ("Новая игра", normalStyle);
 		newGame.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
 				/////////////////////////
 			}
 		});
-		newGame.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
-				Gdx.graphics.getHeight () / 2 + 2 * MyGame.BUTTON_H + 2 * MyGame.DISTANCE_BETWEEN_BUTTONS,
-				MyGame.BUTTON_W, MyGame.BUTTON_H);
+		newGame.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2, Gdx.graphics.getHeight () / 2 + 2 * MyGame.BUTTON_H + 2 * MyGame.DISTANCE_BETWEEN_BUTTONS, MyGame.BUTTON_W, MyGame.BUTTON_H);
 		
 		
-		continueGame = new TextButton ("Продолжить", textButtonStyle);
+		continueGame = new TextButton ("Продолжить", normalStyle);
+		if (GameSystem.IS_FIRST_GAME_START){
+			continueGame.setStyle (closedStyle);
+		}
 		continueGame.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				//////////////////////
+				if (!GameSystem.IS_FIRST_GAME_START){
+					MyGame.getInstance ().setScreen (new PlayScreen ());
+				}
 			}
 		});
 		continueGame.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
-				Gdx.graphics.getHeight () / 2 + MyGame.BUTTON_H + MyGame.DISTANCE_BETWEEN_BUTTONS,
-				MyGame.BUTTON_W, MyGame.BUTTON_H);
+				Gdx.graphics.getHeight () / 2 + MyGame.BUTTON_H + MyGame.DISTANCE_BETWEEN_BUTTONS, MyGame.BUTTON_W,
+				MyGame.BUTTON_H);
 		
 		
-		selectedLVL = new TextButton ("Уровни", textButtonStyle);
+		selectedLVL = new TextButton ("Уровни", normalStyle);
+		if (GameSystem.IS_FIRST_GAME_START){
+			selectedLVL.setStyle (closedStyle);
+		}
 		selectedLVL.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				////////////////////
+				if (!GameSystem.IS_FIRST_GAME_START){
+					/////////////////////
+				}
 			}
 		});
-		selectedLVL.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
-				Gdx.graphics.getHeight () / 2,
+		selectedLVL.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2, Gdx.graphics.getHeight () / 2,
 				MyGame.BUTTON_W, MyGame.BUTTON_H);
 		
 		
-		back = new TextButton ("Назад", textButtonStyle);
+		back = new TextButton ("Назад", normalStyle);
 		back.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
 				MyGame.getInstance ().setScreen (new MainMenuScreen ());
 			}
 		});
-		back.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
-				Gdx.graphics.getHeight () / 2 - MyGame.BUTTON_H - MyGame.DISTANCE_BETWEEN_BUTTONS,
-				MyGame.BUTTON_W, MyGame.BUTTON_H);
+		back.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2, Gdx.graphics.getHeight () / 2 - MyGame.BUTTON_H - MyGame.DISTANCE_BETWEEN_BUTTONS, MyGame.BUTTON_W, MyGame.BUTTON_H);
 		
 		
 		widgetGroup.addActor (newGame);
@@ -93,7 +108,6 @@ public class SelectedModeScreen implements Screen{
 		widgetGroup.addActor (selectedLVL);
 		widgetGroup.addActor (back);
 		stage.addActor (widgetGroup);
-		
 	}
 	
 	

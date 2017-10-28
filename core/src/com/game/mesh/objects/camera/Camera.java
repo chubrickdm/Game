@@ -72,7 +72,7 @@ public class Camera extends GameObject{
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
 			}
 			else{
-				if ((Math.abs (msg.spriteOldX - firstCharacterSpriteX) < 2) && (Math.abs (msg.spriteOldY - firstCharacterSpriteY) < 2)){
+				if ((Math.abs (msg.spriteOldX - firstCharacterSpriteX) < 5) && (Math.abs (msg.spriteOldY - firstCharacterSpriteY) < 5)){
 					//System.out.println ("First moved.");
 					cameraDeltaY = character.getSpriteY () - firstCharacterSpriteY;
 					camera.moveY (cameraDeltaY);

@@ -1,6 +1,7 @@
 package com.game.screens;
 
 import com.badlogic.gdx.Screen;
+import com.game.GameSystem;
 import com.game.addition.ParseXML;
 import com.game.mesh.objects.special.ObjectManager;
 
@@ -9,7 +10,7 @@ public class PlayScreen implements Screen{
 	@Override
 	public void show (){
 		ObjectManager.getInstance ();
-		ParseXML.parseLVL (1);
+		ParseXML.parseLVL (GameSystem.CURRENT_LEVEL);
 	}
 	
 	@Override
