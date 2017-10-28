@@ -7,22 +7,23 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.MyGame;
 
-
-public class MainMenuScreen implements Screen{
+public class SelectedModeScreen implements Screen{
 	private Stage stage;
 	
 	
-	public MainMenuScreen (){
+	private void createButton (){
 		WidgetGroup widgetGroup = new WidgetGroup ();
-		TextButton play;
-		TextButton settings;
-		TextButton exit;
+		TextButton newGame;
+		TextButton continueGame;
+		TextButton selectedLVL;
+		TextButton back;
 		
 		stage = new Stage (new ScreenViewport ());
 		
@@ -31,7 +32,7 @@ public class MainMenuScreen implements Screen{
 		Skin skin = new Skin ();
 		skin.addRegions (buttonAtlas);
 		
-		TextButtonStyle textButtonStyle = new TextButtonStyle ();
+		TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle ();
 		textButtonStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf",
 				MyGame.BUTTON_FONT_SIZE, Color.WHITE);
 		textButtonStyle.up = skin.getDrawable ("button_up");
@@ -39,51 +40,70 @@ public class MainMenuScreen implements Screen{
 		textButtonStyle.down = skin.getDrawable ("button_checked");
 		
 		
-		play = new TextButton ("Играть", textButtonStyle);
-		play.addListener (new ClickListener (){
+		newGame = new TextButton ("Новая игра", textButtonStyle);
+		newGame.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (new SelectedModeScreen ());
+				/////////////////////////
 			}
 		});
-		play.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
+		newGame.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
+				Gdx.graphics.getHeight () / 2 + 2 * MyGame.BUTTON_H + 2 * MyGame.DISTANCE_BETWEEN_BUTTONS,
+				MyGame.BUTTON_W, MyGame.BUTTON_H);
+		
+		
+		continueGame = new TextButton ("Продолжить", textButtonStyle);
+		continueGame.addListener (new ClickListener (){
+			@Override
+			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
+				//////////////////////
+			}
+		});
+		continueGame.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
 				Gdx.graphics.getHeight () / 2 + MyGame.BUTTON_H + MyGame.DISTANCE_BETWEEN_BUTTONS,
 				MyGame.BUTTON_W, MyGame.BUTTON_H);
 		
 		
-		settings = new TextButton ("Настройки", textButtonStyle);
-		settings.addListener (new ClickListener (){
+		selectedLVL = new TextButton ("Уровни", textButtonStyle);
+		selectedLVL.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (new SettingsScreen ());
+				////////////////////
 			}
 		});
-		settings.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
-				Gdx.graphics.getHeight () / 2, MyGame.BUTTON_W, MyGame.BUTTON_H);
+		selectedLVL.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
+				Gdx.graphics.getHeight () / 2,
+				MyGame.BUTTON_W, MyGame.BUTTON_H);
 		
 		
-		exit = new TextButton ("Выход", textButtonStyle);
-		exit.addListener (new ClickListener (){
+		back = new TextButton ("Назад", textButtonStyle);
+		back.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				Gdx.app.exit ();
+				MyGame.getInstance ().setScreen (new MainMenuScreen ());
 			}
 		});
-		exit.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
+		back.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
 				Gdx.graphics.getHeight () / 2 - MyGame.BUTTON_H - MyGame.DISTANCE_BETWEEN_BUTTONS,
 				MyGame.BUTTON_W, MyGame.BUTTON_H);
 		
-		widgetGroup.addActor (play);
-		widgetGroup.addActor (exit);
-		widgetGroup.addActor (settings);
+		
+		widgetGroup.addActor (newGame);
+		widgetGroup.addActor (continueGame);
+		widgetGroup.addActor (selectedLVL);
+		widgetGroup.addActor (back);
 		stage.addActor (widgetGroup);
+		
+	}
+	
+	
+	@Override
+	public void show (){
+		createButton ();
 		
 		// Устанавливаем нашу сцену основным процессором для ввода
 		Gdx.input.setInputProcessor (stage);
 	}
-	
-	@Override
-	public void show (){ }
 	
 	@Override
 	public void render (float delta){
@@ -107,7 +127,5 @@ public class MainMenuScreen implements Screen{
 	public void hide (){ }
 	
 	@Override
-	public void dispose (){
-		stage.dispose ();
-	}
+	public void dispose (){ }
 }

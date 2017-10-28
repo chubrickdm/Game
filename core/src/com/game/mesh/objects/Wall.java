@@ -11,14 +11,12 @@ public class Wall extends GameObject{
 	public static final float WALL_W = UNIT;
 	public static final float WALL_H = UNIT * 3;
 	
-	private boolean horizon = false;
-	
 	
 	public Wall (boolean isHorizonWall, float x, float y){
 		objectType = ObjectType.wall;
-		horizon = isHorizonWall;
+	
 		body = new BodyObject ("core/assets/images/wall.png", x, y, WALL_W, WALL_H, WALL_W, WALL_H);
-		if (horizon){
+		if (isHorizonWall){
 			body.rotate90 ();
 		}
 		dataRender = new DataRender (body.sprite, LayerType.wall);

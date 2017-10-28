@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Matrix4;
 import com.game.GameSystem;
 
 public class BodyCamera{
-	private float x;
 	private float y;
 	private OrthographicCamera camera;
 	
@@ -16,7 +15,6 @@ public class BodyCamera{
 	}
 	
 	private BodyCamera (){
-		x = GameSystem.SCREEN_W / 2;
 		y = GameSystem.SCREEN_H / 2;
 		camera = new OrthographicCamera (GameSystem.SCREEN_W, GameSystem.SCREEN_H);
 		camera.setToOrtho (false);
@@ -28,7 +26,7 @@ public class BodyCamera{
 	}
 	
 	public void update (){
-		camera.update ();;
+		camera.update ();
 	}
 	
 	public Matrix4 getProjectionMatrix (){
@@ -43,9 +41,5 @@ public class BodyCamera{
 	public void setPositionY (float y){
 		camera.translate (0, y - this.y);
 		this.y = y;
-	}
-	
-	public float getPositionY (){
-		return y;
 	}
 }

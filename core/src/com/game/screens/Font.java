@@ -11,9 +11,7 @@ public final class Font{
 			"ПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,";
 	
 	
-	private Font (){
-	
-	}
+	private Font (){ }
 	
 	
 	public static BitmapFont generateFont (String path, int size, Color color){

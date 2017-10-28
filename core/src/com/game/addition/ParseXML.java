@@ -30,23 +30,21 @@ public abstract class ParseXML{
 	private static int h;
 	
 	
-	private static Document getLVLDocument (int level){
+	private static Document getDocument (String fromIDEA, String fromDesktop){
 		Document document;
 		try{
 			DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance ().newDocumentBuilder ();
 			
 			
 			URLDecoder decoder = new URLDecoder ();
-			StringBuffer path = new StringBuffer (decoder.decode (ParseXML.class.getProtectionDomain ().getCodeSource ().getLocation ().getPath ()));
+			StringBuilder path = new StringBuilder (decoder.decode (ParseXML.class.getProtectionDomain ().getCodeSource ().getLocation ().getPath ()));
 			int index = path.lastIndexOf (GameSystem.NAME_JAR_ARCHIVE);
 			if (index == -1){
-				document = documentBuilder.parse ("core/assets/xml/levels/lvl" + String.valueOf (level) + ".tmx");
+				document = documentBuilder.parse (fromIDEA);
 			}
 			else{
 				path.delete (index, path.length ());
-				path.append ("/resourse/xml/levels/lvl");
-				path.append (String.valueOf (level));
-				path.append (".tmx");
+				path.append (fromDesktop);
 				document = documentBuilder.parse (path.toString ());
 			}
 			return document;
@@ -87,10 +85,11 @@ public abstract class ParseXML{
 	public static void parseLVL (int level){
 		float indent; //отсутп по оси Х
 		String currObjectGroup;
-		Document document = getLVLDocument (level);
-		
+		Document document = getDocument ("core/assets/xml/levels/lvl" + String.valueOf (level) + ".tmx",
+				"/resourse/xml/levels/lvl" + String.valueOf (level) + ".tmx");
 		
 		Node map = document.getDocumentElement ();
+		
 		
 		levelH = Integer.parseInt (map.getAttributes ().item (5).getTextContent ()); //tile height
 		levelH *= Integer.parseInt (map.getAttributes ().item (0).getTextContent ()); //height
@@ -134,6 +133,32 @@ public abstract class ParseXML{
 	}
 	
 	public static void parseSettings (){
-	
+		String currField;
+		Document document = getDocument ("core/assets/xml/settings.xml", "/resourse/xml/settings.xml");
+		
+		
+		Node root = document.getDocumentElement ();
+		
+		NodeList fieldList = root.getChildNodes ();
+		for (int i = 0; i < fieldList.getLength (); i++){
+			Node field = fieldList.item (i);
+			
+			if (field.getNodeType () != Node.TEXT_NODE){
+				currField = field.getAttributes ().item (0).getTextContent ();
+				
+				if (currField.equals ("numLevels")){
+					GameSystem.NUM_LEVELS = Integer.parseInt (field.getTextContent ());
+				}
+				else if (currField.equals ("isFirstGameStart")){
+					GameSystem.IS_FIRST_GAME_START = Boolean.parseBoolean (field.getTextContent ());
+				}
+				else if (currField.equals ("numPassedLevels")){
+					GameSystem.NUM_PASSED_LEVELS = Integer.parseInt (field.getTextContent ());
+				}
+				else if (currField.equals ("currentLevel")){
+					GameSystem.CURRENT_LEVEL = Integer.parseInt (field.getTextContent ());
+				}
+			}
+		}
 	}
 }
