@@ -5,7 +5,33 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
+
 public class ParseSettings extends ParseBasis{
+	private static void saveChanges (Document document){
+		try{
+			Transformer transformer = TransformerFactory.newInstance ().newTransformer ();
+			DOMSource source = new DOMSource (document);
+			StreamResult result;
+			if (isFromIDEA){
+				result = new StreamResult (new File (pathFromIDEA));
+			}
+			else{
+				result = new StreamResult (new File (pathFromDesktop));
+			}
+			transformer.transform (source, result);
+		}
+		catch (TransformerException ex){
+			ex.printStackTrace (System.out);
+		}
+	}
+	
+	
 	public static void parseSettings (){
 		String currField;
 		Document document = getDocument ("core/assets/xml/settings.xml", "/resourse/xml/settings.xml");
@@ -51,18 +77,22 @@ public class ParseSettings extends ParseBasis{
 				currField = field.getAttributes ().item (0).getTextContent ();
 				
 				if (currField.equals ("numLevels")){
-					field.setNodeValue (String.valueOf (GameSystem.NUM_LEVELS));
+					field.setTextContent (String.valueOf (GameSystem.NUM_LEVELS));
 				}
 				else if (currField.equals ("isFirstGameStart")){
-					field.setNodeValue (String.valueOf (GameSystem.IS_FIRST_GAME_START));
+					System.out.println (field.getTextContent ());
+					field.setTextContent (String.valueOf (GameSystem.IS_FIRST_GAME_START));
+					System.out.println (field.getTextContent ());
 				}
 				else if (currField.equals ("numPassedLevels")){
-					field.setNodeValue (String.valueOf (GameSystem.NUM_PASSED_LEVELS));
+					field.setTextContent (String.valueOf (GameSystem.NUM_PASSED_LEVELS));
 				}
 				else if (currField.equals ("currentLevel")){
-					field.setNodeValue (String.valueOf (GameSystem.CURRENT_LEVEL));
+					field.setTextContent (String.valueOf (GameSystem.CURRENT_LEVEL));
 				}
 			}
 		}
+		
+		saveChanges (document);
 	}
 }

@@ -13,14 +13,10 @@ import com.game.mesh.objects.special.ObjectManager;
 import com.game.mesh.objects.Wall;
 import com.game.mesh.objects.character.Character;
 
-import java.util.ArrayList;
-
 import static com.game.mesh.objects.GameObject.ASPECT_RATIO;
 
 public abstract class ParseLevel extends ParseBasis{
 	private static boolean characterIsSelected = true;
-	private static int levelW; //ширина уровня умноженная на аспект ратио
-	private static int levelH; //высота уровня умноженная на аспект ратио
 	private static int x;
 	private static int y;
 	private static int w;
@@ -76,6 +72,8 @@ public abstract class ParseLevel extends ParseBasis{
 	
 	
 	public static void parseLVL (int level){
+		int levelW; //ширина уровня умноженная на аспект ратио
+		int levelH; //высота уровня умноженная на аспект ратио
 		float indent; //отсутп по оси Х
 		String currObjectGroup;
 		Document document = getDocument ("core/assets/xml/levels/lvl" + String.valueOf (level) + ".tmx",
