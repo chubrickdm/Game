@@ -1,12 +1,13 @@
-package com.game.addition;
+package com.game.addition.parsers;
 
-
-import com.game.GameSystem;
+import com.game.mesh.objects.ActionWheel;
+import com.game.mesh.objects.camera.Camera;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.game.GameSystem;
 import com.game.mesh.objects.special.ObjectManager;
 import com.game.mesh.objects.Wall;
 import com.game.mesh.objects.character.Character;
@@ -73,9 +74,15 @@ public abstract class ParseXML{
 		y = (int) (levelH - y * ASPECT_RATIO - w * ASPECT_RATIO);
 		if (characterIsSelected){
 			character = new Character (true, x, y);
+			
+			//Обязательно надо установить позицию колеса, а то оно будет появляться не в том месте!
+			ActionWheel.getInstance ().initializePosition (x, y);
+			Camera.getInstance ().setFirstCharacterBodyPosition (x, y);
+			
 			characterIsSelected = false;
 		}
 		else{
+			Camera.getInstance ().setSecondCharacterBodyPosition (x, y);
 			character = new Character (false, x, y);
 		}
 		ObjectManager.getInstance ().addObject (character);
@@ -157,6 +164,36 @@ public abstract class ParseXML{
 				}
 				else if (currField.equals ("currentLevel")){
 					GameSystem.CURRENT_LEVEL = Integer.parseInt (field.getTextContent ());
+				}
+			}
+		}
+	}
+	
+	public static void writeSettings (){
+		String currField;
+		Document document = getDocument ("core/assets/xml/settings.xml", "/resourse/xml/settings.xml");
+		
+		
+		Node root = document.getDocumentElement ();
+		
+		NodeList fieldList = root.getChildNodes ();
+		for (int i = 0; i < fieldList.getLength (); i++){
+			Node field = fieldList.item (i);
+			
+			if (field.getNodeType () != Node.TEXT_NODE){
+				currField = field.getAttributes ().item (0).getTextContent ();
+				
+				if (currField.equals ("numLevels")){
+					field.setNodeValue (String.valueOf (GameSystem.NUM_LEVELS));
+				}
+				else if (currField.equals ("isFirstGameStart")){
+					field.setNodeValue (String.valueOf (GameSystem.IS_FIRST_GAME_START));
+				}
+				else if (currField.equals ("numPassedLevels")){
+					field.setNodeValue (String.valueOf (GameSystem.NUM_PASSED_LEVELS));
+				}
+				else if (currField.equals ("currentLevel")){
+					field.setNodeValue (String.valueOf (GameSystem.CURRENT_LEVEL));
 				}
 			}
 		}

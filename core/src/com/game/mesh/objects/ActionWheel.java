@@ -10,7 +10,6 @@ import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
 
-
 public class ActionWheel extends GameObject{
 	public static final float percentPerTick = 2;
 	public static final float WHEEL_W = UNIT * 2;

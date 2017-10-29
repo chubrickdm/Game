@@ -2,21 +2,17 @@ package com.game.screens;
 
 import com.badlogic.gdx.Screen;
 
-import com.game.GameSystem;
-import com.game.addition.ParseXML;
-import com.game.mesh.objects.special.ObjectManager;
+import com.game.mesh.objects.special.LevelManager;
 
 public class PlayScreen implements Screen{
 	@Override
 	public void show (){
-		ObjectManager.getInstance ();
-		ParseXML.parseLVL (GameSystem.CURRENT_LEVEL);
+		LevelManager.getInstance ().createLevel ();
 	}
 	
 	@Override
 	public void render (float delta){
-		ObjectManager.getInstance ().update ();
-		ObjectManager.getInstance ().draw ();
+		LevelManager.getInstance ().updateLevel ();
 	}
 	
 	@Override
@@ -32,5 +28,7 @@ public class PlayScreen implements Screen{
 	public void hide (){ }
 	
 	@Override
-	public void dispose (){ }
+	public void dispose (){
+		LevelManager.getInstance ().closeLevel ();
+	}
 }

@@ -15,12 +15,6 @@ public class ObjectManager extends GameObject{
 	private LinkedList <GameObject> objects;
 	
 	
-	private void initialize (){
-		objects.add (ActionWheel.getInstance ()); //начальная позиция инициализируется в классе Character
-		objects.add (Camera.getInstance ()); //инициализируются позиции персонажей в классе Character
-		objects.add (LevelManager.getInstance ());
-	}
-	
 	private static class ObjectManagerHolder{
 		private final static ObjectManager instance = new ObjectManager ();
 	}
@@ -29,7 +23,6 @@ public class ObjectManager extends GameObject{
 		iterator = 0;
 		messages = new LinkedList <GameMessage> ();
 		objects = new LinkedList <GameObject> ();
-		initialize ();
 	}
 	
 	
@@ -64,6 +57,12 @@ public class ObjectManager extends GameObject{
 			obj.draw ();
 		}
 		Render.getInstance ().renderScene ();
+	}
+	
+	public void clear (){
+		messages.clear ();
+		objects.clear ();
+		iterator = 0;
 	}
 	
 	public void addMessage (GameMessage msg){

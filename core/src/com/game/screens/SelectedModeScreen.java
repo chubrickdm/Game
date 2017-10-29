@@ -13,9 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
 import com.game.GameSystem;
 import com.game.MyGame;
 import com.game.addition.Font;
+import com.game.mesh.objects.special.LevelManager;
 
 public class SelectedModeScreen implements Screen{
 	private TextButton.TextButtonStyle normalStyle;
@@ -47,7 +49,8 @@ public class SelectedModeScreen implements Screen{
 		newGame.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				/////////////////////////
+				LevelManager.getInstance ().newGame ();
+				MyGame.getInstance ().setScreen (new PlayScreen ());
 			}
 		});
 		newGame.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2, Gdx.graphics.getHeight () / 2 + 2 * MyGame.BUTTON_H + 2 * MyGame.DISTANCE_BETWEEN_BUTTONS, MyGame.BUTTON_W, MyGame.BUTTON_H);
