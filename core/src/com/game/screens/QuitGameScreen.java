@@ -1,8 +1,7 @@
 package com.game.screens;
 
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.game.MyGame;
+import com.game.addition.Font;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,11 +11,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.game.addition.Font;
 
 public class QuitGameScreen implements Screen{
 	private Label.LabelStyle labelStyle;
@@ -102,10 +101,6 @@ public class QuitGameScreen implements Screen{
 		Gdx.gl.glClearColor (0, 0, 0, 1);
 		Gdx.gl.glClear (GL20.GL_COLOR_BUFFER_BIT);
 		
-		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
-			Gdx.app.exit ();
-		}
-		
 		stage.act (delta);
 		stage.draw ();
 	}
@@ -123,5 +118,7 @@ public class QuitGameScreen implements Screen{
 	public void hide (){ }
 	
 	@Override
-	public void dispose (){ }
+	public void dispose (){
+		stage.dispose ();
+	}
 }

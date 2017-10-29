@@ -1,6 +1,7 @@
 package com.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -23,7 +24,7 @@ public class SelectedModeScreen implements Screen{
 	private Stage stage = new Stage (new ScreenViewport ());
 	
 	
-	private void createButtonStyle (){
+	private void createStyle (){
 		TextureAtlas buttonAtlas = new TextureAtlas ("core/assets/images/button.atlas");
 		Skin skin = new Skin ();
 		skin.addRegions (buttonAtlas);
@@ -106,7 +107,7 @@ public class SelectedModeScreen implements Screen{
 	}
 	
 	private void createButton (){
-		createButtonStyle ();
+		createStyle ();
 		
 		createNewGameButton ();
 		createContinueGameButton ();
@@ -129,6 +130,10 @@ public class SelectedModeScreen implements Screen{
 	public void render (float delta){
 		Gdx.gl.glClearColor (0, 0, 0, 1);
 		Gdx.gl.glClear (GL20.GL_COLOR_BUFFER_BIT);
+		
+		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
+			MyGame.getInstance ().setScreen (new MainMenuScreen ());
+		}
 		
 		stage.act (delta);
 		stage.draw ();

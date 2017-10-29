@@ -9,7 +9,6 @@ import com.game.mesh.objects.special.ObjectManager;
 import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.character.Character;
 
-
 public class Camera extends GameObject{
 	private float cameraDeltaY = 0;
 	private float firstCharacterSpriteX = -1;
@@ -73,27 +72,25 @@ public class Camera extends GameObject{
 			}
 			else{
 				if ((Math.abs (msg.spriteOldX - firstCharacterSpriteX) < 5) && (Math.abs (msg.spriteOldY - firstCharacterSpriteY) < 5)){
-					//System.out.println ("First moved.");
-					cameraDeltaY = character.getSpriteY () - firstCharacterSpriteY;
-					camera.moveY (cameraDeltaY);
 					firstCharacterSpriteX = character.getSpriteX ();
 					firstCharacterSpriteY = character.getSpriteY ();
 				}
 				else{
-					//System.out.println ("Second moved.");
-					cameraDeltaY = character.getSpriteY () - secondCharacterSpriteY;
-					camera.moveY (cameraDeltaY);
 					secondCharacterSpriteX = character.getSpriteX ();
 					secondCharacterSpriteY = character.getSpriteY ();
 				}
+				
+				cameraDeltaY = msg.deltaY;
+				camera.moveY (cameraDeltaY);
 			}
 		}
 		else if (message.type == MessageType.characterSelected){
 			Character character = (Character) message.object;
 			camera.setPositionY (character.getSpriteY () + Character.CHARACTER_H / 2);
 		}
-		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
+		else if (message.type == MessageType.pushOut){
 			camera.moveY (-cameraDeltaY);
+			cameraDeltaY = 0;
 		}
 	}
 	

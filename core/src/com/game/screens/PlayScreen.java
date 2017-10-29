@@ -6,7 +6,6 @@ import com.game.GameSystem;
 import com.game.addition.ParseXML;
 import com.game.mesh.objects.special.ObjectManager;
 
-
 public class PlayScreen implements Screen{
 	@Override
 	public void show (){
@@ -21,27 +20,17 @@ public class PlayScreen implements Screen{
 	}
 	
 	@Override
-	public void resize (int width, int height){
-		
-	}
+	public void resize (int width, int height){ }
 	
 	@Override
-	public void pause (){
-		
-	}
+	public void pause (){ }
 	
 	@Override
-	public void resume (){
-		
-	}
+	public void resume (){ }
 	
 	@Override
-	public void hide (){
-		
-	}
+	public void hide (){ }
 	
 	@Override
-	public void dispose (){
-	
-	}
+	public void dispose (){ }
 }

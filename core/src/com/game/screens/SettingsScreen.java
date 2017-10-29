@@ -1,8 +1,10 @@
 package com.game.screens;
 
 import com.game.MyGame;
+import com.game.addition.Font;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.game.addition.Font;
 
 public class SettingsScreen implements Screen{
 	private TextButton.TextButtonStyle normalStyle;
@@ -22,7 +23,7 @@ public class SettingsScreen implements Screen{
 	private Stage stage = new Stage (new ScreenViewport ());
 	
 	
-	private void createButtonStyle (){
+	private void createStyle (){
 		TextureAtlas buttonAtlas = new TextureAtlas ("core/assets/images/button.atlas");
 		Skin skin = new Skin ();
 		skin.addRegions (buttonAtlas);
@@ -96,7 +97,7 @@ public class SettingsScreen implements Screen{
 	}
 	
 	private void createButton (){
-		createButtonStyle ();
+		createStyle ();
 		
 		createVideoButton ();
 		createControlButton ();
@@ -120,6 +121,10 @@ public class SettingsScreen implements Screen{
 		Gdx.gl.glClearColor (0, 0, 0, 1);
 		Gdx.gl.glClear (GL20.GL_COLOR_BUFFER_BIT);
 		
+		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
+			MyGame.getInstance ().setScreen (new MainMenuScreen ());
+		}
+		
 		stage.act (delta);
 		stage.draw ();
 	}
@@ -137,5 +142,7 @@ public class SettingsScreen implements Screen{
 	public void hide (){ }
 	
 	@Override
-	public void dispose (){ }
+	public void dispose (){
+		stage.dispose ();
+	}
 }

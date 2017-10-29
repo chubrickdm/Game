@@ -11,8 +11,8 @@ import java.util.LinkedList;
 
 public class ObjectManager extends GameObject{
 	private int iterator = 0;
-	private LinkedList <GameObject> objects;
 	private LinkedList <GameMessage> messages;
+	private LinkedList <GameObject> objects;
 	
 	
 	private void initialize (){

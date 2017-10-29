@@ -16,7 +16,6 @@ import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
 
-
 public class Character extends GameObject{
 	public static final float CHARACTER_W = UNIT;
 	public static final float CHARACTER_H = UNIT;
@@ -41,16 +40,14 @@ public class Character extends GameObject{
 		if (!Gdx.input.isKeyPressed (Input.Keys.S)){
 			if (angleMove == -1){
 				angleMove = 0;
-				deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 			}
 			else if (angleMove == 2){
-				deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 				angleMove = 1;
 			}
 			else if (angleMove == 6){
-				deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 				angleMove = 7;
 			}
+			deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
 	
@@ -58,16 +55,14 @@ public class Character extends GameObject{
 		if (!Gdx.input.isKeyPressed (Input.Keys.A)){
 			if (angleMove == -1){
 				angleMove = 2;
-				deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 			}
 			else if (angleMove == 0){
-				deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 				angleMove = 1;
 			}
 			else if (angleMove == 4){
-				deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 				angleMove = 3;
 			}
+			deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
 	
@@ -75,16 +70,14 @@ public class Character extends GameObject{
 		if (!Gdx.input.isKeyPressed (Input.Keys.W)){
 			if (angleMove == -1){
 				angleMove = 4;
-				deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 			}
 			else if (angleMove == 2){
-				deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 				angleMove = 3;
 			}
 			else if (angleMove == 4){
-				deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 				angleMove = 5;
 			}
+			deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
 	
@@ -92,16 +85,14 @@ public class Character extends GameObject{
 		if (!Gdx.input.isKeyPressed (Input.Keys.D)){
 			if (angleMove == -1){
 				angleMove = 6;
-				deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 			}
 			else if (angleMove == 0){
-				deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 				angleMove = 7;
 			}
 			else if (angleMove == 4){
-				deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 				angleMove = 5;
 			}
+			deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
 	
@@ -126,7 +117,7 @@ public class Character extends GameObject{
 		else if (deltaX != 0 || deltaY != 0){
 			action = ActionType.movement;
 			body.move (deltaX, deltaY);
-			ObjectManager.getInstance ().addMessage (new MoveMessage (this,
+			ObjectManager.getInstance ().addMessage (new MoveMessage (this, deltaY,
 					body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect,
 					body.getSpriteX () - deltaX, body.getSpriteY () - deltaY));
 		}
