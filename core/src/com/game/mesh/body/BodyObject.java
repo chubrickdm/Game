@@ -30,7 +30,6 @@ public class BodyObject extends Body{
 	public void rotate90 (){
 		sprite.rotate90 (true);
 		sprite.setSize (sprite.getHeight (), sprite.getWidth ());
-		bodyRect = new BodyRectangle (bodyRect.getX () + bodyShiftX, bodyRect.getY () + bodyShiftY,
-				sprite.getWidth (), sprite.getHeight ());
+		bodyRect = new BodyRectangle (bodyRect.getX (), bodyRect.getY (), bodyRect.getH (), bodyRect.getW ());
 	}
 }

@@ -33,7 +33,7 @@
   <object id="49" x="1152" y="192" width="64" height="192"/>
   <object id="50" x="0" y="192" width="64" height="192"/>
  </objectgroup>
- <objectgroup name="invisibaleWall">
+ <objectgroup name="invisibleWall">
   <object id="51" x="640" y="320" width="192" height="64"/>
   <object id="52" x="832" y="320" width="192" height="64"/>
   <object id="53" x="1024" y="320" width="192" height="64"/>

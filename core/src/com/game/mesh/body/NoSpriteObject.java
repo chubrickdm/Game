@@ -40,4 +40,9 @@ public class NoSpriteObject extends Body{
 		spriteX += deltaX;
 		spriteY += deltaY;
 	}
+	
+	@Override
+	public void rotate90 (){
+		bodyRect = new BodyRectangle (bodyRect.getX (), bodyRect.getY (), bodyRect.getH (), bodyRect.getW ());
+	}
 }

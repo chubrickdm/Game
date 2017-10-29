@@ -5,7 +5,8 @@ import com.badlogic.gdx.Input;
 
 import com.game.GameSystem;
 import com.game.MyGame;
-import com.game.addition.parsers.ParseXML;
+import com.game.addition.parsers.ParseLevel;
+import com.game.addition.parsers.ParseSettings;
 import com.game.mesh.objects.ActionWheel;
 import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.camera.Camera;
@@ -31,12 +32,12 @@ public class LevelManager extends GameObject{
 		GameSystem.IS_FIRST_GAME_START = true;
 		GameSystem.CURRENT_LEVEL = 1;
 		GameSystem.NUM_PASSED_LEVELS = 0;
-		ParseXML.writeSettings ();
+		ParseSettings.writeSettings ();
 	}
 	
 	public void createLevel (){
 		ObjectManager.getInstance ();
-		ParseXML.parseLVL (GameSystem.CURRENT_LEVEL);
+		ParseLevel.parseLVL (GameSystem.CURRENT_LEVEL);
 		
 		ObjectManager.getInstance ().addObject (ActionWheel.getInstance ());
 		ObjectManager.getInstance ().addObject (Camera.getInstance ());
@@ -44,7 +45,7 @@ public class LevelManager extends GameObject{
 		
 		if (GameSystem.IS_FIRST_GAME_START){
 			GameSystem.IS_FIRST_GAME_START = false;
-			ParseXML.writeSettings ();
+			ParseSettings.writeSettings ();
 		}
 	}
 	
