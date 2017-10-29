@@ -1,6 +1,7 @@
 package com.game.addition.parsers;
 
 import com.game.mesh.objects.ActionWheel;
+import com.game.mesh.objects.FinishLevel;
 import com.game.mesh.objects.InvisibleWall;
 import com.game.mesh.objects.camera.Camera;
 import org.w3c.dom.Document;
@@ -11,6 +12,8 @@ import com.game.GameSystem;
 import com.game.mesh.objects.special.ObjectManager;
 import com.game.mesh.objects.Wall;
 import com.game.mesh.objects.character.Character;
+
+import java.util.ArrayList;
 
 import static com.game.mesh.objects.GameObject.ASPECT_RATIO;
 
@@ -26,7 +29,6 @@ public abstract class ParseLevel extends ParseBasis{
 	
 	private static void createWall (){
 		Wall wall;
-		y = (int) (levelH - y * ASPECT_RATIO - h * ASPECT_RATIO);
 		if (w > h){
 			wall = new Wall (true, x, y);
 		}
@@ -38,17 +40,18 @@ public abstract class ParseLevel extends ParseBasis{
 	
 	private static void createCharacter (){
 		Character character;
-		y = (int) (levelH - y * ASPECT_RATIO - w * ASPECT_RATIO);
 		if (characterIsSelected){
 			character = new Character (true, x, y);
 			
 			//Обязательно надо установить позицию колеса, а то оно будет появляться не в том месте!
 			ActionWheel.getInstance ().initializePosition (x, y);
 			Camera.getInstance ().setFirstCharacterBodyPosition (x, y);
+			FinishLevel.getInstance ().setFirstCharacterBodyPosition (x, y);
 			
 			characterIsSelected = false;
 		}
 		else{
+			FinishLevel.getInstance ().setSecondCharacterBodyPosition (x, y);
 			Camera.getInstance ().setSecondCharacterBodyPosition (x, y);
 			character = new Character (false, x, y);
 		}
@@ -57,7 +60,6 @@ public abstract class ParseLevel extends ParseBasis{
 	
 	private static void createInvisibleWall (){
 		InvisibleWall invisibleWall;
-		y = (int) (levelH - y * ASPECT_RATIO - h * ASPECT_RATIO);
 		if (w > h){
 			invisibleWall = new InvisibleWall (true, x, y);
 		}
@@ -65,6 +67,11 @@ public abstract class ParseLevel extends ParseBasis{
 			invisibleWall = new InvisibleWall (false, x, y);
 		}
 		ObjectManager.getInstance ().addObject (invisibleWall);
+	}
+	
+	private static void createLevelFinish (){
+		FinishLevel.getInstance ().initialize (x, y, w, h);
+		ObjectManager.getInstance ().addObject (FinishLevel.getInstance ());
 	}
 	
 	
@@ -100,11 +107,16 @@ public abstract class ParseLevel extends ParseBasis{
 					Node object = objects.item (j);
 					
 					if (object.getNodeType () != Node.TEXT_NODE){
+						w = Integer.parseInt (object.getAttributes ().item (2).getTextContent ());
+						w = (int) (w * ASPECT_RATIO);
+						h = Integer.parseInt (object.getAttributes ().item (0).getTextContent ());
+						h = (int) (h * ASPECT_RATIO);
+						
 						x = Integer.parseInt (object.getAttributes ().item (3).getTextContent ());
 						x = (int) (x * ASPECT_RATIO + indent);
 						y = Integer.parseInt (object.getAttributes ().item (4).getTextContent ());
-						w = Integer.parseInt (object.getAttributes ().item (2).getTextContent ());
-						h = Integer.parseInt (object.getAttributes ().item (0).getTextContent ());
+						y = (int) (levelH - y * ASPECT_RATIO - h);
+						
 						
 						if (currObjectGroup.equals ("wall")){
 							createWall ();
@@ -114,6 +126,9 @@ public abstract class ParseLevel extends ParseBasis{
 						}
 						else if (currObjectGroup.equals ("invisibleWall")){
 							createInvisibleWall ();
+						}
+						else if (currObjectGroup.equals ("finishLevel")){
+							createLevelFinish ();
 						}
 					}
 				}

@@ -60,4 +60,32 @@ public class BodyRectangle{
 		
 		return false;
 	}
+	
+	public boolean contains (BodyRectangle rect){
+		int tmpI = 0;
+		
+		if ((rect.getX () <= x + w) && (rect.getY () <= y + h) &&
+				(rect.getX () >= x) && (rect.getY () >= y)){
+			tmpI++;
+		}
+		if ((rect.getX () + rect.getW () <= x + w) && (rect.getY () <= y + h) &&
+				(rect.getX () + rect.getW () >= x) && (rect.getY () >= y)){
+			tmpI++;
+		}
+		if ((rect.getX () <= x + w) && (rect.getY () + rect.getH () <= y + h) &&
+				(rect.getX () >= x) && (rect.getY () + rect.getH () >= y)){
+			tmpI++;
+		}
+		if ((rect.getX () + rect.getW () <= x + w) && (rect.getY () + rect.getH () <= y + h) &&
+				(rect.getX () + rect.getW () >= x) && (rect.getY () + rect.getH () >= y)){
+			tmpI++;
+		}
+		
+		if (tmpI == 4){
+			return  true;
+		}
+		else{
+			return false;
+		}
+	}
 }

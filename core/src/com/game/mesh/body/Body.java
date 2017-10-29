@@ -19,6 +19,10 @@ public class Body{
 		return bodyRect.intersects (bodyRectangle);
 	}
 	
+	public boolean contains (BodyRectangle bodyRectangle){
+		return bodyRect.contains (bodyRectangle);
+	}
+	
 	public float getBodyX (){
 		return bodyRect.getX ();
 	}

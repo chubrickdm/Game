@@ -9,14 +9,14 @@ import com.game.messages.MoveMessage;
 import com.game.messages.PushOutMessage;
 
 public class InvisibleWall extends GameObject{
-	public static final float WALL_W = UNIT;
-	public static final float WALL_H = UNIT * 3;
+	public static final float INVISIBLE_WALL_W = Wall.WALL_W;
+	public static final float INVISIBLE_WALL_H = Wall.WALL_H;
 	
 	
 	public InvisibleWall (boolean isHorizonWall, float x, float y){
 		objectType = ObjectType.invisibleWall;
 		
-		body = new NoSpriteObject (x, y, WALL_W, WALL_H, WALL_W, WALL_H);
+		body = new NoSpriteObject (x, y, INVISIBLE_WALL_W, INVISIBLE_WALL_H, INVISIBLE_WALL_W, INVISIBLE_WALL_H);
 		if (isHorizonWall){
 			body.rotate90 ();
 		}

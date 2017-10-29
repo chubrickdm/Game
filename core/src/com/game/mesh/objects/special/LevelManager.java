@@ -67,9 +67,8 @@ public class LevelManager extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move && message.objectType == ObjectType.character){
-			Character character = (Character) message.object;
-			
+		if (message.type == MessageType.levelComplete){
+			MyGame.getInstance ().setScreen (new SelectedModeScreen ());
 		}
 	}
 	
