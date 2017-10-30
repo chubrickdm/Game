@@ -205,4 +205,7 @@ public class Character extends GameObject{
 		dataRender.sprite = currSprite;
 		Render.getInstance ().addDataForRender (dataRender);
 	}
+	
+	@Override
+	public void clear (){ }
 }

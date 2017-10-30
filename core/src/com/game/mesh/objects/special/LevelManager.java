@@ -8,15 +8,35 @@ import com.game.MyGame;
 import com.game.addition.parsers.ParseLevel;
 import com.game.addition.parsers.ParseSettings;
 import com.game.mesh.objects.ActionWheel;
-import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.camera.Camera;
-import com.game.mesh.objects.character.Character;
 import com.game.messages.GameMessage;
 import com.game.mesh.objects.GameObject;
 import com.game.messages.MessageType;
 import com.game.screens.SelectedModeScreen;
 
 public class LevelManager extends GameObject{
+	private void completeLevel (){
+		ObjectManager.getInstance ().clear ();
+		
+		if (GameSystem.CURRENT_LEVEL != GameSystem.NUM_LEVELS){
+			GameSystem.CURRENT_LEVEL++;
+		}
+		else{
+			GameSystem.GAME_OVER = true;
+		}
+		if (GameSystem.NUM_PASSED_LEVELS != GameSystem.NUM_LEVELS){
+			GameSystem.NUM_PASSED_LEVELS++;
+		}
+		ParseSettings.writeSettings ();
+		
+		MyGame.getInstance ().setScreen (new SelectedModeScreen ());
+	}
+	
+	private void closeLevel (){
+		ObjectManager.getInstance ().clear ();
+		MyGame.getInstance ().setScreen (new SelectedModeScreen ());
+	}
+	
 	private static class LevelManagerHolder{
 		private final static LevelManager instance = new LevelManager ();
 	}
@@ -32,11 +52,12 @@ public class LevelManager extends GameObject{
 		GameSystem.IS_FIRST_GAME_START = true;
 		GameSystem.CURRENT_LEVEL = 1;
 		GameSystem.NUM_PASSED_LEVELS = 0;
+		GameSystem.GAME_OVER = false;
+		
 		ParseSettings.writeSettings ();
 	}
 	
 	public void createLevel (){
-		ObjectManager.getInstance ();
 		ParseLevel.parseLVL (GameSystem.CURRENT_LEVEL);
 		
 		ObjectManager.getInstance ().addObject (ActionWheel.getInstance ());
@@ -54,24 +75,23 @@ public class LevelManager extends GameObject{
 		ObjectManager.getInstance ().draw ();
 	}
 	
-	public void closeLevel (){
-		ObjectManager.getInstance ().clear ();
-	}
-	
 	@Override
 	public void update (){
 		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
-			MyGame.getInstance ().setScreen (new SelectedModeScreen ());
+			closeLevel ();
 		}
 	}
 	
 	@Override
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.levelComplete){
-			MyGame.getInstance ().setScreen (new SelectedModeScreen ());
+			completeLevel ();
 		}
 	}
 	
 	@Override
 	public void draw (){ }
+	
+	@Override
+	public void clear (){ }
 }

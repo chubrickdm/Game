@@ -58,6 +58,9 @@ public class ParseSettings extends ParseBasis{
 				else if (currField.equals ("currentLevel")){
 					GameSystem.CURRENT_LEVEL = Integer.parseInt (field.getTextContent ());
 				}
+				else if (currField.equals ("gameOver")){
+					GameSystem.GAME_OVER = Boolean.parseBoolean (field.getTextContent ());
+				}
 			}
 		}
 	}
@@ -87,6 +90,9 @@ public class ParseSettings extends ParseBasis{
 				}
 				else if (currField.equals ("currentLevel")){
 					field.setTextContent (String.valueOf (GameSystem.CURRENT_LEVEL));
+				}
+				else if (currField.equals ("gameOver")){
+					field.setTextContent (String.valueOf (GameSystem.GAME_OVER));
 				}
 			}
 		}

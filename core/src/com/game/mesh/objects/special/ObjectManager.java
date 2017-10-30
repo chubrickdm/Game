@@ -59,7 +59,11 @@ public class ObjectManager extends GameObject{
 		Render.getInstance ().renderScene ();
 	}
 	
+	@Override
 	public void clear (){
+		for (GameObject obj : objects){
+			obj.clear ();
+		}
 		messages.clear ();
 		objects.clear ();
 		iterator = 0;

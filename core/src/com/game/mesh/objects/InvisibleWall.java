@@ -28,4 +28,7 @@ public class InvisibleWall extends GameObject{
 	
 	@Override
 	public void draw (){ }
+	
+	@Override
+	public void clear (){ }
 }

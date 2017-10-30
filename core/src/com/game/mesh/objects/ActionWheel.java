@@ -91,4 +91,11 @@ public class ActionWheel extends GameObject{
 			Render.getInstance ().addDataForRender (dataRender);
 		}
 	}
+	
+	@Override
+	public void clear (){
+		body.setOrigin (WHEEL_H / 2, WHEEL_H / 2);
+		body.setScale (percentSize / 100);
+		body.setSpritePosition (WHEEL_H / 2, WHEEL_H / 2);
+	}
 }

@@ -37,18 +37,18 @@ public abstract class ParseLevel extends ParseBasis{
 	private static void createCharacter (){
 		Character character;
 		if (characterIsSelected){
-			character = new Character (true, x, y);
-			
 			//Обязательно надо установить позицию колеса, а то оно будет появляться не в том месте!
 			ActionWheel.getInstance ().initializePosition (x, y);
 			Camera.getInstance ().setFirstCharacterBodyPosition (x, y);
 			FinishLevel.getInstance ().setFirstCharacterBodyPosition (x, y);
 			
+			character = new Character (true, x, y);
 			characterIsSelected = false;
 		}
 		else{
 			FinishLevel.getInstance ().setSecondCharacterBodyPosition (x, y);
 			Camera.getInstance ().setSecondCharacterBodyPosition (x, y);
+			
 			character = new Character (false, x, y);
 		}
 		ObjectManager.getInstance ().addObject (character);
@@ -67,6 +67,7 @@ public abstract class ParseLevel extends ParseBasis{
 	
 	
 	public static void parseLVL (int level){
+		characterIsSelected = true;
 		int levelW; //ширина уровня умноженная на аспект ратио
 		int levelH; //высота уровня умноженная на аспект ратио
 		float indent; //отсутп по оси Х
@@ -110,17 +111,19 @@ public abstract class ParseLevel extends ParseBasis{
 						y = (int) (levelH - y * ASPECT_RATIO - h);
 						
 						
-						if (currObjectGroup.equals ("wall")){
+						switch (currObjectGroup){
+						case "wall":
 							createWall ();
-						}
-						else if (currObjectGroup.equals ("characters")){
+							break;
+						case "characters":
 							createCharacter ();
-						}
-						else if (currObjectGroup.equals ("invisibleWall")){
+							break;
+						case "invisibleWall":
 							createInvisibleWall ();
-						}
-						else if (currObjectGroup.equals ("finishLevel")){
+							break;
+						case "finishLevel":
 							createLevelFinish ();
+							break;
 						}
 					}
 				}

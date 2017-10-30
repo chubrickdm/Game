@@ -20,4 +20,5 @@ public abstract class GameObject{
 	abstract public void update ();
 	abstract public void sendMessage (GameMessage message);
 	abstract public void draw ();
+	abstract public void clear ();
 }

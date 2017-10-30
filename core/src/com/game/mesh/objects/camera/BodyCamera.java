@@ -10,19 +10,10 @@ public class BodyCamera{
 	private OrthographicCamera camera;
 	
 	
-	private static class BodyCameraHolder{
-		private final static BodyCamera instance = new BodyCamera ();
-	}
-	
-	private BodyCamera (){
+	public BodyCamera (){
 		y = GameSystem.SCREEN_H / 2;
 		camera = new OrthographicCamera (GameSystem.SCREEN_W, GameSystem.SCREEN_H);
 		camera.setToOrtho (false);
-	}
-	
-	
-	public static BodyCamera getInstance (){
-		return BodyCameraHolder.instance;
 	}
 	
 	public void update (){

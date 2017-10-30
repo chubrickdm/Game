@@ -28,7 +28,5 @@ public class PlayScreen implements Screen{
 	public void hide (){ }
 	
 	@Override
-	public void dispose (){
-		LevelManager.getInstance ().closeLevel ();
-	}
+	public void dispose (){ }
 }
