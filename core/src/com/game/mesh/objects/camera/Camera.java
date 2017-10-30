@@ -64,13 +64,13 @@ public class Camera extends GameObject{
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			Character character = (Character) message.object;
 			MoveMessage msg = (MoveMessage) message;
-			if (Math.abs (character.getSpriteY () - firstCharacterSpriteY) > GameSystem.SCREEN_H / 2 - GameObject.UNIT){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
-			}
-			else if (Math.abs (character.getSpriteY () - secondCharacterSpriteY) > GameSystem.SCREEN_H / 2 - GameObject.UNIT){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
-			}
-			else{
+			//if (Math.abs (character.getSpriteY () - firstCharacterSpriteY) > GameSystem.SCREEN_H / 2 - GameObject.UNIT){
+			//	ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
+			//}
+			//else if (Math.abs (character.getSpriteY () - secondCharacterSpriteY) > GameSystem.SCREEN_H / 2 - GameObject.UNIT){
+			//	ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
+			//}
+			//else{
 				if ((Math.abs (msg.spriteOldX - firstCharacterSpriteX) < 5) && (Math.abs (msg.spriteOldY - firstCharacterSpriteY) < 5)){
 					firstCharacterSpriteX = character.getSpriteX ();
 					firstCharacterSpriteY = character.getSpriteY ();
@@ -82,7 +82,7 @@ public class Camera extends GameObject{
 				
 				cameraDeltaY = msg.deltaY;
 				camera.moveY (cameraDeltaY);
-			}
+			//}
 		}
 		else if (message.type == MessageType.characterSelected){
 			Character character = (Character) message.object;

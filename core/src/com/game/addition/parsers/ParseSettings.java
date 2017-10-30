@@ -80,9 +80,7 @@ public class ParseSettings extends ParseBasis{
 					field.setTextContent (String.valueOf (GameSystem.NUM_LEVELS));
 				}
 				else if (currField.equals ("isFirstGameStart")){
-					System.out.println (field.getTextContent ());
 					field.setTextContent (String.valueOf (GameSystem.IS_FIRST_GAME_START));
-					System.out.println (field.getTextContent ());
 				}
 				else if (currField.equals ("numPassedLevels")){
 					field.setTextContent (String.valueOf (GameSystem.NUM_PASSED_LEVELS));

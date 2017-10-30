@@ -2,7 +2,6 @@ package com.game;
 
 import com.badlogic.gdx.Game;
 
-import com.game.addition.parsers.ParseLevel;
 import com.game.addition.parsers.ParseSettings;
 import com.game.mesh.objects.GameObject;
 import com.game.screens.MainMenuScreen;

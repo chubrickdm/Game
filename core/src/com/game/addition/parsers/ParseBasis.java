@@ -24,7 +24,6 @@ public abstract class ParseBasis{
 		try{
 			DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance ().newDocumentBuilder ();
 			
-			
 			URLDecoder decoder = new URLDecoder ();
 			StringBuilder path = new StringBuilder (decoder.decode (ParseLevel.class.getProtectionDomain ().getCodeSource ().getLocation ().getPath ()));
 			int index = path.lastIndexOf (GameSystem.NAME_JAR_ARCHIVE);

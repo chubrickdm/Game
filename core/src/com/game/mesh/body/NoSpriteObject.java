@@ -3,10 +3,10 @@ package com.game.mesh.body;
 import com.game.addition.math.BodyRectangle;
 
 public class NoSpriteObject extends Body{
-	private float spriteX;
-	private float spriteY;
-	private float bodyShiftX;
-	private float bodyShiftY;
+	private float spriteX = 0;
+	private float spriteY = 0;
+	private float bodyShiftX = 0;
+	private float bodyShiftY = 0;
 	
 	
 	public NoSpriteObject (float x, float y, float w, float h, float bodyW, float bodyH){
@@ -15,6 +15,10 @@ public class NoSpriteObject extends Body{
 		bodyShiftX = (w - bodyW) / 2;
 		bodyShiftY = (h - bodyH) / 2;
 		bodyRect = new BodyRectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
+	}
+	
+	public NoSpriteObject (float x, float y, float bodyW, float bodyH){
+		bodyRect = new BodyRectangle (x, y, bodyW, bodyH);
 	}
 	
 	@Override
@@ -39,10 +43,5 @@ public class NoSpriteObject extends Body{
 		bodyRect.move (deltaX, deltaY);
 		spriteX += deltaX;
 		spriteY += deltaY;
-	}
-	
-	@Override
-	public void rotate90 (){
-		bodyRect = new BodyRectangle (bodyRect.getX (), bodyRect.getY (), bodyRect.getH (), bodyRect.getW ());
 	}
 }

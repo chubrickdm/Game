@@ -56,12 +56,7 @@ public abstract class ParseLevel extends ParseBasis{
 	
 	private static void createInvisibleWall (){
 		InvisibleWall invisibleWall;
-		if (w > h){
-			invisibleWall = new InvisibleWall (true, x, y);
-		}
-		else{
-			invisibleWall = new InvisibleWall (false, x, y);
-		}
+		invisibleWall = new InvisibleWall (x, y, w, h);
 		ObjectManager.getInstance ().addObject (invisibleWall);
 	}
 	
@@ -76,8 +71,7 @@ public abstract class ParseLevel extends ParseBasis{
 		int levelH; //высота уровня умноженная на аспект ратио
 		float indent; //отсутп по оси Х
 		String currObjectGroup;
-		Document document = getDocument ("core/assets/xml/levels/lvl" + String.valueOf (level) + ".tmx",
-				"/resourse/xml/levels/lvl" + String.valueOf (level) + ".tmx");
+		Document document = getDocument ("core/assets/xml/levels/lvl" + String.valueOf (level) + ".tmx", "/resourse/xml/levels/lvl" + String.valueOf (level) + ".tmx");
 		
 		Node map = document.getDocumentElement ();
 		
