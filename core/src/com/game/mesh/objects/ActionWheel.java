@@ -3,6 +3,8 @@ package com.game.mesh.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+import com.game.MyGame;
+import com.game.mesh.objects.special.ObjectManager;
 import com.game.messages.*;
 import com.game.mesh.body.NoBodyObject;
 import com.game.mesh.objects.character.Character;
@@ -61,11 +63,6 @@ public class ActionWheel extends GameObject{
 		return ActionWheelHolder.instance;
 	}
 	
-	public void initializePosition (float coordCharacterX, float coordCharacterY){
-		body.setSpritePosition (coordCharacterX + Character.CHARACTER_W / 2,
-				coordCharacterY + Character.CHARACTER_H / 2);
-	}
-	
 	@Override
 	public void update (){
 		updateSizeAnimation ();
@@ -82,6 +79,14 @@ public class ActionWheel extends GameObject{
 			Character character = (Character) message.object;
 			body.setSpritePosition (character.getSpriteX () + Character.CHARACTER_W / 2,
 					character.getSpriteY () + Character.CHARACTER_H / 2);
+		}
+		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
+			ReturnPositionMessage msg = (ReturnPositionMessage) message;
+			Character character = (Character) message.object;
+			if (character.getIsSelected ()){
+				body.setSpritePosition (msg.spriteX + Character.CHARACTER_W / 2,
+						msg.spriteY + Character.CHARACTER_H / 2);
+			}
 		}
 	}
 	

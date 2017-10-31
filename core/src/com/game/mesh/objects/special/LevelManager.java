@@ -11,10 +11,14 @@ import com.game.mesh.objects.ActionWheel;
 import com.game.mesh.objects.camera.Camera;
 import com.game.messages.GameMessage;
 import com.game.mesh.objects.GameObject;
+import com.game.messages.GetPositionMessage;
 import com.game.messages.MessageType;
 import com.game.screens.SelectedModeScreen;
 
 public class LevelManager extends GameObject{
+	private boolean isFirstUpdate = true;
+	
+	
 	private void completeLevel (){
 		ObjectManager.getInstance ().clear ();
 		
@@ -80,6 +84,10 @@ public class LevelManager extends GameObject{
 		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
 			closeLevel ();
 		}
+		if (isFirstUpdate){
+			isFirstUpdate = false;
+			ObjectManager.getInstance ().addMessage (new GetPositionMessage (this));
+		}
 	}
 	
 	@Override
@@ -93,5 +101,7 @@ public class LevelManager extends GameObject{
 	public void draw (){ }
 	
 	@Override
-	public void clear (){ }
+	public void clear (){
+		isFirstUpdate = true;
+	}
 }

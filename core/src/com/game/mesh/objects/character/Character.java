@@ -166,6 +166,10 @@ public class Character extends GameObject{
 		return body.getSpriteY ();
 	}
 	
+	public boolean getIsSelected (){
+		return isSelected;
+	}
+	
 	@Override
 	public void update (){
 		updateMoveAnimation ();
@@ -197,6 +201,9 @@ public class Character extends GameObject{
 			isPushOut = true;
 			PushOutMessage msg = (PushOutMessage) message;
 			body.setBodyPosition (msg.whereBodyX, msg.whereBodyY);
+		}
+		else if (message.type == MessageType.getPosition){
+			ObjectManager.getInstance ().addMessage (new ReturnPositionMessage (this, getSpriteX (), getSpriteY ()));
 		}
 	}
 	

@@ -17,6 +17,24 @@ public class Camera extends GameObject{
 	private BodyCamera camera;
 	
 	
+	private void setFirstCharacterBodyPosition (float spriteX, float spriteY){
+		firstCharacterSpriteX = spriteX;
+		firstCharacterSpriteY = spriteY;
+		
+		if (firstCharacterSpriteY > secondCharacterSpriteY){
+			camera.setPositionY (spriteY + Character.CHARACTER_H / 2);
+		}
+	}
+	
+	private void setSecondCharacterBodyPosition (float spriteX, float spriteY){
+		secondCharacterSpriteX = spriteX;
+		secondCharacterSpriteY = spriteY;
+		
+		if (secondCharacterSpriteY > firstCharacterSpriteY){
+			camera.setPositionY (spriteY + Character.CHARACTER_H / 2);
+		}
+	}
+	
 	private static class CameraHolder{
 		private final static Camera instance = new Camera ();
 	}
@@ -29,24 +47,6 @@ public class Camera extends GameObject{
 	
 	public static Camera getInstance (){
 		return CameraHolder.instance;
-	}
-	
-	public void setFirstCharacterBodyPosition (float spriteX, float spriteY){
-		firstCharacterSpriteX = spriteX;
-		firstCharacterSpriteY = spriteY;
-		
-		if (firstCharacterSpriteY > secondCharacterSpriteY){
-			camera.setPositionY (spriteY + Character.CHARACTER_H / 2);
-		}
-	}
-	
-	public void setSecondCharacterBodyPosition (float spriteX, float spriteY){
-		secondCharacterSpriteX = spriteX;
-		secondCharacterSpriteY = spriteY;
-		
-		if (secondCharacterSpriteY > firstCharacterSpriteY){
-			camera.setPositionY (spriteY + Character.CHARACTER_H / 2);
-		}
 	}
 	
 	public Matrix4 getProjectionMatrix (){
@@ -84,6 +84,16 @@ public class Camera extends GameObject{
 		else if (message.type == MessageType.pushOut){
 			camera.moveY (-cameraDeltaY);
 			cameraDeltaY = 0;
+		}
+		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
+			ReturnPositionMessage msg = (ReturnPositionMessage) message;
+			Character character = (Character) message.object;
+			if (character.getIsSelected ()){
+				setFirstCharacterBodyPosition (msg.spriteX, msg.spriteY);
+			}
+			else{
+				setSecondCharacterBodyPosition (msg.spriteX, msg.spriteY);
+			}
 		}
 	}
 	

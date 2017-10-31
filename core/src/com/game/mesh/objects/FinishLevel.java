@@ -15,6 +15,16 @@ public class FinishLevel extends GameObject{
 	private float secondCharacterSpriteY = -1;
 	
 	
+	private void setFirstCharacterBodyPosition (float spriteX, float spriteY){
+		firstCharacterSpriteX = spriteX;
+		firstCharacterSpriteY = spriteY;
+	}
+	
+	private void setSecondCharacterBodyPosition (float spriteX, float spriteY){
+		secondCharacterSpriteX = spriteX;
+		secondCharacterSpriteY = spriteY;
+	}
+	
 	private static class FinishLevelHolder{
 		private final static FinishLevel instance = new FinishLevel ();
 	}
@@ -30,16 +40,6 @@ public class FinishLevel extends GameObject{
 	
 	public void initialize (float x, float y, float w, float h){
 		body = new NoSpriteObject (x, y, w, h, w, h);
-	}
-	
-	public void setFirstCharacterBodyPosition (float spriteX, float spriteY){
-		firstCharacterSpriteX = spriteX;
-		firstCharacterSpriteY = spriteY;
-	}
-	
-	public void setSecondCharacterBodyPosition (float spriteX, float spriteY){
-		secondCharacterSpriteX = spriteX;
-		secondCharacterSpriteY = spriteY;
 	}
 	
 	@Override
@@ -88,6 +88,16 @@ public class FinishLevel extends GameObject{
 				else{
 					secondOnFinish = true;
 				}
+			}
+		}
+		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
+			ReturnPositionMessage msg = (ReturnPositionMessage) message;
+			Character character = (Character) message.object;
+			if (character.getIsSelected ()){
+				setFirstCharacterBodyPosition (msg.spriteX, msg.spriteY);
+			}
+			else{
+				setSecondCharacterBodyPosition (msg.spriteX, msg.spriteY);
 			}
 		}
 	}

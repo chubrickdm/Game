@@ -37,18 +37,10 @@ public abstract class ParseLevel extends ParseBasis{
 	private static void createCharacter (){
 		Character character;
 		if (characterIsSelected){
-			//Обязательно надо установить позицию колеса, а то оно будет появляться не в том месте!
-			ActionWheel.getInstance ().initializePosition (x, y);
-			Camera.getInstance ().setFirstCharacterBodyPosition (x, y);
-			FinishLevel.getInstance ().setFirstCharacterBodyPosition (x, y);
-			
 			character = new Character (true, x, y);
 			characterIsSelected = false;
 		}
 		else{
-			FinishLevel.getInstance ().setSecondCharacterBodyPosition (x, y);
-			Camera.getInstance ().setSecondCharacterBodyPosition (x, y);
-			
 			character = new Character (false, x, y);
 		}
 		ObjectManager.getInstance ().addObject (character);
