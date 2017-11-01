@@ -1,19 +1,17 @@
 package com.game.addition.parsers;
 
-import com.game.mesh.objects.ActionWheel;
 import com.game.mesh.objects.FinishLevel;
 import com.game.mesh.objects.InvisibleWall;
-import com.game.mesh.objects.camera.Camera;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import com.game.GameSystem;
 import com.game.mesh.objects.special.ObjectManager;
 import com.game.mesh.objects.Wall;
 import com.game.mesh.objects.character.Character;
 
 import static com.game.mesh.objects.GameObject.ASPECT_RATIO;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public abstract class ParseLevel extends ParseBasis{
 	private static boolean characterIsSelected = true;

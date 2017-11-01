@@ -15,12 +15,12 @@ public class Body{
 		bodyRect.move (deltaX, deltaY);
 	}
 	
-	public boolean intersects (BodyRectangle bodyRectangle){
-		return bodyRect.intersects (bodyRectangle);
+	public boolean intersects (float x, float y, float w, float h){
+		return bodyRect.intersects (x, y, w, h);
 	}
 	
-	public boolean contains (BodyRectangle bodyRectangle){
-		return bodyRect.contains (bodyRectangle);
+	public boolean contains (float x, float y, float w, float h){
+		return bodyRect.contains (x, y, w, h);
 	}
 	
 	public float getBodyX (){
@@ -29,6 +29,14 @@ public class Body{
 	
 	public float getBodyY (){
 		return bodyRect.getY ();
+	}
+	
+	public float getBodyW (){
+		return bodyRect.getW ();
+	}
+	
+	public float getBodyH (){
+		return bodyRect.getH ();
 	}
 	
 	public float getSpriteX (){

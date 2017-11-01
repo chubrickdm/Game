@@ -4,13 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import com.game.GameSystem;
 import com.game.mesh.objects.ObjectType;
-import com.game.mesh.objects.ActionWheel;
 import com.game.mesh.objects.GameObject;
 import com.game.messages.*;
 import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.body.NoSpriteObject;
-import com.game.mesh.objects.camera.Camera;
 import com.game.mesh.objects.special.ObjectManager;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
@@ -25,12 +24,15 @@ public class Character extends GameObject{
 	public static final int FRAME_COLS = 4;
 	public static final int FRAME_ROWS = 1;
 	
+	
+	
 	private boolean isSelected = false;
 	private boolean isPushOut = false;
 	private float deltaX = 0;
 	private float deltaY = 0;
 	private float time = 0;
 	private int angleMove = 0;
+	private CharacterName name = CharacterName.unknown;
 	private ActionType action;
 	private Sprite currSprite;
 	private ObjectAnimation moveAnimation;
@@ -117,11 +119,11 @@ public class Character extends GameObject{
 		else if (deltaX != 0 || deltaY != 0){
 			action = ActionType.movement;
 			body.move (deltaX, deltaY);
-			ObjectManager.getInstance ().addMessage (new MoveMessage (this, deltaY,
-					body.getBodyX () - deltaX, body.getBodyY () - deltaY, body.bodyRect,
-					body.getSpriteX () - deltaX, body.getSpriteY () - deltaY));
+			ObjectManager.getInstance ().addMessage (new MoveMessage (this, deltaX, deltaY,
+					body.getBodyX () - deltaX, body.getBodyY () - deltaY,
+					body.getSpriteX () - deltaX, body.getSpriteY () - deltaY, body.getBodyW (),
+					body.getBodyH ()));
 		}
-		
 		
 		
 		if (angleMove == -1){
@@ -145,10 +147,17 @@ public class Character extends GameObject{
 	}
 	
 	
-	public Character (boolean isSelected, float x, float y){
+	public Character (float x, float y){
 		objectType = ObjectType.character;
 		action = ActionType.stand;
-		this.isSelected = isSelected;
+		if (x < GameSystem.SCREEN_W / 2){
+			isSelected = true;
+			name = CharacterName.first;
+		}
+		else{
+			isSelected = false;
+			name = CharacterName.second;
+		}
 		
 		body = new NoSpriteObject (x, y, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
 		
@@ -158,16 +167,12 @@ public class Character extends GameObject{
 		dataRender = new DataRender (currSprite, LayerType.character);
 	}
 	
-	public float getSpriteX (){
-		return body.getSpriteX ();
-	}
-	
-	public float getSpriteY (){
-		return body.getSpriteY ();
-	}
-	
 	public boolean getIsSelected (){
 		return isSelected;
+	}
+	
+	public CharacterName getName (){
+		return name;
 	}
 	
 	@Override
@@ -187,13 +192,14 @@ public class Character extends GameObject{
 				action = ActionType.stand;
 			}
 			else{
-				ObjectManager.getInstance ().addMessage (new CharacterSelectedMessage (this));
+				ObjectManager.getInstance ().addMessage (new CharacterSelectedMessage (this, body.getSpriteX (),
+						body.getSpriteY ()));
 				isSelected = true;
 			}
 		}
 		else if (message.type == MessageType.move && message.object != this && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
-			if (body.intersects (msg.bodyRectangle)){
+			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
 			}
 		}
@@ -203,7 +209,8 @@ public class Character extends GameObject{
 			body.setBodyPosition (msg.whereBodyX, msg.whereBodyY);
 		}
 		else if (message.type == MessageType.getPosition){
-			ObjectManager.getInstance ().addMessage (new ReturnPositionMessage (this, getSpriteX (), getSpriteY ()));
+			ObjectManager.getInstance ().addMessage (new ReturnPositionMessage (this, body.getSpriteX (),
+					body.getSpriteY ()));
 		}
 	}
 	

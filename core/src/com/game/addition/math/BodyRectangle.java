@@ -40,44 +40,44 @@ public class BodyRectangle{
 		return h;
 	}
 	
-	public boolean intersects (BodyRectangle rect){
-		if ((rect.getX () <= x + w) && (rect.getY () <= y + h) &&
-				(rect.getX () >= x) && (rect.getY () >= y)){
+	public boolean intersects (float x, float y, float w, float h){
+		if ((this.x <= x + w) && (this.y <= y + h) &&
+				(this.x >= x) && (this.y >= y)){
 			return true;
 		}
-		else if ((rect.getX () + rect.getW () <= x + w) && (rect.getY () <= y + h) &&
-				(rect.getX () + rect.getW () >= x) && (rect.getY () >= y)){
+		else if ((this.x + this.w <= x + w) && (this.y <= y + h) &&
+				(this.x + this.w >= x) && (this.y >= y)){
 			return true;
 		}
-		else if ((rect.getX () <= x + w) && (rect.getY () + rect.getH () <= y + h) &&
-				(rect.getX () >= x) && (rect.getY () + rect.getH () >= y)){
+		else if ((this.x <= x + w) && (this.y + this.h <= y + h) &&
+				(this.x >= x) && (this.y + this.h >= y)){
 			return true;
 		}
-		else if ((rect.getX () + rect.getW () <= x + w) && (rect.getY () + rect.getH () <= y + h) &&
-				(rect.getX () + rect.getW () >= x) && (rect.getY () + rect.getH () >= y)){
+		else if ((this.x + this.w <= x + w) && (this.y + this.h <= y + h) &&
+				(this.x + this.w >= x) && (this.y + this.h >= y)){
 			return true;
 		}
 		
 		return false;
 	}
 	
-	public boolean contains (BodyRectangle rect){
+	public boolean contains (float x, float y, float w, float h){
 		int tmpI = 0;
 		
-		if ((rect.getX () <= x + w) && (rect.getY () <= y + h) &&
-				(rect.getX () >= x) && (rect.getY () >= y)){
+		if ((this.x <= x + w) && (this.y <= y + h) &&
+				(this.x >= x) && (this.y >= y)){
 			tmpI++;
 		}
-		if ((rect.getX () + rect.getW () <= x + w) && (rect.getY () <= y + h) &&
-				(rect.getX () + rect.getW () >= x) && (rect.getY () >= y)){
+		if ((this.x + this.w <= x + w) && (this.y <= y + h) &&
+				(this.x + this.w >= x) && (this.y >= y)){
 			tmpI++;
 		}
-		if ((rect.getX () <= x + w) && (rect.getY () + rect.getH () <= y + h) &&
-				(rect.getX () >= x) && (rect.getY () + rect.getH () >= y)){
+		if ((this.x <= x + w) && (this.y + this.h <= y + h) &&
+				(this.x >= x) && (this.y + this.h >= y)){
 			tmpI++;
 		}
-		if ((rect.getX () + rect.getW () <= x + w) && (rect.getY () + rect.getH () <= y + h) &&
-				(rect.getX () + rect.getW () >= x) && (rect.getY () + rect.getH () >= y)){
+		if ((this.x + this.w <= x + w) && (this.y + this.h <= y + h) &&
+				(this.x + this.w >= x) && (this.y + this.h >= y)){
 			tmpI++;
 		}
 		

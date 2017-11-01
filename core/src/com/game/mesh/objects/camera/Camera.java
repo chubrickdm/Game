@@ -10,30 +10,8 @@ import com.game.mesh.objects.character.Character;
 
 public class Camera extends GameObject{
 	private float cameraDeltaY = 0;
-	private float firstCharacterSpriteX = -1;
-	private float firstCharacterSpriteY = -1;
-	private float secondCharacterSpriteX = -1;
-	private float secondCharacterSpriteY = -1;
 	private BodyCamera camera;
 	
-	
-	private void setFirstCharacterBodyPosition (float spriteX, float spriteY){
-		firstCharacterSpriteX = spriteX;
-		firstCharacterSpriteY = spriteY;
-		
-		if (firstCharacterSpriteY > secondCharacterSpriteY){
-			camera.setPositionY (spriteY + Character.CHARACTER_H / 2);
-		}
-	}
-	
-	private void setSecondCharacterBodyPosition (float spriteX, float spriteY){
-		secondCharacterSpriteX = spriteX;
-		secondCharacterSpriteY = spriteY;
-		
-		if (secondCharacterSpriteY > firstCharacterSpriteY){
-			camera.setPositionY (spriteY + Character.CHARACTER_H / 2);
-		}
-	}
 	
 	private static class CameraHolder{
 		private final static Camera instance = new Camera ();
@@ -61,39 +39,18 @@ public class Camera extends GameObject{
 	@Override
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
-			Character character = (Character) message.object;
 			MoveMessage msg = (MoveMessage) message;
-			
-			if ((Math.abs (msg.spriteOldX - firstCharacterSpriteX) < 5) && (Math.abs (msg.spriteOldY - firstCharacterSpriteY) < 5)){
-				firstCharacterSpriteX = character.getSpriteX ();
-				firstCharacterSpriteY = character.getSpriteY ();
-			}
-			else{
-				secondCharacterSpriteX = character.getSpriteX ();
-				secondCharacterSpriteY = character.getSpriteY ();
-			}
 			
 			cameraDeltaY = msg.deltaY;
 			camera.moveY (cameraDeltaY);
-			
 		}
 		else if (message.type == MessageType.characterSelected){
-			Character character = (Character) message.object;
-			camera.setPositionY (character.getSpriteY () + Character.CHARACTER_H / 2);
+			CharacterSelectedMessage msg = (CharacterSelectedMessage) message;
+			camera.setPositionY (msg.spriteY + Character.CHARACTER_H / 2);
 		}
-		else if (message.type == MessageType.pushOut){
+		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
 			camera.moveY (-cameraDeltaY);
 			cameraDeltaY = 0;
-		}
-		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
-			ReturnPositionMessage msg = (ReturnPositionMessage) message;
-			Character character = (Character) message.object;
-			if (character.getIsSelected ()){
-				setFirstCharacterBodyPosition (msg.spriteX, msg.spriteY);
-			}
-			else{
-				setSecondCharacterBodyPosition (msg.spriteX, msg.spriteY);
-			}
 		}
 	}
 	
@@ -104,6 +61,7 @@ public class Camera extends GameObject{
 	
 	@Override
 	public void clear (){
+		cameraDeltaY = 0;
 		camera.setPositionY (GameSystem.SCREEN_H / 2);
 	}
 }

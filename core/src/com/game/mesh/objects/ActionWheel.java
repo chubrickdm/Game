@@ -23,6 +23,7 @@ public class ActionWheel extends GameObject{
 	
 	private void updateSizeAnimation (){
 		if (Gdx.input.isKeyPressed (Input.Keys.F)){
+			ObjectManager.getInstance ().addMessage (new GetPositionMessage (this));
 			isVisible = true;
 			if (percentSize >= 100){
 				body.setScale (1);
@@ -70,17 +71,7 @@ public class ActionWheel extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move && message.objectType == ObjectType.character){
-			Character character = (Character) message.object;
-			body.setSpritePosition (character.getSpriteX () + Character.CHARACTER_W / 2,
-					character.getSpriteY () + Character.CHARACTER_H / 2);
-		}
-		else if (message.type == MessageType.characterSelected){
-			Character character = (Character) message.object;
-			body.setSpritePosition (character.getSpriteX () + Character.CHARACTER_W / 2,
-					character.getSpriteY () + Character.CHARACTER_H / 2);
-		}
-		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
+		if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
 			ReturnPositionMessage msg = (ReturnPositionMessage) message;
 			Character character = (Character) message.object;
 			if (character.getIsSelected ()){

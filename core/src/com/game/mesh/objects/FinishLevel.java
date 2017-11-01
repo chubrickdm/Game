@@ -3,27 +3,14 @@ package com.game.mesh.objects;
 import com.game.addition.math.BodyRectangle;
 import com.game.mesh.body.NoSpriteObject;
 import com.game.mesh.objects.character.Character;
+import com.game.mesh.objects.character.CharacterName;
 import com.game.mesh.objects.special.ObjectManager;
 import com.game.messages.*;
 
 public class FinishLevel extends GameObject{
 	private boolean firstOnFinish = false;
 	private boolean secondOnFinish = false;
-	private float firstCharacterSpriteX = -1;
-	private float firstCharacterSpriteY = -1;
-	private float secondCharacterSpriteX = -1;
-	private float secondCharacterSpriteY = -1;
 	
-	
-	private void setFirstCharacterBodyPosition (float spriteX, float spriteY){
-		firstCharacterSpriteX = spriteX;
-		firstCharacterSpriteY = spriteY;
-	}
-	
-	private void setSecondCharacterBodyPosition (float spriteX, float spriteY){
-		secondCharacterSpriteX = spriteX;
-		secondCharacterSpriteY = spriteY;
-	}
 	
 	private static class FinishLevelHolder{
 		private final static FinishLevel instance = new FinishLevel ();
@@ -52,23 +39,19 @@ public class FinishLevel extends GameObject{
 	@Override
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
-			Character character = (Character) message.object;
 			MoveMessage msg = (MoveMessage) message;
+			Character character = (Character) message.object;
 			
-			if ((Math.abs (msg.spriteOldX - firstCharacterSpriteX) < 5) && (Math.abs (msg.spriteOldY - firstCharacterSpriteY) < 5)){
-				firstCharacterSpriteX = character.getSpriteX ();
-				firstCharacterSpriteY = character.getSpriteY ();
-				if (body.contains (msg.bodyRectangle)){
+			if (character.getName () == CharacterName.first){
+				if (body.contains (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 					firstOnFinish = true;
 				}
 				else{
 					firstOnFinish = false;
 				}
 			}
-			else{
-				secondCharacterSpriteX = character.getSpriteX ();
-				secondCharacterSpriteY = character.getSpriteY ();
-				if (body.contains (msg.bodyRectangle)){
+			else if (character.getName () == CharacterName.second){
+				if (body.contains (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 					secondOnFinish = true;
 				}
 				else{
@@ -79,25 +62,13 @@ public class FinishLevel extends GameObject{
 		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
 			PushOutMessage msg = (PushOutMessage) message;
 			Character character = (Character) msg.object;
-			if (body.contains (new BodyRectangle (msg.whereBodyX, msg.whereBodyY, Character.BODY_CHARACTER_W,
-					Character.BODY_CHARACTER_H))){
-				if ((Math.abs (character.getSpriteX () - firstCharacterSpriteX) < 5) &&
-						(Math.abs (character.getSpriteY () - firstCharacterSpriteY) < 5)){
+			if (body.contains (msg.whereBodyX, msg.whereBodyY, Character.BODY_CHARACTER_W, Character.BODY_CHARACTER_H)){
+				if (character.getName () == CharacterName.first){
 					firstOnFinish = true;
 				}
-				else{
+				else if (character.getName () == CharacterName.second){
 					secondOnFinish = true;
 				}
-			}
-		}
-		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
-			ReturnPositionMessage msg = (ReturnPositionMessage) message;
-			Character character = (Character) message.object;
-			if (character.getIsSelected ()){
-				setFirstCharacterBodyPosition (msg.spriteX, msg.spriteY);
-			}
-			else{
-				setSecondCharacterBodyPosition (msg.spriteX, msg.spriteY);
 			}
 		}
 	}

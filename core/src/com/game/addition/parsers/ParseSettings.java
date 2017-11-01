@@ -1,6 +1,7 @@
 package com.game.addition.parsers;
 
 import com.game.GameSystem;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -10,6 +11,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import java.io.File;
 
 public class ParseSettings extends ParseBasis{
@@ -46,20 +48,22 @@ public class ParseSettings extends ParseBasis{
 			if (field.getNodeType () != Node.TEXT_NODE){
 				currField = field.getAttributes ().item (0).getTextContent ();
 				
-				if (currField.equals ("numLevels")){
+				switch (currField){
+				case "numLevels":
 					GameSystem.NUM_LEVELS = Integer.parseInt (field.getTextContent ());
-				}
-				else if (currField.equals ("isFirstGameStart")){
+					break;
+				case "isFirstGameStart":
 					GameSystem.IS_FIRST_GAME_START = Boolean.parseBoolean (field.getTextContent ());
-				}
-				else if (currField.equals ("numPassedLevels")){
+					break;
+				case "numPassedLevels":
 					GameSystem.NUM_PASSED_LEVELS = Integer.parseInt (field.getTextContent ());
-				}
-				else if (currField.equals ("currentLevel")){
+					break;
+				case "currentLevel":
 					GameSystem.CURRENT_LEVEL = Integer.parseInt (field.getTextContent ());
-				}
-				else if (currField.equals ("gameOver")){
+					break;
+				case "gameOver":
 					GameSystem.GAME_OVER = Boolean.parseBoolean (field.getTextContent ());
+					break;
 				}
 			}
 		}
@@ -79,20 +83,22 @@ public class ParseSettings extends ParseBasis{
 			if (field.getNodeType () != Node.TEXT_NODE){
 				currField = field.getAttributes ().item (0).getTextContent ();
 				
-				if (currField.equals ("numLevels")){
+				switch (currField){
+				case "numLevels":
 					field.setTextContent (String.valueOf (GameSystem.NUM_LEVELS));
-				}
-				else if (currField.equals ("isFirstGameStart")){
+					break;
+				case "isFirstGameStart":
 					field.setTextContent (String.valueOf (GameSystem.IS_FIRST_GAME_START));
-				}
-				else if (currField.equals ("numPassedLevels")){
+					break;
+				case "numPassedLevels":
 					field.setTextContent (String.valueOf (GameSystem.NUM_PASSED_LEVELS));
-				}
-				else if (currField.equals ("currentLevel")){
+					break;
+				case "currentLevel":
 					field.setTextContent (String.valueOf (GameSystem.CURRENT_LEVEL));
-				}
-				else if (currField.equals ("gameOver")){
+					break;
+				case "gameOver":
 					field.setTextContent (String.valueOf (GameSystem.GAME_OVER));
+					break;
 				}
 			}
 		}
