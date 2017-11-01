@@ -3,12 +3,15 @@ package com.game.mesh.objects.camera;
 import com.badlogic.gdx.math.Matrix4;
 
 import com.game.GameSystem;
+import com.game.mesh.objects.character.CharacterName;
+import com.game.mesh.objects.special.ObjectManager;
 import com.game.messages.*;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.character.Character;
 
 public class Camera extends GameObject{
+	private boolean isFirstUpdate = true;
 	private float cameraDeltaY = 0;
 	private BodyCamera camera;
 	
@@ -34,6 +37,10 @@ public class Camera extends GameObject{
 	@Override
 	public void update (){
 		camera.update ();
+		if (isFirstUpdate){
+			ObjectManager.getInstance ().addMessage (new GetPositionMessage ());
+			isFirstUpdate = false;
+		}
 	}
 	
 	@Override
@@ -52,6 +59,13 @@ public class Camera extends GameObject{
 			camera.moveY (-cameraDeltaY);
 			cameraDeltaY = 0;
 		}
+		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
+			Character character = (Character) message.object;
+			if (character.getName () == CharacterName.first){
+				ReturnPositionMessage msg = (ReturnPositionMessage) message;
+				camera.setPositionY (msg.spriteY + Character.CHARACTER_H / 2);
+			}
+		}
 	}
 	
 	@Override
@@ -61,6 +75,7 @@ public class Camera extends GameObject{
 	
 	@Override
 	public void clear (){
+		isFirstUpdate = true;
 		cameraDeltaY = 0;
 		camera.setPositionY (GameSystem.SCREEN_H / 2);
 	}

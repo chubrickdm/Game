@@ -35,11 +35,11 @@ public abstract class ParseLevel extends ParseBasis{
 	private static void createCharacter (){
 		Character character;
 		if (characterIsSelected){
-			character = new Character (true, x, y);
+			character = new Character (x, y);
 			characterIsSelected = false;
 		}
 		else{
-			character = new Character (false, x, y);
+			character = new Character (x, y);
 		}
 		ObjectManager.getInstance ().addObject (character);
 	}

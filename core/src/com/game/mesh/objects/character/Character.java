@@ -200,7 +200,8 @@ public class Character extends GameObject{
 		else if (message.type == MessageType.move && message.object != this && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
 			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY,
+						-msg.deltaX, -msg.deltaY));
 			}
 		}
 		else if (message.type == MessageType.pushOut && message.object == this){
@@ -209,8 +210,7 @@ public class Character extends GameObject{
 			body.setBodyPosition (msg.whereBodyX, msg.whereBodyY);
 		}
 		else if (message.type == MessageType.getPosition){
-			ObjectManager.getInstance ().addMessage (new ReturnPositionMessage (this, body.getSpriteX (),
-					body.getSpriteY ()));
+			ObjectManager.getInstance ().addMessage (new ReturnPositionMessage (this, body.getSpriteX (), body.getSpriteY ()));
 		}
 	}
 	

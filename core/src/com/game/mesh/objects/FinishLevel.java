@@ -1,6 +1,5 @@
 package com.game.mesh.objects;
 
-import com.game.addition.math.BodyRectangle;
 import com.game.mesh.body.NoSpriteObject;
 import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.character.CharacterName;

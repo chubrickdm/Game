@@ -41,20 +41,16 @@ public class BodyRectangle{
 	}
 	
 	public boolean intersects (float x, float y, float w, float h){
-		if ((this.x <= x + w) && (this.y <= y + h) &&
-				(this.x >= x) && (this.y >= y)){
+		if ((x <= this.x + this.w) && (y <= this.y + this.h) && (x >= this.x) && (y >= this.y)){
 			return true;
 		}
-		else if ((this.x + this.w <= x + w) && (this.y <= y + h) &&
-				(this.x + this.w >= x) && (this.y >= y)){
+		else if ((x + w <= this.x + this.w) && (y <= this.y + this.h) && (x + w >= this.x) && (y >= this.y)){
 			return true;
 		}
-		else if ((this.x <= x + w) && (this.y + this.h <= y + h) &&
-				(this.x >= x) && (this.y + this.h >= y)){
+		else if ((x <= this.x + this.w) && (y + h <= this.y + this.h) && (x >= this.x) && (y + h >= this.y)){
 			return true;
 		}
-		else if ((this.x + this.w <= x + w) && (this.y + this.h <= y + h) &&
-				(this.x + this.w >= x) && (this.y + this.h >= y)){
+		else if ((x + w <= this.x + this.w) && (y + h <= this.y + this.h) && (x + w >= this.x) && (y + h >= this.y)){
 			return true;
 		}
 		
@@ -64,20 +60,16 @@ public class BodyRectangle{
 	public boolean contains (float x, float y, float w, float h){
 		int tmpI = 0;
 		
-		if ((this.x <= x + w) && (this.y <= y + h) &&
-				(this.x >= x) && (this.y >= y)){
+		if ((x <= this.x + this.w) && (y <= this.y + this.h) && (x >= this.x) && (y >= this.y)){
 			tmpI++;
 		}
-		if ((this.x + this.w <= x + w) && (this.y <= y + h) &&
-				(this.x + this.w >= x) && (this.y >= y)){
+		else if ((x + w <= this.x + this.w) && (y <= this.y + this.h) && (x + w >= this.x) && (y >= this.y)){
 			tmpI++;
 		}
-		if ((this.x <= x + w) && (this.y + this.h <= y + h) &&
-				(this.x >= x) && (this.y + this.h >= y)){
+		else if ((x <= this.x + this.w) && (y + h <= this.y + this.h) && (x >= this.x) && (y + h >= this.y)){
 			tmpI++;
 		}
-		if ((this.x + this.w <= x + w) && (this.y + this.h <= y + h) &&
-				(this.x + this.w >= x) && (this.y + this.h >= y)){
+		else if ((x + w <= this.x + this.w) && (y + h <= this.y + this.h) && (x + w >= this.x) && (y + h >= this.y)){
 			tmpI++;
 		}
 		
