@@ -24,8 +24,6 @@ public class Character extends GameObject{
 	public static final int FRAME_COLS = 4;
 	public static final int FRAME_ROWS = 1;
 	
-	
-	
 	private boolean isSelected = false;
 	private boolean isPushOut = false;
 	private float deltaX = 0;

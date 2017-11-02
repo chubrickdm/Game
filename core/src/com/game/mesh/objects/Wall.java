@@ -3,20 +3,18 @@ package com.game.mesh.objects;
 import com.game.messages.*;
 import com.game.mesh.body.BodyObject;
 import com.game.mesh.objects.special.ObjectManager;
-import com.game.render.DataRender;
-import com.game.render.LayerType;
-import com.game.render.Render;
+import com.game.render.*;
 
 public class Wall extends GameObject{
 	public static final float WALL_W = UNIT;
 	public static final float WALL_H = UNIT * 3;
 	
 	
-	public Wall (boolean isHorizonWall, float x, float y){
+	public Wall (float x, float y, float w, float h){
 		objectType = ObjectType.wall;
-	
+		
 		body = new BodyObject ("core/assets/images/wall.png", x, y, WALL_W, WALL_H, WALL_W, WALL_H);
-		if (isHorizonWall){
+		if (w > h){
 			body.rotate90 ();
 		}
 		dataRender = new DataRender (body.sprite, LayerType.wall);
