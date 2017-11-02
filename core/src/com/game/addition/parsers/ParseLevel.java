@@ -15,10 +15,10 @@ import org.w3c.dom.NodeList;
 
 public abstract class ParseLevel extends ParseBasis{
 	private static boolean characterIsSelected = true;
-	private static int x;
-	private static int y;
-	private static int w;
-	private static int h;
+	private static float x;
+	private static float y;
+	private static float w;
+	private static float h;
 	
 	
 	private static void createWall (){
@@ -90,15 +90,15 @@ public abstract class ParseLevel extends ParseBasis{
 					Node object = objects.item (j);
 					
 					if (object.getNodeType () != Node.TEXT_NODE){
-						w = Integer.parseInt (object.getAttributes ().item (2).getTextContent ());
-						w = (int) (w * ASPECT_RATIO);
-						h = Integer.parseInt (object.getAttributes ().item (0).getTextContent ());
-						h = (int) (h * ASPECT_RATIO);
+						w = Float.parseFloat (object.getAttributes ().item (2).getTextContent ());
+						w *= ASPECT_RATIO;
+						h = Float.parseFloat (object.getAttributes ().item (0).getTextContent ());
+						h *= ASPECT_RATIO;
 						
-						x = Integer.parseInt (object.getAttributes ().item (3).getTextContent ());
-						x = (int) (x * ASPECT_RATIO + indent);
-						y = Integer.parseInt (object.getAttributes ().item (4).getTextContent ());
-						y = (int) (levelH - y * ASPECT_RATIO - h);
+						x = Float.parseFloat (object.getAttributes ().item (3).getTextContent ());
+						x = x * ASPECT_RATIO + indent;
+						y = Float.parseFloat (object.getAttributes ().item (4).getTextContent ());
+						y = levelH - y * ASPECT_RATIO - h;
 						
 						
 						switch (currObjectGroup){

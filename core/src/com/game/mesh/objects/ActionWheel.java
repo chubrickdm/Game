@@ -16,6 +16,8 @@ public class ActionWheel extends GameObject{
 	
 	private boolean isFirstUpdate = true;
 	private boolean isVisible = false;
+	private float deltaX;
+	private float deltaY;
 	private float percentSize = 1;
 	
 	
@@ -74,8 +76,9 @@ public class ActionWheel extends GameObject{
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
-			body.setSpritePosition (msg.spriteOldX + msg.deltaX + Character.CHARACTER_W / 2,
-					msg.spriteOldY + msg.deltaY + Character.CHARACTER_H / 2);
+			body.move (msg.deltaX, msg.deltaY);
+			deltaX = msg.deltaX;
+			deltaY = msg.deltaY;
 		}
 		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
 			ReturnPositionMessage msg = (ReturnPositionMessage) message;
@@ -85,9 +88,9 @@ public class ActionWheel extends GameObject{
 			}
 		}
 		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
-			PushOutMessage msg = (PushOutMessage) message;
-			body.move (msg.deltaX, msg.deltaY);
-			
+			body.move (-deltaX, -deltaY);
+			deltaX = 0;
+			deltaY = 0;
 		}
 		else if (message.type == MessageType.characterSelected){
 			CharacterSelectedMessage msg = (CharacterSelectedMessage) message;

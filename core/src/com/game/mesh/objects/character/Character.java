@@ -119,6 +119,7 @@ public class Character extends GameObject{
 		else if (deltaX != 0 || deltaY != 0){
 			action = ActionType.movement;
 			body.move (deltaX, deltaY);
+			
 			ObjectManager.getInstance ().addMessage (new MoveMessage (this, deltaX, deltaY,
 					body.getBodyX () - deltaX, body.getBodyY () - deltaY,
 					body.getSpriteX () - deltaX, body.getSpriteY () - deltaY, body.getBodyW (),
@@ -200,8 +201,7 @@ public class Character extends GameObject{
 		else if (message.type == MessageType.move && message.object != this && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
 			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY,
-						-msg.deltaX, -msg.deltaY));
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, msg.oldBodyX, msg.oldBodyY));
 			}
 		}
 		else if (message.type == MessageType.pushOut && message.object == this){

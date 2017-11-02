@@ -40,36 +40,36 @@ public class BodyRectangle{
 		return h;
 	}
 	
-	public boolean intersects (float x, float y, float w, float h){
-		if ((x <= this.x + this.w) && (y <= this.y + this.h) && (x >= this.x) && (y >= this.y)){
+	public boolean intersects (float xx, float yy, float ww, float hh){
+		if ((xx <= x + w) && (yy <= y + h) && (xx >= x) && (yy >= y)){
 			return true;
 		}
-		else if ((x + w <= this.x + this.w) && (y <= this.y + this.h) && (x + w >= this.x) && (y >= this.y)){
+		else if ((xx + ww <= x + w) && (yy <= y + h) && (xx + ww >= x) && (yy >= y)){
 			return true;
 		}
-		else if ((x <= this.x + this.w) && (y + h <= this.y + this.h) && (x >= this.x) && (y + h >= this.y)){
+		else if ((xx <= x + w) && (yy + hh <= y + h) && (xx >= x) && (yy + hh >= y)){
 			return true;
 		}
-		else if ((x + w <= this.x + this.w) && (y + h <= this.y + this.h) && (x + w >= this.x) && (y + h >= this.y)){
+		else if ((xx + ww <= x + w) && (yy + hh <= y + h) && (xx + ww >= x) && (yy + hh >= y)){
 			return true;
 		}
 		
 		return false;
 	}
 	
-	public boolean contains (float x, float y, float w, float h){
+	public boolean contains (float xx, float yy, float ww, float hh){
 		int tmpI = 0;
 		
-		if ((x <= this.x + this.w) && (y <= this.y + this.h) && (x >= this.x) && (y >= this.y)){
+		if ((xx <= x + w) && (yy <= y + h) && (xx >= x) && (yy >= y)){
 			tmpI++;
 		}
-		else if ((x + w <= this.x + this.w) && (y <= this.y + this.h) && (x + w >= this.x) && (y >= this.y)){
+		if ((xx + ww <= x + w) && (yy <= y + h) && (xx + ww >= x) && (yy >= y)){
 			tmpI++;
 		}
-		else if ((x <= this.x + this.w) && (y + h <= this.y + this.h) && (x >= this.x) && (y + h >= this.y)){
+		if ((xx <= x + w) && (yy + hh <= y + h) && (xx >= x) && (yy + hh >= y)){
 			tmpI++;
 		}
-		else if ((x + w <= this.x + this.w) && (y + h <= this.y + this.h) && (x + w >= this.x) && (y + h >= this.y)){
+		if ((xx + ww <= x + w) && (yy + hh <= y + h) && (xx + ww >= x) && (yy + hh >= y)){
 			tmpI++;
 		}
 		

@@ -2,11 +2,13 @@ package com.game.mesh.objects;
 
 import com.game.mesh.body.NoSpriteObject;
 import com.game.mesh.objects.character.Character;
+import com.game.mesh.objects.character.CharacterName;
 import com.game.mesh.objects.special.ObjectManager;
 import com.game.messages.*;
 
 public class FinishLevel extends GameObject{
-	private static int CHARACTER_ON_FINISH_COUNTER = 0;
+	private boolean firstOnFinish = false;
+	private boolean secondOnFinish = false;
 	
 	
 	private static class FinishLevelHolder{
@@ -28,34 +30,64 @@ public class FinishLevel extends GameObject{
 	
 	@Override
 	public void update (){
-		if (CHARACTER_ON_FINISH_COUNTER == 2){
+		if (firstOnFinish && secondOnFinish){
 			ObjectManager.getInstance ().addMessage (new CompleteLevelMessage ());
 		}
-		CHARACTER_ON_FINISH_COUNTER = 0;
 	}
 	
 	@Override
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
-			if (body.contains (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				CHARACTER_ON_FINISH_COUNTER++;
-			}
+			Character character = (Character) message.object;
 			
+			if (character.getName () == CharacterName.first){
+				if (body.contains (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+					firstOnFinish = true;
+					//System.out.println ("First - " + true);
+				}
+				else{
+					firstOnFinish = false;
+					//System.out.println ("First - " + false);
+				}
+			}
+			else if (character.getName () == CharacterName.second){
+				//System.out.println ("Coordinates body Second: " + msg.oldBodyX + " " + msg.oldBodyY);
+				//System.out.println ("deltaY: " + msg.deltaY);
+				if (body.contains (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+					secondOnFinish = true;
+					//System.out.println ("Second - " + true);
+				}
+				else{
+					secondOnFinish = false;
+					//System.out.println ("Second - " + false);
+				}
+			}
 		}
 		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
 			PushOutMessage msg = (PushOutMessage) message;
-			if (!body.contains (msg.whereBodyX, msg.whereBodyY, Character.BODY_CHARACTER_W, Character.BODY_CHARACTER_H)){
-				CHARACTER_ON_FINISH_COUNTER--;
+			Character character = (Character) msg.object;
+			//System.out.println ("Push out character.");
+			if (body.contains (msg.whereBodyX, msg.whereBodyY, Character.BODY_CHARACTER_W, Character.BODY_CHARACTER_H)){
+				//System.out.println ("Character contains.");
+				if (character.getName () == CharacterName.first){
+					firstOnFinish = true;
+					//System.out.println ("First - " + true);
+				}
+				else if (character.getName () == CharacterName.second){
+					secondOnFinish = true;
+					//System.out.println ("Second - " + true);
+				}
 			}
 		}
 	}
 	
 	@Override
-	public void draw (){
-		CHARACTER_ON_FINISH_COUNTER = 0;
-	}
+	public void draw (){ }
 	
 	@Override
-	public void clear (){ }
+	public void clear (){
+		firstOnFinish = false;
+		secondOnFinish = false;
+	}
 }
