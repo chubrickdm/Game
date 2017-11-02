@@ -9,8 +9,9 @@ public class ReturnPositionMessage extends GameMessage{
 	
 	public ReturnPositionMessage (GameObject object, float spriteX, float spriteY){
 		this.type = MessageType.returnPosition;
-		this.objectType = object.objectType;
 		this.object = object;
+		this.objectType = object.objectType;
+		
 		this.spriteX = spriteX;
 		this.spriteY = spriteY;
 	}

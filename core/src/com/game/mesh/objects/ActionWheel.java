@@ -55,7 +55,7 @@ public class ActionWheel extends GameObject{
 		body.setOrigin (WHEEL_H / 2, WHEEL_H / 2);
 		body.setScale (percentSize / 100);
 		body.setSpritePosition (WHEEL_H / 2, WHEEL_H / 2);
-		dataRender = new DataRender (body.sprite, LayerType.actionWheel);
+		dataRender = new DataRender (body.getSprite (), LayerType.actionWheel);
 	}
 	
 	
@@ -76,9 +76,9 @@ public class ActionWheel extends GameObject{
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
-			body.move (msg.deltaX, msg.deltaY);
 			deltaX = msg.deltaX;
 			deltaY = msg.deltaY;
+			body.move (deltaX, deltaY);
 		}
 		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
 			ReturnPositionMessage msg = (ReturnPositionMessage) message;
@@ -89,8 +89,7 @@ public class ActionWheel extends GameObject{
 		}
 		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
 			body.move (-deltaX, -deltaY);
-			deltaX = 0;
-			deltaY = 0;
+			deltaX = 0; deltaY = 0;
 		}
 		else if (message.type == MessageType.characterSelected){
 			CharacterSelectedMessage msg = (CharacterSelectedMessage) message;

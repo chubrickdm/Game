@@ -10,8 +10,8 @@ public class CharacterSelectedMessage extends GameMessage{
 	
 	public CharacterSelectedMessage (GameObject object, float spriteX, float spriteY){
 		this.type = MessageType.characterSelected;
-		this.objectType = ObjectType.character;
 		this.object = object;
+		this.objectType = ObjectType.character;
 		
 		this.spriteX = spriteX;
 		this.spriteY = spriteY;

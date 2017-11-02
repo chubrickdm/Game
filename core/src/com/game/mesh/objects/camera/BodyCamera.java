@@ -1,8 +1,8 @@
 package com.game.mesh.objects.camera;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-
 import com.badlogic.gdx.math.Matrix4;
+
 import com.game.GameSystem;
 
 public class BodyCamera{

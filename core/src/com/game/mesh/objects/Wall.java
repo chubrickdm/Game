@@ -17,7 +17,7 @@ public class Wall extends GameObject{
 		if (w > h){
 			body.rotate90 ();
 		}
-		dataRender = new DataRender (body.sprite, LayerType.wall);
+		dataRender = new DataRender (body.getSprite (), LayerType.wall);
 	}
 	
 	@Override

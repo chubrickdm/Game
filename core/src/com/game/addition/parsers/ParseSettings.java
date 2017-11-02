@@ -37,8 +37,6 @@ public class ParseSettings extends ParseBasis{
 	public static void parseSettings (){
 		String currField;
 		Document document = getDocument ("core/assets/xml/settings.xml", "/resourse/xml/settings.xml");
-		
-		
 		Node root = document.getDocumentElement ();
 		
 		NodeList fieldList = root.getChildNodes ();
@@ -72,8 +70,6 @@ public class ParseSettings extends ParseBasis{
 	public static void writeSettings (){
 		String currField;
 		Document document = getDocument ("core/assets/xml/settings.xml", "/resourse/xml/settings.xml");
-		
-		
 		Node root = document.getDocumentElement ();
 		
 		NodeList fieldList = root.getChildNodes ();

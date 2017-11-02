@@ -11,7 +11,6 @@ import com.game.mesh.objects.ActionWheel;
 import com.game.mesh.objects.camera.Camera;
 import com.game.messages.GameMessage;
 import com.game.mesh.objects.GameObject;
-import com.game.messages.GetPositionMessage;
 import com.game.messages.MessageType;
 import com.game.screens.SelectedModeScreen;
 
@@ -25,6 +24,7 @@ public class LevelManager extends GameObject{
 		else{
 			GameSystem.GAME_OVER = true;
 		}
+		
 		if (GameSystem.NUM_PASSED_LEVELS != GameSystem.NUM_LEVELS){
 			GameSystem.NUM_PASSED_LEVELS++;
 		}

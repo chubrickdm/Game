@@ -21,10 +21,10 @@ public class MoveMessage extends GameMessage{
 		
 		this.deltaX = deltaX;
 		this.deltaY = deltaY;
-		this.oldBodyX = oldBodyX;
-		this.oldBodyY = oldBodyY;
 		this.spriteOldX = spriteOldX;
 		this.spriteOldY = spriteOldY;
+		this.oldBodyX = oldBodyX;
+		this.oldBodyY = oldBodyY;
 		this.bodyW = bodyW;
 		this.bodyH = bodyH;
 	}

@@ -3,9 +3,9 @@ package com.game.mesh.body;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.addition.math.BodyRectangle;
 
-public class Body{
-	public BodyRectangle bodyRect;
-	public Sprite sprite;
+public abstract class Body{
+	protected BodyRectangle bodyRect;
+	protected Sprite sprite;
 	
 	
 	public void setBodyPosition (float x, float y){ }
@@ -45,6 +45,10 @@ public class Body{
 	
 	public float getSpriteY (){
 		return sprite.getY ();
+	}
+	
+	public Sprite getSprite (){
+		return new Sprite (sprite);
 	}
 	
 	public void setScale (float scale){ }

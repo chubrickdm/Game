@@ -61,7 +61,7 @@ public class Camera extends GameObject{
 		}
 		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
 			Character character = (Character) message.object;
-			if (character.getName () == CharacterName.first){
+			if (character.getIsSelected ()){
 				ReturnPositionMessage msg = (ReturnPositionMessage) message;
 				camera.setPositionY (msg.spriteY + Character.CHARACTER_H / 2);
 			}

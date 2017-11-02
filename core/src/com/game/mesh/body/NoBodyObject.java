@@ -51,5 +51,4 @@ public class NoBodyObject extends Body{
 	public float getBodyY (){
 		return sprite.getY ();
 	}
-	
 }

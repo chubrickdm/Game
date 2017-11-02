@@ -18,6 +18,10 @@ public class NoSpriteObject extends Body{
 	}
 	
 	public NoSpriteObject (float x, float y, float bodyW, float bodyH){
+		spriteX = x;
+		spriteY = y;
+		bodyShiftX = 0;
+		bodyShiftY = 0;
 		bodyRect = new BodyRectangle (x, y, bodyW, bodyH);
 	}
 	

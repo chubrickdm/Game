@@ -11,9 +11,7 @@ import com.game.messages.*;
 import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.body.NoSpriteObject;
 import com.game.mesh.objects.special.ObjectManager;
-import com.game.render.DataRender;
-import com.game.render.LayerType;
-import com.game.render.Render;
+import com.game.render.*;
 
 public class Character extends GameObject{
 	public static final float CHARACTER_W = UNIT;
@@ -38,78 +36,53 @@ public class Character extends GameObject{
 	
 	private void keyWPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.S)){
-			if (angleMove == -1){
-				angleMove = 0;
-			}
-			else if (angleMove == 2){
-				angleMove = 1;
-			}
-			else if (angleMove == 6){
-				angleMove = 7;
-			}
+			if (angleMove == -1)     angleMove = 0;
+			else if (angleMove == 2) angleMove = 1;
+			else if (angleMove == 6) angleMove = 7;
+			
 			deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
 	
 	private void keyDPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.A)){
-			if (angleMove == -1){
-				angleMove = 2;
-			}
-			else if (angleMove == 0){
-				angleMove = 1;
-			}
-			else if (angleMove == 4){
-				angleMove = 3;
-			}
+			if (angleMove == -1)     angleMove = 2;
+			else if (angleMove == 0) angleMove = 1;
+			else if (angleMove == 4) angleMove = 3;
+			
 			deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
 	
 	private void keySPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.W)){
-			if (angleMove == -1){
-				angleMove = 4;
-			}
-			else if (angleMove == 2){
-				angleMove = 3;
-			}
-			else if (angleMove == 4){
-				angleMove = 5;
-			}
+			if (angleMove == -1)     angleMove = 4;
+			else if (angleMove == 2) angleMove = 3;
+			else if (angleMove == 4) angleMove = 5;
+			
 			deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
 	
 	private void keyAPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.D)){
-			if (angleMove == -1){
-				angleMove = 6;
-			}
-			else if (angleMove == 0){
-				angleMove = 7;
-			}
-			else if (angleMove == 4){
-				angleMove = 5;
-			}
+			if (angleMove == -1)     angleMove = 6;
+			else if (angleMove == 0) angleMove = 7;
+			else if (angleMove == 4) angleMove = 5;
+			
 			deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
 	
 	private void updateControl (){
 		int tmpI = angleMove;
-		deltaY = 0;
-		deltaX = 0;
+		deltaX = 0; deltaY = 0;
 		angleMove = -1;
 		action = ActionType.stand;
-		if (Gdx.input.isKeyPressed (Input.Keys.W))
-			keyWPressed ();
-		if (Gdx.input.isKeyPressed (Input.Keys.D))
-			keyDPressed ();
-		if (Gdx.input.isKeyPressed (Input.Keys.S))
-			keySPressed ();
-		if (Gdx.input.isKeyPressed (Input.Keys.A))
-			keyAPressed ();
+		if (Gdx.input.isKeyPressed (Input.Keys.W)) keyWPressed ();
+		if (Gdx.input.isKeyPressed (Input.Keys.D)) keyDPressed ();
+		if (Gdx.input.isKeyPressed (Input.Keys.S)) keySPressed ();
+		if (Gdx.input.isKeyPressed (Input.Keys.A)) keyAPressed ();
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (this));
@@ -134,12 +107,11 @@ public class Character extends GameObject{
 		if (action == ActionType.movement && !isPushOut){
 			time += Gdx.graphics.getDeltaTime ();
 			currSprite = moveAnimation.getCurrSprite (time);
-			body.setBodyPosition (body.getBodyX (), body.getBodyY ());
 		}
 		else{
 			currSprite = moveAnimation.getCurrSprite (0);
-			body.setBodyPosition (body.getBodyX (), body.getBodyY ());
 		}
+		body.setBodyPosition (body.getBodyX (), body.getBodyY ());
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
 		currSprite.setOriginCenter ();
 		currSprite.setRotation (180 - angleMove * 45);
