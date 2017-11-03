@@ -13,7 +13,7 @@ public class NoSpriteObject extends Body{
 		spriteX = x;
 		spriteY = y;
 		bodyShiftX = (w - bodyW) / 2;
-		bodyShiftY = (h - bodyH) / 2;
+		//bodyShiftY = (h - bodyH) / 2;
 		bodyRect = new BodyRectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
 	}
 	

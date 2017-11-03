@@ -16,8 +16,8 @@ import com.game.render.*;
 public class Character extends GameObject{
 	public static final float CHARACTER_W = 34 * UNIT / 64;
 	public static final float CHARACTER_H = 53 * UNIT / 64;
-	public static final float BODY_CHARACTER_W = 3 * CHARACTER_W / 4;
-	public static final float BODY_CHARACTER_H = 3 * CHARACTER_H / 4;
+	public static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 3;
+	public static final float BODY_CHARACTER_H = CHARACTER_H / 3;
 	public static final float CHARACTER_SPEED = 100 * ASPECT_RATIO;
 	public static final int FRAME_COLS = 7;
 	public static final int FRAME_ROWS = 1;
@@ -43,13 +43,6 @@ public class Character extends GameObject{
 		}
 	}
 	
-	private void keyDPressed (){
-		if (!Gdx.input.isKeyPressed (Input.Keys.A)){
-			action = ActionType.rightWalk;
-			deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
-		}
-	}
-	
 	private void keySPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.W)){
 			action = ActionType.backWalk;
@@ -57,19 +50,29 @@ public class Character extends GameObject{
 		}
 	}
 	
+	private void keyDPressed (){
+		if (!Gdx.input.isKeyPressed (Input.Keys.A)){
+			if (!Gdx.input.isKeyPressed (Input.Keys.W)){
+				action = ActionType.rightWalk;
+			}
+			deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
+		}
+	}
+	
 	private void keyAPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.D)){
-			action = ActionType.leftWalk;
+			if (!Gdx.input.isKeyPressed (Input.Keys.W)){
+				action = ActionType.leftWalk;
+			}
 			deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
 	
 	private void updateControl (){
 		deltaX = 0; deltaY = 0;
-		action = ActionType.stand;
 		if (Gdx.input.isKeyPressed (Input.Keys.W)) keyWPressed ();
-		if (Gdx.input.isKeyPressed (Input.Keys.D)) keyDPressed ();
 		if (Gdx.input.isKeyPressed (Input.Keys.S)) keySPressed ();
+		if (Gdx.input.isKeyPressed (Input.Keys.D)) keyDPressed ();
 		if (Gdx.input.isKeyPressed (Input.Keys.A)) keyAPressed ();
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
@@ -86,7 +89,7 @@ public class Character extends GameObject{
 	}
 	
 	private void updateMoveAnimation (){
-		if ((deltaX != 0 || deltaY != 0) && !isPushOut){
+		if ((deltaX != 0 || deltaY != 0) && !isPushOut && isSelected){
 			time += Gdx.graphics.getDeltaTime ();
 			switch (action){
 			case forwardWalk:
@@ -119,15 +122,13 @@ public class Character extends GameObject{
 				break;
 			}
 		}
-		body.setBodyPosition (body.getBodyX (), body.getBodyY ());
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
-		currSprite.setOriginCenter ();
 	}
 	
 	
 	public Character (float x, float y){
 		objectType = ObjectType.character;
-		action = ActionType.stand;
+		action = ActionType.forwardWalk;
 		if (x < GameSystem.SCREEN_W / 2){
 			isSelected = true;
 			name = CharacterName.first;
@@ -148,7 +149,7 @@ public class Character extends GameObject{
 		backWalk = new ObjectAnimation ("core/assets/images/walking_back.png", CHARACTER_W,
 				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		
-		currSprite = forwardWalk.getCurrSprite (0);
+		//currSprite = forwardWalk.getCurrSprite (0);
 		dataRender = new DataRender (currSprite, LayerType.character);
 	}
 	
@@ -174,7 +175,6 @@ public class Character extends GameObject{
 		if (message.type == MessageType.characterChange){
 			if (isSelected){
 				isSelected = false;
-				action = ActionType.stand;
 			}
 			else{
 				ObjectManager.getInstance ().addMessage (new CharacterSelectedMessage (this, body.getSpriteX (),
