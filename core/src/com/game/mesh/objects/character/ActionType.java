@@ -1,5 +1,5 @@
 package com.game.mesh.objects.character;
 
 public enum ActionType{
-	movement, stand, unknown
+	movement, stand, leftWalk, rightWalk, forwardWalk, backWalk, unknown
 }
