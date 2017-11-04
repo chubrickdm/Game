@@ -149,7 +149,6 @@ public class Character extends GameObject{
 		backWalk = new ObjectAnimation ("core/assets/images/walking_back.png", CHARACTER_W,
 				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		
-		//currSprite = forwardWalk.getCurrSprite (0);
 		dataRender = new DataRender (currSprite, LayerType.character);
 	}
 	

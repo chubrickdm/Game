@@ -14,7 +14,12 @@ public class Render{
 	
 	
 	private void sortedScene (){
-		renderList.sort ((tmp1, tmp2) -> tmp1.layerType.getValue () - tmp2.layerType.getValue ());
+		renderList.sort ((tmp1, tmp2) -> {
+			if (tmp1.layerType == LayerType.actionWheel){
+				return 1;
+			}
+			return (int) (tmp2.sprite.getY () - tmp1.sprite.getY ());
+		});
 	}
 	
 	private static class RenderHolder{

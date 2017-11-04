@@ -48,7 +48,7 @@ public abstract class Body{
 	}
 	
 	public Sprite getSprite (){
-		return new Sprite (sprite);
+		return sprite;
 	}
 	
 	public void setScale (float scale){ }
