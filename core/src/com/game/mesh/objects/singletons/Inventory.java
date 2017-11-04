@@ -5,20 +5,19 @@ import com.badlogic.gdx.Input;
 
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
-import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
 import com.game.mesh.body.NoBodyObject;
 import com.game.mesh.objects.character.Character;
 import com.game.render.*;
 
-public class ActionWheel extends GameObject{
-	public static final float percentPerTick = 2;
-	public static final float WHEEL_W = UNIT * 2;
-	public static final float WHEEL_H = UNIT * 2;
+public class Inventory extends GameObject{
+	private static final float percentPerTick = 2;
+	private static final float INVENTORY_W = UNIT * 2;
+	private static final float INVENTORY_H = UNIT * 2;
 	
+	private boolean pushOutHorizont = false;
+	private boolean pushOutVertical = false;
 	private boolean isVisible = false;
-	private float deltaX;
-	private float deltaY;
 	private float percentSize = 1;
 	
 	
@@ -46,26 +45,28 @@ public class ActionWheel extends GameObject{
 		}
 	}
 	
-	private static class ActionWheelHolder{
-		private final static ActionWheel instance = new ActionWheel ();
+	private static class InventoryHolder{
+		private final static Inventory instance = new Inventory ();
 	}
 	
-	private ActionWheel (){
+	private Inventory (){
 		objectType = ObjectType.actionWheel;
-		body = new NoBodyObject ("core/assets/images/action_wheel.png", 0, 0, WHEEL_W, WHEEL_H);
-		body.setOrigin (WHEEL_H / 2, WHEEL_H / 2);
+		body = new NoBodyObject ("core/assets/images/action_wheel.png", 0, 0, INVENTORY_W, INVENTORY_H);
+		body.setOrigin (INVENTORY_W / 2, INVENTORY_H / 2);
 		body.setScale (percentSize / 100);
-		body.setSpritePosition (WHEEL_H / 2, WHEEL_H / 2);
+		body.setSpritePosition (INVENTORY_W / 2, INVENTORY_H / 2);
 		dataRender = new DataRender (body.getSprite (), LayerType.actionWheel);
 	}
 	
 	
-	public static ActionWheel getInstance (){
-		return ActionWheelHolder.instance;
+	public static Inventory getInstance (){
+		return InventoryHolder.instance;
 	}
 	
 	@Override
 	public void update (){
+		pushOutHorizont = false;
+		pushOutVertical = false;
 		updateSizeAnimation ();
 	}
 	
@@ -73,9 +74,8 @@ public class ActionWheel extends GameObject{
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
-			deltaX = msg.deltaX;
-			deltaY = msg.deltaY;
-			body.move (deltaX, deltaY);
+			
+			body.move (msg.deltaX, msg.deltaY);
 		}
 		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
 			ReturnPositionMessage msg = (ReturnPositionMessage) message;
@@ -85,8 +85,15 @@ public class ActionWheel extends GameObject{
 			}
 		}
 		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
-			body.move (-deltaX, -deltaY);
-			deltaX = 0; deltaY = 0;
+			PushOutMessage msg = (PushOutMessage) message;
+			if (msg.deltaX != 0 && !pushOutHorizont){
+				body.move (msg.deltaX, 0);
+				pushOutHorizont = true;
+			}
+			if (msg.deltaY != 0 && !pushOutVertical){
+				body.move (0, msg.deltaY);
+				pushOutVertical = true;
+			}
 		}
 		else if (message.type == MessageType.characterSelected){
 			CharacterSelectedMessage msg = (CharacterSelectedMessage) message;
@@ -105,8 +112,8 @@ public class ActionWheel extends GameObject{
 	public void clear (){
 		isVisible = false;
 		percentSize = 1;
-		body.setOrigin (WHEEL_H / 2, WHEEL_H / 2);
+		body.setOrigin (INVENTORY_H / 2, INVENTORY_H / 2);
 		body.setScale (percentSize / 100);
-		body.setSpritePosition (WHEEL_H / 2, WHEEL_H / 2);
+		body.setSpritePosition (INVENTORY_H / 2, INVENTORY_H / 2);
 	}
 }

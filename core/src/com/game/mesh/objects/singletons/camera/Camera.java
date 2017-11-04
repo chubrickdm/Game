@@ -10,7 +10,7 @@ import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.character.Character;
 
 public class Camera extends GameObject{
-	private float cameraDeltaY = 0;
+	private boolean pushOutVertical = false;
 	private BodyCamera camera;
 	
 	
@@ -34,6 +34,7 @@ public class Camera extends GameObject{
 	
 	@Override
 	public void update (){
+		pushOutVertical = false;
 		camera.update ();
 	}
 	
@@ -41,17 +42,19 @@ public class Camera extends GameObject{
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
-			
-			cameraDeltaY = msg.deltaY;
-			camera.moveY (cameraDeltaY);
+			camera.moveY (msg.deltaY);
 		}
 		else if (message.type == MessageType.characterSelected){
 			CharacterSelectedMessage msg = (CharacterSelectedMessage) message;
 			camera.setPositionY (msg.spriteY + msg.spriteH / 2);
 		}
 		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
-			camera.moveY (-cameraDeltaY);
-			cameraDeltaY = 0;
+			PushOutMessage msg = (PushOutMessage) message;
+			if (msg.deltaY != 0 && !pushOutVertical){
+				camera.moveY (msg.deltaY);
+				pushOutVertical = true;
+			}
+		
 		}
 		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
 			Character character = (Character) message.object;
@@ -63,13 +66,10 @@ public class Camera extends GameObject{
 	}
 	
 	@Override
-	public void draw (){
-		cameraDeltaY = 0;
-	}
+	public void draw (){ }
 	
 	@Override
 	public void clear (){
-		cameraDeltaY = 0;
 		camera.setPositionY (GameSystem.SCREEN_H / 2);
 	}
 }

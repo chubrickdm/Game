@@ -7,7 +7,7 @@ import com.game.GameSystem;
 import com.game.MyGame;
 import com.game.addition.parsers.ParseLevel;
 import com.game.addition.parsers.ParseSettings;
-import com.game.mesh.objects.singletons.ActionWheel;
+import com.game.mesh.objects.singletons.Inventory;
 import com.game.mesh.objects.singletons.camera.Camera;
 import com.game.messages.GameMessage;
 import com.game.mesh.objects.GameObject;
@@ -65,7 +65,7 @@ public class LevelManager extends GameObject{
 	public void createLevel (){
 		ParseLevel.parseLVL (GameSystem.CURRENT_LEVEL);
 		
-		ObjectManager.getInstance ().addObject (ActionWheel.getInstance ());
+		ObjectManager.getInstance ().addObject (Inventory.getInstance ());
 		ObjectManager.getInstance ().addObject (Camera.getInstance ());
 		ObjectManager.getInstance ().addObject (this);
 		
@@ -85,7 +85,7 @@ public class LevelManager extends GameObject{
 		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
 			closeLevel ();
 		}
-		if (isFirstUpdate){
+		if (isFirstUpdate){ //обязательно нужно, что б камера и инвентрь получили начальные координаты персонажей
 			ObjectManager.getInstance ().addMessage (new GetPositionMessage ());
 			isFirstUpdate = false;
 		}
