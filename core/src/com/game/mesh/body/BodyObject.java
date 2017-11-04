@@ -6,8 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.addition.math.BodyRectangle;
 
 public class BodyObject extends Body{
-	private float bodyShiftX;
-	private float bodyShiftY;
+	private float bodyShiftX = 0;
 	
 	
 	public BodyObject (String fileName, float x, float y, float w, float h, float bodyW, float bodyH){
@@ -16,13 +15,12 @@ public class BodyObject extends Body{
 		
 		sprite.setBounds (x, y, w, h);
 		bodyShiftX = (w - bodyW) / 2;
-		bodyShiftY = (h - bodyH) / 2;
-		bodyRect = new BodyRectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
+		bodyRect = new BodyRectangle (x + bodyShiftX, y, bodyW, bodyH);
 	}
 	
 	@Override
 	public void setBodyPosition (float x, float y){
-		sprite.setPosition (x - bodyShiftX, y - bodyShiftY);
+		sprite.setPosition (x - bodyShiftX, y);
 		bodyRect.setPosition (x, y);
 	}
 	

@@ -12,11 +12,7 @@ public class Wall extends GameObject{
 	
 	public Wall (float x, float y, float w, float h){
 		objectType = ObjectType.wall;
-		
-		body = new BodyObject ("core/assets/images/wall.png", x, y, WALL_W, WALL_H, WALL_W, WALL_H);
-		if (w > h){
-			body.rotate90 ();
-		}
+		body = new BodyObject ("core/assets/images/wall2.png", x, y, WALL_W, WALL_H, w, h);
 		dataRender = new DataRender (body.getSprite (), LayerType.wall);
 	}
 	
