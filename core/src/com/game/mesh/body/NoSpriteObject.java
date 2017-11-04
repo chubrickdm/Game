@@ -6,6 +6,8 @@ public class NoSpriteObject extends Body{
 	private float spriteX = 0;
 	private float spriteY = 0;
 	private float bodyShiftX = 0;
+	private float spriteW;
+	private float spriteH;
 	
 	
 	public NoSpriteObject (float x, float y, float w, float h, float bodyW, float bodyH){
@@ -13,6 +15,8 @@ public class NoSpriteObject extends Body{
 		spriteY = y;
 		bodyShiftX = (w - bodyW) / 2;
 		bodyRect = new BodyRectangle (x + bodyShiftX, y, bodyW, bodyH);
+		spriteW = w;
+		spriteH = h;
 	}
 	
 	public NoSpriteObject (float x, float y, float bodyW, float bodyH){
@@ -37,6 +41,16 @@ public class NoSpriteObject extends Body{
 	@Override
 	public float getSpriteY (){
 		return spriteY;
+	}
+	
+	@Override
+	public float getSpriteW (){
+		return spriteW;
+	}
+	
+	@Override
+	public float getSpriteH (){
+		return spriteH;
 	}
 	
 	@Override

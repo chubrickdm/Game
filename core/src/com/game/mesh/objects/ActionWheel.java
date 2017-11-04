@@ -84,7 +84,7 @@ public class ActionWheel extends GameObject{
 			ReturnPositionMessage msg = (ReturnPositionMessage) message;
 			Character character = (Character) message.object;
 			if (character.getIsSelected ()){
-				body.setSpritePosition (msg.spriteX + Character.CHARACTER_W / 2, msg.spriteY + Character.CHARACTER_H / 2);
+				body.setSpritePosition (msg.spriteX + msg.spriteW / 2, msg.spriteY +  msg.spriteH / 2);
 			}
 		}
 		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
@@ -93,7 +93,7 @@ public class ActionWheel extends GameObject{
 		}
 		else if (message.type == MessageType.characterSelected){
 			CharacterSelectedMessage msg = (CharacterSelectedMessage) message;
-			body.setSpritePosition (msg.spriteX + Character.CHARACTER_W / 2, msg.spriteY + Character.CHARACTER_H / 2);
+			body.setSpritePosition (msg.spriteX + msg.spriteW / 2, msg.spriteY + msg.spriteH / 2);
 		}
 	}
 	
@@ -106,6 +106,8 @@ public class ActionWheel extends GameObject{
 	
 	@Override
 	public void clear (){
+		percentSize = 1;
+		isVisible = false;
 		isFirstUpdate = true;
 		body.setOrigin (WHEEL_H / 2, WHEEL_H / 2);
 		body.setScale (percentSize / 100);

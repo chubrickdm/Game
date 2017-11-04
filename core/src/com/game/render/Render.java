@@ -18,6 +18,9 @@ public class Render{
 			if (tmp1.layerType == LayerType.actionWheel){
 				return 1;
 			}
+			else if (tmp2.layerType == LayerType.actionWheel){
+				return -1;
+			}
 			return (int) (tmp2.sprite.getY () - tmp1.sprite.getY ());
 		});
 	}

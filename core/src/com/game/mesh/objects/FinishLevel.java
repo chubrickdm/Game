@@ -42,7 +42,7 @@ public class FinishLevel extends GameObject{
 			Character character = (Character) message.object;
 			
 			if (character.getName () == CharacterName.first){
-				if (body.contains (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+				if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 					firstOnFinish = true;
 				}
 				else{
@@ -50,7 +50,7 @@ public class FinishLevel extends GameObject{
 				}
 			}
 			else if (character.getName () == CharacterName.second){
-				if (body.contains (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+				if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 					secondOnFinish = true;
 				}
 				else{
@@ -58,19 +58,7 @@ public class FinishLevel extends GameObject{
 				}
 			}
 		}
-		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
-			PushOutMessage msg = (PushOutMessage) message;
-			Character character = (Character) msg.object;
-			
-			if (body.contains (msg.whereBodyX, msg.whereBodyY, Character.BODY_CHARACTER_W, Character.BODY_CHARACTER_H)){
-				if (character.getName () == CharacterName.first){
-					firstOnFinish = true;
-				}
-				else if (character.getName () == CharacterName.second){
-					secondOnFinish = true;
-				}
-			}
-		}
+		
 	}
 	
 	@Override

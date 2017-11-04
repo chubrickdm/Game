@@ -53,7 +53,7 @@ public class Camera extends GameObject{
 		}
 		else if (message.type == MessageType.characterSelected){
 			CharacterSelectedMessage msg = (CharacterSelectedMessage) message;
-			camera.setPositionY (msg.spriteY + Character.CHARACTER_H / 2);
+			camera.setPositionY (msg.spriteY + msg.spriteH / 2);
 		}
 		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
 			camera.moveY (-cameraDeltaY);
@@ -63,7 +63,7 @@ public class Camera extends GameObject{
 			Character character = (Character) message.object;
 			if (character.getIsSelected ()){
 				ReturnPositionMessage msg = (ReturnPositionMessage) message;
-				camera.setPositionY (msg.spriteY + Character.CHARACTER_H / 2);
+				camera.setPositionY (msg.spriteY + msg.spriteH / 2);
 			}
 		}
 	}

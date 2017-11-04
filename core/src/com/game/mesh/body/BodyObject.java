@@ -23,11 +23,4 @@ public class BodyObject extends Body{
 		sprite.setPosition (x - bodyShiftX, y);
 		bodyRect.setPosition (x, y);
 	}
-	
-	@Override
-	public void rotate90 (){
-		sprite.rotate90 (true);
-		sprite.setSize (sprite.getHeight (), sprite.getWidth ());
-		bodyRect = new BodyRectangle (bodyRect.getX (), bodyRect.getY (), bodyRect.getH (), bodyRect.getW ());
-	}
 }

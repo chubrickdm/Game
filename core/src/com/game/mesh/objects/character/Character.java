@@ -14,13 +14,13 @@ import com.game.mesh.objects.special.ObjectManager;
 import com.game.render.*;
 
 public class Character extends GameObject{
-	public static final float CHARACTER_W = UNIT;
-	public static final float CHARACTER_H = UNIT;
-	public static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
-	public static final float BODY_CHARACTER_H = CHARACTER_H / 4;
-	public static final float CHARACTER_SPEED = 100 * ASPECT_RATIO;
-	public static final int FRAME_COLS = 7;
-	public static final int FRAME_ROWS = 1;
+	private static final float CHARACTER_W = UNIT;
+	private static final float CHARACTER_H = UNIT;
+	private static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
+	private static final float BODY_CHARACTER_H = CHARACTER_H / 4;
+	private static final float CHARACTER_SPEED = 100 * ASPECT_RATIO;
+	private static final int FRAME_COLS = 7;
+	private static final int FRAME_ROWS = 1;
 	
 	private boolean isSelected = false;
 	private boolean isPushOut = false;
@@ -177,7 +177,7 @@ public class Character extends GameObject{
 			}
 			else{
 				ObjectManager.getInstance ().addMessage (new CharacterSelectedMessage (this, body.getSpriteX (),
-						body.getSpriteY ()));
+						body.getSpriteY (), body.getSpriteW (), body.getSpriteH ()));
 				isSelected = true;
 			}
 		}
@@ -193,7 +193,8 @@ public class Character extends GameObject{
 			body.setBodyPosition (msg.whereBodyX, msg.whereBodyY);
 		}
 		else if (message.type == MessageType.getPosition){
-			ObjectManager.getInstance ().addMessage (new ReturnPositionMessage (this, body.getSpriteX (), body.getSpriteY ()));
+			ObjectManager.getInstance ().addMessage (new ReturnPositionMessage (this, body.getSpriteX (),
+					body.getSpriteY (), body.getSpriteW (), body.getSpriteH ()));
 		}
 	}
 	

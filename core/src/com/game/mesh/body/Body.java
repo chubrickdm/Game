@@ -47,6 +47,14 @@ public abstract class Body{
 		return sprite.getY ();
 	}
 	
+	public float getSpriteW (){
+		return sprite.getWidth ();
+	}
+	
+	public float getSpriteH (){
+		return sprite.getHeight ();
+	}
+	
 	public Sprite getSprite (){
 		return sprite;
 	}
@@ -58,6 +66,4 @@ public abstract class Body{
 	public void setSpritePosition (float x, float y){
 		sprite.setPosition (x, y);
 	}
-	
-	public void rotate90 (){ }
 }
