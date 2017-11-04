@@ -1,9 +1,11 @@
-package com.game.mesh.objects;
+package com.game.mesh.objects.singletons;
 
 import com.game.mesh.body.NoSpriteObject;
+import com.game.mesh.objects.GameObject;
+import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.character.CharacterName;
-import com.game.mesh.objects.special.ObjectManager;
+import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
 
 public class FinishLevel extends GameObject{

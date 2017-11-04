@@ -1,9 +1,11 @@
-package com.game.mesh.objects;
+package com.game.mesh.objects.singletons;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-import com.game.mesh.objects.special.ObjectManager;
+import com.game.mesh.objects.GameObject;
+import com.game.mesh.objects.ObjectType;
+import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
 import com.game.mesh.body.NoBodyObject;
 import com.game.mesh.objects.character.Character;
@@ -14,7 +16,6 @@ public class ActionWheel extends GameObject{
 	public static final float WHEEL_W = UNIT * 2;
 	public static final float WHEEL_H = UNIT * 2;
 	
-	private boolean isFirstUpdate = true;
 	private boolean isVisible = false;
 	private float deltaX;
 	private float deltaY;
@@ -66,10 +67,6 @@ public class ActionWheel extends GameObject{
 	@Override
 	public void update (){
 		updateSizeAnimation ();
-		if (isFirstUpdate){
-			ObjectManager.getInstance ().addMessage (new GetPositionMessage ());
-			isFirstUpdate = false;
-		}
 	}
 	
 	@Override
@@ -106,9 +103,8 @@ public class ActionWheel extends GameObject{
 	
 	@Override
 	public void clear (){
-		percentSize = 1;
 		isVisible = false;
-		isFirstUpdate = true;
+		percentSize = 1;
 		body.setOrigin (WHEEL_H / 2, WHEEL_H / 2);
 		body.setScale (percentSize / 100);
 		body.setSpritePosition (WHEEL_H / 2, WHEEL_H / 2);

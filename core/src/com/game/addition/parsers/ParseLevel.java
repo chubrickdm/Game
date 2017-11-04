@@ -1,9 +1,9 @@
 package com.game.addition.parsers;
 
-import com.game.mesh.objects.FinishLevel;
+import com.game.mesh.objects.singletons.FinishLevel;
 import com.game.mesh.objects.InvisibleWall;
 import com.game.GameSystem;
-import com.game.mesh.objects.special.ObjectManager;
+import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.mesh.objects.Wall;
 import com.game.mesh.objects.character.Character;
 

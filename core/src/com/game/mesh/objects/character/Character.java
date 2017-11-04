@@ -10,7 +10,7 @@ import com.game.mesh.objects.GameObject;
 import com.game.messages.*;
 import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.body.NoSpriteObject;
-import com.game.mesh.objects.special.ObjectManager;
+import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.render.*;
 
 public class Character extends GameObject{

@@ -1,4 +1,4 @@
-package com.game.mesh.objects.camera;
+package com.game.mesh.objects.singletons.camera;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;

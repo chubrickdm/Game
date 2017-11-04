@@ -2,14 +2,14 @@ package com.game.mesh.objects;
 
 import com.game.messages.*;
 import com.game.mesh.body.BodyObject;
-import com.game.mesh.objects.special.ObjectManager;
+import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.render.*;
 
 public class Wall extends GameObject{
-	public static final float BODY_WALL_W = UNIT;
-	public static final float BODY_WALL_H = UNIT;
-	public static final float WALL_W = UNIT;
-	public static final float WALL_H = UNIT * 3;
+	private static final float BODY_WALL_W = UNIT;
+	private static final float BODY_WALL_H = UNIT;
+	private static final float WALL_W = UNIT;
+	private static final float WALL_H = UNIT * 3;
 	
 	
 	public Wall (float x, float y){

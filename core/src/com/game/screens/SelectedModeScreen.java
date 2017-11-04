@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.GameSystem;
 import com.game.MyGame;
 import com.game.addition.Font;
-import com.game.mesh.objects.special.LevelManager;
+import com.game.mesh.objects.singletons.special.LevelManager;
 
 public class SelectedModeScreen implements Screen{
 	private TextButton.TextButtonStyle normalStyle;
