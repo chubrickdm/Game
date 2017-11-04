@@ -6,13 +6,15 @@ import com.game.mesh.objects.special.ObjectManager;
 import com.game.render.*;
 
 public class Wall extends GameObject{
+	public static final float BODY_WALL_W = UNIT;
+	public static final float BODY_WALL_H = UNIT;
 	public static final float WALL_W = UNIT;
 	public static final float WALL_H = UNIT * 3;
 	
 	
-	public Wall (float x, float y, float w, float h){
+	public Wall (float x, float y){
 		objectType = ObjectType.wall;
-		body = new BodyObject ("core/assets/images/wall2.png", x, y, WALL_W, WALL_H, w, h);
+		body = new BodyObject ("core/assets/images/wall2.png", x, y, WALL_W, WALL_H, BODY_WALL_W, BODY_WALL_H);
 		dataRender = new DataRender (body.getSprite (), LayerType.wall);
 	}
 	

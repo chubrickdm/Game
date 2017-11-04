@@ -48,7 +48,7 @@ public abstract class ParseLevel extends ParseBasis{
 	
 	private static void createWall (){
 		Wall wall;
-		wall = new Wall (x, y, w, h);
+		wall = new Wall (x, y);
 		ObjectManager.getInstance ().addObject (wall);
 	}
 	

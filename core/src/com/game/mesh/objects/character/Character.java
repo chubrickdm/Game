@@ -14,10 +14,10 @@ import com.game.mesh.objects.special.ObjectManager;
 import com.game.render.*;
 
 public class Character extends GameObject{
-	public static final float CHARACTER_W = 34 * UNIT / 64;
-	public static final float CHARACTER_H = 53 * UNIT / 64;
-	public static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 3;
-	public static final float BODY_CHARACTER_H = CHARACTER_H / 3;
+	public static final float CHARACTER_W = UNIT;
+	public static final float CHARACTER_H = UNIT;
+	public static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
+	public static final float BODY_CHARACTER_H = CHARACTER_H / 4;
 	public static final float CHARACTER_SPEED = 100 * ASPECT_RATIO;
 	public static final int FRAME_COLS = 7;
 	public static final int FRAME_ROWS = 1;
