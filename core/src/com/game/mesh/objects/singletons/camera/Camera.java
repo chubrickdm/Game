@@ -69,6 +69,6 @@ public class Camera extends GameObject{
 	
 	@Override
 	public void clear (){
-		camera.setPositionY (GameSystem.SCREEN_H / 2);
+		camera = new BodyCamera ();
 	}
 }

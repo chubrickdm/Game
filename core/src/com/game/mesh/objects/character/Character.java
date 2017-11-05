@@ -79,12 +79,9 @@ public class Character extends GameObject{
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (this));
 		}
 		else if (deltaX != 0 || deltaY != 0){
+			ObjectManager.getInstance ().addMessage (new MoveMessage (this, deltaX, deltaY, body.getBodyX (),
+					body.getBodyY (), body.getSpriteX (), body.getSpriteY (), body.getBodyW (), body.getBodyH ()));
 			body.move (deltaX, deltaY);
-			
-			ObjectManager.getInstance ().addMessage (new MoveMessage (this, deltaX, deltaY,
-					body.getBodyX () - deltaX, body.getBodyY () - deltaY,
-					body.getSpriteX () - deltaX, body.getSpriteY () - deltaY, body.getBodyW (),
-					body.getBodyH ()));
 		}
 	}
 	
@@ -201,6 +198,15 @@ public class Character extends GameObject{
 		else if (message.type == MessageType.getPosition){
 			ObjectManager.getInstance ().addMessage (new ReturnPositionMessage (this, body.getSpriteX (),
 					body.getSpriteY (), body.getSpriteW (), body.getSpriteH ()));
+		}
+		else if (message.type == MessageType.move && message.objectType == ObjectType.box){
+			MoveMessage msg = (MoveMessage) message;
+			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (this, -msg.deltaX, 0));
+			}
+			if (body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (this, 0, -msg.deltaY));
+			}
 		}
 	}
 	

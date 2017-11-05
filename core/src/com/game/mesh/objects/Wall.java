@@ -23,7 +23,8 @@ public class Wall extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move && message.objectType == ObjectType.character){
+		if (message.type == MessageType.move && (message.objectType == ObjectType.character ||
+				message.objectType == ObjectType.box)){
 			MoveMessage msg = (MoveMessage) message;
 			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, -msg.deltaX, 0));
@@ -31,6 +32,7 @@ public class Wall extends GameObject{
 			if (body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, 0, -msg.deltaY));
 			}
+			
 		}
 	}
 	

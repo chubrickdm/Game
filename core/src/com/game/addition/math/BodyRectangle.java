@@ -54,6 +54,19 @@ public class BodyRectangle{
 			return true;
 		}
 		
+		else if ((x <= xx + ww) && (y <= yy + hh) && (x >= xx) && (y >= yy)){
+			return true;
+		}
+		else if ((x + w <= xx + ww) && (y <= yy + hh) && (x + w >= xx) && (y >= yy)){
+			return true;
+		}
+		else if ((x <= xx + ww) && (y + h <= yy + hh) && (x >= xx) && (y + h >= yy)){
+			return true;
+		}
+		else if ((x + w <= xx + ww) && (y + h <= yy + hh) && (x + w >= xx) && (y + h >= yy)){
+			return true;
+		}
+		
 		return false;
 	}
 	
