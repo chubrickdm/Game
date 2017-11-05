@@ -1,5 +1,6 @@
 package com.game.addition.parsers;
 
+import com.game.mesh.objects.Box;
 import com.game.mesh.objects.singletons.FinishLevel;
 import com.game.mesh.objects.InvisibleWall;
 import com.game.GameSystem;
@@ -52,6 +53,12 @@ public abstract class ParseLevel extends ParseBasis{
 		ObjectManager.getInstance ().addObject (wall);
 	}
 	
+	private static void createBox (){
+		Box box;
+		box = new Box (x, y);
+		ObjectManager.getInstance ().addObject (box);
+	}
+	
 	private static void createCharacter (){
 		Character character;
 		character = new Character (x, y);
@@ -102,6 +109,9 @@ public abstract class ParseLevel extends ParseBasis{
 							break;
 						case "finishLevel":
 							createLevelFinish ();
+							break;
+						case "box":
+							createBox ();
 							break;
 						}
 					}

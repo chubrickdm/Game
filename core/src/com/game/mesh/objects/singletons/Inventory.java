@@ -15,7 +15,7 @@ public class Inventory extends GameObject{
 	private static final float INVENTORY_W = UNIT * 2;
 	private static final float INVENTORY_H = UNIT * 2;
 	
-	private boolean pushOutHorizont = false;
+	private boolean pushOutHorizontal = false;
 	private boolean pushOutVertical = false;
 	private boolean isVisible = false;
 	private float percentSize = 1;
@@ -65,7 +65,7 @@ public class Inventory extends GameObject{
 	
 	@Override
 	public void update (){
-		pushOutHorizont = false;
+		pushOutHorizontal = false;
 		pushOutVertical = false;
 		updateSizeAnimation ();
 	}
@@ -86,9 +86,9 @@ public class Inventory extends GameObject{
 		}
 		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
 			PushOutMessage msg = (PushOutMessage) message;
-			if (msg.deltaX != 0 && !pushOutHorizont){
+			if (msg.deltaX != 0 && !pushOutHorizontal){
 				body.move (msg.deltaX, 0);
-				pushOutHorizont = true;
+				pushOutHorizontal = true;
 			}
 			if (msg.deltaY != 0 && !pushOutVertical){
 				body.move (0, msg.deltaY);
