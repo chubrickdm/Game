@@ -54,7 +54,6 @@ public class Camera extends GameObject{
 				camera.moveY (msg.deltaY);
 				pushOutVertical = true;
 			}
-		
 		}
 		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
 			Character character = (Character) message.object;

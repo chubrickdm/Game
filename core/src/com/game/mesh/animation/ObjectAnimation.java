@@ -1,11 +1,13 @@
 package com.game.mesh.animation;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class ObjectAnimation{
+	private float time = 0;
 	private float frameW;
 	private float frameH;
 	private Animation <TextureRegion> animation;
@@ -30,6 +32,20 @@ public class ObjectAnimation{
 	
 	public Sprite getCurrSprite (float time){
 		Sprite currSprite = new Sprite (animation.getKeyFrame (time, true));
+		currSprite.setBounds (0, 0, frameW, frameH);
+		return currSprite;
+	}
+	
+	public Sprite getCurrSprite (){
+		time += Gdx.graphics.getDeltaTime ();
+		Sprite currSprite = new Sprite (animation.getKeyFrame (time, true));
+		currSprite.setBounds (0, 0, frameW, frameH);
+		return currSprite;
+	}
+	
+	public Sprite getFirstFrame (){
+		time = 0;
+		Sprite currSprite = new Sprite (animation.getKeyFrame (0, true));
 		currSprite.setBounds (0, 0, frameW, frameH);
 		return currSprite;
 	}

@@ -18,17 +18,15 @@ public class Character extends GameObject{
 	private static final float CHARACTER_H = UNIT;
 	private static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
 	private static final float BODY_CHARACTER_H = CHARACTER_H / 4;
-	private static final float CHARACTER_SPEED = 100 * ASPECT_RATIO;
+	private static final float CHARACTER_SPEED = 80 * ASPECT_RATIO;
 	private static final int FRAME_COLS = 7;
 	private static final int FRAME_ROWS = 1;
 	
 	private boolean isSelected = false;
-	private boolean isPushOut = false;
-	private boolean pushOutHorizont = false;
+	private boolean pushOutHorizontal = false;
 	private boolean pushOutVertical = false;
 	private float deltaX = 0;
 	private float deltaY = 0;
-	private float time = 0;
 	private CharacterName name = CharacterName.unknown;
 	private ActionType action;
 	private Sprite currSprite;
@@ -91,36 +89,35 @@ public class Character extends GameObject{
 	}
 	
 	private void updateMoveAnimation (){
-		if ((deltaX != 0 || deltaY != 0) && !isPushOut && isSelected){
-			time += Gdx.graphics.getDeltaTime ();
+		if ((deltaX != 0 || deltaY != 0) && isSelected){
 			switch (action){
 			case forwardWalk:
-				currSprite = forwardWalk.getCurrSprite (time);
+				currSprite = forwardWalk.getCurrSprite ();
 				break;
 			case rightWalk:
-				currSprite = rightWalk.getCurrSprite (time);
+				currSprite = rightWalk.getCurrSprite ();
 				break;
 			case backWalk:
-				currSprite = backWalk.getCurrSprite (time);
+				currSprite = backWalk.getCurrSprite ();
 				break;
 			case leftWalk:
-				currSprite = leftWalk.getCurrSprite (time);
+				currSprite = leftWalk.getCurrSprite ();
 				break;
 			}
 		}
 		else{
 			switch (action){
 			case forwardWalk:
-				currSprite = forwardWalk.getCurrSprite (0);
+				currSprite = forwardWalk.getFirstFrame ();
 				break;
 			case rightWalk:
-				currSprite = rightWalk.getCurrSprite (0);
+				currSprite = rightWalk.getFirstFrame ();
 				break;
 			case backWalk:
-				currSprite = backWalk.getCurrSprite (0);
+				currSprite = backWalk.getFirstFrame ();
 				break;
 			case leftWalk:
-				currSprite = leftWalk.getCurrSprite (0);
+				currSprite = leftWalk.getFirstFrame ();
 				break;
 			}
 		}
@@ -164,10 +161,9 @@ public class Character extends GameObject{
 	
 	@Override
 	public void update (){
-		updateMoveAnimation ();
-		isPushOut = false;
-		pushOutHorizont = false;
+		pushOutHorizontal = false;
 		pushOutVertical = false;
+		updateMoveAnimation ();
 		if (isSelected){
 			updateControl ();
 		}
@@ -193,15 +189,14 @@ public class Character extends GameObject{
 		}
 		else if (message.type == MessageType.pushOut && message.object == this){
 			PushOutMessage msg = (PushOutMessage) message;
-			if (msg.deltaX != 0 && !pushOutHorizont){
+			if (msg.deltaX != 0 && !pushOutHorizontal){
 				body.move (msg.deltaX, 0);
-				pushOutHorizont = true;
+				pushOutHorizontal = true;
 			}
 			if (msg.deltaY != 0 && !pushOutVertical){
 				body.move (0, msg.deltaY);
 				pushOutVertical = true;
 			}
-			isPushOut = true;
 		}
 		else if (message.type == MessageType.getPosition){
 			ObjectManager.getInstance ().addMessage (new ReturnPositionMessage (this, body.getSpriteX (),
