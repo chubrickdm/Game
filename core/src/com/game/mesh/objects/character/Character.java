@@ -201,11 +201,11 @@ public class Character extends GameObject{
 		}
 		else if (message.type == MessageType.move && message.objectType == ObjectType.box){
 			MoveMessage msg = (MoveMessage) message;
-			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (this, -msg.deltaX, 0));
+			if (msg.deltaX != 0 && body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (this, msg.deltaX, 0));
 			}
-			if (body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (this, 0, -msg.deltaY));
+			if (msg.deltaY != 0 && body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (this, 0, msg.deltaY));
 			}
 		}
 	}
