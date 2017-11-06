@@ -11,8 +11,8 @@ import com.game.render.LayerType;
 import com.game.render.Render;
 
 public class Box extends GameObject{
-	private static final float BODY_BOX_W = UNIT;
-	private static final float BODY_BOX_H = UNIT;
+	private static final float BODY_BOX_W = UNIT - 1;
+	private static final float BODY_BOX_H = UNIT - 1;
 	private static final float BOX_W = UNIT;
 	private static final float BOX_H = UNIT * 2;
 	
@@ -24,6 +24,7 @@ public class Box extends GameObject{
 	public Box (float x, float y){
 		objectType = ObjectType.box;
 		body = new BodyObject ("core/assets/images/box.png", x, y, BOX_W, BOX_H, BODY_BOX_W, BODY_BOX_H);
+		body.move (0, 0.5f);
 		dataRender = new DataRender (body.getSprite (), LayerType.box);
 	}
 	
