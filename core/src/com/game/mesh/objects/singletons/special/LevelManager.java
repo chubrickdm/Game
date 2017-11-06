@@ -96,6 +96,9 @@ public class LevelManager extends GameObject{
 		if (message.type == MessageType.levelComplete){
 			completeLevel ();
 		}
+		else if (message.type == MessageType.playerLost){
+			closeLevel ();
+		}
 	}
 	
 	@Override

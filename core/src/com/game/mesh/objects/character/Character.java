@@ -34,6 +34,7 @@ public class Character extends GameObject{
 	private ObjectAnimation rightWalk;
 	private ObjectAnimation forwardWalk;
 	private ObjectAnimation backWalk;
+	private ObjectAnimation backFall;
 	
 	
 	private void keyWPressed (){
@@ -121,6 +122,16 @@ public class Character extends GameObject{
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
 	}
 	
+	private void updateFallAnimation (){
+		if (backFall.isAnimationFinished ()){
+			ObjectManager.getInstance ().addMessage (new PlayerLostMessage ());
+		}
+		if (action == ActionType.fall){
+			currSprite = backFall.getCurrSprite ();
+		}
+		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
+	}
+	
 	
 	public Character (float x, float y){
 		objectType = ObjectType.character;
@@ -135,6 +146,7 @@ public class Character extends GameObject{
 		}
 		
 		body = new NoSpriteObject (x, y, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
+		body.move (0, 0.25f);
 		
 		leftWalk = new ObjectAnimation ("core/assets/images/walking_left.png", CHARACTER_W,
 				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
@@ -143,6 +155,8 @@ public class Character extends GameObject{
 		forwardWalk = new ObjectAnimation ("core/assets/images/walking_forward.png", CHARACTER_W,
 				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		backWalk = new ObjectAnimation ("core/assets/images/walking_back.png", CHARACTER_W,
+				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
+		backFall = new ObjectAnimation ("core/assets/images/fall_back.png", false, CHARACTER_W,
 				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		
 		dataRender = new DataRender (currSprite, LayerType.character);
@@ -161,7 +175,8 @@ public class Character extends GameObject{
 		pushOutHorizontal = false;
 		pushOutVertical = false;
 		updateMoveAnimation ();
-		if (isSelected){
+		updateFallAnimation ();
+		if (isSelected && action != ActionType.fall){
 			updateControl ();
 		}
 	}
@@ -206,6 +221,12 @@ public class Character extends GameObject{
 			}
 			if (msg.deltaY != 0 && body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (this, 0, msg.deltaY));
+			}
+		}
+		else if (message.type == MessageType.characterDied && message.object == this){
+			CharacterDiedMessage msg = (CharacterDiedMessage) message;
+			if (msg.killer == ObjectType.hole){
+				action = ActionType.fall;
 			}
 		}
 	}

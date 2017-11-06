@@ -72,7 +72,6 @@ public class BodyRectangle{
 	
 	public boolean contains (float xx, float yy, float ww, float hh){
 		int tmpI = 0;
-		
 		if ((xx <= x + w) && (yy <= y + h) && (xx >= x) && (yy >= y)){
 			tmpI++;
 		}
@@ -85,12 +84,27 @@ public class BodyRectangle{
 		if ((xx + ww <= x + w) && (yy + hh <= y + h) && (xx + ww >= x) && (yy + hh >= y)){
 			tmpI++;
 		}
-		
 		if (tmpI == 4){
-			return  true;
+			return true;
 		}
-		else{
-			return false;
+		
+		tmpI = 0;
+		if ((x <= xx + ww) && (y <= yy + hh) && (x >= xx) && (y >= yy)){
+			tmpI++;
 		}
+		if ((x + w <= xx + ww) && (y <= yy + hh) && (x + w >= xx) && (y >= yy)){
+			tmpI++;
+		}
+		if ((x <= xx + ww) && (y + h <= yy + hh) && (x >= xx) && (y + h >= yy)){
+			tmpI++;
+		}
+		if ((x + w <= xx + ww) && (y + h <= yy + hh) && (x + w >= xx) && (y + h >= yy)){
+			tmpI++;
+		}
+		if (tmpI == 4){
+			return true;
+		}
+		
+		return false;
 	}
 }
