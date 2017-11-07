@@ -3,7 +3,6 @@ package com.game.mesh.objects.singletons;
 import com.game.mesh.body.NoSpriteObject;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
-import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.character.CharacterName;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
@@ -39,11 +38,10 @@ public class FinishLevel extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move && message.objectType == ObjectType.character){
+		if (message.type == MessageType.move && (message.objectType == ObjectType.characterFirst || message.objectType == ObjectType.characterSecond)){
 			MoveMessage msg = (MoveMessage) message;
-			Character character = (Character) message.object;
 			
-			if (character.getName () == CharacterName.first){
+			if (msg.objectType == ObjectType.characterFirst){
 				if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 					firstOnFinish = true;
 				}
@@ -51,7 +49,7 @@ public class FinishLevel extends GameObject{
 					firstOnFinish = false;
 				}
 			}
-			else if (character.getName () == CharacterName.second){
+			else if (msg.objectType == ObjectType.characterSecond){
 				if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 					secondOnFinish = true;
 				}

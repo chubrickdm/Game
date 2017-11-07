@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Matrix4;
 import com.game.messages.*;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
-import com.game.mesh.objects.character.Character;
 
 public class Camera extends GameObject{
 	private boolean pushOutVertical = false;
@@ -54,11 +53,8 @@ public class Camera extends GameObject{
 			}
 		}
 		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
-			Character character = (Character) message.object;
-			if (character.getIsSelected ()){
-				ReturnPositionMessage msg = (ReturnPositionMessage) message;
-				camera.setPositionY (msg.spriteY + msg.spriteH / 2);
-			}
+			ReturnPositionMessage msg = (ReturnPositionMessage) message;
+			camera.setPositionY (msg.spriteY + msg.spriteH / 2);
 		}
 	}
 	

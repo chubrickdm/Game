@@ -1,12 +1,8 @@
-package com.game.mesh.objects.character.first;
+package com.game.mesh.objects.character.second;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import com.game.mesh.animation.ObjectAnimation;
-import com.game.mesh.body.Body;
-import com.game.mesh.body.BodyObject;
-import com.game.mesh.body.NoSpriteObject;
-import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.character.ActionType;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.PlayerLostMessage;
@@ -14,23 +10,18 @@ import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
 
-public class CharacterAnimations{
-	public static final float CHARACTER_W = GameObject.UNIT;
-	public static final float CHARACTER_H = GameObject.UNIT;
-	private static final float CHARACTER_SPEED = 80 * GameObject.ASPECT_RATIO;
+public class SecondAnimations extends SecondBody{
 	private static final int FRAME_COLS = 7;
 	private static final int FRAME_ROWS = 1;
 	
-	private boolean isMove = false;
-	private boolean isFall = false;
-	private ActionType action;
+	private SecondBody second;
 	private DataRender dataRender;
 	private Sprite currSprite;
-	private NoSpriteObject body;
 	private ObjectAnimation leftWalk;
 	private ObjectAnimation rightWalk;
 	private ObjectAnimation forwardWalk;
 	private ObjectAnimation backWalk;
+	
 	private ObjectAnimation leftFall;
 	private ObjectAnimation rightFall;
 	private ObjectAnimation forwardFall;
@@ -70,7 +61,7 @@ public class CharacterAnimations{
 				break;
 			}
 		}
-		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
+		currSprite.setPosition (bodySecond.getSpriteX (), bodySecond.getSpriteY ());
 	}
 	
 	private void updateFallAnimation (){
@@ -102,7 +93,7 @@ public class CharacterAnimations{
 			break;
 		}
 		
-		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
+		currSprite.setPosition (bodySecond.getSpriteX (), bodySecond.getSpriteY ());
 	}
 	
 	private void selectFallAnimation (){
@@ -121,10 +112,9 @@ public class CharacterAnimations{
 	}
 	
 	
-	public CharacterAnimations (Body body){
-		this.body = (NoSpriteObject) body;
-		
-		action = ActionType.backWalk;
+	public SecondAnimations (SecondBody second){
+		this.second = second;
+		action = ActionType.forwardWalk;
 		
 		leftWalk = new ObjectAnimation ("core/assets/images/walking_left.png", CHARACTER_W, CHARACTER_H,
 				FRAME_ROWS, FRAME_COLS, 0.15f);
@@ -148,23 +138,18 @@ public class CharacterAnimations{
 		dataRender = new DataRender (currSprite, LayerType.character);
 	}
 	
-	public void update (ActionType action, boolean isFall, boolean isMove){
-		this.isFall = isFall;
-		this.isMove = isMove;
+	@Override
+	public void update (){
 		if (isFall){
 			selectFallAnimation ();
 			updateFallAnimation ();
 		}
-		this.action = action;
 		updateMoveAnimation ();
 	}
 	
+	@Override
 	public void draw (){
 		dataRender.sprite = currSprite;
 		Render.getInstance ().addDataForRender (dataRender);
-	}
-	
-	public ActionType getAction (){
-		return action;
 	}
 }

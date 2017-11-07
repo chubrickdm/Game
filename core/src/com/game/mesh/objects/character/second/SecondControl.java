@@ -1,25 +1,16 @@
-package com.game.mesh.objects.character.first;
+package com.game.mesh.objects.character.second;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.game.mesh.body.Body;
-import com.game.mesh.body.NoSpriteObject;
-import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.character.ActionType;
-import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.CharacterChangeMessage;
 import com.game.messages.MoveMessage;
 
-public class CharacterControl{
-	private static final float CHARACTER_SPEED = 80 * GameObject.ASPECT_RATIO;
+public class SecondControl extends SecondBody{
+	private static final float CHARACTER_SPEED = 80 * ASPECT_RATIO;
 	
-	private boolean isMove = false;
-	private float deltaX = 0;
-	private float deltaY = 0;
-	private ActionType action;
-	private NoSpriteObject body;
-	private Character character;
+	private SecondBody second;
 	
 	
 	private void keyWPressed (){
@@ -63,32 +54,26 @@ public class CharacterControl{
 		if (Gdx.input.isKeyPressed (Input.Keys.A)) keyAPressed ();
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
-			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (character));
+			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (second));
 		}
 		else if (deltaX != 0 || deltaY != 0){
 			isMove = true;
-			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, body.getBodyX (),
-					body.getBodyY (), body.getSpriteX (), body.getSpriteY (), body.getBodyW (), body.getBodyH ()));
-			body.move (deltaX, deltaY);
+			ObjectManager.getInstance ().addMessage (new MoveMessage (second, deltaX, deltaY, bodySecond.getBodyX (),
+					bodySecond.getBodyY (), bodySecond.getSpriteX (), bodySecond.getSpriteY (), bodySecond.getBodyW (),
+					bodySecond.getBodyH ()));
+			bodySecond.move (deltaX, deltaY);
 		}
 	}
 	
 	
-	public CharacterControl (Character character, Body body){
-		this.character = character;
-		this.body = (NoSpriteObject) body;
-		action = ActionType.forwardWalk;
+	public SecondControl (SecondBody second){
+		this.second = second;
 	}
 	
+	@Override
 	public void update (){
-		updateControl ();
-	}
-	
-	public ActionType getAction (){
-		return action;
-	}
-	
-	public boolean getIsMove (){
-		return isMove;
+		if (isSelected && !isFall){
+			updateControl ();
+		}
 	}
 }

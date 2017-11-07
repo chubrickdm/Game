@@ -2,12 +2,13 @@ package com.game.addition.parsers;
 
 import com.game.mesh.objects.Box;
 import com.game.mesh.objects.Hole;
+import com.game.mesh.objects.character.first.FirstBody;
+import com.game.mesh.objects.character.second.SecondBody;
 import com.game.mesh.objects.singletons.FinishLevel;
 import com.game.mesh.objects.InvisibleWall;
 import com.game.GameSystem;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.mesh.objects.Wall;
-import com.game.mesh.objects.character.Character;
 
 import static com.game.mesh.objects.GameObject.ASPECT_RATIO;
 
@@ -67,9 +68,14 @@ public abstract class ParseLevel extends ParseBasis{
 	}
 	
 	private static void createCharacter (){
-		Character character;
-		character = new Character (x, y);
-		ObjectManager.getInstance ().addObject (character);
+		if (x < GameSystem.SCREEN_W / 2){
+			FirstBody first = new FirstBody (x, y);
+			ObjectManager.getInstance ().addObject (first);
+		}
+		else{
+			SecondBody second = new SecondBody (x, y);
+			ObjectManager.getInstance ().addObject (second);
+		}
 	}
 	
 	private static void createInvisibleWall (){
