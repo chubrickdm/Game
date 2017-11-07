@@ -13,9 +13,10 @@ import com.game.mesh.body.NoSpriteObject;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.render.*;
 
-public class Character extends GameObject{
-	private static final float CHARACTER_W = UNIT;
-	private static final float CHARACTER_H = UNIT;
+import static com.game.mesh.objects.character.CharacterAnimations.CHARACTER_H;
+import static com.game.mesh.objects.character.CharacterAnimations.CHARACTER_W;
+
+public class CharacterBody extends GameObject{
 	private static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
 	private static final float BODY_CHARACTER_H = CHARACTER_H / 4;
 	private static final float CHARACTER_SPEED = 80 * ASPECT_RATIO;
@@ -133,7 +134,7 @@ public class Character extends GameObject{
 	}
 	
 	
-	public Character (float x, float y){
+	public CharacterBody (float x, float y){
 		objectType = ObjectType.character;
 		action = ActionType.forwardWalk;
 		if (x < GameSystem.SCREEN_W / 2){

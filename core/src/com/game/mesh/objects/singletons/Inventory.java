@@ -7,7 +7,7 @@ import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
 import com.game.messages.*;
 import com.game.mesh.body.NoBodyObject;
-import com.game.mesh.objects.character.Character;
+import com.game.mesh.objects.character.CharacterBody;
 import com.game.render.*;
 
 public class Inventory extends GameObject{
@@ -79,8 +79,8 @@ public class Inventory extends GameObject{
 		}
 		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
 			ReturnPositionMessage msg = (ReturnPositionMessage) message;
-			Character character = (Character) message.object;
-			if (character.getIsSelected ()){
+			CharacterBody characterBody = (CharacterBody) message.object;
+			if (characterBody.getIsSelected ()){
 				body.setSpritePosition (msg.spriteX + msg.spriteW / 2, msg.spriteY +  msg.spriteH / 2);
 			}
 		}
