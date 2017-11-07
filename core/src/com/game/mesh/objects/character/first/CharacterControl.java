@@ -1,18 +1,25 @@
-package com.game.mesh.objects.character;
+package com.game.mesh.objects.character.first;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.game.mesh.body.Body;
+import com.game.mesh.body.NoSpriteObject;
 import com.game.mesh.objects.GameObject;
+import com.game.mesh.objects.character.ActionType;
+import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.CharacterChangeMessage;
 import com.game.messages.MoveMessage;
 
-public class CharacterControl extends CharacterAddition{
+public class CharacterControl{
 	private static final float CHARACTER_SPEED = 80 * GameObject.ASPECT_RATIO;
 	
+	private boolean isMove = false;
 	private float deltaX = 0;
 	private float deltaY = 0;
 	private ActionType action;
+	private NoSpriteObject body;
+	private Character character;
 	
 	
 	private void keyWPressed (){
@@ -48,6 +55,7 @@ public class CharacterControl extends CharacterAddition{
 	}
 	
 	private void updateControl (){
+		isMove = false;
 		deltaX = 0; deltaY = 0;
 		if (Gdx.input.isKeyPressed (Input.Keys.W)) keyWPressed ();
 		if (Gdx.input.isKeyPressed (Input.Keys.S)) keySPressed ();
@@ -58,19 +66,29 @@ public class CharacterControl extends CharacterAddition{
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (character));
 		}
 		else if (deltaX != 0 || deltaY != 0){
-			ObjectManager.getInstance ().addMessage (new MoveMessage (this, deltaX, deltaY, body.getBodyX (),
+			isMove = true;
+			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, body.getBodyX (),
 					body.getBodyY (), body.getSpriteX (), body.getSpriteY (), body.getBodyW (), body.getBodyH ()));
 			body.move (deltaX, deltaY);
 		}
 	}
 	
 	
-	public CharacterControl (Character character){
+	public CharacterControl (Character character, Body body){
 		this.character = character;
+		this.body = (NoSpriteObject) body;
+		action = ActionType.forwardWalk;
 	}
 	
-	@Override
 	public void update (){
 		updateControl ();
+	}
+	
+	public ActionType getAction (){
+		return action;
+	}
+	
+	public boolean getIsMove (){
+		return isMove;
 	}
 }
