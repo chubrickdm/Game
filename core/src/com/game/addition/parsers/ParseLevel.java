@@ -7,7 +7,7 @@ import com.game.mesh.objects.InvisibleWall;
 import com.game.GameSystem;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.mesh.objects.Wall;
-import com.game.mesh.objects.character.CharacterBody;
+import com.game.mesh.objects.character.Character;
 
 import static com.game.mesh.objects.GameObject.ASPECT_RATIO;
 
@@ -67,9 +67,9 @@ public abstract class ParseLevel extends ParseBasis{
 	}
 	
 	private static void createCharacter (){
-		CharacterBody characterBody;
-		characterBody = new CharacterBody (x, y);
-		ObjectManager.getInstance ().addObject (characterBody);
+		Character character;
+		character = new Character (x, y);
+		ObjectManager.getInstance ().addObject (character);
 	}
 	
 	private static void createInvisibleWall (){

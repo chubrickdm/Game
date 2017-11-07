@@ -4,10 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.objects.GameObject;
+import com.game.mesh.objects.singletons.special.ObjectManager;
+import com.game.messages.PlayerLostMessage;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 
-public class CharacterAnimations{
+public class CharacterAnimations extends CharacterAddition{
 	public static final float CHARACTER_W = GameObject.UNIT;
 	public static final float CHARACTER_H = GameObject.UNIT;
 	
@@ -25,11 +27,10 @@ public class CharacterAnimations{
 	private ObjectAnimation forwardWalk;
 	private ObjectAnimation backWalk;
 	private ObjectAnimation backFall;
-	private CharacterBody characterBody;
 	
 	
-	public CharacterAnimations (CharacterBody characterBody){
-		this.characterBody = characterBody;
+	public CharacterAnimations (Character character){
+		this.character = character;
 		
 		action = ActionType.forwardWalk;
 		
@@ -46,4 +47,53 @@ public class CharacterAnimations{
 		
 		dataRender = new DataRender (currSprite, LayerType.character);
 	}
+	
+	private void updateMoveAnimation (){
+		if ((deltaX != 0 || deltaY != 0) && isSelected){
+			switch (action){
+			case forwardWalk:
+				currSprite = forwardWalk.getCurrSprite ();
+				break;
+			case rightWalk:
+				currSprite = rightWalk.getCurrSprite ();
+				break;
+			case backWalk:
+				currSprite = backWalk.getCurrSprite ();
+				break;
+			case leftWalk:
+				currSprite = leftWalk.getCurrSprite ();
+				break;
+			}
+		}
+		else{
+			switch (action){
+			case forwardWalk:
+				currSprite = forwardWalk.getFirstFrame ();
+				break;
+			case rightWalk:
+				currSprite = rightWalk.getFirstFrame ();
+				break;
+			case backWalk:
+				currSprite = backWalk.getFirstFrame ();
+				break;
+			case leftWalk:
+				currSprite = leftWalk.getFirstFrame ();
+				break;
+			}
+		}
+		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
+	}
+	
+	private void updateFallAnimation (){
+		if (backFall.isAnimationFinished ()){
+			ObjectManager.getInstance ().addMessage (new PlayerLostMessage ());
+		}
+		if (action == ActionType.fall){
+			currSprite = backFall.getCurrSprite ();
+		}
+		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
+	}
+	
+	@Override
+	public void update (){ }
 }
