@@ -91,7 +91,4 @@ public class Box extends GameObject{
 	public void draw (){
 		Render.getInstance ().addDataForRender (dataRender);
 	}
-	
-	@Override
-	public void clear (){ }
 }

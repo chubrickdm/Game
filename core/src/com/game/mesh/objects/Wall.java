@@ -19,9 +19,6 @@ public class Wall extends GameObject{
 	}
 	
 	@Override
-	public void update (){ }
-	
-	@Override
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && (message.objectType == ObjectType.character ||
 				message.objectType == ObjectType.box)){
@@ -40,7 +37,4 @@ public class Wall extends GameObject{
 	public void draw (){
 		Render.getInstance ().addDataForRender (dataRender);
 	}
-	
-	@Override
-	public void clear (){ }
 }

@@ -1,30 +1,25 @@
 package com.game.mesh.objects.character;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import com.game.GameSystem;
 import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.GameObject;
 import com.game.messages.*;
-import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.body.NoSpriteObject;
-import com.game.mesh.objects.singletons.special.ObjectManager;
 
 public class Character extends GameObject{
 	protected static final float CHARACTER_W = UNIT;
 	protected static final float CHARACTER_H = UNIT;
+	
 	private static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
 	private static final float BODY_CHARACTER_H = CHARACTER_H / 4;
 	
 	protected boolean isFall = false;
 	protected boolean isMove = false;
 	protected boolean isSelected = false;
-	private boolean pushOutHorizontal = false;
-	private boolean pushOutVertical = false;
-	private CharacterName name = CharacterName.unknown;
 	protected ActionType action;
+	
+	private CharacterName name = CharacterName.unknown;
+	private CharacterMessageParser parser;
 	private CharacterControl control;
 	private CharacterAnimations animations;
 	
@@ -46,6 +41,7 @@ public class Character extends GameObject{
 		body = new NoSpriteObject (x, y, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
 		body.move (0, 0.25f);
 		
+		parser = new CharacterMessageParser (this);
 		control = new CharacterControl (this);
 		animations = new CharacterAnimations (this);
 	}
@@ -56,64 +52,20 @@ public class Character extends GameObject{
 	
 	@Override
 	public void update (){
-		pushOutHorizontal = false;
-		pushOutVertical = false;
+		parser.update ();
 		animations.update ();
 		control.update ();
 	}
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.characterChange && message.object != this){
-			ObjectManager.getInstance ().addMessage (new CharacterSelectedMessage (this, body.getSpriteX (),
-					body.getSpriteY (), body.getSpriteW (), body.getSpriteH ()));
-			isSelected = true;
-		}
-		else if (message.type == MessageType.move && message.object != this && message.objectType == ObjectType.character){
-			MoveMessage msg = (MoveMessage) message;
-			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, -msg.deltaX, -msg.deltaY));
-			}
-		}
-		else if (message.type == MessageType.pushOut && message.object == this){
-			PushOutMessage msg = (PushOutMessage) message;
-			if (msg.deltaX != 0 && !pushOutHorizontal){
-				body.move (msg.deltaX, 0);
-				pushOutHorizontal = true;
-			}
-			if (msg.deltaY != 0 && !pushOutVertical){
-				body.move (0, msg.deltaY);
-				pushOutVertical = true;
-			}
-		}
-		else if (message.type == MessageType.getPosition){
-			ObjectManager.getInstance ().addMessage (new ReturnPositionMessage (this, body.getSpriteX (),
-					body.getSpriteY (), body.getSpriteW (), body.getSpriteH ()));
-		}
-		else if (message.type == MessageType.move && message.objectType == ObjectType.box){
-			MoveMessage msg = (MoveMessage) message;
-			if (msg.deltaX != 0 && body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (this, msg.deltaX, 0));
-			}
-			if (msg.deltaY != 0 && body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (this, 0, msg.deltaY));
-			}
-		}
-		else if (message.type == MessageType.characterDied && message.object == this){
-			CharacterDiedMessage msg = (CharacterDiedMessage) message;
-			if (msg.killer == ObjectType.hole){
-				isFall = true;
-			}
-		}
+		parser.parseMessage (message);
 	}
 	
 	@Override
 	public void draw (){
 		animations.draw ();
 	}
-	
-	@Override
-	public void clear (){ }
 	
 	
 	protected float getBodyX (){
@@ -140,7 +92,19 @@ public class Character extends GameObject{
 		return body.getSpriteY ();
 	}
 	
+	protected float getSpriteW (){
+		return body.getSpriteW ();
+	}
+	
+	protected float getSpriteH (){
+		return body.getSpriteH ();
+	}
+	
 	protected void move (float x, float y){
 		body.move (x, y);
+	}
+	
+	protected boolean intersects (float x, float y, float w, float h){
+		return body.intersects (x, y, w, h);
 	}
 }

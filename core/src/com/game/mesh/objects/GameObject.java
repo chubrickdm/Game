@@ -17,8 +17,8 @@ public abstract class GameObject{
 	protected Body body;
 	
 	
-	abstract public void update ();
+	public void update (){ }
 	abstract public void sendMessage (GameMessage message);
-	abstract public void draw ();
-	abstract public void clear ();
+	public void draw (){ }
+	public void clear (){ }
 }

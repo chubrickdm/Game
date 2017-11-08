@@ -78,8 +78,8 @@ public class Inventory extends GameObject{
 			
 			body.move (msg.deltaX, msg.deltaY);
 		}
-		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
-			ReturnPositionMessage msg = (ReturnPositionMessage) message;
+		else if (message.type == MessageType.returnStartPosition && message.objectType == ObjectType.character){
+			ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
 			Character character = (Character) message.object;
 			if (character.getName () == CharacterName.first){
 				body.setSpritePosition (msg.spriteX + msg.spriteW / 2, msg.spriteY +  msg.spriteH / 2);

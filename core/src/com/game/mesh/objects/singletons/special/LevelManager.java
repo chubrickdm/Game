@@ -11,7 +11,7 @@ import com.game.mesh.objects.singletons.Inventory;
 import com.game.mesh.objects.singletons.camera.Camera;
 import com.game.messages.GameMessage;
 import com.game.mesh.objects.GameObject;
-import com.game.messages.GetPositionMessage;
+import com.game.messages.GetStartPositionMessage;
 import com.game.messages.MessageType;
 import com.game.screens.SelectedModeScreen;
 
@@ -86,7 +86,7 @@ public class LevelManager extends GameObject{
 			closeLevel ();
 		}
 		if (isFirstUpdate){ //обязательно нужно, что б камера и инвентрь получили начальные координаты персонажей
-			ObjectManager.getInstance ().addMessage (new GetPositionMessage ());
+			ObjectManager.getInstance ().addMessage (new GetStartPositionMessage ());
 			isFirstUpdate = false;
 		}
 	}
@@ -100,9 +100,6 @@ public class LevelManager extends GameObject{
 			closeLevel ();
 		}
 	}
-	
-	@Override
-	public void draw (){ }
 	
 	@Override
 	public void clear (){

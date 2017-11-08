@@ -64,9 +64,6 @@ public class FinishLevel extends GameObject{
 	}
 	
 	@Override
-	public void draw (){ }
-	
-	@Override
 	public void clear (){
 		firstOnFinish = false;
 		secondOnFinish = false;
