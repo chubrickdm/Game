@@ -2,9 +2,13 @@ package com.game.mesh.objects.singletons.camera;
 
 import com.badlogic.gdx.math.Matrix4;
 
+import com.game.GameSystem;
+import com.game.mesh.objects.character.CharacterName;
+import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
+import com.game.mesh.objects.character.Character;
 
 public class Camera extends GameObject{
 	private boolean pushOutVertical = false;
@@ -53,8 +57,11 @@ public class Camera extends GameObject{
 			}
 		}
 		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
-			ReturnPositionMessage msg = (ReturnPositionMessage) message;
-			camera.setPositionY (msg.spriteY + msg.spriteH / 2);
+			Character character = (Character) message.object;
+			if (character.getName () == CharacterName.first){
+				ReturnPositionMessage msg = (ReturnPositionMessage) message;
+				camera.setPositionY (msg.spriteY + msg.spriteH / 2);
+			}
 		}
 	}
 	

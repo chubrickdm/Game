@@ -8,15 +8,15 @@ import com.game.render.LayerType;
 import com.game.render.Render;
 
 public class Hole extends GameObject{
-	private static final float BODY_HOLE_W = UNIT * 1.8f;
-	private static final float BODY_HOLE_H = UNIT * 1.8f;
+	private static final float BODY_HOLE_W = UNIT * 2;
+	private static final float BODY_HOLE_H = UNIT * 2;
 	private static final float HOLE_W = UNIT * 2;
 	private static final float HOLE_H = UNIT * 2;
 	
 	
 	public Hole (float x, float y){
 		objectType = ObjectType.hole;
-		body = new BodyObject ("core/assets/images/hole.png", true, x, y, HOLE_W, HOLE_H, BODY_HOLE_W, BODY_HOLE_H);
+		body = new BodyObject ("core/assets/images/hole.png", x, y, HOLE_W, HOLE_H, BODY_HOLE_W, BODY_HOLE_H);
 		dataRender = new DataRender (body.getSprite (), LayerType.hole);
 	}
 	

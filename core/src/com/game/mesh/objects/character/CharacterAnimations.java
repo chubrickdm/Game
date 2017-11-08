@@ -1,23 +1,18 @@
-package com.game.mesh.objects.character.first;
+package com.game.mesh.objects.character;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.mesh.animation.ObjectAnimation;
-import com.game.mesh.body.Body;
-import com.game.mesh.body.NoSpriteObject;
-import com.game.mesh.objects.GameObject;
-import com.game.mesh.objects.character.ActionType;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.PlayerLostMessage;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
 
-public class FirstAnimations extends FirstBody{
+public class CharacterAnimations extends Character{
 	private static final int FRAME_COLS = 7;
 	private static final int FRAME_ROWS = 1;
 	
-	private FirstBody first;
-	private DataRender dataRender;
+	private Character character;
 	private Sprite currSprite;
 	private ObjectAnimation leftWalk;
 	private ObjectAnimation rightWalk;
@@ -31,8 +26,8 @@ public class FirstAnimations extends FirstBody{
 	
 	
 	private void updateMoveAnimation (){
-		if (isMove){
-			switch (action){
+		if (character.isMove){
+			switch (character.action){
 			case forwardWalk:
 				currSprite = forwardWalk.getCurrSprite ();
 				break;
@@ -48,7 +43,7 @@ public class FirstAnimations extends FirstBody{
 			}
 		}
 		else{
-			switch (action){
+			switch (character.action){
 			case forwardWalk:
 				currSprite = forwardWalk.getFirstFrame ();
 				break;
@@ -63,7 +58,7 @@ public class FirstAnimations extends FirstBody{
 				break;
 			}
 		}
-		currSprite.setPosition (bodyFirst.getSpriteX (), bodyFirst.getSpriteY ());
+		currSprite.setPosition (character.getSpriteX (), character.getSpriteY ());
 	}
 	
 	private void updateFallAnimation (){
@@ -80,43 +75,43 @@ public class FirstAnimations extends FirstBody{
 			ObjectManager.getInstance ().addMessage (new PlayerLostMessage ());
 		}
 		
-		switch (action){
-		case forwardWalk:
+		switch (character.action){
+		case forwardFall:
 			currSprite = forwardFall.getCurrSprite ();
 			break;
-		case rightWalk:
+		case rightFall:
 			currSprite = rightFall.getCurrSprite ();
 			break;
-		case backWalk:
+		case backFall:
 			currSprite = backFall.getCurrSprite ();
 			break;
-		case leftWalk:
+		case leftFall:
 			currSprite = leftFall.getCurrSprite ();
 			break;
 		}
 		
-		currSprite.setPosition (bodyFirst.getSpriteX (), bodyFirst.getSpriteY ());
+		currSprite.setPosition (character.getSpriteX (), character.getSpriteY ());
 	}
 	
 	private void selectFallAnimation (){
-		if (action == ActionType.leftWalk){
-			action = ActionType.leftFall;
+		if (character.action == ActionType.leftWalk){
+			character.action = ActionType.leftFall;
 		}
-		else if (action == ActionType.rightWalk){
-			action = ActionType.rightFall;
+		else if (character.action == ActionType.rightWalk){
+			character.action = ActionType.rightFall;
 		}
-		else if (action == ActionType.forwardWalk){
-			action = ActionType.forwardFall;
+		else if (character.action == ActionType.forwardWalk){
+			character.action = ActionType.forwardFall;
 		}
-		else if (action == ActionType.backWalk){
-			action = ActionType.backFall;
+		else if (character.action == ActionType.backWalk){
+			character.action = ActionType.backFall;
 		}
 	}
 	
 	
-	public FirstAnimations (FirstBody first){
-		this.first = first;
-		action = ActionType.forwardWalk;
+	public CharacterAnimations (Character character){
+		this.character = character;
+		character.action = ActionType.forwardWalk;
 		
 		leftWalk = new ObjectAnimation ("core/assets/images/walking_left.png", CHARACTER_W, CHARACTER_H,
 				FRAME_ROWS, FRAME_COLS, 0.15f);
@@ -142,11 +137,13 @@ public class FirstAnimations extends FirstBody{
 	
 	@Override
 	public void update (){
-		if (isFall){
+		if (character.isFall){
 			selectFallAnimation ();
 			updateFallAnimation ();
 		}
-		updateMoveAnimation ();
+		else{
+			updateMoveAnimation ();
+		}
 	}
 	
 	@Override

@@ -41,7 +41,7 @@ public class QuitGameScreen implements Screen{
 	}
 	
 	private void createQuestionLabel (){
-		Label question = new Label ("Вы действительно хотите выйти?", labelStyle);
+		Label question = new Label ("Вы действительно хотите выйти", labelStyle);
 		question.setPosition (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_FONT_SIZE * 8,
 				Gdx.graphics.getHeight () / 2);
 		widgetGroup.addActor (question);
