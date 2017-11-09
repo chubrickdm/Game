@@ -44,7 +44,7 @@ public class ObjectManager extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.deleting){
+		if (message.type == MessageType.deleteObject){
 			objects.remove (message.object);
 		}
 	}

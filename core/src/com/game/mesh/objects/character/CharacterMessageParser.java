@@ -56,9 +56,9 @@ public class CharacterMessageParser extends Character{
 				ObjectManager.getInstance ().addMessage (new PushOutMessage (character, 0, msg.deltaY));
 			}
 		}
-		else if (message.type == MessageType.characterDied && message.object == character){
-			CharacterDiedMessage msg = (CharacterDiedMessage) message;
-			if (msg.killer == ObjectType.hole){
+		else if (message.type == MessageType.destroyObject && message.object == character){
+			DestroyObjectMessage msg = (DestroyObjectMessage) message;
+			if (msg.destroyer == ObjectType.hole){
 				character.isFall = true;
 			}
 		}

@@ -8,10 +8,10 @@ import com.game.render.LayerType;
 import com.game.render.Render;
 
 public class Hole extends GameObject{
-	private static final float BODY_HOLE_W = UNIT * 2;
-	private static final float BODY_HOLE_H = UNIT * 2;
-	private static final float HOLE_W = UNIT * 1.8f;
-	private static final float HOLE_H = UNIT * 1.8f;
+	private static final float BODY_HOLE_W = UNIT * 1.8f;
+	private static final float BODY_HOLE_H = UNIT * 1.8f;
+	private static final float HOLE_W = UNIT * 2;
+	private static final float HOLE_H = UNIT * 2;
 	
 	
 	public Hole (float x, float y){
@@ -23,10 +23,10 @@ public class Hole extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move && (message.objectType == ObjectType.character)){
+		if (message.type == MessageType.move){
 			MoveMessage msg = (MoveMessage) message;
 			if (body.contains (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new CharacterDiedMessage (msg.object, this));
+				ObjectManager.getInstance ().addMessage (new DestroyObjectMessage (msg.object, this));
 			}
 		}
 	}
