@@ -9,9 +9,20 @@ import java.util.LinkedList;
 
 public class ObjectManager extends GameObject{
 	private int iterator = 0;
+	private LinkedList <GameMessage> messageForManager;
 	private LinkedList <GameMessage> messages;
 	private LinkedList <GameObject> objects;
 	
+	
+	private void parseMessagesForManager (){
+		if (messageForManager.size () != 0){
+			for (GameMessage msg : messageForManager){
+				if (msg.type == MessageType.deleteObject){
+					objects.remove (msg.object);
+				}
+			}
+		}
+	}
 	
 	private static class ObjectManagerHolder{
 		private final static ObjectManager instance = new ObjectManager ();
@@ -19,6 +30,7 @@ public class ObjectManager extends GameObject{
 	
 	private ObjectManager (){
 		iterator = 0;
+		messageForManager = new LinkedList <GameMessage> ();
 		messages = new LinkedList <GameMessage> ();
 		objects = new LinkedList <GameObject> ();
 	}
@@ -30,11 +42,11 @@ public class ObjectManager extends GameObject{
 	
 	@Override
 	public void update (){
+		parseMessagesForManager ();
 		for (GameObject obj : objects){
 			obj.update ();
 		}
-		iterator = 0;
-		for (; iterator < messages.size (); iterator++){
+		for (iterator = 0; iterator < messages.size (); iterator++){
 			GameMessage msg = messages.remove ();
 			for (GameObject obj : objects){
 				obj.sendMessage (msg);
@@ -44,9 +56,7 @@ public class ObjectManager extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.deleteObject){
-			objects.remove (message.object);
-		}
+		messageForManager.add (message);
 	}
 	
 	@Override

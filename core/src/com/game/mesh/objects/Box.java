@@ -58,13 +58,13 @@ public class Box extends GameObject{
 	}
 	
 	private void updateFallAnimation (){
-		if (fall.isAnimationFinished ()){
-			ObjectManager.getInstance ().sendMessage (new DeleteObjectMessage (this));
-		}
-		else{
+		//if (fall.isAnimationFinished ()){
+		//	ObjectManager.getInstance ().sendMessage (new DeleteObjectMessage (this));
+		//}
+		//else{
 			currSprite = fall.getCurrSprite ();
 			currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
-		}
+		//}
 	}
 	
 	private void updateMoveAnimation (){
@@ -77,7 +77,7 @@ public class Box extends GameObject{
 		body = new NoSpriteObject (x, y, BOX_W, BOX_H, BODY_BOX_W, BODY_BOX_H);
 		body.move (0, 0.5f);
 		
-		fall = new ObjectAnimation ("core/assets/images/box_fall.png", BOX_W, BOX_H,
+		fall = new ObjectAnimation ("core/assets/images/box_fall.png", false, BOX_W, BOX_H,
 				1, 5, 0.15f);
 		currSprite = fall.getCurrSprite (0);
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
@@ -125,5 +125,8 @@ public class Box extends GameObject{
 	@Override
 	public void draw (){
 		Render.getInstance ().addDataForRender (dataRender);
+		if (fall.isAnimationFinished ()){
+			ObjectManager.getInstance ().sendMessage (new DeleteObjectMessage (this));
+		}
 	}
 }
