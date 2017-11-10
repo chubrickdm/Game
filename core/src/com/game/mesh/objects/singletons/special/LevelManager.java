@@ -7,7 +7,8 @@ import com.game.GameSystem;
 import com.game.MyGame;
 import com.game.addition.parsers.ParseLevel;
 import com.game.addition.parsers.ParseSettings;
-import com.game.mesh.objects.singletons.Inventory;
+import com.game.mesh.objects.Inventory;
+import com.game.mesh.objects.character.CharacterName;
 import com.game.mesh.objects.singletons.camera.Camera;
 import com.game.messages.GameMessage;
 import com.game.mesh.objects.GameObject;
@@ -16,9 +17,6 @@ import com.game.messages.MessageType;
 import com.game.screens.SelectedModeScreen;
 
 public class LevelManager extends GameObject{
-	private boolean isFirstUpdate = true;
-	
-	
 	private void completeLevel (){
 		ObjectManager.getInstance ().clear ();
 		
@@ -65,7 +63,8 @@ public class LevelManager extends GameObject{
 	public void createLevel (){
 		ParseLevel.parseLVL (GameSystem.CURRENT_LEVEL);
 		
-		ObjectManager.getInstance ().addObject (Inventory.getInstance ());
+		ObjectManager.getInstance ().addObject (new Inventory (CharacterName.first));
+		ObjectManager.getInstance ().addObject (new Inventory (CharacterName.second));
 		ObjectManager.getInstance ().addObject (Camera.getInstance ());
 		ObjectManager.getInstance ().addObject (this);
 		
@@ -73,6 +72,9 @@ public class LevelManager extends GameObject{
 			GameSystem.IS_FIRST_GAME_START = false;
 			ParseSettings.writeSettings ();
 		}
+		
+		//важно здесь отослать это сообщение, что б инвентари и камера смогли получить начальные позиции персонажей.
+		ObjectManager.getInstance ().addMessage (new GetStartPositionMessage ());
 	}
 	
 	public void updateLevel (){
@@ -85,10 +87,6 @@ public class LevelManager extends GameObject{
 		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
 			closeLevel ();
 		}
-		if (isFirstUpdate){ //обязательно нужно, что б камера и инвентрь получили начальные координаты персонажей
-			ObjectManager.getInstance ().addMessage (new GetStartPositionMessage ());
-			isFirstUpdate = false;
-		}
 	}
 	
 	@Override
@@ -99,10 +97,5 @@ public class LevelManager extends GameObject{
 		else if (message.type == MessageType.playerLost){
 			closeLevel ();
 		}
-	}
-	
-	@Override
-	public void clear (){
-		isFirstUpdate = true;
 	}
 }

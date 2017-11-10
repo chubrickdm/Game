@@ -62,5 +62,7 @@ public class FinishLevel extends GameObject{
 	public void clear (){
 		firstOnFinish = false;
 		secondOnFinish = false;
+		firstDetected = null;
+		secondDetected = null;
 	}
 }
