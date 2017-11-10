@@ -2,7 +2,6 @@ package com.game.mesh.objects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.mesh.animation.ObjectAnimation;
-import com.game.mesh.body.BodyObject;
 import com.game.mesh.body.NoSpriteObject;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
@@ -58,13 +57,13 @@ public class Box extends GameObject{
 	}
 	
 	private void updateFallAnimation (){
-		//if (fall.isAnimationFinished ()){
-		//	ObjectManager.getInstance ().sendMessage (new DeleteObjectMessage (this));
-		//}
-		//else{
+		if (fall.isAnimationFinished ()){
+			ObjectManager.getInstance ().sendMessage (new DeleteObjectMessage (this));
+		}
+		else{
 			currSprite = fall.getCurrSprite ();
 			currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
-		//}
+		}
 	}
 	
 	private void updateMoveAnimation (){
@@ -78,7 +77,7 @@ public class Box extends GameObject{
 		body.move (0, 0.5f);
 		
 		fall = new ObjectAnimation ("core/assets/images/box_fall.png", false, BOX_W, BOX_H,
-				1, 5, 0.15f);
+				1, 5, 0.3f);
 		currSprite = fall.getCurrSprite (0);
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
 		
@@ -124,9 +123,7 @@ public class Box extends GameObject{
 	
 	@Override
 	public void draw (){
+		dataRender.sprite = currSprite;
 		Render.getInstance ().addDataForRender (dataRender);
-		if (fall.isAnimationFinished ()){
-			ObjectManager.getInstance ().sendMessage (new DeleteObjectMessage (this));
-		}
 	}
 }

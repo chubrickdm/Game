@@ -43,6 +43,7 @@ public class ObjectManager extends GameObject{
 	@Override
 	public void update (){
 		parseMessagesForManager ();
+		
 		for (GameObject obj : objects){
 			obj.update ();
 		}
@@ -72,9 +73,10 @@ public class ObjectManager extends GameObject{
 		for (GameObject obj : objects){
 			obj.clear ();
 		}
+		iterator = 0;
+		messageForManager.clear ();
 		messages.clear ();
 		objects.clear ();
-		iterator = 0;
 	}
 	
 	public void addMessage (GameMessage msg){

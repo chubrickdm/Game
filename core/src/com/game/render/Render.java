@@ -15,10 +15,10 @@ public class Render{
 	
 	private void sortedScene (){
 		renderList.sort ((tmp1, tmp2) -> {
-			if (tmp1.layerType == LayerType.actionWheel || tmp1.layerType == LayerType.character){
+			if (tmp1.layerType == LayerType.actionWheel || tmp2.layerType == LayerType.hole){
 				return 1;
 			}
-			else if (tmp2.layerType == LayerType.actionWheel || tmp2.layerType == LayerType.character){
+			else if (tmp2.layerType == LayerType.actionWheel || tmp1.layerType == LayerType.hole){
 				return -1;
 			}
 			
