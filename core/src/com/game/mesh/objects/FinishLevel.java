@@ -1,32 +1,20 @@
-package com.game.mesh.objects.singletons;
+package com.game.mesh.objects;
 
 import com.game.mesh.body.NoSpriteObject;
-import com.game.mesh.objects.GameObject;
-import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.character.CharacterName;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
 
 public class FinishLevel extends GameObject{
-	private boolean firstOnFinish = false;
-	private boolean secondOnFinish = false;
+	private static boolean firstOnFinish = false;
+	private static boolean secondOnFinish = false;
+	private static FinishLevel firstDetected = null;
+	private static FinishLevel secondDetected = null;
 	
 	
-	private static class FinishLevelHolder{
-		private final static FinishLevel instance = new FinishLevel ();
-	}
-	
-	private FinishLevel (){
+	public FinishLevel (float x, float y, float w, float h){
 		objectType = ObjectType.finishLevel;
-	}
-	
-	
-	public static FinishLevel getInstance (){
-		return FinishLevel.FinishLevelHolder.instance;
-	}
-	
-	public void initialize (float x, float y, float w, float h){
 		body = new NoSpriteObject (x, y, w, h);
 	}
 	
@@ -46,21 +34,28 @@ public class FinishLevel extends GameObject{
 			if (character.getName () == CharacterName.first){
 				if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 					firstOnFinish = true;
+					firstDetected = this;
 				}
 				else{
-					firstOnFinish = false;
+					if (firstDetected == this || firstDetected == null){
+						firstOnFinish = false;
+						firstDetected = null;
+					}
 				}
 			}
 			else if (character.getName () == CharacterName.second){
 				if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 					secondOnFinish = true;
+					secondDetected = this;
 				}
 				else{
-					secondOnFinish = false;
+					if (secondDetected == this || secondDetected == null){
+						secondOnFinish = false;
+						secondDetected = null;
+					}
 				}
 			}
 		}
-		
 	}
 	
 	@Override
