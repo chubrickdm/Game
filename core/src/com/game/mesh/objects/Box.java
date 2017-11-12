@@ -2,6 +2,7 @@ package com.game.mesh.objects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.mesh.animation.ObjectAnimation;
+import com.game.mesh.body.AnimatedObject;
 import com.game.mesh.body.NoSpriteObject;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
@@ -73,7 +74,7 @@ public class Box extends GameObject{
 	
 	public Box (float x, float y){
 		objectType = ObjectType.box;
-		body = new NoSpriteObject (x, y, BOX_W, BOX_H, BODY_BOX_W, BODY_BOX_H);
+		body = new AnimatedObject (x, y, BOX_W, BOX_H, BODY_BOX_W, BODY_BOX_H);
 		body.move (0, 0.5f);
 		
 		fall = new ObjectAnimation ("core/assets/images/box_fall.png", false, BOX_W, BOX_H,

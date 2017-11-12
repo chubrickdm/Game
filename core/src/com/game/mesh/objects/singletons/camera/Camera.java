@@ -9,6 +9,7 @@ import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.character.Character;
 
 public class Camera extends GameObject{
+	//private boolean pushOutHorizontal = false;
 	private boolean pushOutVertical = false;
 	private BodyCamera camera;
 	
@@ -33,6 +34,7 @@ public class Camera extends GameObject{
 	
 	@Override
 	public void update (){
+		//pushOutHorizontal = false;
 		pushOutVertical = false;
 		camera.update ();
 	}
@@ -42,15 +44,21 @@ public class Camera extends GameObject{
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
 			camera.moveY (msg.deltaY);
+			//camera.move (msg.deltaX, msg.deltaY);
 		}
 		else if (message.type == MessageType.characterSelected){
 			CharacterSelectedMessage msg = (CharacterSelectedMessage) message;
 			camera.setPositionY (msg.spriteY + msg.spriteH / 2);
+			//camera.setPosition (msg.spriteX + msg.spriteW / 2, msg.spriteY + msg.spriteH / 2);
 		}
 		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
 			PushOutMessage msg = (PushOutMessage) message;
+			//if (msg.deltaX != 0 && !pushOutHorizontal){
+			//	camera.move (msg.deltaX, 0);
+			//	pushOutHorizontal = true;
+			//}
 			if (msg.deltaY != 0 && !pushOutVertical){
-				camera.moveY (msg.deltaY);
+				camera.move (0, msg.deltaY);
 				pushOutVertical = true;
 			}
 		}
@@ -59,6 +67,7 @@ public class Camera extends GameObject{
 			if (character.getName () == CharacterName.first){
 				ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
 				camera.setPositionY (msg.spriteY + msg.spriteH / 2);
+				//camera.setPosition (msg.spriteX + msg.spriteW / 2, msg.spriteY + msg.spriteH / 2);
 			}
 		}
 	}

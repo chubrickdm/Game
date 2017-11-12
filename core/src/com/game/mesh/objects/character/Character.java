@@ -1,6 +1,7 @@
 package com.game.mesh.objects.character;
 
 import com.game.GameSystem;
+import com.game.mesh.body.AnimatedObject;
 import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.GameObject;
 import com.game.messages.*;
@@ -38,7 +39,7 @@ public class Character extends GameObject{
 			name = CharacterName.second;
 		}
 		
-		body = new NoSpriteObject (x, y, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
+		body = new AnimatedObject (x, y, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
 		body.move (0, 0.25f);
 		
 		parser = new CharacterMessageParser (this);
