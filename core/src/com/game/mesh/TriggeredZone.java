@@ -17,6 +17,16 @@ public class TriggeredZone{
 	}
 	
 	public void setPosition (float x, float y){
-		//zone.setPosition (x );
+		zone.setPosition (x - originX, y - originY);
+	}
+	
+	public void setOrigin (float originX, float originY){
+		this.originX = originX;
+		this.originY = originY;
+		setPosition (zone.getX (), zone.getY ());
+	}
+	
+	public void move (float deltaX, float deltaY){
+		zone.move (deltaX, deltaY);
 	}
 }

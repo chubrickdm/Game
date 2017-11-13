@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><root>
     <field name="numLevels">2</field>
     <field name="isFirstGameStart">false</field>
-    <field name="numPassedLevels">1</field>
-    <field name="currentLevel">2</field>
+    <field name="numPassedLevels">0</field>
+    <field name="currentLevel">1</field>
     <field name="gameOver">false</field>
 </root>
