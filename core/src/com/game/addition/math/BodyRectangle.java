@@ -41,6 +41,8 @@ public class BodyRectangle{
 	}
 	
 	public boolean intersects (float xx, float yy, float ww, float hh){
+		//т.к. мы работаем с прямоугольниками, для пересечения необходимо и достаточно что бы хотя бы
+		//одна вершина одного из прямоугольников лежала в другом прямоугольнике
 		if ((xx <= x + w) && (yy <= y + h) && (xx >= x) && (yy >= y)){
 			return true;
 		}
@@ -72,6 +74,8 @@ public class BodyRectangle{
 	
 	public boolean contains (float xx, float yy, float ww, float hh){
 		int tmpI = 0;
+		//для того что б один один прямоугольник находился в другом необходимо и достаточно что бы
+		//все 4 вершины одного прямогоульника лежали в другом
 		if ((xx <= x + w) && (yy <= y + h) && (xx >= x) && (yy >= y)){
 			tmpI++;
 		}

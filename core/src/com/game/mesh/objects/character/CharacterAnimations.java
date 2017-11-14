@@ -62,6 +62,7 @@ public class CharacterAnimations extends Character{
 	}
 	
 	private void updateFallAnimation (){
+		//игрок проиграл если он упал (т.е. закончилась прокрутка анимации падения)
 		if (leftFall.isAnimationFinished ()){
 			ObjectManager.getInstance ().addMessage (new PlayerLostMessage ());
 		}

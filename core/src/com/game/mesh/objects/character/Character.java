@@ -30,11 +30,11 @@ public class Character extends GameObject{
 	public Character (float x, float y){
 		objectType = ObjectType.character;
 		action = ActionType.forwardWalk;
-		if (x < GameSystem.SCREEN_W / 2){
+		if (x < GameSystem.SCREEN_W / 2){ //персонаж слева, всегда первый
 			isSelected = true;
 			name = CharacterName.first;
 		}
-		else{
+		else{ //а справа, всегда второй
 			isSelected = false;
 			name = CharacterName.second;
 		}

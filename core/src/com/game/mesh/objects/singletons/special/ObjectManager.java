@@ -8,13 +8,16 @@ import com.game.render.Render;
 import java.util.LinkedList;
 
 public class ObjectManager extends GameObject{
-	private int iterator = 0;
+	private int iterator = 0; //итератор для сообщений
 	private LinkedList <GameMessage> messageForManager;
 	private LinkedList <GameMessage> messages;
 	private LinkedList <GameObject> objects;
 	
 	
 	private void parseMessagesForManager (){
+		//здесь обрабатываться сообщения для менеджера (пока что это только удаление объекта из списка).
+		//Пришлось делать это т.к. если удалять объект из списка во время работы с ним, будет ошибка и экстренное
+		//закрытие программы.
 		if (messageForManager.size () != 0){
 			for (GameMessage msg : messageForManager){
 				if (msg.type == MessageType.deleteObject){
@@ -70,6 +73,8 @@ public class ObjectManager extends GameObject{
 	
 	@Override
 	public void clear (){
+		//метод вызывается при закрытии уровня, или перехода к следующему, и служит для очистки перменных классов
+		//сиглентонов (менеджер, камера).
 		for (GameObject obj : objects){
 			obj.clear ();
 		}
@@ -81,7 +86,9 @@ public class ObjectManager extends GameObject{
 	
 	public void addMessage (GameMessage msg){
 		messages.add (msg);
-		iterator--;
+		iterator--; //вот эта операция обязательна, т.к. мы извлекаем из списка сообщение когда рассылаем его по объектам
+		//и при добавлении увеличиваем, получается что количество сообщений не изменилось, но итератор должен стать
+		//на позицию раньше
 	}
 	
 	public void addObject (GameObject obj){

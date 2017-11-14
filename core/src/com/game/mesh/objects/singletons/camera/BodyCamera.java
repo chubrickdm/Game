@@ -8,7 +8,7 @@ import com.game.GameSystem;
 public class BodyCamera{
 	private float x;
 	private float y;
-	private OrthographicCamera camera;
+	private OrthographicCamera camera; //у камеры нет метода setPosition, поэтому пришлось делать оболочку
 	
 	
 	public BodyCamera (){

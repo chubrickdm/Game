@@ -2,7 +2,7 @@ package com.game.mesh.body;
 
 import com.game.addition.math.BodyRectangle;
 
-public class AnimatedObject extends Body{
+public class AnimatedObject extends Body{ //спец. класс для анимированных объектов, в котором хранятся координаты спрайта
 	private float spriteX = 0;
 	private float spriteY = 0;
 	private float bodyShiftX = 0;
@@ -14,7 +14,7 @@ public class AnimatedObject extends Body{
 		spriteX = x;
 		spriteY = y;
 		bodyShiftX = (w - bodyW) / 2;
-		bodyRect = new BodyRectangle (x + bodyShiftX, y, bodyW, bodyH);
+		body = new BodyRectangle (x + bodyShiftX, y, bodyW, bodyH);
 		spriteW = w;
 		spriteH = h;
 	}
@@ -23,7 +23,10 @@ public class AnimatedObject extends Body{
 	public void setBodyPosition (float x, float y){
 		spriteX = x - bodyShiftX;
 		spriteY = y;
-		bodyRect.setPosition (x, y);
+		body.setPosition (x, y);
+		if (triggeredZone != null){
+			triggeredZone.setPosition (x, y);
+		}
 	}
 	
 	@Override
@@ -48,8 +51,11 @@ public class AnimatedObject extends Body{
 	
 	@Override
 	public void move (float deltaX, float deltaY){
-		bodyRect.move (deltaX, deltaY);
+		body.move (deltaX, deltaY);
 		spriteX += deltaX;
 		spriteY += deltaY;
+		if (triggeredZone != null){
+			triggeredZone.move (deltaX, deltaY);
+		}
 	}
 }

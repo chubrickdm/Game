@@ -9,7 +9,7 @@ import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.character.Character;
 
 public class Camera extends GameObject{
-	//private boolean pushOutHorizontal = false;
+	//private boolean pushOutHorizontal = false; //то что закомментировано, это вариант когда камера всегда на персонаже
 	private boolean pushOutVertical = false;
 	private BodyCamera camera;
 	
@@ -71,9 +71,6 @@ public class Camera extends GameObject{
 			}
 		}
 	}
-	
-	@Override
-	public void draw (){ }
 	
 	@Override
 	public void clear (){

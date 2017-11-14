@@ -9,8 +9,8 @@ import com.game.messages.*;
 public class FinishLevel extends GameObject{
 	private static boolean firstOnFinish = false;
 	private static boolean secondOnFinish = false;
-	private static FinishLevel firstDetected = null;
-	private static FinishLevel secondDetected = null;
+	private static FinishLevel firstDetected = null; //ссылка на финиш, на который стал первый персонаж
+	private static FinishLevel secondDetected = null; //ссылка на финиш, на который стал второй персонаж
 	
 	
 	public FinishLevel (float x, float y, float w, float h){
@@ -37,6 +37,7 @@ public class FinishLevel extends GameObject{
 					firstDetected = this;
 				}
 				else{
+					//персонаж может уйти только с того финиша, на котором ранее находился
 					if (firstDetected == this || firstDetected == null){
 						firstOnFinish = false;
 						firstDetected = null;
@@ -49,6 +50,7 @@ public class FinishLevel extends GameObject{
 					secondDetected = this;
 				}
 				else{
+					//персонаж может уйти только с того финиша, на котором ранее находился
 					if (secondDetected == this || secondDetected == null){
 						secondOnFinish = false;
 						secondDetected = null;
@@ -56,13 +58,5 @@ public class FinishLevel extends GameObject{
 				}
 			}
 		}
-	}
-	
-	@Override
-	public void clear (){
-		firstOnFinish = false;
-		secondOnFinish = false;
-		firstDetected = null;
-		secondDetected = null;
 	}
 }

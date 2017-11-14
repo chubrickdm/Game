@@ -2,9 +2,11 @@ package com.game.mesh.body;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.addition.math.BodyRectangle;
+import com.game.mesh.TriggeredZone;
 
 public abstract class Body{
-	protected BodyRectangle bodyRect;
+	protected BodyRectangle body;
+	protected TriggeredZone triggeredZone = null;
 	protected Sprite sprite;
 	
 	
@@ -12,31 +14,31 @@ public abstract class Body{
 	
 	public void move (float deltaX, float deltaY){
 		sprite.setPosition (sprite.getX () + deltaX, sprite.getY () + deltaY);
-		bodyRect.move (deltaX, deltaY);
+		body.move (deltaX, deltaY);
 	}
 	
 	public boolean intersects (float x, float y, float w, float h){
-		return bodyRect.intersects (x, y, w, h);
+		return body.intersects (x, y, w, h);
 	}
 	
 	public boolean contains (float x, float y, float w, float h){
-		return bodyRect.contains (x, y, w, h);
+		return body.contains (x, y, w, h);
 	}
 	
 	public float getBodyX (){
-		return bodyRect.getX ();
+		return body.getX ();
 	}
 	
 	public float getBodyY (){
-		return bodyRect.getY ();
+		return body.getY ();
 	}
 	
 	public float getBodyW (){
-		return bodyRect.getW ();
+		return body.getW ();
 	}
 	
 	public float getBodyH (){
-		return bodyRect.getH ();
+		return body.getH ();
 	}
 	
 	public float getSpriteX (){
@@ -65,5 +67,14 @@ public abstract class Body{
 	
 	public void setSpritePosition (float x, float y){
 		sprite.setPosition (x, y);
+	}
+	
+	public void setTriggeredZone (TriggeredZone zone){
+		triggeredZone = zone;
+		triggeredZone.setPosition (body.getX () + body.getW () / 2, body.getY () + body.getH () / 2);
+	}
+	
+	public boolean checkTriggered (float x, float y, float w, float h){
+		return triggeredZone.isTriggered (x, y, w, h);
 	}
 }

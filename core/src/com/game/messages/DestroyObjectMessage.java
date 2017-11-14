@@ -3,7 +3,7 @@ package com.game.messages;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
 
-public class DestroyObjectMessage extends GameMessage{
+public class DestroyObjectMessage extends GameMessage{ //создается когда объект умирает, уничтожается
 	public ObjectType destroyer;
 	
 	

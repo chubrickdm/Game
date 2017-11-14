@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class ObjectAnimation{
-	private boolean looping = true;
+	private boolean looping = true; //зацикливащаяся анимация или нет
 	private float time = 0;
 	private float frameW;
 	private float frameH;
@@ -15,6 +15,7 @@ public class ObjectAnimation{
 	
 	
 	public ObjectAnimation (String fileName, float frameW, float frameH, int frameRows, int frameCols, float frameDuration){
+		//frameDuration - время между кадрами
 		this.frameW = frameW;
 		this.frameH = frameH;
 		Texture texture = new Texture (fileName);
@@ -32,7 +33,7 @@ public class ObjectAnimation{
 	}
 	
 	public ObjectAnimation (String fileName, boolean looping, float frameW, float frameH, int frameRows, int frameCols, float frameDuration){
-		this.looping = looping;
+		this.looping = looping; //конструктор для задания повторения анимации
 		this.frameW = frameW;
 		this.frameH = frameH;
 		Texture texture = new Texture (fileName);
@@ -47,12 +48,6 @@ public class ObjectAnimation{
 			}
 		}
 		animation = new Animation <TextureRegion> (frameDuration, frames);
-	}
-	
-	public Sprite getCurrSprite (float time){
-		Sprite currSprite = new Sprite (animation.getKeyFrame (time, looping));
-		currSprite.setBounds (0, 0, frameW, frameH);
-		return currSprite;
 	}
 	
 	public Sprite getCurrSprite (){

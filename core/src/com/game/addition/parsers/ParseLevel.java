@@ -48,34 +48,33 @@ public abstract class ParseLevel extends ParseBasis{
 		y = levelH - y * ASPECT_RATIO - h;
 	}
 	
-	private static void createWall (){
-		Wall wall = new Wall (x, y);
-		ObjectManager.getInstance ().addObject (wall);
-	}
-	
-	private static void createBox (){
-		Box box = new Box (x, y);
-		ObjectManager.getInstance ().addObject (box);
-	}
-	
-	private static void createHole (){
-		Hole hole = new Hole (x, y);
-		ObjectManager.getInstance ().addObject (hole);
-	}
-	
-	private static void createCharacter (){
-		Character character = new Character (x, y);
-		ObjectManager.getInstance ().addObject (character);
-	}
-	
-	private static void createInvisibleWall (){
-		InvisibleWall invisibleWall = new InvisibleWall (x, y, w, h);
-		ObjectManager.getInstance ().addObject (invisibleWall);
-	}
-	
-	private static void createLevelFinish (){
-		FinishLevel finish = new FinishLevel (x, y, w, h);
-		ObjectManager.getInstance ().addObject (finish);
+	private static void createObject (String currObjectGroup){
+		switch (currObjectGroup){
+		case "wall":
+			Wall wall = new Wall (x, y);
+			ObjectManager.getInstance ().addObject (wall);
+			break;
+		case "characters":
+			Character character = new Character (x, y);
+			ObjectManager.getInstance ().addObject (character);
+			break;
+		case "invisibleWall":
+			InvisibleWall invisibleWall = new InvisibleWall (x, y, w, h);
+			ObjectManager.getInstance ().addObject (invisibleWall);
+			break;
+		case "finishLevel":
+			FinishLevel finish = new FinishLevel (x, y, w, h);
+			ObjectManager.getInstance ().addObject (finish);
+			break;
+		case "box":
+			Box box = new Box (x, y);
+			ObjectManager.getInstance ().addObject (box);
+			break;
+		case "hole":
+			Hole hole = new Hole (x, y);
+			ObjectManager.getInstance ().addObject (hole);
+			break;
+		}
 	}
 	
 	
@@ -99,26 +98,7 @@ public abstract class ParseLevel extends ParseBasis{
 					if (object.getNodeType () != Node.TEXT_NODE){
 						parseCoordinates (object);
 						
-						switch (currObjectGroup){
-						case "wall":
-							createWall ();
-							break;
-						case "characters":
-							createCharacter ();
-							break;
-						case "invisibleWall":
-							createInvisibleWall ();
-							break;
-						case "finishLevel":
-							createLevelFinish ();
-							break;
-						case "box":
-							createBox ();
-							break;
-						case "hole":
-							createHole ();
-							break;
-						}
+						createObject (currObjectGroup);
 					}
 				}
 			}

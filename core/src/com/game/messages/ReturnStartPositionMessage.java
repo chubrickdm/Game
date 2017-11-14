@@ -2,7 +2,7 @@ package com.game.messages;
 
 import com.game.mesh.objects.GameObject;
 
-public class ReturnStartPositionMessage extends GameMessage{
+public class ReturnStartPositionMessage extends GameMessage{ //создается в ответ на сообщение о получение позиций
 	public float spriteX;
 	public float spriteY;
 	public float spriteW;

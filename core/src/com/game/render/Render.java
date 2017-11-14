@@ -15,6 +15,7 @@ public class Render{
 	
 	private void sortedScene (){
 		renderList.sort ((tmp1, tmp2) -> {
+			//яма всегда рисуется последней
 			if (tmp1.layerType == LayerType.actionWheel || tmp2.layerType == LayerType.hole){
 				return 1;
 			}

@@ -16,7 +16,7 @@ public class BodyObject extends Body{
 		
 		sprite.setBounds (x, y, w, h);
 		bodyShiftX = (w - bodyW) / 2;
-		bodyRect = new BodyRectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
+		body = new BodyRectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
 	}
 	
 	public BodyObject (String fileName, boolean withShiftY, float x, float y, float w, float h, float bodyW, float bodyH){
@@ -28,12 +28,12 @@ public class BodyObject extends Body{
 		if (withShiftY){
 			bodyShiftY = (h - bodyH) / 2;
 		}
-		bodyRect = new BodyRectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
+		body = new BodyRectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
 	}
 	
 	@Override
 	public void setBodyPosition (float x, float y){
 		sprite.setPosition (x - bodyShiftX, y - bodyShiftY);
-		bodyRect.setPosition (x, y);
+		body.setPosition (x, y);
 	}
 }
