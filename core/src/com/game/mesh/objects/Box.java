@@ -141,6 +141,7 @@ public class Box extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
+		
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			movedByCharacterMessage (message);
 			checkTriggeredZone (message);
