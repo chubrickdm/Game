@@ -1,11 +1,11 @@
 package com.game.render;
 
-import box2dLight.PointLight;
 import box2dLight.RayHandler;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import com.game.MyGame;
 import com.game.mesh.objects.singletons.camera.Camera;
 
@@ -15,9 +15,7 @@ public class Render{
 	private SpriteBatch batch;
 	private ArrayList <DataRender> renderList;
 	
-	
-	private RayHandler handler;
-	private PointLight light;
+	public RayHandler handler;
 	
 	private void sortedScene (){
 		renderList.sort ((tmp1, tmp2) -> {
@@ -43,7 +41,6 @@ public class Render{
 		
 		
 		handler = new RayHandler (MyGame.getInstance ().world);
-		light = new PointLight (handler, 500, Color.WHITE, 1000, 700, 400);
 	}
 	
 	
@@ -54,9 +51,6 @@ public class Render{
 	public void renderScene (){
 		Gdx.gl.glClearColor (0, 0, 0, 1);
 		Gdx.gl.glClear (GL20.GL_COLOR_BUFFER_BIT);
-		
-		
-		
 		
 		sortedScene ();
 		

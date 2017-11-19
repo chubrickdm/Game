@@ -1,10 +1,15 @@
 package com.game.mesh.objects.character;
 
+import box2dLight.PointLight;
+
+import com.badlogic.gdx.graphics.Color;
+
 import com.game.GameSystem;
 import com.game.mesh.body.AnimatedObject;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
 import com.game.messages.GameMessage;
+import com.game.render.Render;
 
 public class Character extends GameObject{
 	protected static final float CHARACTER_W = UNIT;
@@ -19,6 +24,7 @@ public class Character extends GameObject{
 	protected ActionType action;
 	
 	private CharacterName name = CharacterName.unknown;
+	private PointLight flashLight;
 	private CharacterMessageParser parser;
 	private CharacterControl control;
 	private CharacterAnimations animations;
@@ -40,6 +46,8 @@ public class Character extends GameObject{
 		
 		body = new AnimatedObject (x, y, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
 		body.move (0, 0.25f);
+		flashLight = new PointLight (Render.getInstance ().handler,100, Color.GRAY, (int) (300 * ASPECT_RATIO),
+				x + CHARACTER_W / 2, y + CHARACTER_H);
 		
 		parser = new CharacterMessageParser (this);
 		control = new CharacterControl (this);
@@ -100,11 +108,17 @@ public class Character extends GameObject{
 		return body.getSpriteH ();
 	}
 	
-	protected void move (float x, float y){
-		body.move (x, y);
+	protected void move (float deltaX, float deltaY){
+		body.move (deltaX, deltaY);
+		flashLight.setPosition (flashLight.getX () + deltaX, flashLight.getY () + deltaY);
 	}
 	
 	protected boolean intersects (float x, float y, float w, float h){
 		return body.intersects (x, y, w, h);
+	}
+	
+	@Override
+	public void clear (){
+		flashLight.remove ();
 	}
 }
