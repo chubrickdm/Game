@@ -1,9 +1,14 @@
 package com.game.mesh.objects;
 
-import com.game.messages.*;
 import com.game.mesh.body.BodyObject;
 import com.game.mesh.objects.singletons.special.ObjectManager;
-import com.game.render.*;
+import com.game.messages.GameMessage;
+import com.game.messages.MessageType;
+import com.game.messages.MoveMessage;
+import com.game.messages.PushOutMessage;
+import com.game.render.DataRender;
+import com.game.render.LayerType;
+import com.game.render.Render;
 
 public class Wall extends GameObject{
 	private static final float BODY_WALL_W = UNIT;

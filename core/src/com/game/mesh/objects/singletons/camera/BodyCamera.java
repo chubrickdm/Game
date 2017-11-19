@@ -2,7 +2,6 @@ package com.game.mesh.objects.singletons.camera;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
-
 import com.game.GameSystem;
 
 public class BodyCamera{
@@ -24,6 +23,10 @@ public class BodyCamera{
 	
 	public Matrix4 getProjectionMatrix (){
 		return camera.combined;
+	}
+	
+	public OrthographicCamera getCamera (){
+		return camera;
 	}
 	
 	public void moveY (float deltaY){

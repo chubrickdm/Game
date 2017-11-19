@@ -2,7 +2,6 @@ package com.game.mesh.body;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import com.game.addition.math.BodyRectangle;
 
 public class BodyObject extends Body{

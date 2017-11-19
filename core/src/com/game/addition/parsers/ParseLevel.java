@@ -1,19 +1,14 @@
 package com.game.addition.parsers;
 
-import com.game.mesh.objects.Box;
-import com.game.mesh.objects.Hole;
-import com.game.mesh.objects.FinishLevel;
-import com.game.mesh.objects.InvisibleWall;
 import com.game.GameSystem;
-import com.game.mesh.objects.singletons.special.ObjectManager;
-import com.game.mesh.objects.Wall;
+import com.game.mesh.objects.*;
 import com.game.mesh.objects.character.Character;
-
-import static com.game.mesh.objects.GameObject.ASPECT_RATIO;
-
+import com.game.mesh.objects.singletons.special.ObjectManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import static com.game.mesh.objects.GameObject.ASPECT_RATIO;
 
 public abstract class ParseLevel extends ParseBasis{
 	private static float x;

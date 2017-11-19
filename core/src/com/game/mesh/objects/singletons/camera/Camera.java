@@ -1,12 +1,12 @@
 package com.game.mesh.objects.singletons.camera;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
-
-import com.game.mesh.objects.character.CharacterName;
-import com.game.messages.*;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.character.Character;
+import com.game.mesh.objects.character.CharacterName;
+import com.game.messages.*;
 
 public class Camera extends GameObject{
 	//private boolean pushOutHorizontal = false; //то что закомментировано, это вариант когда камера всегда на персонаже
@@ -30,6 +30,10 @@ public class Camera extends GameObject{
 	
 	public Matrix4 getProjectionMatrix (){
 		return camera.getProjectionMatrix ();
+	}
+	
+	public OrthographicCamera getCamera (){
+		return camera.getCamera ();
 	}
 	
 	@Override

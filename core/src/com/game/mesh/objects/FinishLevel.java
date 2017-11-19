@@ -4,7 +4,10 @@ import com.game.mesh.body.NoSpriteObject;
 import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.character.CharacterName;
 import com.game.mesh.objects.singletons.special.ObjectManager;
-import com.game.messages.*;
+import com.game.messages.CompleteLevelMessage;
+import com.game.messages.GameMessage;
+import com.game.messages.MessageType;
+import com.game.messages.MoveMessage;
 
 public class FinishLevel extends GameObject{
 	private static boolean firstOnFinish = false;
@@ -58,5 +61,13 @@ public class FinishLevel extends GameObject{
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void clear (){
+		firstOnFinish = false;
+		secondOnFinish = false;
+		firstDetected = null;
+		secondDetected = null;
 	}
 }

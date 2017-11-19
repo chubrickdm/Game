@@ -2,10 +2,9 @@ package com.game.mesh.objects.character;
 
 import com.game.GameSystem;
 import com.game.mesh.body.AnimatedObject;
-import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.GameObject;
-import com.game.messages.*;
-import com.game.mesh.body.NoSpriteObject;
+import com.game.mesh.objects.ObjectType;
+import com.game.messages.GameMessage;
 
 public class Character extends GameObject{
 	protected static final float CHARACTER_W = UNIT;

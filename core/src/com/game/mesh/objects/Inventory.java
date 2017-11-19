@@ -2,12 +2,13 @@ package com.game.mesh.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-
-import com.game.mesh.objects.character.CharacterName;
-import com.game.messages.*;
 import com.game.mesh.body.NoBodyObject;
 import com.game.mesh.objects.character.Character;
-import com.game.render.*;
+import com.game.mesh.objects.character.CharacterName;
+import com.game.messages.*;
+import com.game.render.DataRender;
+import com.game.render.LayerType;
+import com.game.render.Render;
 
 public class Inventory extends GameObject{
 	private static final float percentPerTick = 2;
@@ -115,5 +116,10 @@ public class Inventory extends GameObject{
 		if (isVisible){
 			Render.getInstance ().addDataForRender (dataRender);
 		}
+	}
+	
+	@Override
+	public void clear (){
+		selectedCharacter = CharacterName.first;
 	}
 }

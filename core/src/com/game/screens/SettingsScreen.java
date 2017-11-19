@@ -1,8 +1,5 @@
 package com.game.screens;
 
-import com.game.MyGame;
-import com.game.addition.Font;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -16,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.game.MyGame;
+import com.game.addition.Font;
 
 public class SettingsScreen implements Screen{
 	private TextButton.TextButtonStyle normalStyle;

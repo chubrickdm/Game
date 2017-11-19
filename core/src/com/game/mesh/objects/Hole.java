@@ -2,7 +2,10 @@ package com.game.mesh.objects;
 
 import com.game.mesh.body.BodyObject;
 import com.game.mesh.objects.singletons.special.ObjectManager;
-import com.game.messages.*;
+import com.game.messages.DestroyObjectMessage;
+import com.game.messages.GameMessage;
+import com.game.messages.MessageType;
+import com.game.messages.MoveMessage;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;

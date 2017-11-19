@@ -1,9 +1,12 @@
 package com.game.render;
 
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.game.MyGame;
 import com.game.mesh.objects.singletons.camera.Camera;
 
 import java.util.ArrayList;
@@ -12,6 +15,9 @@ public class Render{
 	private SpriteBatch batch;
 	private ArrayList <DataRender> renderList;
 	
+	
+	private RayHandler handler;
+	private PointLight light;
 	
 	private void sortedScene (){
 		renderList.sort ((tmp1, tmp2) -> {
@@ -34,6 +40,10 @@ public class Render{
 	private Render (){
 		batch = new SpriteBatch ();
 		renderList = new ArrayList <DataRender> ();
+		
+		
+		handler = new RayHandler (MyGame.getInstance ().world);
+		light = new PointLight (handler, 500, Color.WHITE, 1000, 700, 400);
 	}
 	
 	
@@ -45,6 +55,9 @@ public class Render{
 		Gdx.gl.glClearColor (0, 0, 0, 1);
 		Gdx.gl.glClear (GL20.GL_COLOR_BUFFER_BIT);
 		
+		
+		
+		
 		sortedScene ();
 		
 		Camera.getInstance ().update ();
@@ -55,6 +68,9 @@ public class Render{
 			data.sprite.draw (batch);
 		}
 		batch.end ();
+		
+		handler.setCombinedMatrix (Camera.getInstance ().getCamera ());
+		handler.updateAndRender ();
 		
 		renderList.clear ();
 	}

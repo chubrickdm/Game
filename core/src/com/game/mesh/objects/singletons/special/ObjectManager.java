@@ -1,8 +1,8 @@
 package com.game.mesh.objects.singletons.special;
 
+import com.game.mesh.objects.GameObject;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
-import com.game.mesh.objects.GameObject;
 import com.game.render.Render;
 
 import java.util.LinkedList;

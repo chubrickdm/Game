@@ -2,7 +2,6 @@ package com.game.mesh.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import com.game.mesh.TriggeredZone;
 import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.body.AnimatedObject;
@@ -10,7 +9,9 @@ import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.character.CharacterName;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
-import com.game.render.*;
+import com.game.render.DataRender;
+import com.game.render.LayerType;
+import com.game.render.Render;
 
 public class Box extends GameObject{
 	private static final float BODY_BOX_W = UNIT - 1;
