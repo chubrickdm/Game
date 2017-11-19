@@ -75,7 +75,8 @@ public abstract class ParseLevel extends ParseBasis{
 	
 	public static void parseLVL (int level){
 		String currObjectGroup;
-		Document document = getDocument ("core/assets/xml/levels/lvl" + String.valueOf (level) + ".tmx", "/resourse/xml/levels/lvl" + String.valueOf (level) + ".tmx");
+		Document document = getDocument ("core/assets/xml/levels/lvl" + String.valueOf (level) + ".tmx",
+				"/resource/xml/levels/lvl" + String.valueOf (level) + ".tmx");
 		Node map = document.getDocumentElement ();
 		additionalCalculates (map);
 		

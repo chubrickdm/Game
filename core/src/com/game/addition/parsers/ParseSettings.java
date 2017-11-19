@@ -1,6 +1,7 @@
 package com.game.addition.parsers;
 
 import com.game.GameSystem;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -10,20 +11,35 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import java.io.File;
+import java.net.URLDecoder;
 
 public class ParseSettings extends ParseBasis{
+	private static String fromIDEA = "core/assets/xml/settings.xml";
+	private static String fromDesktop = "/resource/xml/settings.xml";
+	
+	
 	private static void saveChanges (Document document){
 		try{
 			Transformer transformer = TransformerFactory.newInstance ().newTransformer ();
 			DOMSource source = new DOMSource (document);
 			StreamResult result;
-			if (isFromIDEA){
-				result = new StreamResult (new File (pathFromIDEA));
+			
+			URLDecoder decoder = new URLDecoder ();
+			StringBuilder path = new StringBuilder (decoder.decode (ParseBasis.class.getProtectionDomain ().getCodeSource ().getLocation ().getPath ()));
+			int index = path.lastIndexOf (GameSystem.NAME_JAR_ARCHIVE); //ищем в этом пути имя архива
+			if (index == -1){ //если не нашли, значит мы запускаем проект с IDEA
+				isFromIDEA = true;
+				result = new StreamResult (new File (fromIDEA));
 			}
-			else{
-				result = new StreamResult (new File (pathFromDesktop));
+			else{ //если нашли, значит запускаем с .jar архива
+				isFromIDEA = false;
+				path.delete (index, path.length ()); //удаляем все начиная с имя архива
+				path.append (fromDesktop);
+				result = new StreamResult (new File (path.toString ()));
 			}
+			
 			transformer.transform (source, result);
 		}
 		catch (TransformerException ex){
@@ -34,7 +50,7 @@ public class ParseSettings extends ParseBasis{
 	
 	public static void parseSettings (){
 		String currField;
-		Document document = getDocument ("core/assets/xml/settings.xml", "/resourse/xml/settings.xml");
+		Document document = getDocument (fromIDEA, fromDesktop);
 		Node root = document.getDocumentElement ();
 		
 		NodeList fieldList = root.getChildNodes ();
@@ -67,7 +83,7 @@ public class ParseSettings extends ParseBasis{
 	
 	public static void writeSettings (){
 		String currField;
-		Document document = getDocument ("core/assets/xml/settings.xml", "/resourse/xml/settings.xml");
+		Document document = getDocument (fromIDEA, fromDesktop);
 		Node root = document.getDocumentElement ();
 		
 		NodeList fieldList = root.getChildNodes ();
