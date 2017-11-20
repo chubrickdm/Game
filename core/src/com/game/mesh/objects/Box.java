@@ -20,6 +20,7 @@ public class Box extends GameObject{
 	private static final float BOX_H = UNIT * 2;
 	private static final float TRIGGERED_ZONE_W = 2 * BODY_BOX_W;
 	private static final float TRIGGERED_ZONE_H = 2 * BODY_BOX_H;
+	private static Box triggeredBox = null; //только один ящик может быть выбран
 	
 	private boolean isFall = false;
 	private boolean pushOutHorizontal = false;
@@ -32,12 +33,23 @@ public class Box extends GameObject{
 		MoveMessage msg = (MoveMessage) message;
 		if (!isFall){ //если этого условия не будет, то когда ящик падает и персонаж двигается возле триггеред зоны
 			// спрайт с анимации падения меняется на обычный
-			if (body.checkTriggered (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				currSprite = triggeredBoxSprite;
-				//здесь по идеи должно создаваться сообщение о возбуждении объекта
+			boolean triggered;
+			triggered = body.checkTriggered (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH);
+			if (triggered){
+				if (triggeredBox == null){
+					currSprite = triggeredBoxSprite;
+					triggeredBox = this;
+					//здесь по идеи должно создаваться сообщение о возбуждении объекта
+				}
+				else if (triggeredBox == this){
+					currSprite = triggeredBoxSprite;
+				}
 			}
 			else{
 				currSprite = fall.getFirstFrame ();
+				if (triggeredBox == this){
+					triggeredBox = null;
+				}
 			}
 			updateMoveAnimation ();
 		}
@@ -177,5 +189,10 @@ public class Box extends GameObject{
 	public void draw (){
 		dataRender.sprite = currSprite;
 		Render.getInstance ().addDataForRender (dataRender);
+	}
+	
+	@Override
+	public void clear (){
+		triggeredBox = null;
 	}
 }
