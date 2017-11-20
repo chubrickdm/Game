@@ -1,7 +1,8 @@
-package com.game.mesh.objects.singletons.camera;
+package com.game.mesh.objects.singletons;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
+import com.game.GameSystem;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.character.Character;
@@ -9,9 +10,8 @@ import com.game.mesh.objects.character.CharacterName;
 import com.game.messages.*;
 
 public class Camera extends GameObject{
-	//private boolean pushOutHorizontal = false; //то что закомментировано, это вариант когда камера всегда на персонаже
 	private boolean pushOutVertical = false;
-	private BodyCamera camera;
+	private OrthographicCamera camera;
 	
 	
 	private static class CameraHolder{
@@ -20,7 +20,9 @@ public class Camera extends GameObject{
 	
 	private Camera (){
 		objectType = ObjectType.camera;
-		camera = new BodyCamera ();
+		
+		camera = new OrthographicCamera (GameSystem.SCREEN_W, GameSystem.SCREEN_H);
+		camera.setToOrtho (false);
 	}
 	
 	
@@ -29,16 +31,15 @@ public class Camera extends GameObject{
 	}
 	
 	public Matrix4 getProjectionMatrix (){
-		return camera.getProjectionMatrix ();
+		return camera.combined;
 	}
 	
 	public OrthographicCamera getCamera (){
-		return camera.getCamera ();
+		return camera;
 	}
 	
 	@Override
 	public void update (){
-		//pushOutHorizontal = false;
 		pushOutVertical = false;
 		camera.update ();
 	}
@@ -47,22 +48,16 @@ public class Camera extends GameObject{
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
-			camera.moveY (msg.deltaY);
-			//camera.move (msg.deltaX, msg.deltaY);
+			camera.translate (0, msg.deltaY);
 		}
 		else if (message.type == MessageType.characterSelected){
 			CharacterSelectedMessage msg = (CharacterSelectedMessage) message;
-			camera.setPositionY (msg.spriteY + msg.spriteH / 2);
-			//camera.setPosition (msg.spriteX + msg.spriteW / 2, msg.spriteY + msg.spriteH / 2);
+			camera.position.set (camera.position.x, msg.spriteY + msg.spriteH / 2, 0);
 		}
 		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
 			PushOutMessage msg = (PushOutMessage) message;
-			//if (msg.deltaX != 0 && !pushOutHorizontal){
-			//	camera.move (msg.deltaX, 0);
-			//	pushOutHorizontal = true;
-			//}
 			if (msg.deltaY != 0 && !pushOutVertical){
-				camera.move (0, msg.deltaY);
+				camera.translate (0, msg.deltaY);
 				pushOutVertical = true;
 			}
 		}
@@ -70,14 +65,14 @@ public class Camera extends GameObject{
 			Character character = (Character) message.object;
 			if (character.getName () == CharacterName.first){
 				ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
-				camera.setPositionY (msg.spriteY + msg.spriteH / 2);
-				//camera.setPosition (msg.spriteX + msg.spriteW / 2, msg.spriteY + msg.spriteH / 2);
+				camera.position.set (camera.position.x, msg.spriteY + msg.spriteH / 2, 0);
 			}
 		}
 	}
 	
 	@Override
 	public void clear (){
-		camera = new BodyCamera ();
+		camera = new OrthographicCamera (GameSystem.SCREEN_W, GameSystem.SCREEN_H);
+		camera.setToOrtho (false);
 	}
 }

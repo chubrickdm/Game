@@ -1,4 +1,4 @@
-package com.game.mesh.objects;
+package com.game.mesh.objects.singletons;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.game.GameSystem;
 import com.game.MyGame;
+import com.game.mesh.objects.GameObject;
 import com.game.messages.GameMessage;
 
 public class Chain extends GameObject{ //по центру экрана проходит линия, которая не дает смешиваться свету от фонариков персонажей

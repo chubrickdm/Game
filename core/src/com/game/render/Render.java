@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.game.MyGame;
-import com.game.mesh.objects.singletons.camera.Camera;
+import com.game.mesh.objects.singletons.Camera;
 
 import java.util.ArrayList;
 
