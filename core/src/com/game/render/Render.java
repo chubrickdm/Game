@@ -17,6 +17,7 @@ public class Render{
 	
 	public RayHandler handler;
 	
+	
 	private void sortedScene (){
 		renderList.sort ((tmp1, tmp2) -> {
 			//яма всегда рисуется последней
@@ -38,7 +39,6 @@ public class Render{
 	private Render (){
 		batch = new SpriteBatch ();
 		renderList = new ArrayList <DataRender> ();
-		
 		
 		handler = new RayHandler (MyGame.getInstance ().world);
 	}

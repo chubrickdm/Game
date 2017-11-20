@@ -6,6 +6,7 @@ import com.game.GameSystem;
 import com.game.MyGame;
 import com.game.addition.parsers.ParseLevel;
 import com.game.addition.parsers.ParseSettings;
+import com.game.mesh.objects.Chain;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.Inventory;
 import com.game.mesh.objects.character.CharacterName;
@@ -65,6 +66,7 @@ public class LevelManager extends GameObject{
 		ObjectManager.getInstance ().addObject (new Inventory (CharacterName.first));
 		ObjectManager.getInstance ().addObject (new Inventory (CharacterName.second));
 		ObjectManager.getInstance ().addObject (Camera.getInstance ());
+		ObjectManager.getInstance ().addObject (Chain.getInstance ());
 		ObjectManager.getInstance ().addObject (this);
 		
 		if (GameSystem.IS_FIRST_GAME_START){
