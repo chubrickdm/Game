@@ -156,8 +156,9 @@ public class Box extends GameObject{
 	public void sendMessage (GameMessage message){
 		
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
+			checkTriggeredZone (message); //именно в таком порядке, иначе будет баг, спрайт будет заходить на стену
 			movedByCharacterMessage (message);
-			checkTriggeredZone (message);
+			
 		}
 		else if (message.type == MessageType.move && message.objectType == ObjectType.box && message.object != this){
 			MoveMessage msg = (MoveMessage) message;
