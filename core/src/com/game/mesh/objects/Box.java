@@ -139,7 +139,7 @@ public class Box extends GameObject{
 		currSprite = fall.getFirstFrame ();
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
 		
-		dataRender = new DataRender (currSprite, LayerType.box);
+		dataRender = new DataRender (currSprite, LayerType.normal);
 	}
 	
 	@Override

@@ -134,7 +134,7 @@ public class CharacterAnimations extends Character{
 		backFall = new ObjectAnimation (path + "fall_back.png", false, CHARACTER_W,
 				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		
-		dataRender = new DataRender (currSprite, LayerType.character);
+		dataRender = new DataRender (currSprite, LayerType.normal);
 	}
 	
 	@Override

@@ -23,7 +23,7 @@ public class ToxicGas extends GameObject{
 		objectType = ObjectType.hole;
 		body = new BodyObject ("core/assets/images/other/toxic_gas.png", true, x, y, HOLE_W, HOLE_H,
 				BODY_HOLE_W, BODY_HOLE_H);
-		dataRender = new DataRender (body.getSprite (), LayerType.hole);
+		dataRender = new DataRender (body.getSprite (), LayerType.normal);
 	}
 	
 	@Override

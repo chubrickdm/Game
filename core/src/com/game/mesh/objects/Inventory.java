@@ -72,7 +72,7 @@ public class Inventory extends GameObject{
 		body.setOrigin (INVENTORY_W / 2, INVENTORY_H / 2);
 		body.setScale (percentSize / 100);
 		body.setSpritePosition (INVENTORY_W / 2, INVENTORY_H / 2);
-		dataRender = new DataRender (body.getSprite (), LayerType.actionWheel);
+		dataRender = new DataRender (body.getSprite (), LayerType.over);
 	}
 	
 	@Override

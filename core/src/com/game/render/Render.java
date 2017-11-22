@@ -21,10 +21,10 @@ public class Render{
 	private void sortedScene (){
 		renderList.sort ((tmp1, tmp2) -> {
 			//яма всегда рисуется последней
-			if (tmp1.layerType == LayerType.actionWheel || tmp2.layerType == LayerType.hole){
+			if (tmp1.layerType == LayerType.over || tmp2.layerType == LayerType.below){
 				return 1;
 			}
-			else if (tmp2.layerType == LayerType.actionWheel || tmp1.layerType == LayerType.hole){
+			else if (tmp2.layerType == LayerType.over || tmp1.layerType == LayerType.below){
 				return -1;
 			}
 			

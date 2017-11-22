@@ -20,7 +20,7 @@ public class Wall extends GameObject{
 	public Wall (float x, float y){
 		objectType = ObjectType.wall;
 		body = new BodyObject ("core/assets/images/other/wall.png", x, y, WALL_W, WALL_H, BODY_WALL_W, BODY_WALL_H);
-		dataRender = new DataRender (body.getSprite (), LayerType.wall);
+		dataRender = new DataRender (body.getSprite (), LayerType.normal);
 	}
 	
 	@Override

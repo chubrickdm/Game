@@ -1,5 +1,8 @@
 package com.game.render;
 
 public enum LayerType{
-	unknown, character, wall, box, hole, actionWheel
+	unknown,
+	below, //всегда рисуется под всеми спрайтами
+	normal, //рисуется впорядке позиции
+	over //всегда рисуется над всеми спрайтами
 }

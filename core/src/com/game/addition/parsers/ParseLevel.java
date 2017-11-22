@@ -69,6 +69,10 @@ public abstract class ParseLevel extends ParseBasis{
 			Hole hole = new Hole (x, y);
 			ObjectManager.getInstance ().addObject (hole);
 			break;
+		case "mushrooms":
+			Mushrooms mushrooms = new Mushrooms (x, y);
+			ObjectManager.getInstance ().addObject (mushrooms);
+			break;
 		}
 	}
 	
