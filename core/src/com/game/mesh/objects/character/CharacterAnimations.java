@@ -25,6 +25,11 @@ public class CharacterAnimations extends Character{
 	private ObjectAnimation forwardFall;
 	private ObjectAnimation backFall;
 	
+	private ObjectAnimation leftChoke;
+	private ObjectAnimation rightChoke;
+	private ObjectAnimation forwardChoke;
+	private ObjectAnimation backChoke;
+	
 	
 	private void updateMoveAnimation (){
 		if (character.isMove){
@@ -110,6 +115,53 @@ public class CharacterAnimations extends Character{
 		}
 	}
 	
+	private void updateChokeAnimation (){
+		if (leftChoke.isAnimationFinished ()){
+			ObjectManager.getInstance ().addMessage (new PlayerLostMessage ());
+		}
+		else if (rightChoke.isAnimationFinished ()){
+			ObjectManager.getInstance ().addMessage (new PlayerLostMessage ());
+		}
+		else if (forwardChoke.isAnimationFinished ()){
+			ObjectManager.getInstance ().addMessage (new PlayerLostMessage ());
+		}
+		else if (backChoke.isAnimationFinished ()){
+			ObjectManager.getInstance ().addMessage (new PlayerLostMessage ());
+		}
+		
+		switch (character.action){
+		case forwardChoke:
+			currSprite = forwardChoke.getCurrSprite ();
+			break;
+		case rightChoke:
+			currSprite = rightChoke.getCurrSprite ();
+			break;
+		case backChoke:
+			currSprite = backChoke.getCurrSprite ();
+			break;
+		case leftChoke:
+			currSprite = leftChoke.getCurrSprite ();
+			break;
+		}
+		
+		currSprite.setPosition (character.getSpriteX (), character.getSpriteY ());
+	}
+	
+	private void selectChokeAnimation (){
+		if (character.action == ActionType.leftWalk){
+			character.action = ActionType.leftChoke;
+		}
+		else if (character.action == ActionType.rightWalk){
+			character.action = ActionType.rightChoke;
+		}
+		else if (character.action == ActionType.forwardWalk){
+			character.action = ActionType.forwardChoke;
+		}
+		else if (character.action == ActionType.backWalk){
+			character.action = ActionType.backChoke;
+		}
+	}
+	
 	
 	public CharacterAnimations (Character character){
 		this.character = character;
@@ -134,6 +186,15 @@ public class CharacterAnimations extends Character{
 		backFall = new ObjectAnimation (path + "fall_back.png", false, CHARACTER_W,
 				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		
+		leftChoke = new ObjectAnimation (path + "choke_left.png", false, CHARACTER_W,
+				CHARACTER_H, FRAME_ROWS, 5, 0.2f);
+		rightChoke = new ObjectAnimation (path + "choke_right.png", false, CHARACTER_W,
+				CHARACTER_H, FRAME_ROWS, 5, 0.2f);
+		forwardChoke = new ObjectAnimation (path + "choke_forward.png", false, CHARACTER_W,
+				CHARACTER_H, FRAME_ROWS, 5, 0.2f);
+		backChoke = new ObjectAnimation (path + "choke_back.png", false, CHARACTER_W,
+				CHARACTER_H, FRAME_ROWS, 5, 0.2f);
+		
 		dataRender = new DataRender (currSprite, LayerType.normal);
 	}
 	
@@ -142,6 +203,10 @@ public class CharacterAnimations extends Character{
 		if (character.isFall){
 			selectFallAnimation ();
 			updateFallAnimation ();
+		}
+		else if (character.isChoke){
+			selectChokeAnimation ();
+			updateChokeAnimation ();
 		}
 		else{
 			updateMoveAnimation ();

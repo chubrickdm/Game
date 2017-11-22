@@ -48,7 +48,7 @@ public class ToxicGas extends GameObject{
 		if (message.type == MessageType.move){
 			MoveMessage msg = (MoveMessage) message;
 			if (body.contains (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				//ObjectManager.getInstance ().addMessage (new DestroyObjectMessage (msg.object, this));
+				ObjectManager.getInstance ().addMessage (new DestroyObjectMessage (msg.object, this));
 			}
 		}
 	}

@@ -71,8 +71,11 @@ public class CharacterMessageParser extends Character{
 		}
 		else if (message.type == MessageType.destroyObject && message.object == character){
 			DestroyObjectMessage msg = (DestroyObjectMessage) message;
-			if (msg.destroyer == ObjectType.hole || msg.destroyer == ObjectType.toxicGas){
+			if (msg.destroyer == ObjectType.hole){
 				character.isFall = true;
+			}
+			else if (msg.destroyer == ObjectType.toxicGas){
+				character.isChoke = true;
 			}
 		}
 	}

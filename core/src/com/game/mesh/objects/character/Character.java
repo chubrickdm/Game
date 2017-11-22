@@ -18,6 +18,7 @@ public class Character extends GameObject{
 	private static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
 	private static final float BODY_CHARACTER_H = CHARACTER_H / 4;
 	
+	protected boolean isChoke = false;
 	protected boolean isFall = false;
 	protected boolean isMove = false;
 	protected boolean isSelected = false;

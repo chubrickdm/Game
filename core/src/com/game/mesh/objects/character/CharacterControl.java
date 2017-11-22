@@ -74,7 +74,7 @@ public class CharacterControl extends Character{
 	
 	@Override
 	public void update (){
-		if (character.isSelected && !character.isFall){
+		if (character.isSelected && !character.isFall && !character.isChoke){
 			updateControl ();
 		}
 	}

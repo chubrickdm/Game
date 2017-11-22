@@ -2,5 +2,7 @@ package com.game.mesh.objects.character;
 
 public enum ActionType{
 	leftWalk, rightWalk, forwardWalk, backWalk,
-	leftFall, rightFall, forwardFall, backFall, unknown
+	leftFall, rightFall, forwardFall, backFall,
+	leftChoke, rightChoke, forwardChoke, backChoke,
+	unknown
 }
