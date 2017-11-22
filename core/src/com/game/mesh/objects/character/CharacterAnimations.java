@@ -11,6 +11,7 @@ import com.game.render.Render;
 public class CharacterAnimations extends Character{
 	private static final int FRAME_COLS = 7;
 	private static final int FRAME_ROWS = 1;
+	private static final String path = "core/assets/images/character/";
 	
 	private Character character;
 	private Sprite currSprite;
@@ -114,23 +115,23 @@ public class CharacterAnimations extends Character{
 		this.character = character;
 		character.action = ActionType.forwardWalk;
 		
-		leftWalk = new ObjectAnimation ("core/assets/images/walking_left.png", CHARACTER_W, CHARACTER_H,
+		leftWalk = new ObjectAnimation (path + "walking_left.png", CHARACTER_W, CHARACTER_H,
 				FRAME_ROWS, FRAME_COLS, 0.15f);
-		rightWalk = new ObjectAnimation ("core/assets/images/walking_right.png", CHARACTER_W, CHARACTER_H,
+		rightWalk = new ObjectAnimation (path + "walking_right.png", CHARACTER_W, CHARACTER_H,
 				FRAME_ROWS, FRAME_COLS, 0.15f);
-		forwardWalk = new ObjectAnimation ("core/assets/images/walking_forward.png", CHARACTER_W, CHARACTER_H,
+		forwardWalk = new ObjectAnimation (path + "walking_forward.png", CHARACTER_W, CHARACTER_H,
 				FRAME_ROWS, FRAME_COLS, 0.15f);
-		backWalk = new ObjectAnimation ("core/assets/images/walking_back.png", CHARACTER_W, CHARACTER_H,
+		backWalk = new ObjectAnimation (path + "walking_back.png", CHARACTER_W, CHARACTER_H,
 				FRAME_ROWS, FRAME_COLS, 0.15f);
 		
 		
-		leftFall = new ObjectAnimation ("core/assets/images/fall_left.png", false, CHARACTER_W,
+		leftFall = new ObjectAnimation (path + "fall_left.png", false, CHARACTER_W,
 				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
-		rightFall = new ObjectAnimation ("core/assets/images/fall_right.png", false, CHARACTER_W,
+		rightFall = new ObjectAnimation (path + "fall_right.png", false, CHARACTER_W,
 				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
-		forwardFall = new ObjectAnimation ("core/assets/images/fall_forward.png", false, CHARACTER_W,
+		forwardFall = new ObjectAnimation (path + "fall_forward.png", false, CHARACTER_W,
 				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
-		backFall = new ObjectAnimation ("core/assets/images/fall_back.png", false, CHARACTER_W,
+		backFall = new ObjectAnimation (path + "fall_back.png", false, CHARACTER_W,
 				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		
 		dataRender = new DataRender (currSprite, LayerType.character);

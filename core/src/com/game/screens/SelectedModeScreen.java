@@ -26,7 +26,7 @@ public class SelectedModeScreen implements Screen{
 	
 	
 	private void createStyle (){
-		TextureAtlas buttonAtlas = new TextureAtlas ("core/assets/images/button.atlas");
+		TextureAtlas buttonAtlas = new TextureAtlas ("core/assets/images/button/button.atlas");
 		Skin skin = new Skin ();
 		skin.addRegions (buttonAtlas);
 		

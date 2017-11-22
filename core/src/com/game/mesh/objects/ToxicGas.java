@@ -1,6 +1,8 @@
 package com.game.mesh.objects;
 
 import com.game.mesh.body.BodyObject;
+import com.game.mesh.objects.GameObject;
+import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.DestroyObjectMessage;
 import com.game.messages.GameMessage;
@@ -10,17 +12,17 @@ import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
 
-public class Hole extends GameObject{
+public class ToxicGas extends GameObject{
 	private static final float BODY_HOLE_W = UNIT * 1.8f;
 	private static final float BODY_HOLE_H = UNIT * 1.8f;
 	private static final float HOLE_W = UNIT * 2;
 	private static final float HOLE_H = UNIT * 2;
 	
 	
-	public Hole (float x, float y){
+	public ToxicGas (float x, float y){
 		objectType = ObjectType.hole;
-		body = new BodyObject ("core/assets/images/other/hole.png", true, x, y, HOLE_W, HOLE_H, BODY_HOLE_W,
-				BODY_HOLE_H);
+		body = new BodyObject ("core/assets/images/other/toxic_gas.png", true, x, y, HOLE_W, HOLE_H,
+				BODY_HOLE_W, BODY_HOLE_H);
 		dataRender = new DataRender (body.getSprite (), LayerType.hole);
 	}
 	

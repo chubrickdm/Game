@@ -75,6 +75,9 @@ public abstract class Body{
 	}
 	
 	public boolean checkTriggered (float x, float y, float w, float h){
-		return triggeredZone.isTriggered (x, y, w, h);
+		if (triggeredZone != null){
+			return triggeredZone.isTriggered (x, y, w, h);
+		}
+		return false;
 	}
 }

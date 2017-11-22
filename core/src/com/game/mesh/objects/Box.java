@@ -2,6 +2,7 @@ package com.game.mesh.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import com.game.mesh.TriggeredZone;
 import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.body.AnimatedObject;
@@ -105,6 +106,7 @@ public class Box extends GameObject{
 	
 	private void updateFallAnimation (){
 		if (fall.isAnimationFinished ()){
+			triggeredBox = null;
 			ObjectManager.getInstance ().sendMessage (new DeleteObjectMessage (this));
 		}
 		else{
@@ -128,11 +130,11 @@ public class Box extends GameObject{
 		triggeredZone.setOrigin (TRIGGERED_ZONE_W / 2, TRIGGERED_ZONE_H / 2);
 		body.setTriggeredZone (triggeredZone);
 		
-		Texture texture = new Texture ("core/assets/images/box_triggered.png");
+		Texture texture = new Texture ("core/assets/images/other/box_triggered.png");
 		triggeredBoxSprite = new Sprite (texture);
 		triggeredBoxSprite.setSize (BOX_W, BOX_H);
 		
-		fall = new ObjectAnimation ("core/assets/images/box_fall.png", false, BOX_W, BOX_H,
+		fall = new ObjectAnimation ("core/assets/images/other/box_fall.png", false, BOX_W, BOX_H,
 				1, 5, 0.3f);
 		currSprite = fall.getFirstFrame ();
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
@@ -154,7 +156,6 @@ public class Box extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			checkTriggeredZone (message); //именно в таком порядке, иначе будет баг, спрайт будет заходить на стену
 			movedByCharacterMessage (message);

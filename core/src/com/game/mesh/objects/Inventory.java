@@ -68,7 +68,7 @@ public class Inventory extends GameObject{
 	public Inventory (CharacterName ownerName){
 		objectType = ObjectType.actionWheel;
 		this.ownerName = ownerName;
-		body = new NoBodyObject ("core/assets/images/action_wheel.png", 0, 0, INVENTORY_W, INVENTORY_H);
+		body = new NoBodyObject ("core/assets/images/other/action_wheel.png", 0, 0, INVENTORY_W, INVENTORY_H);
 		body.setOrigin (INVENTORY_W / 2, INVENTORY_H / 2);
 		body.setScale (percentSize / 100);
 		body.setSpritePosition (INVENTORY_W / 2, INVENTORY_H / 2);
