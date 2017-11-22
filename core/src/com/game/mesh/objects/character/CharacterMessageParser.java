@@ -71,7 +71,7 @@ public class CharacterMessageParser extends Character{
 		}
 		else if (message.type == MessageType.destroyObject && message.object == character){
 			DestroyObjectMessage msg = (DestroyObjectMessage) message;
-			if (msg.destroyer == ObjectType.hole || msg.destroyer == ObjectType.mushrooms){
+			if (msg.destroyer == ObjectType.hole || msg.destroyer == ObjectType.toxicGas){
 				character.isFall = true;
 			}
 		}

@@ -1,6 +1,7 @@
 package com.game.mesh.objects.singletons.special;
 
 import com.game.mesh.objects.GameObject;
+import com.game.messages.AddObjectMessage;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
 import com.game.render.Render;
@@ -18,11 +19,15 @@ public class ObjectManager extends GameObject{
 		//здесь обрабатываться сообщения для менеджера (пока что это только удаление объекта из списка).
 		//Пришлось делать это т.к. если удалять объект из списка во время работы с ним, будет ошибка и экстренное
 		//закрытие программы.
-		for (GameMessage msg : messagesForManager){
-			if (msg.type == MessageType.deleteObject){
-				objects.remove (msg.object);
+		for (GameMessage message : messagesForManager){
+			if (message.type == MessageType.deleteObject){
+				objects.remove (message.object);
+			}
+			else if (message.type == MessageType.addObject){
+				objects.add (message.object);
 			}
 		}
+		messagesForManager.clear ();
 	}
 	
 	private static class ObjectManagerHolder{
