@@ -51,6 +51,7 @@ public class ObjectAnimation{
 	}
 	
 	public Sprite getCurrSprite (){
+		animation.setPlayMode (Animation.PlayMode.NORMAL);
 		time += Gdx.graphics.getDeltaTime ();
 		Sprite currSprite = new Sprite (animation.getKeyFrame (time, looping));
 		currSprite.setBounds (0, 0, frameW, frameH);
@@ -66,5 +67,17 @@ public class ObjectAnimation{
 		Sprite currSprite = new Sprite (animation.getKeyFrame (0, looping));
 		currSprite.setBounds (0, 0, frameW, frameH);
 		return currSprite;
+	}
+	
+	public Sprite getReversedCurrSprite (){
+		animation.setPlayMode (Animation.PlayMode.REVERSED);
+		time += Gdx.graphics.getDeltaTime ();
+		Sprite currSprite = new Sprite (animation.getKeyFrame (time, looping));
+		currSprite.setBounds (0, 0, frameW, frameH);
+		return currSprite;
+	}
+	
+	public void resetTime (){
+		time = 0;
 	}
 }

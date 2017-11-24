@@ -1,6 +1,7 @@
 package com.game.mesh.objects.character;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.PlayerLostMessage;
@@ -187,13 +188,13 @@ public class CharacterAnimations extends Character{
 				CHARACTER_H, FRAME_ROWS, FRAME_COLS, 0.15f);
 		
 		leftChoke = new ObjectAnimation (path + "choke_left.png", false, CHARACTER_W,
-				CHARACTER_H, FRAME_ROWS, 5, 0.2f);
+				CHARACTER_H, FRAME_ROWS, 5, 0.3f);
 		rightChoke = new ObjectAnimation (path + "choke_right.png", false, CHARACTER_W,
-				CHARACTER_H, FRAME_ROWS, 5, 0.2f);
+				CHARACTER_H, FRAME_ROWS, 5, 0.3f);
 		forwardChoke = new ObjectAnimation (path + "choke_forward.png", false, CHARACTER_W,
-				CHARACTER_H, FRAME_ROWS, 5, 0.2f);
+				CHARACTER_H, FRAME_ROWS, 5, 0.3f);
 		backChoke = new ObjectAnimation (path + "choke_back.png", false, CHARACTER_W,
-				CHARACTER_H, FRAME_ROWS, 5, 0.2f);
+				CHARACTER_H, FRAME_ROWS, 5, 0.3f);
 		
 		dataRender = new DataRender (currSprite, LayerType.normal);
 	}
