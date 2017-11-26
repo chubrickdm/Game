@@ -25,13 +25,13 @@ public class Mushrooms extends GameObject{
 	private ToxicGas toxicGas = null;
 	private Sprite currSprite;
 	private ObjectAnimation hide;
-	private PointLight flashLight;
+	private PointLight light;
 	
 	public Mushrooms (float x, float y){
 		objectType = ObjectType.mushrooms;
 		body = new AnimatedObject (x, y, MUSH_W, MUSH_H, BODY_MUSH_W, BODY_MUSH_H);
 		
-		flashLight = new PointLight (Render.getInstance ().handler,100, Color.OLIVE, (int) (100 * ASPECT_RATIO),
+		light = new PointLight (Render.getInstance ().handler,100, Color.OLIVE, (int) (100 * ASPECT_RATIO),
 				x + MUSH_W / 2, y + MUSH_H / 2);
 		hide = new ObjectAnimation ("core/assets/images/other/mushrooms_hide.png", false, MUSH_W, MUSH_H,
 				1, 5, 0.1f);
@@ -46,7 +46,7 @@ public class Mushrooms extends GameObject{
 			currSprite = hide.getCurrSprite ();
 			if (hide.isAnimationFinished ()){
 				isHide = true;
-				flashLight.remove ();
+				light.setActive (false);
 			}
 		}
 		else if (!gasWasCreated && isHide){
@@ -54,8 +54,7 @@ public class Mushrooms extends GameObject{
 			if (hide.isAnimationFinished ()){
 				isHide = false;
 				hide.resetTime ();
-				flashLight = new PointLight (Render.getInstance ().handler,100, Color.OLIVE, (int) (100 * ASPECT_RATIO),
-						body.getSpriteX () + MUSH_W / 2, body.getSpriteY () + MUSH_H / 2);
+				light.setActive (true);
 			}
 		}
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
@@ -85,6 +84,6 @@ public class Mushrooms extends GameObject{
 	
 	@Override
 	public void clear (){
-		flashLight.remove ();
+		light.remove ();
 	}
 }
