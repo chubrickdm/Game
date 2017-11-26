@@ -1,7 +1,6 @@
 package com.game.mesh.objects.singletons.special;
 
 import com.game.mesh.objects.GameObject;
-import com.game.messages.AddObjectMessage;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
 import com.game.render.Render;
@@ -9,25 +8,23 @@ import com.game.render.Render;
 import java.util.LinkedList;
 
 public class ObjectManager extends GameObject{
-	private int iterator = 0;
 	private LinkedList <GameMessage> messagesForManager;
 	private LinkedList <GameMessage> messages;
 	private LinkedList <GameObject> objects;
 	
 	
 	private void parseMessagesForManager (){
-		//здесь обрабатываться сообщения для менеджера (пока что это только удаление объекта из списка).
-		//Пришлось делать это т.к. если удалять объект из списка во время работы с ним, будет ошибка и экстренное
-		//закрытие программы.
-		for (GameMessage message : messagesForManager){
-			if (message.type == MessageType.deleteObject){
-				objects.remove (message.object);
+		//здесь обрабатываться сообщения для менеджера. Пришлось делать это т.к. если удалять объект из списка во время
+		//работы с ним, будет ошибка и экстренное закрытие программы.
+		while (!messagesForManager.isEmpty ()){
+			GameMessage msg = messagesForManager.remove ();
+			if (msg.type == MessageType.deleteObject){
+				objects.remove (msg.object);
 			}
-			else if (message.type == MessageType.addObject){
-				objects.add (message.object);
+			else if (msg.type == MessageType.addObject){
+				objects.add (msg.object);
 			}
 		}
-		messagesForManager.clear ();
 	}
 	
 	private static class ObjectManagerHolder{
@@ -35,7 +32,6 @@ public class ObjectManager extends GameObject{
 	}
 	
 	private ObjectManager (){
-		iterator = 0;
 		messagesForManager = new LinkedList <GameMessage> ();
 		messages = new LinkedList <GameMessage> ();
 		objects = new LinkedList <GameObject> ();
@@ -53,7 +49,7 @@ public class ObjectManager extends GameObject{
 		for (GameObject obj : objects){
 			obj.update ();
 		}
-		for (iterator = 0; iterator < messages.size (); iterator++){
+		while (!messages.isEmpty ()){
 			GameMessage msg = messages.remove ();
 			for (GameObject obj : objects){
 				obj.sendMessage (msg);
@@ -77,11 +73,10 @@ public class ObjectManager extends GameObject{
 	@Override
 	public void clear (){
 		//метод вызывается при закрытии уровня, или перехода к следующему, и служит для очистки перменных классов
-		//сиглентонов (менеджер, камера).
+		//сиглентонов (менеджер, камера) или удалить динамический свет.
 		for (GameObject obj : objects){
 			obj.clear ();
 		}
-		iterator = 0;
 		messagesForManager.clear ();
 		messages.clear ();
 		objects.clear ();
@@ -89,9 +84,6 @@ public class ObjectManager extends GameObject{
 	
 	public void addMessage (GameMessage msg){
 		messages.add (msg);
-		iterator--; //вот эта операция обязательна, т.к. мы извлекаем из списка сообщение когда рассылаем его по объектам
-		//и при добавлении увеличиваем, получается что количество сообщений не изменилось, но итератор должен стать
-		//на позицию раньше
 	}
 	
 	public void addObject (GameObject obj){

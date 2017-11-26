@@ -16,12 +16,10 @@ public class Render{
 	private ArrayList <DataRender> renderList;
 	
 	public RayHandler handler;
-
-	/* Just trying to make a commit -- JamesListener*/
+	
 	
 	private void sortedScene (){
 		renderList.sort ((tmp1, tmp2) -> {
-			//яма всегда рисуется последней
 			if (tmp1.layerType == LayerType.over || tmp2.layerType == LayerType.below){
 				return 1;
 			}
