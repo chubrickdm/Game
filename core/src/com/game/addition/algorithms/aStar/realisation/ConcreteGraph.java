@@ -22,12 +22,22 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 	}
 	
 	public void addWall (float x, float y){
+		x++;
+		y++;
 		x -= GameSystem.INDENT_BETWEEN_SCREEN_LEVEL;
 		
 		int i = (int) (x / GameObject.UNIT);
 		int j = (int) (y / (GameObject.UNIT * GameObject.ANGLE));
 		map.get (i).remove (j);
 		map.get (i).add (j, new ConcreteNode (i, j, TypeNode.wall));
+	}
+	
+	public void addInvisibleWall (float x, float y, float w, float h){
+		for (int  i = 0; i <= w / GameObject.UNIT; i++){
+			for (int j = 0; j < h / (GameObject.UNIT * GameObject.ANGLE); j++){
+				addWall (x + i * GameObject.UNIT, y + j * (GameObject.UNIT * GameObject.ANGLE));
+			}
+		}
 	}
 	
 	@Override

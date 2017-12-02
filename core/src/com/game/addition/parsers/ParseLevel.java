@@ -55,7 +55,7 @@ public abstract class ParseLevel extends ParseBasis{
 		case "wall":
 			Wall wall = new Wall (x, y);
 			ObjectManager.getInstance ().addObject (wall);
-			LevelManager.getInstance ().level.addWall (x + 1, y + 1);
+			LevelManager.getInstance ().level.addWall (x, y);
 			break;
 		case "characters":
 			Character character = new Character (x, y);
@@ -64,6 +64,7 @@ public abstract class ParseLevel extends ParseBasis{
 		case "invisibleWall":
 			InvisibleWall invisibleWall = new InvisibleWall (x, y, w, h);
 			ObjectManager.getInstance ().addObject (invisibleWall);
+			LevelManager.getInstance ().level.addInvisibleWall (x, y, w, h);
 			break;
 		case "finishLevel":
 			FinishLevel finish = new FinishLevel (x, y, w, h);

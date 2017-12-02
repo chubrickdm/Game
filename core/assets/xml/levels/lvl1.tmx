@@ -124,22 +124,6 @@
   <object id="156" x="384" y="816" width="64" height="48"/>
   <object id="157" x="448" y="816" width="64" height="48"/>
   <object id="158" x="384" y="912" width="64" height="48"/>
-  <object id="160" x="64" y="288" width="64" height="48"/>
-  <object id="161" x="128" y="288" width="64" height="48"/>
-  <object id="162" x="192" y="288" width="64" height="48"/>
-  <object id="163" x="256" y="288" width="64" height="48"/>
-  <object id="164" x="320" y="288" width="64" height="48"/>
-  <object id="165" x="384" y="288" width="64" height="48"/>
-  <object id="166" x="448" y="288" width="64" height="48"/>
-  <object id="167" x="512" y="288" width="64" height="48"/>
-  <object id="168" x="64" y="1440" width="64" height="48"/>
-  <object id="169" x="128" y="1440" width="64" height="48"/>
-  <object id="170" x="192" y="1440" width="64" height="48"/>
-  <object id="171" x="256" y="1440" width="64" height="48"/>
-  <object id="172" x="320" y="1440" width="64" height="48"/>
-  <object id="173" x="384" y="1440" width="64" height="48"/>
-  <object id="174" x="448" y="1440" width="64" height="48"/>
-  <object id="175" x="512" y="1440" width="64" height="48"/>
  </objectgroup>
  <objectgroup name="characters">
   <object id="106" x="896" y="1056" width="64" height="48"/>
