@@ -12,9 +12,9 @@ import com.game.render.Render;
 
 public class Hole extends GameObject{
 	private static final float BODY_HOLE_W = UNIT * 1.8f;
-	private static final float BODY_HOLE_H = UNIT * 1.8f;
+	private static final float BODY_HOLE_H = UNIT * ANGLE * 1.8f;
 	private static final float HOLE_W = UNIT * 2;
-	private static final float HOLE_H = UNIT * 2;
+	private static final float HOLE_H = UNIT * ANGLE * 2;
 	
 	
 	public Hole (float x, float y){

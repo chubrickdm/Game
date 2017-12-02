@@ -13,9 +13,9 @@ import com.game.render.Render;
 
 public class ToxicGas extends GameObject{
 	private static final float BODY_GAS_W = UNIT * 2;
-	private static final float BODY_GAS_H = UNIT * 2;
+	private static final float BODY_GAS_H = UNIT * ANGLE * 2;
 	private static final float GAS_W = UNIT * 2;
-	private static final float GAS_H = UNIT * 2;
+	private static final float GAS_H = UNIT * ANGLE * 2;
 	
 	private float timer = 5;
 	private Sprite currSprite;

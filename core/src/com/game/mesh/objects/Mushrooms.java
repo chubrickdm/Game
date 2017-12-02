@@ -16,9 +16,9 @@ import com.game.render.*;
 
 public class Mushrooms extends GameObject{
 	private static final float BODY_MUSH_W = UNIT * 1.8f;
-	private static final float BODY_MUSH_H = UNIT * 1.8f;
+	private static final float BODY_MUSH_H = UNIT * ANGLE * 1.8f;
 	private static final float MUSH_W = UNIT * 2;
-	private static final float MUSH_H = UNIT * 2;
+	private static final float MUSH_H = UNIT * ANGLE * 2;
 	
 	private boolean isHide = false;
 	private boolean gasWasCreated = false;
