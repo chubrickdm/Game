@@ -62,8 +62,8 @@ public class Render{
 		}
 		batch.end ();
 		
-		handler.setCombinedMatrix (Camera.getInstance ().getCamera ());
-		handler.updateAndRender ();
+		//handler.setCombinedMatrix (Camera.getInstance ().getCamera ());
+		//handler.updateAndRender ();
 		
 		renderList.clear ();
 	}

@@ -16,9 +16,9 @@ import com.game.render.Render;
 
 public class Box extends GameObject{
 	private static final float BODY_BOX_W = UNIT - 1;
-	private static final float BODY_BOX_H = UNIT - 1;
+	private static final float BODY_BOX_H = UNIT * ANGLE - 1;
 	private static final float BOX_W = UNIT;
-	private static final float BOX_H = UNIT * 2;
+	private static final float BOX_H = UNIT + UNIT * ANGLE;
 	private static final float TRIGGERED_ZONE_W = 2 * BODY_BOX_W;
 	private static final float TRIGGERED_ZONE_H = 2 * BODY_BOX_H;
 	private static Box triggeredBox = null; //только один ящик может быть выбран
@@ -130,11 +130,11 @@ public class Box extends GameObject{
 		triggeredZone.setOrigin (TRIGGERED_ZONE_W / 2, TRIGGERED_ZONE_H / 2);
 		body.setTriggeredZone (triggeredZone);
 		
-		Texture texture = new Texture ("core/assets/images/other/box_triggered.png");
+		Texture texture = new Texture ("core/assets/images/other/box_2_triggered.png");
 		triggeredBoxSprite = new Sprite (texture);
 		triggeredBoxSprite.setSize (BOX_W, BOX_H);
 		
-		fall = new ObjectAnimation ("core/assets/images/other/box_fall.png", false, BOX_W, BOX_H,
+		fall = new ObjectAnimation ("core/assets/images/other/box_2_fall.png", false, BOX_W, BOX_H,
 				1, 5, 0.3f);
 		currSprite = fall.getFirstFrame ();
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());

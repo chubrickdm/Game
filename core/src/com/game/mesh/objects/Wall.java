@@ -12,14 +12,14 @@ import com.game.render.Render;
 
 public class Wall extends GameObject{
 	private static final float BODY_WALL_W = UNIT;
-	private static final float BODY_WALL_H = UNIT;
+	private static final float BODY_WALL_H = UNIT * ANGLE;
 	private static final float WALL_W = UNIT;
-	private static final float WALL_H = UNIT * 3;
+	private static final float WALL_H = UNIT * 2 + UNIT * ANGLE;
 	
 	
 	public Wall (float x, float y){
 		objectType = ObjectType.wall;
-		body = new BodyObject ("core/assets/images/other/wall.png", x, y, WALL_W, WALL_H, BODY_WALL_W, BODY_WALL_H);
+		body = new BodyObject ("core/assets/images/other/wall_2.png", x, y, WALL_W, WALL_H, BODY_WALL_W, BODY_WALL_H);
 		dataRender = new DataRender (body.getSprite (), LayerType.normal);
 	}
 	
