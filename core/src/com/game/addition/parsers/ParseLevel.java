@@ -11,11 +11,13 @@ import org.w3c.dom.NodeList;
 import static com.game.mesh.objects.GameObject.ASPECT_RATIO;
 
 public abstract class ParseLevel extends ParseBasis{
+	public static float indent;
+	
 	private static float x;
 	private static float y;
 	private static float w;
 	private static float h;
-	private static float indent; //отсутп по оси Х
+	//private static float indent; //отсутп по оси Х
 	private static int levelW; //ширина уровня умноженная на аспект ратио
 	private static int levelH; //высота уровня умноженная на аспект ратио
 	

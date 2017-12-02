@@ -34,10 +34,6 @@ public class Camera extends GameObject{
 		return camera.combined;
 	}
 	
-	public OrthographicCamera getCamera (){
-		return camera;
-	}
-	
 	@Override
 	public void update (){
 		pushOutVertical = false;

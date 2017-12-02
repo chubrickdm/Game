@@ -3,10 +3,14 @@ package com.game.render;
 import box2dLight.RayHandler;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.game.MyGame;
+import com.game.addition.parsers.ParseLevel;
+import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.singletons.Camera;
 
 import java.util.ArrayList;
@@ -14,6 +18,9 @@ import java.util.ArrayList;
 public class Render{
 	private SpriteBatch batch;
 	private ArrayList <DataRender> renderList;
+	////////////////////////
+	private ShapeRenderer shapes;
+	//////////////////////
 	
 	public RayHandler handler;
 	
@@ -36,6 +43,11 @@ public class Render{
 	}
 	
 	private Render (){
+		/////////////////////////////////////////////////
+		shapes = new ShapeRenderer ();
+		shapes.setColor (Color.GRAY);
+		////////////////////////////////////////////////
+		
 		batch = new SpriteBatch ();
 		renderList = new ArrayList <DataRender> ();
 		
@@ -61,6 +73,18 @@ public class Render{
 			data.sprite.draw (batch);
 		}
 		batch.end ();
+		
+		////////////////////////////////////////////////////////////////////////////
+		shapes.setProjectionMatrix (Camera.getInstance ().getProjectionMatrix ());
+		shapes.begin (ShapeRenderer.ShapeType.Line);
+		for (int i = 0; i < 19; i++){
+			shapes.line (i * GameObject.UNIT + ParseLevel.indent, 0, i * GameObject.UNIT + ParseLevel.indent, 2000);
+		}
+		for (int i = 0; i < 40; i++){
+			shapes.line (ParseLevel.indent, i * GameObject.UNIT * GameObject.ANGLE, 19 * GameObject.UNIT + ParseLevel.indent, i * GameObject.UNIT * GameObject.ANGLE);
+		}
+		shapes.end ();
+		///////////////////////////////////////////////////////////////////////////
 		
 		//handler.setCombinedMatrix (Camera.getInstance ().getCamera ());
 		//handler.updateAndRender ();

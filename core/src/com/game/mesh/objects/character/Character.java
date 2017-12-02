@@ -2,6 +2,8 @@ package com.game.mesh.objects.character;
 
 import box2dLight.PointLight;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 
 import com.game.GameSystem;
@@ -52,6 +54,7 @@ public class Character extends GameObject{
 		
 		parser = new CharacterMessageParser (this);
 		control = new CharacterControl (this);
+		new CharacterInputProcessor (this);
 		animations = new CharacterAnimations (this);
 	}
 	
