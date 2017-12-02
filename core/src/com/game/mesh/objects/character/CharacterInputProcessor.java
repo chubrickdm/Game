@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class CharacterInputProcessor extends Character implements InputProcessor{
 	private static InputMultiplexer multiplexer;
 	private static boolean creteMultiplexer = false;
-	ConcreteNode start;
-	ConcreteNode finish;
+	private ConcreteNode start;
+	private ConcreteNode finish;
 	private Character character;
 	
 	

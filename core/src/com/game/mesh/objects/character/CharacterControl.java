@@ -122,12 +122,14 @@ public class CharacterControl extends Character{
 		}
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
+			movedByComputer = false;
 			character.isSelected = false;
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (character));
 		}
 		else if (deltaX != 0 || deltaY != 0){
 			character.isMove = true;
-			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (), character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
+			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (),
+					character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
 			character.move (deltaX, deltaY);
 		}
 	}
@@ -149,7 +151,7 @@ public class CharacterControl extends Character{
 	
 	@Override
 	public void update (){
-		if (character.isSelected && !character.isFall && !character.isChoke){
+		if (character.isSelected & !character.isFall & !character.isChoke){
 			updateControl ();
 		}
 	}

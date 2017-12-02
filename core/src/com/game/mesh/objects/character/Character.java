@@ -83,6 +83,11 @@ public class Character extends GameObject{
 		animations.draw ();
 	}
 	
+	@Override
+	public void clear (){
+		inputProcessor.clear ();
+		flashLight.remove ();
+	}
 	
 	protected float getBodyX (){
 		return body.getBodyX ();
@@ -127,11 +132,5 @@ public class Character extends GameObject{
 	
 	protected void setPath (ArrayList <ConcreteNode> path){
 		control.setPath (path);
-	}
-	
-	@Override
-	public void clear (){
-		inputProcessor.clear ();
-		flashLight.remove ();
 	}
 }
