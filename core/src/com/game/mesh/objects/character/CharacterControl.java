@@ -1,8 +1,8 @@
 package com.game.mesh.objects.character;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
 import com.game.GameSystem;
 import com.game.addition.algorithms.aStar.realisation.ConcreteNode;
 import com.game.mesh.objects.GameObject;
@@ -31,8 +31,6 @@ public class CharacterControl extends Character{
 		current.y = character.getBodyY () + character.getBodyH () / 2;
 		next.x = (path.get (iterator).x + 0.5f) * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL;
 		next.y = (path.get (iterator).y + 0.5f) * GameObject.UNIT * GameObject.ANGLE;
-		//next.x = (path.get (iterator).x - path.get (iterator - 1).x) * GameObject.UNIT + current.x;
-		//next.y = (path.get (iterator).y - path.get (iterator - 1).y) * GameObject.UNIT * GameObject.ANGLE + current.y;
 	}
 	
 	private void updatedMoveByComputer (){
@@ -58,11 +56,9 @@ public class CharacterControl extends Character{
 		}
 		if (!moveX && !moveY){
 			if (iterator == path.size () - 1){
-				System.out.println ("End.");
 				movedByComputer = false;
 			}
 			else{
-				System.out.println ("Next edge.");
 				nextIteration ();
 			}
 		}

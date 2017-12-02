@@ -13,11 +13,6 @@ public class ConcreteNode extends Node{
 		y = 0;
 	}
 	
-	public ConcreteNode (int x, int y){
-		this.x = x;
-		this.y = y;
-	}
-	
 	public ConcreteNode (int x, int y, TypeNode type){
 		this.type = type;
 		this.x = x;

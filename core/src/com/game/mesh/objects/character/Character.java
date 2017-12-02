@@ -33,6 +33,7 @@ public class Character extends GameObject{
 	private PointLight flashLight;
 	private CharacterMessageParser parser;
 	private CharacterControl control;
+	private CharacterInputProcessor inputProcessor;
 	private CharacterAnimations animations;
 	
 	
@@ -57,7 +58,7 @@ public class Character extends GameObject{
 		
 		parser = new CharacterMessageParser (this);
 		control = new CharacterControl (this);
-		new CharacterInputProcessor (this);
+		inputProcessor = new CharacterInputProcessor (this);
 		animations = new CharacterAnimations (this);
 	}
 	
@@ -130,6 +131,7 @@ public class Character extends GameObject{
 	
 	@Override
 	public void clear (){
+		inputProcessor.clear ();
 		flashLight.remove ();
 	}
 }
