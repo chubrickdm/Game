@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.game.GameSystem;
 import com.game.MyGame;
+import com.game.addition.algorithms.aStar.realisation.ConcreteGraph;
 import com.game.addition.parsers.ParseLevel;
 import com.game.addition.parsers.ParseSettings;
 import com.game.mesh.objects.singletons.Chain;
@@ -17,6 +18,9 @@ import com.game.messages.MessageType;
 import com.game.screens.SelectedModeScreen;
 
 public class LevelManager extends GameObject{
+	public ConcreteGraph level;
+	
+	
 	private void completeLevel (){
 		ObjectManager.getInstance ().clear ();
 		
@@ -61,6 +65,7 @@ public class LevelManager extends GameObject{
 	}
 	
 	public void createLevel (){
+		level = new ConcreteGraph ();
 		ParseLevel.parseLVL (GameSystem.CURRENT_LEVEL);
 		
 		ObjectManager.getInstance ().addObject (new Inventory (CharacterName.first));

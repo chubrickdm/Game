@@ -3,7 +3,9 @@ package com.game.addition.parsers;
 import com.game.GameSystem;
 import com.game.mesh.objects.*;
 import com.game.mesh.objects.character.Character;
+import com.game.mesh.objects.singletons.special.LevelManager;
 import com.game.mesh.objects.singletons.special.ObjectManager;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -11,26 +13,29 @@ import org.w3c.dom.NodeList;
 import static com.game.mesh.objects.GameObject.ASPECT_RATIO;
 
 public abstract class ParseLevel extends ParseBasis{
-	public static float indent;
-	
 	private static float x;
 	private static float y;
 	private static float w;
 	private static float h;
-	//private static float indent; //отсутп по оси Х
+	
 	private static int levelW; //ширина уровня умноженная на аспект ратио
 	private static int levelH; //высота уровня умноженная на аспект ратио
 	
+	
 	private static void additionalCalculates (Node map){
 		levelH = Integer.parseInt (map.getAttributes ().item (5).getTextContent ()); //tile height
-		levelH *= Integer.parseInt (map.getAttributes ().item (0).getTextContent ()); //height
+		int height = Integer.parseInt (map.getAttributes ().item (0).getTextContent ());
+		levelH *= height;
 		levelH *= ASPECT_RATIO;
 		
 		levelW = Integer.parseInt (map.getAttributes ().item (6).getTextContent ()); //tile width
-		levelW *= Integer.parseInt (map.getAttributes ().item (8).getTextContent ()); //width
+		int width = Integer.parseInt (map.getAttributes ().item (8).getTextContent ());
+		levelW *= width;
 		levelW *= ASPECT_RATIO;
 		
-		indent = (GameSystem.SCREEN_W - levelW) / 2;
+		GameSystem.INDENT_BETWEEN_SCREEN_LEVEL = (GameSystem.SCREEN_W - levelW) / 2;
+		
+		LevelManager.getInstance ().level.setSize (width, height);
 	}
 	
 	private static void parseCoordinates (Node object){
@@ -40,7 +45,7 @@ public abstract class ParseLevel extends ParseBasis{
 		h *= ASPECT_RATIO;
 		
 		x = Float.parseFloat (object.getAttributes ().item (3).getTextContent ());
-		x = x * ASPECT_RATIO + indent;
+		x = x * ASPECT_RATIO + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL;
 		y = Float.parseFloat (object.getAttributes ().item (4).getTextContent ());
 		y = levelH - y * ASPECT_RATIO - h;
 	}
@@ -50,6 +55,7 @@ public abstract class ParseLevel extends ParseBasis{
 		case "wall":
 			Wall wall = new Wall (x, y);
 			ObjectManager.getInstance ().addObject (wall);
+			LevelManager.getInstance ().level.addWall (x + 1, y + 1);
 			break;
 		case "characters":
 			Character character = new Character (x, y);

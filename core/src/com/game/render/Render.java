@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.game.GameSystem;
 import com.game.MyGame;
 import com.game.addition.parsers.ParseLevel;
 import com.game.mesh.objects.GameObject;
@@ -78,10 +79,10 @@ public class Render{
 		shapes.setProjectionMatrix (Camera.getInstance ().getProjectionMatrix ());
 		shapes.begin (ShapeRenderer.ShapeType.Line);
 		for (int i = 0; i < 19; i++){
-			shapes.line (i * GameObject.UNIT + ParseLevel.indent, 0, i * GameObject.UNIT + ParseLevel.indent, 2000);
+			shapes.line (i * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, 0, i * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, 2000);
 		}
 		for (int i = 0; i < 40; i++){
-			shapes.line (ParseLevel.indent, i * GameObject.UNIT * GameObject.ANGLE, 19 * GameObject.UNIT + ParseLevel.indent, i * GameObject.UNIT * GameObject.ANGLE);
+			shapes.line (GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, i * GameObject.UNIT * GameObject.ANGLE, 19 * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, i * GameObject.UNIT * GameObject.ANGLE);
 		}
 		shapes.end ();
 		///////////////////////////////////////////////////////////////////////////

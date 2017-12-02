@@ -1,8 +1,7 @@
 package com.game.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.game.mesh.objects.character.CharacterInputProcessor;
+
 import com.game.mesh.objects.singletons.special.LevelManager;
 
 public class PlayScreen implements Screen{

@@ -11,7 +11,7 @@ public class DesktopLauncher{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration ();
 		
 		config.title = "Project 6";
-		config.fullscreen = GameSystem.fullScreen;
+		config.fullscreen = GameSystem.FULL_SCREEN;
 		config.width = (int) GameSystem.SCREEN_W;
 		config.height = (int) GameSystem.SCREEN_H;
 		
