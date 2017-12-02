@@ -32,12 +32,13 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 		if (character.isSelected){
 			screenY = (int) (character.getSpriteY () + character.getSpriteH () / 2 - GameSystem.SCREEN_H / 2) + (int) GameSystem.SCREEN_H - screenY;
 			
-			ConcreteNode start = new ConcreteNode (0, 0);
+			//обязательно надо к int делать преобразование, а то работать не будет.
+			ConcreteNode start = new ConcreteNode ();
 			start.x = (int) ((character.getBodyX () + character.getBodyW () / 2 - GameSystem.INDENT_BETWEEN_SCREEN_LEVEL) / GameObject.UNIT);
 			start.y = (int) ((character.getBodyY () + character.getBodyH () / 2) / (GameObject.UNIT * GameObject.ANGLE));
 			System.out.println ("Character: " + start.x + " " + start.y);
 			
-			ConcreteNode finish = new ConcreteNode (0, 0);
+			ConcreteNode finish = new ConcreteNode ();
 			finish.x = (int) ((screenX - GameSystem.INDENT_BETWEEN_SCREEN_LEVEL) / GameObject.UNIT);
 			finish.y = (int) (screenY / (GameObject.UNIT * GameObject.ANGLE));
 			System.out.println ("Mouse: " + finish.x + " " + finish.y);
@@ -46,16 +47,16 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 			AlgorithmAStar <ConcreteNode> algorithm = new AlgorithmAStar <> ();
 			ArrayList <ConcreteNode> path = algorithm.findWay (LevelManager.getInstance ().level, start, finish);
 			
-			if (path == null){
-				System.out.println ("Don't exist path.");
-			}
-			else{
+			if (path != null && path.size () != 1){
 				System.out.println ("Start.");
 				for (ConcreteNode tmpN : path){
 					System.out.println (tmpN.x + " " + tmpN.y);
 				}
 				System.out.println ("Finish.");
+				character.setPath (path);
 			}
+			
+			
 			
 			return true;
 		}

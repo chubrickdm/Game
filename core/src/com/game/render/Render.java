@@ -79,10 +79,10 @@ public class Render{
 		shapes.setProjectionMatrix (Camera.getInstance ().getProjectionMatrix ());
 		shapes.begin (ShapeRenderer.ShapeType.Line);
 		for (int i = 0; i < 19; i++){
-			shapes.line (i * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, 0, i * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, 2000);
+			//shapes.line (i * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, 0, i * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, 2000);
 		}
 		for (int i = 0; i < 40; i++){
-			shapes.line (GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, i * GameObject.UNIT * GameObject.ANGLE, 19 * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, i * GameObject.UNIT * GameObject.ANGLE);
+			//shapes.line (GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, i * GameObject.UNIT * GameObject.ANGLE, 19 * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, i * GameObject.UNIT * GameObject.ANGLE);
 		}
 		shapes.end ();
 		///////////////////////////////////////////////////////////////////////////

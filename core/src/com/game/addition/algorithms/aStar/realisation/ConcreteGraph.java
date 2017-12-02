@@ -48,8 +48,8 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 	@Override
 	public ArrayList <ConcreteNode> neighbors (ConcreteNode current){
 		ArrayList <ConcreteNode> list = new ArrayList <> ();
-		int x = current.x;
-		int y = current.y;
+		int x = (int) current.x;
+		int y = (int) current.y;
 		
 		for (int i = -1; i < 2 && x > 0 && y > 0; i++){
 			if (map.get (x + i).get (y - 1).type != TypeNode.wall){

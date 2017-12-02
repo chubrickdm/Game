@@ -7,11 +7,14 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 
 import com.game.GameSystem;
+import com.game.addition.algorithms.aStar.realisation.ConcreteNode;
 import com.game.mesh.body.AnimatedObject;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
 import com.game.messages.GameMessage;
 import com.game.render.Render;
+
+import java.util.ArrayList;
 
 public class Character extends GameObject{
 	protected static final float CHARACTER_W = UNIT;
@@ -119,6 +122,10 @@ public class Character extends GameObject{
 	
 	protected boolean intersects (float x, float y, float w, float h){
 		return body.intersects (x, y, w, h);
+	}
+	
+	protected void setPath (ArrayList <ConcreteNode> path){
+		control.setPath (path);
 	}
 	
 	@Override

@@ -3,10 +3,15 @@ package com.game.addition.algorithms.aStar.realisation;
 import com.game.addition.algorithms.aStar.Node;
 
 public class ConcreteNode extends Node{
-	public int x;
-	public int y;
+	public float x;
+	public float y;
 	public TypeNode type = TypeNode.empty;
 	
+	
+	public ConcreteNode (){
+		x = 0;
+		y = 0;
+	}
 	
 	public ConcreteNode (int x, int y){
 		this.x = x;
