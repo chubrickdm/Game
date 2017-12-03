@@ -19,7 +19,7 @@ public class MainMenuScreen implements Screen{
 	
 	private void createPlayButton (){
 		TextButton play;
-		play = new TextButton ("Играть", MyGame.normalStyle);
+		play = new TextButton ("Играть", TextStyle.getInstance ().normalStyle);
 		play.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -34,7 +34,7 @@ public class MainMenuScreen implements Screen{
 	
 	private void createSettingsButton (){
 		TextButton settings;
-		settings = new TextButton ("Настройки", MyGame.normalStyle);
+		settings = new TextButton ("Настройки", TextStyle.getInstance ().normalStyle);
 		settings.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -48,7 +48,7 @@ public class MainMenuScreen implements Screen{
 	
 	private void createExitButton (){
 		TextButton exit;
-		exit = new TextButton ("Выход", MyGame.normalStyle);
+		exit = new TextButton ("Выход", TextStyle.getInstance ().normalStyle);
 		exit.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -77,7 +77,6 @@ public class MainMenuScreen implements Screen{
 		widgetGroup = new WidgetGroup ();
 		stage = new Stage (new ScreenViewport ());
 		
-		MyGame.getInstance ().createStyle ();
 		createButton ();
 	}
 	

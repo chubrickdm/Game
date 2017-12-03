@@ -19,7 +19,7 @@ public class QuitGameScreen implements Screen{
 	
 	
 	private void createQuestionLabel (){
-		Label question = new Label ("Вы действительно хотите выйти?", MyGame.labelStyle);
+		Label question = new Label ("Вы действительно хотите выйти?", TextStyle.getInstance ().labelStyle);
 		question.setPosition (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_FONT_SIZE * 8,
 				Gdx.graphics.getHeight () / 2);
 		widgetGroup.addActor (question);
@@ -27,7 +27,7 @@ public class QuitGameScreen implements Screen{
 	
 	private void createReturnButton (){
 		TextButton returnn;
-		returnn = new TextButton ("Вернуться", MyGame.normalStyle);
+		returnn = new TextButton ("Вернуться", TextStyle.getInstance ().normalStyle);
 		returnn.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -42,7 +42,7 @@ public class QuitGameScreen implements Screen{
 	
 	private void createQuitButton (){
 		TextButton quit;
-		quit = new TextButton ("Выйти", MyGame.normalStyle);
+		quit = new TextButton ("Выйти", TextStyle.getInstance ().normalStyle);
 		quit.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){

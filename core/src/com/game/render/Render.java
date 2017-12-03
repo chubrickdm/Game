@@ -90,7 +90,6 @@ public class Render{
 		
 		sortedScene ();
 		
-		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.L)){
 			showLight = !showLight;
 		}
@@ -103,7 +102,6 @@ public class Render{
 			tmpS.draw (batch);
 		}
 		for (DataRender data : renderList){
-			
 			data.sprite.draw (batch);
 		}
 		batch.end ();

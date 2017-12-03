@@ -20,7 +20,7 @@ public class SettingsScreen implements Screen{
 	
 	private void createVideoButton (){
 		TextButton video;
-		video = new TextButton ("Видео", MyGame.normalStyle);
+		video = new TextButton ("Видео", TextStyle.getInstance ().normalStyle);
 		video.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -35,7 +35,7 @@ public class SettingsScreen implements Screen{
 	
 	private void createControlButton (){
 		TextButton control;
-		control = new TextButton ("Управление", MyGame.normalStyle);
+		control = new TextButton ("Управление", TextStyle.getInstance ().normalStyle);
 		control.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -50,7 +50,7 @@ public class SettingsScreen implements Screen{
 	
 	private void createSoundButton (){
 		TextButton sound;
-		sound = new TextButton ("Звук", MyGame.normalStyle);
+		sound = new TextButton ("Звук", TextStyle.getInstance ().normalStyle);
 		sound.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -65,7 +65,7 @@ public class SettingsScreen implements Screen{
 	
 	private void createBackButton (){
 		TextButton back;
-		back = new TextButton ("Назад", MyGame.normalStyle);
+		back = new TextButton ("Назад", TextStyle.getInstance ().normalStyle);
 		back.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){

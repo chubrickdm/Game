@@ -22,7 +22,7 @@ public class SelectedModeScreen implements Screen{
 	
 	private void createNewGameButton (){
 		TextButton newGame;
-		newGame = new TextButton ("Новая игра", MyGame.normalStyle);
+		newGame = new TextButton ("Новая игра", TextStyle.getInstance ().normalStyle);
 		newGame.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -36,9 +36,9 @@ public class SelectedModeScreen implements Screen{
 	
 	private void createContinueGameButton (){
 		TextButton continueGame;
-		continueGame = new TextButton ("Продолжить", MyGame.normalStyle);
+		continueGame = new TextButton ("Продолжить", TextStyle.getInstance ().normalStyle);
 		if (GameSystem.IS_FIRST_GAME_START){
-			continueGame.setStyle (MyGame.closedStyle);
+			continueGame.setStyle (TextStyle.getInstance ().closedStyle);
 		}
 		continueGame.addListener (new ClickListener (){
 			@Override
@@ -56,9 +56,9 @@ public class SelectedModeScreen implements Screen{
 	
 	private void createSelectedLVLButton (){
 		TextButton selectedLVL;
-		selectedLVL = new TextButton ("Уровни", MyGame.normalStyle);
+		selectedLVL = new TextButton ("Уровни", TextStyle.getInstance ().normalStyle);
 		if (GameSystem.IS_FIRST_GAME_START){
-			selectedLVL.setStyle (MyGame.closedStyle);
+			selectedLVL.setStyle (TextStyle.getInstance ().closedStyle);
 		}
 		selectedLVL.addListener (new ClickListener (){
 			@Override
@@ -75,7 +75,7 @@ public class SelectedModeScreen implements Screen{
 	
 	private void createBackButton (){
 		TextButton back;
-		back = new TextButton ("Назад", MyGame.normalStyle);
+		back = new TextButton ("Назад", TextStyle.getInstance ().normalStyle);
 		back.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
