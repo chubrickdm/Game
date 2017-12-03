@@ -19,32 +19,13 @@ import com.game.addition.Font;
 import com.game.mesh.objects.singletons.special.LevelManager;
 
 public class SelectedModeScreen implements Screen{
-	private TextButton.TextButtonStyle normalStyle;
-	private TextButton.TextButtonStyle closedStyle;
-	private WidgetGroup widgetGroup = new WidgetGroup ();
-	private Stage stage = new Stage (new ScreenViewport ());
+	private WidgetGroup widgetGroup;
+	private Stage stage;
 	
-	
-	private void createStyle (){
-		TextureAtlas buttonAtlas = new TextureAtlas ("core/assets/images/button/button.atlas");
-		Skin skin = new Skin ();
-		skin.addRegions (buttonAtlas);
-		
-		
-		normalStyle = new TextButton.TextButtonStyle ();
-		normalStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
-		normalStyle.up = skin.getDrawable ("button_up");
-		normalStyle.over = skin.getDrawable ("button_checked");
-		normalStyle.down = skin.getDrawable ("button_checked");
-		
-		closedStyle = new TextButton.TextButtonStyle ();
-		closedStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
-		closedStyle.up = skin.getDrawable ("button_closed");
-	}
 	
 	private void createNewGameButton (){
 		TextButton newGame;
-		newGame = new TextButton ("Новая игра", normalStyle);
+		newGame = new TextButton ("Новая игра", MyGame.normalStyle);
 		newGame.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -58,9 +39,9 @@ public class SelectedModeScreen implements Screen{
 	
 	private void createContinueGameButton (){
 		TextButton continueGame;
-		continueGame = new TextButton ("Продолжить", normalStyle);
+		continueGame = new TextButton ("Продолжить", MyGame.normalStyle);
 		if (GameSystem.IS_FIRST_GAME_START){
-			continueGame.setStyle (closedStyle);
+			continueGame.setStyle (MyGame.closedStyle);
 		}
 		continueGame.addListener (new ClickListener (){
 			@Override
@@ -78,9 +59,9 @@ public class SelectedModeScreen implements Screen{
 	
 	private void createSelectedLVLButton (){
 		TextButton selectedLVL;
-		selectedLVL = new TextButton ("Уровни", normalStyle);
+		selectedLVL = new TextButton ("Уровни", MyGame.normalStyle);
 		if (GameSystem.IS_FIRST_GAME_START){
-			selectedLVL.setStyle (closedStyle);
+			selectedLVL.setStyle (MyGame.closedStyle);
 		}
 		selectedLVL.addListener (new ClickListener (){
 			@Override
@@ -97,7 +78,7 @@ public class SelectedModeScreen implements Screen{
 	
 	private void createBackButton (){
 		TextButton back;
-		back = new TextButton ("Назад", normalStyle);
+		back = new TextButton ("Назад", MyGame.normalStyle);
 		back.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -109,8 +90,6 @@ public class SelectedModeScreen implements Screen{
 	}
 	
 	private void createButton (){
-		createStyle ();
-		
 		createNewGameButton ();
 		createContinueGameButton ();
 		createSelectedLVLButton ();
@@ -124,6 +103,9 @@ public class SelectedModeScreen implements Screen{
 	}
 	
 	private SelectedModeScreen (){
+		widgetGroup = new WidgetGroup ();
+		stage = new Stage (new ScreenViewport ());
+		
 		createButton ();
 	}
 	
@@ -134,6 +116,8 @@ public class SelectedModeScreen implements Screen{
 	
 	@Override
 	public void show (){
+		createButton ();
+		
 		// Устанавливаем нашу сцену основным процессором для ввода
 		Gdx.input.setInputProcessor (stage);
 	}

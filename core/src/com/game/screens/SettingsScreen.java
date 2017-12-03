@@ -17,27 +17,13 @@ import com.game.MyGame;
 import com.game.addition.Font;
 
 public class SettingsScreen implements Screen{
-	private TextButton.TextButtonStyle normalStyle;
 	private WidgetGroup widgetGroup;
 	private Stage stage;
 	
 	
-	private void createStyle (){
-		TextureAtlas buttonAtlas = new TextureAtlas ("core/assets/images/button/button.atlas");
-		Skin skin = new Skin ();
-		skin.addRegions (buttonAtlas);
-		
-		
-		normalStyle = new TextButton.TextButtonStyle ();
-		normalStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
-		normalStyle.up = skin.getDrawable ("button_up");
-		normalStyle.over = skin.getDrawable ("button_checked");
-		normalStyle.down = skin.getDrawable ("button_checked");
-	}
-	
 	private void createVideoButton (){
 		TextButton video;
-		video = new TextButton ("Видео", normalStyle);
+		video = new TextButton ("Видео", MyGame.normalStyle);
 		video.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -52,7 +38,7 @@ public class SettingsScreen implements Screen{
 	
 	private void createControlButton (){
 		TextButton control;
-		control = new TextButton ("Управление", normalStyle);
+		control = new TextButton ("Управление", MyGame.normalStyle);
 		control.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -67,7 +53,7 @@ public class SettingsScreen implements Screen{
 	
 	private void createSoundButton (){
 		TextButton sound;
-		sound = new TextButton ("Звук", normalStyle);
+		sound = new TextButton ("Звук", MyGame.normalStyle);
 		sound.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -82,7 +68,7 @@ public class SettingsScreen implements Screen{
 	
 	private void createBackButton (){
 		TextButton back;
-		back = new TextButton ("Назад", normalStyle);
+		back = new TextButton ("Назад", MyGame.normalStyle);
 		back.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -96,8 +82,6 @@ public class SettingsScreen implements Screen{
 	}
 	
 	private void createButton (){
-		createStyle ();
-		
 		createVideoButton ();
 		createControlButton ();
 		createSoundButton ();
@@ -114,6 +98,7 @@ public class SettingsScreen implements Screen{
 	private SettingsScreen (){
 		widgetGroup = new WidgetGroup ();
 		stage = new Stage (new ScreenViewport ());
+		
 		createButton ();
 	}
 	
@@ -125,7 +110,8 @@ public class SettingsScreen implements Screen{
 	
 	@Override
 	public void show (){
-		System.out.println ("Show.");
+		createButton ();
+		
 		// Устанавливаем нашу сцену основным процессором для ввода
 		Gdx.input.setInputProcessor (stage);
 	}

@@ -17,30 +17,12 @@ import com.game.MyGame;
 import com.game.addition.Font;
 
 public class QuitGameScreen implements Screen{
-	private Label.LabelStyle labelStyle;
-	private TextButton.TextButtonStyle normalStyle;
-	private WidgetGroup widgetGroup = new WidgetGroup ();
-	private Stage stage = new Stage (new ScreenViewport ());
+	private WidgetGroup widgetGroup;
+	private Stage stage;
 	
-	
-	private void createStyle (){
-		TextureAtlas buttonAtlas = new TextureAtlas ("core/assets/images/button/button.atlas");
-		Skin skin = new Skin ();
-		skin.addRegions (buttonAtlas);
-		
-		
-		normalStyle = new TextButton.TextButtonStyle ();
-		normalStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
-		normalStyle.up = skin.getDrawable ("button_up");
-		normalStyle.over = skin.getDrawable ("button_checked");
-		normalStyle.down = skin.getDrawable ("button_checked");
-		
-		labelStyle = new Label.LabelStyle ();
-		labelStyle.font = Font.generateFont ("core/assets/fonts/russoone.ttf", MyGame.BUTTON_FONT_SIZE, Color.WHITE);
-	}
 	
 	private void createQuestionLabel (){
-		Label question = new Label ("Вы действительно хотите выйти?", labelStyle);
+		Label question = new Label ("Вы действительно хотите выйти?", MyGame.labelStyle);
 		question.setPosition (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_FONT_SIZE * 8,
 				Gdx.graphics.getHeight () / 2);
 		widgetGroup.addActor (question);
@@ -48,7 +30,7 @@ public class QuitGameScreen implements Screen{
 	
 	private void createReturnButton (){
 		TextButton returnn;
-		returnn = new TextButton ("Вернуться", normalStyle);
+		returnn = new TextButton ("Вернуться", MyGame.normalStyle);
 		returnn.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -63,7 +45,7 @@ public class QuitGameScreen implements Screen{
 	
 	private void createQuitButton (){
 		TextButton quit;
-		quit = new TextButton ("Выйти", normalStyle);
+		quit = new TextButton ("Выйти", MyGame.normalStyle);
 		quit.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
@@ -77,8 +59,6 @@ public class QuitGameScreen implements Screen{
 	}
 	
 	private void createButton (){
-		createStyle ();
-		
 		createQuestionLabel ();
 		createReturnButton ();
 		createQuitButton ();
@@ -91,6 +71,9 @@ public class QuitGameScreen implements Screen{
 	}
 	
 	private QuitGameScreen (){
+		widgetGroup = new WidgetGroup ();
+		stage = new Stage (new ScreenViewport ());
+		
 		createButton ();
 	}
 	
@@ -101,6 +84,8 @@ public class QuitGameScreen implements Screen{
 	
 	@Override
 	public void show (){
+		createButton ();
+		
 		// Устанавливаем нашу сцену основным процессором для ввода
 		Gdx.input.setInputProcessor (stage);
 	}
