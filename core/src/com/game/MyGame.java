@@ -30,6 +30,6 @@ public class MyGame extends Game{
 	@Override
 	public void create (){
 		ParseSettings.parseSettings ();
-		setScreen (new MainMenuScreen ());
+		setScreen (MainMenuScreen.getInstance ());
 	}
 }

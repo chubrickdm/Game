@@ -12,13 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
 import com.game.MyGame;
 import com.game.addition.Font;
 
 public class MainMenuScreen implements Screen{
 	private TextButton.TextButtonStyle normalStyle;
-	private WidgetGroup widgetGroup = new WidgetGroup ();
-	private Stage stage = new Stage (new ScreenViewport ());
+	private WidgetGroup widgetGroup;
+	private Stage stage;
 	
 	
 	private void createStyle (){
@@ -40,7 +41,7 @@ public class MainMenuScreen implements Screen{
 		play.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (new SelectedModeScreen ());
+				MyGame.getInstance ().setScreen (SelectedModeScreen.getInstance ());
 			}
 		});
 		play.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
@@ -55,7 +56,8 @@ public class MainMenuScreen implements Screen{
 		settings.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (new SettingsScreen ());
+				System.out.println ("Touch settings button.");
+				MyGame.getInstance ().setScreen (SettingsScreen.getInstance ());
 			}
 		});
 		settings.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
@@ -69,7 +71,7 @@ public class MainMenuScreen implements Screen{
 		exit.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (new QuitGameScreen ());
+				MyGame.getInstance ().setScreen (QuitGameScreen.getInstance ());
 			}
 		});
 		exit.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
@@ -88,11 +90,25 @@ public class MainMenuScreen implements Screen{
 		stage.addActor (widgetGroup);
 	}
 	
+	private static class MainMenuScreenHolder{
+		private final static MainMenuScreen instance = new MainMenuScreen ();
+	}
+	
+	private MainMenuScreen (){
+		widgetGroup = new WidgetGroup ();
+		stage = new Stage (new ScreenViewport ());
+		
+		createButton ();
+	}
+	
+	
+	public static MainMenuScreen getInstance (){
+		return MainMenuScreenHolder.instance;
+	}
 	
 	@Override
 	public void show (){
-		createButton ();
-		
+		System.out.println ("Show in MainMenu.");
 		// Устанавливаем нашу сцену основным процессором для ввода
 		Gdx.input.setInputProcessor (stage);
 	}
@@ -119,7 +135,5 @@ public class MainMenuScreen implements Screen{
 	public void hide (){ }
 	
 	@Override
-	public void dispose (){
-		stage.dispose ();
-	}
+	public void dispose (){ }
 }

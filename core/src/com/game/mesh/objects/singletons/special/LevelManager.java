@@ -36,12 +36,12 @@ public class LevelManager extends GameObject{
 		}
 		ParseSettings.writeSettings ();
 		
-		MyGame.getInstance ().setScreen (new SelectedModeScreen ());
+		MyGame.getInstance ().setScreen (SelectedModeScreen.getInstance ());
 	}
 	
 	private void closeLevel (){
 		ObjectManager.getInstance ().clear ();
-		MyGame.getInstance ().setScreen (new SelectedModeScreen ());
+		MyGame.getInstance ().setScreen (SelectedModeScreen.getInstance ());
 	}
 	
 	private static class LevelManagerHolder{

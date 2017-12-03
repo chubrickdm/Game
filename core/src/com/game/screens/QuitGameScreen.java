@@ -52,7 +52,7 @@ public class QuitGameScreen implements Screen{
 		returnn.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (new MainMenuScreen ());
+				MyGame.getInstance ().setScreen (MainMenuScreen.getInstance ());
 			}
 		});
 		returnn.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
@@ -86,11 +86,21 @@ public class QuitGameScreen implements Screen{
 		stage.addActor (widgetGroup);
 	}
 	
+	private static class QuitGameScreenHolder{
+		private final static QuitGameScreen instance = new QuitGameScreen ();
+	}
+	
+	private QuitGameScreen (){
+		createButton ();
+	}
+	
+	
+	public static QuitGameScreen getInstance (){
+		return QuitGameScreenHolder.instance;
+	}
 	
 	@Override
 	public void show (){
-		createButton ();
-		
 		// Устанавливаем нашу сцену основным процессором для ввода
 		Gdx.input.setInputProcessor (stage);
 	}
@@ -117,7 +127,5 @@ public class QuitGameScreen implements Screen{
 	public void hide (){ }
 	
 	@Override
-	public void dispose (){
-		stage.dispose ();
-	}
+	public void dispose (){ }
 }

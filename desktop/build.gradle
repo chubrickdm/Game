@@ -29,7 +29,7 @@ task dist(type: Jar) {
     from files(sourceSets.main.output.classesDir)
     from files(sourceSets.main.output.resourcesDir)
     from {configurations.compile.collect {zipTree(it)}}
-    from files(project.assetsDir);
+    //from files(project.assetsDir); //из-за этого не создаются папки, которые в папке core/assets
 
     manifest {
         attributes 'Main-Class': project.mainClassName

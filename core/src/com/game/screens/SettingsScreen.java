@@ -18,8 +18,8 @@ import com.game.addition.Font;
 
 public class SettingsScreen implements Screen{
 	private TextButton.TextButtonStyle normalStyle;
-	private WidgetGroup widgetGroup = new WidgetGroup ();
-	private Stage stage = new Stage (new ScreenViewport ());
+	private WidgetGroup widgetGroup;
+	private Stage stage;
 	
 	
 	private void createStyle (){
@@ -86,7 +86,7 @@ public class SettingsScreen implements Screen{
 		back.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (new MainMenuScreen ());
+				MyGame.getInstance ().setScreen (MainMenuScreen.getInstance ());
 			}
 		});
 		back.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
@@ -107,10 +107,25 @@ public class SettingsScreen implements Screen{
 	}
 	
 	
+	private static class SettingsScreenHolder{
+		private final static SettingsScreen instance = new SettingsScreen ();
+	}
+	
+	private SettingsScreen (){
+		widgetGroup = new WidgetGroup ();
+		stage = new Stage (new ScreenViewport ());
+		createButton ();
+	}
+	
+	
+	public static SettingsScreen getInstance (){
+		return SettingsScreenHolder.instance;
+	}
+	
+	
 	@Override
 	public void show (){
-		createButton ();
-		
+		System.out.println ("Show.");
 		// Устанавливаем нашу сцену основным процессором для ввода
 		Gdx.input.setInputProcessor (stage);
 	}
@@ -121,7 +136,7 @@ public class SettingsScreen implements Screen{
 		Gdx.gl.glClear (GL20.GL_COLOR_BUFFER_BIT);
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
-			MyGame.getInstance ().setScreen (new MainMenuScreen ());
+			MyGame.getInstance ().setScreen (MainMenuScreen.getInstance ());
 		}
 		
 		stage.act (delta);
@@ -141,7 +156,5 @@ public class SettingsScreen implements Screen{
 	public void hide (){ }
 	
 	@Override
-	public void dispose (){
-		stage.dispose ();
-	}
+	public void dispose (){ }
 }

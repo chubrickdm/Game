@@ -3,11 +3,16 @@ package com.game.render;
 import box2dLight.RayHandler;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.game.GameSystem;
 import com.game.MyGame;
 import com.game.addition.parsers.ParseLevel;
@@ -15,16 +20,39 @@ import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.singletons.Camera;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Render{
+	private boolean showLight = false;
 	private SpriteBatch batch;
-	private ArrayList <DataRender> renderList;
-	////////////////////////
-	private ShapeRenderer shapes;
-	//////////////////////
+	private ArrayList <Sprite> floors;
+	private LinkedList <DataRender> renderList;
 	
 	public RayHandler handler;
 	
+	
+	private void createFloor (){
+		floors = new ArrayList <> ();
+		Texture texture = new Texture ("core/assets/images/other/floor.png");
+		int numRegions = 4;
+		TextureRegion[] regions = new TextureRegion[numRegions];
+		int w = texture.getWidth () / numRegions;
+		int h = texture.getHeight ();
+		
+		for (int i = 0; i < numRegions; i++){
+			regions[i] = new TextureRegion (texture, i * w, 0, w, h);
+		}
+		
+		Sprite sprite;
+		for (int i = 0; i < 19; i++){
+			for (int j = 0; j < 50; j++){
+				sprite = new Sprite (regions[MathUtils.random (0, regions.length - 1)]);
+				sprite.setBounds (i * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL,
+						j * GameObject.UNIT * GameObject.ANGLE, GameObject.UNIT, GameObject.UNIT * GameObject.ANGLE);
+				floors.add (sprite);
+			}
+		}
+	}
 	
 	private void sortedScene (){
 		renderList.sort ((tmp1, tmp2) -> {
@@ -44,15 +72,11 @@ public class Render{
 	}
 	
 	private Render (){
-		/////////////////////////////////////////////////
-		shapes = new ShapeRenderer ();
-		shapes.setColor (Color.GRAY);
-		////////////////////////////////////////////////
-		
 		batch = new SpriteBatch ();
-		renderList = new ArrayList <DataRender> ();
+		renderList = new LinkedList <> ();
 		
 		handler = new RayHandler (MyGame.getInstance ().world);
+		createFloor ();
 	}
 	
 	
@@ -66,29 +90,28 @@ public class Render{
 		
 		sortedScene ();
 		
+		
+		if (Gdx.input.isKeyJustPressed (Input.Keys.L)){
+			showLight = !showLight;
+		}
+		
 		Camera.getInstance ().update ();
 		batch.setProjectionMatrix (Camera.getInstance ().getProjectionMatrix ());
 		
 		batch.begin ();
+		for (Sprite tmpS : floors){
+			tmpS.draw (batch);
+		}
 		for (DataRender data : renderList){
+			
 			data.sprite.draw (batch);
 		}
 		batch.end ();
 		
-		////////////////////////////////////////////////////////////////////////////
-		shapes.setProjectionMatrix (Camera.getInstance ().getProjectionMatrix ());
-		shapes.begin (ShapeRenderer.ShapeType.Line);
-		for (int i = 0; i < 19; i++){
-			//shapes.line (i * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, 0, i * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, 2000);
+		if (showLight){
+			handler.setCombinedMatrix (Camera.getInstance ().getCamera ());
+			handler.updateAndRender ();
 		}
-		for (int i = 0; i < 40; i++){
-			//shapes.line (GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, i * GameObject.UNIT * GameObject.ANGLE, 19 * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL, i * GameObject.UNIT * GameObject.ANGLE);
-		}
-		shapes.end ();
-		///////////////////////////////////////////////////////////////////////////
-		
-		//handler.setCombinedMatrix (Camera.getInstance ().getCamera ());
-		//handler.updateAndRender ();
 		
 		renderList.clear ();
 	}

@@ -49,7 +49,7 @@ public class SelectedModeScreen implements Screen{
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
 				LevelManager.getInstance ().newGame ();
-				MyGame.getInstance ().setScreen (new PlayScreen ());
+				MyGame.getInstance ().setScreen (PlayScreen.getInstance ());
 			}
 		});
 		newGame.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2, Gdx.graphics.getHeight () / 2 + 2 * MyGame.BUTTON_H + 2 * MyGame.DISTANCE_BETWEEN_BUTTONS, MyGame.BUTTON_W, MyGame.BUTTON_H);
@@ -66,7 +66,7 @@ public class SelectedModeScreen implements Screen{
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
 				if (!GameSystem.IS_FIRST_GAME_START){
-					MyGame.getInstance ().setScreen (new PlayScreen ());
+					MyGame.getInstance ().setScreen (PlayScreen.getInstance ());
 				}
 			}
 		});
@@ -101,7 +101,7 @@ public class SelectedModeScreen implements Screen{
 		back.addListener (new ClickListener (){
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				MyGame.getInstance ().setScreen (new MainMenuScreen ());
+				MyGame.getInstance ().setScreen (MainMenuScreen.getInstance ());
 			}
 		});
 		back.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2, Gdx.graphics.getHeight () / 2 - MyGame.BUTTON_H - MyGame.DISTANCE_BETWEEN_BUTTONS, MyGame.BUTTON_W, MyGame.BUTTON_H);
@@ -119,11 +119,21 @@ public class SelectedModeScreen implements Screen{
 		stage.addActor (widgetGroup);
 	}
 	
+	private static class SelectedModeScreenHolder{
+		private final static SelectedModeScreen instance = new SelectedModeScreen ();
+	}
+	
+	private SelectedModeScreen (){
+		createButton ();
+	}
+	
+	
+	public static SelectedModeScreen getInstance (){
+		return SelectedModeScreenHolder.instance;
+	}
 	
 	@Override
 	public void show (){
-		createButton ();
-		
 		// Устанавливаем нашу сцену основным процессором для ввода
 		Gdx.input.setInputProcessor (stage);
 	}
@@ -134,7 +144,7 @@ public class SelectedModeScreen implements Screen{
 		Gdx.gl.glClear (GL20.GL_COLOR_BUFFER_BIT);
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.ESCAPE)){
-			MyGame.getInstance ().setScreen (new MainMenuScreen ());
+			MyGame.getInstance ().setScreen (MainMenuScreen.getInstance ());
 		}
 		
 		stage.act (delta);
