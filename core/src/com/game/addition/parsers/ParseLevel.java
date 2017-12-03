@@ -6,6 +6,7 @@ import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.singletons.special.LevelManager;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 
+import com.game.messages.AddObjectMessage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -54,33 +55,33 @@ public abstract class ParseLevel extends ParseBasis{
 		switch (currObjectGroup){
 		case "wall":
 			Wall wall = new Wall (x, y);
-			ObjectManager.getInstance ().addObject (wall);
+			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (wall));
 			LevelManager.getInstance ().level.addWall (x, y);
 			break;
 		case "characters":
 			Character character = new Character (x, y);
-			ObjectManager.getInstance ().addObject (character);
+			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (character));
 			break;
 		case "invisibleWall":
 			InvisibleWall invisibleWall = new InvisibleWall (x, y, w, h);
-			ObjectManager.getInstance ().addObject (invisibleWall);
+			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (invisibleWall));
 			LevelManager.getInstance ().level.addInvisibleWall (x, y, w, h);
 			break;
 		case "finishLevel":
 			FinishLevel finish = new FinishLevel (x, y, w, h);
-			ObjectManager.getInstance ().addObject (finish);
+			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (finish));
 			break;
 		case "box":
 			Box box = new Box (x, y);
-			ObjectManager.getInstance ().addObject (box);
+			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (box));
 			break;
 		case "hole":
 			Hole hole = new Hole (x, y);
-			ObjectManager.getInstance ().addObject (hole);
+			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (hole));
 			break;
 		case "mushrooms":
 			Mushrooms mushrooms = new Mushrooms (x, y);
-			ObjectManager.getInstance ().addObject (mushrooms);
+			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (mushrooms));
 			break;
 		}
 	}

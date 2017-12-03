@@ -12,6 +12,7 @@ import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.Inventory;
 import com.game.mesh.objects.character.CharacterName;
 import com.game.mesh.objects.singletons.Camera;
+import com.game.messages.AddObjectMessage;
 import com.game.messages.GameMessage;
 import com.game.messages.GetStartPositionMessage;
 import com.game.messages.MessageType;
@@ -68,11 +69,11 @@ public class LevelManager extends GameObject{
 		level = new ConcreteGraph ();
 		ParseLevel.parseLVL (GameSystem.CURRENT_LEVEL);
 		
-		ObjectManager.getInstance ().addObject (new Inventory (CharacterName.first));
-		ObjectManager.getInstance ().addObject (new Inventory (CharacterName.second));
-		ObjectManager.getInstance ().addObject (Camera.getInstance ());
-		ObjectManager.getInstance ().addObject (Chain.getInstance ());
-		ObjectManager.getInstance ().addObject (this);
+		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (new Inventory (CharacterName.first)));
+		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (new Inventory (CharacterName.second)));
+		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (Camera.getInstance ()));
+		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (Chain.getInstance ()));
+		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (this));
 		
 		if (GameSystem.IS_FIRST_GAME_START){
 			GameSystem.IS_FIRST_GAME_START = false;

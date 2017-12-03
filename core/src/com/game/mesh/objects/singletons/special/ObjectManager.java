@@ -8,31 +8,15 @@ import com.game.render.Render;
 import java.util.LinkedList;
 
 public class ObjectManager extends GameObject{
-	private LinkedList <GameMessage> messagesForManager;
 	private LinkedList <GameMessage> messages;
 	private LinkedList <GameObject> objects;
 	
-	
-	private void parseMessagesForManager (){
-		//здесь обрабатываться сообщения для менеджера. Пришлось делать это т.к. если удалять объект из списка во время
-		//работы с ним, будет ошибка и экстренное закрытие программы.
-		while (!messagesForManager.isEmpty ()){
-			GameMessage msg = messagesForManager.remove ();
-			if (msg.type == MessageType.deleteObject){
-				objects.remove (msg.object);
-			}
-			else if (msg.type == MessageType.addObject){
-				objects.add (msg.object);
-			}
-		}
-	}
 	
 	private static class ObjectManagerHolder{
 		private final static ObjectManager instance = new ObjectManager ();
 	}
 	
 	private ObjectManager (){
-		messagesForManager = new LinkedList <GameMessage> ();
 		messages = new LinkedList <GameMessage> ();
 		objects = new LinkedList <GameObject> ();
 	}
@@ -44,22 +28,28 @@ public class ObjectManager extends GameObject{
 	
 	@Override
 	public void update (){
-		parseMessagesForManager ();
-		
-		for (GameObject obj : objects){
-			obj.update ();
+		//проверка на пустоту обязательно, т.к. может быть ситуация когда обновляется LevelManager и игрок нажимает на
+		//на Escape и происходит очищение всех объектов в object, а i = object.size (), до удаления.
+		for (int i = objects.size () - 1; i > -1 && !objects.isEmpty (); i--){
+			objects.get (i).update ();
 		}
 		while (!messages.isEmpty ()){
 			GameMessage msg = messages.remove ();
-			for (GameObject obj : objects){
-				obj.sendMessage (msg);
+			
+			for (int i = objects.size () - 1; i > -1 && !objects.isEmpty (); i--){
+				objects.get (i).sendMessage (msg);
 			}
 		}
 	}
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		messagesForManager.add (message);
+		if (message.type == MessageType.deleteObject){
+			objects.remove (message.object);
+		}
+		else if (message.type == MessageType.addObject){
+			objects.add (message.object);
+		}
 	}
 	
 	@Override
@@ -77,16 +67,11 @@ public class ObjectManager extends GameObject{
 		for (GameObject obj : objects){
 			obj.clear ();
 		}
-		messagesForManager.clear ();
 		messages.clear ();
 		objects.clear ();
 	}
 	
 	public void addMessage (GameMessage msg){
 		messages.add (msg);
-	}
-	
-	public void addObject (GameObject obj){
-		objects.add (obj);
 	}
 }
