@@ -130,11 +130,11 @@ public class Box extends GameObject{
 		triggeredZone.setOrigin (TRIGGERED_ZONE_W / 2, TRIGGERED_ZONE_H / 2);
 		body.setTriggeredZone (triggeredZone);
 		
-		Texture texture = new Texture ("core/assets/images/other/box_2_triggered.png");
+		Texture texture = new Texture ("core/assets/images/other/box_3_triggered.png");
 		triggeredBoxSprite = new Sprite (texture);
 		triggeredBoxSprite.setSize (BOX_W, BOX_H);
 		
-		fall = new ObjectAnimation ("core/assets/images/other/box_2_fall.png", false, BOX_W, BOX_H,
+		fall = new ObjectAnimation ("core/assets/images/other/box_3_fall.png", false, BOX_W, BOX_H,
 				1, 5, 0.3f);
 		currSprite = fall.getFirstFrame ();
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());

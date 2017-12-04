@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.game.GameSystem;
 import com.game.MyGame;
 import com.game.addition.parsers.ParseLevel;
+import com.game.mesh.Floor;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.singletons.Camera;
 
@@ -24,35 +25,12 @@ import java.util.LinkedList;
 
 public class Render{
 	private boolean showLight = false;
+	private Floor floor;
 	private SpriteBatch batch;
-	private ArrayList <Sprite> floors;
 	private LinkedList <DataRender> renderList;
 	
 	public RayHandler handler;
 	
-	
-	private void createFloor (){
-		floors = new ArrayList <> ();
-		Texture texture = new Texture ("core/assets/images/other/floor.png");
-		int numRegions = 4;
-		TextureRegion[] regions = new TextureRegion[numRegions];
-		int w = texture.getWidth () / numRegions;
-		int h = texture.getHeight ();
-		
-		for (int i = 0; i < numRegions; i++){
-			regions[i] = new TextureRegion (texture, i * w, 0, w, h);
-		}
-		
-		Sprite sprite;
-		for (int i = 0; i < 19; i++){
-			for (int j = 0; j < 50; j++){
-				sprite = new Sprite (regions[MathUtils.random (0, regions.length - 1)]);
-				sprite.setBounds (i * GameObject.UNIT + GameSystem.INDENT_BETWEEN_SCREEN_LEVEL,
-						j * GameObject.UNIT * GameObject.ANGLE, GameObject.UNIT, GameObject.UNIT * GameObject.ANGLE);
-				floors.add (sprite);
-			}
-		}
-	}
 	
 	private void sortedScene (){
 		renderList.sort ((tmp1, tmp2) -> {
@@ -72,11 +50,11 @@ public class Render{
 	}
 	
 	private Render (){
+		floor = new Floor ();
 		batch = new SpriteBatch ();
 		renderList = new LinkedList <> ();
 		
 		handler = new RayHandler (MyGame.getInstance ().world);
-		createFloor ();
 	}
 	
 	
@@ -98,9 +76,7 @@ public class Render{
 		batch.setProjectionMatrix (Camera.getInstance ().getProjectionMatrix ());
 		
 		batch.begin ();
-		for (Sprite tmpS : floors){
-			tmpS.draw (batch);
-		}
+		floor.draw (batch);
 		for (DataRender data : renderList){
 			data.sprite.draw (batch);
 		}

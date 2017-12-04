@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+
 import com.game.MyGame;
 
 public class TextStyle{
-	public TextButton.TextButtonStyle normalStyle;
 	public Label.LabelStyle labelStyle;
+	public TextButton.TextButtonStyle normalStyle;
 	public TextButton.TextButtonStyle closedStyle;
 	
 	

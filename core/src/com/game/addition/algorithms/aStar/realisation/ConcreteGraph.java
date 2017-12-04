@@ -3,6 +3,7 @@ package com.game.addition.algorithms.aStar.realisation;
 import com.game.GameSystem;
 import com.game.addition.algorithms.aStar.Graph;
 import com.game.mesh.objects.GameObject;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -10,6 +11,10 @@ import java.util.LinkedList;
 public class ConcreteGraph implements Graph <ConcreteNode>{
 	private LinkedList <LinkedList <ConcreteNode>> map;
 	
+	
+	public Pair <Integer, Integer> getSize (){
+		return new Pair <Integer, Integer> (map.size (), map.get (0).size ());
+	}
 	
 	public void setSize (int x, int y){
 		map = new LinkedList <> ();
@@ -33,7 +38,7 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 	}
 	
 	public void addInvisibleWall (float x, float y, float w, float h){
-		for (int  i = 0; i <= w / GameObject.UNIT; i++){
+		for (int i = 0; i <= w / GameObject.UNIT; i++){
 			for (int j = 0; j < h / (GameObject.UNIT * GameObject.ANGLE); j++){
 				addWall (x + i * GameObject.UNIT, y + j * (GameObject.UNIT * GameObject.ANGLE));
 			}
