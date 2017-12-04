@@ -16,9 +16,13 @@ public class FinishLevel extends GameObject{
 	private static FinishLevel secondDetected = null; //ссылка на финиш, на который стал второй персонаж
 	
 	
-	public FinishLevel (float x, float y, float w, float h){
+	public FinishLevel (){
 		objectType = ObjectType.finishLevel;
-		body = new NoSpriteObject (x, y, w, h);
+		body = new NoSpriteObject (0, 0, 1, 1);
+	}
+	
+	public void setBodyBounds (float x, float y, float w, float h){
+		body.setBodyBounds (x, y, w, h);
 	}
 	
 	@Override

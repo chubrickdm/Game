@@ -64,6 +64,7 @@ public class ObjectAnimation{
 	
 	public Sprite getFirstFrame (){
 		time = 0;
+		animation.setPlayMode (Animation.PlayMode.NORMAL);
 		Sprite currSprite = new Sprite (animation.getKeyFrame (0, looping));
 		currSprite.setBounds (0, 0, frameW, frameH);
 		return currSprite;

@@ -30,7 +30,7 @@ public class Mushrooms extends GameObject{
 	
 	public Mushrooms (){
 		objectType = ObjectType.mushrooms;
-		body = new AnimatedObject (0, 0, MUSH_W, MUSH_H, BODY_MUSH_W, BODY_MUSH_H);
+		body = new AnimatedObject (0, 0, MUSH_W, MUSH_H, BODY_MUSH_W, BODY_MUSH_H, true);
 		
 		light = new PointLight (Render.getInstance ().handler,100, Color.OLIVE, (int) (100 * ASPECT_RATIO),
 				MUSH_W / 2, MUSH_H / 2);
@@ -45,8 +45,6 @@ public class Mushrooms extends GameObject{
 		body.setSpritePosition (x, y);
 		light.setPosition (x + MUSH_W / 2, y + MUSH_H / 2);
 		light.setActive (true);
-		hide.resetTime ();
-		currSprite = hide.getFirstFrame ();
 	}
 	
 	@Override
@@ -94,10 +92,10 @@ public class Mushrooms extends GameObject{
 	@Override
 	public void clear (){
 		isHide = false;
-		light.setActive (false);
 		gasWasCreated = false;
-		hide.resetTime ();
 		toxicGas = null;
+		currSprite = hide.getFirstFrame ();
+		light.setActive (false);
 		Pools.free (this);
 	}
 }

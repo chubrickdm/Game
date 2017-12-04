@@ -8,9 +8,13 @@ import com.game.messages.MoveMessage;
 import com.game.messages.PushOutMessage;
 
 public class InvisibleWall extends GameObject{
-	public InvisibleWall (float x, float y, float w, float h){
+	public InvisibleWall (){
 		objectType = ObjectType.invisibleWall;
-		body = new NoSpriteObject (x, y, w, h);
+		body = new NoSpriteObject (0, 0, 1, 1);
+	}
+	
+	public void setBodyBounds (float x, float y, float w, float h){
+		body.setBodyBounds (x, y, w, h);
 	}
 	
 	@Override

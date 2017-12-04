@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Render{
-	private boolean showLight = false;
+	private boolean showLight = true;
 	private Floor floor;
 	private SpriteBatch batch;
 	private LinkedList <DataRender> renderList;

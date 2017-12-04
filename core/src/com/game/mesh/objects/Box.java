@@ -31,6 +31,7 @@ public class Box extends GameObject{
 	private Sprite triggeredBoxSprite;
 	private ObjectAnimation fall;
 	
+	
 	private void checkTriggeredZone (GameMessage message){
 		MoveMessage msg = (MoveMessage) message;
 		if (!isFall){ //если этого условия не будет, то когда ящик падает и персонаж двигается возле триггеред зоны
@@ -200,7 +201,9 @@ public class Box extends GameObject{
 	
 	@Override
 	public void clear (){
-		Pools.free (this);
+		isFall = false;
 		triggeredBox = null;
+		currSprite = fall.getFirstFrame ();
+		Pools.free (this);
 	}
 }

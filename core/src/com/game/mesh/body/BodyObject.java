@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.game.addition.math.BodyRectangle;
 
 public class BodyObject extends Body{
-	private float bodyShiftX = 0;
-	private float bodyShiftY = 0;
+	private float bodyShiftX;
+	private float bodyShiftY;
 	
 	
 	public BodyObject (String fileName, float x, float y, float w, float h, float bodyW, float bodyH){

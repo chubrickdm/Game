@@ -1,6 +1,7 @@
 package com.game.mesh.body;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import com.game.addition.math.BodyRectangle;
 import com.game.mesh.TriggeredZone;
 
@@ -11,6 +12,11 @@ public abstract class Body{
 	
 	
 	public void setBodyPosition (float x, float y){ }
+	
+	public void setBodyBounds (float x, float y, float w, float h){
+		body.setPosition (x, y);
+		body.setSize (w, h);
+	}
 	
 	public void move (float deltaX, float deltaY){
 		sprite.setPosition (sprite.getX () + deltaX, sprite.getY () + deltaY);

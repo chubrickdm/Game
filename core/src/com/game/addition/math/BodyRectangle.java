@@ -14,6 +14,11 @@ public class BodyRectangle{
 		this.h = h;
 	}
 	
+	public void setSize (float w, float h){
+		this.w = w;
+		this.h = h;
+	}
+	
 	public void setPosition (float x, float y){
 		this.x = x;
 		this.y = y;

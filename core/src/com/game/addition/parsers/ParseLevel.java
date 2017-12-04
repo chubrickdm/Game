@@ -1,14 +1,14 @@
 package com.game.addition.parsers;
 
-import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
+
 import com.game.GameSystem;
 import com.game.mesh.objects.*;
 import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.singletons.special.LevelManager;
 import com.game.mesh.objects.singletons.special.ObjectManager;
-
 import com.game.messages.AddObjectMessage;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -66,12 +66,14 @@ public abstract class ParseLevel extends ParseBasis{
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (character));
 			break;
 		case "invisibleWall":
-			InvisibleWall invisibleWall = new InvisibleWall (x, y, w, h);
+			InvisibleWall invisibleWall = Pools.obtain (InvisibleWall.class);
+			invisibleWall.setBodyBounds (x, y, w, h);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (invisibleWall));
 			LevelManager.getInstance ().level.addInvisibleWall (x, y, w, h);
 			break;
 		case "finishLevel":
-			FinishLevel finish = new FinishLevel (x, y, w, h);
+			FinishLevel finish = Pools.obtain (FinishLevel.class);
+			finish.setBodyBounds (x, y, w, h);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (finish));
 			break;
 		case "box":

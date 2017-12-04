@@ -46,6 +46,18 @@ public class ObjectManager extends GameObject{
 				return new Hole ();
 			}
 		});
+		Pools.set (FinishLevel.class, new Pool <FinishLevel> (15, 30){
+			@Override
+			protected FinishLevel newObject (){
+				return new FinishLevel ();
+			}
+		});
+		Pools.set (InvisibleWall.class, new Pool <InvisibleWall> (15, 30){
+			@Override
+			protected InvisibleWall newObject (){
+				return new InvisibleWall ();
+			}
+		});
 	}
 	
 	
