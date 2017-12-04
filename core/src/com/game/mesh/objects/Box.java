@@ -3,6 +3,7 @@ package com.game.mesh.objects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import com.badlogic.gdx.utils.Pools;
 import com.game.mesh.TriggeredZone;
 import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.body.AnimatedObject;
@@ -108,6 +109,7 @@ public class Box extends GameObject{
 		if (fall.isAnimationFinished ()){
 			triggeredBox = null;
 			ObjectManager.getInstance ().sendMessage (new DeleteObjectMessage (this));
+			clear ();
 		}
 		else{
 			currSprite = fall.getCurrSprite ();
@@ -120,13 +122,12 @@ public class Box extends GameObject{
 	}
 	
 	
-	public Box (float x, float y){
+	public Box (){
 		objectType = ObjectType.box;
-		body = new AnimatedObject (x, y, BOX_W, BOX_H, BODY_BOX_W, BODY_BOX_H);
+		body = new AnimatedObject (0, 0, BOX_W, BOX_H, BODY_BOX_W, BODY_BOX_H);
 		body.move (0, 0.5f);
 		
-		TriggeredZone triggeredZone;
-		triggeredZone = new TriggeredZone (x, y, TRIGGERED_ZONE_W, TRIGGERED_ZONE_H);
+		TriggeredZone triggeredZone = new TriggeredZone (0, 0, TRIGGERED_ZONE_W, TRIGGERED_ZONE_H);
 		triggeredZone.setOrigin (TRIGGERED_ZONE_W / 2, TRIGGERED_ZONE_H / 2);
 		body.setTriggeredZone (triggeredZone);
 		
@@ -140,6 +141,10 @@ public class Box extends GameObject{
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
 		
 		dataRender = new DataRender (currSprite, LayerType.normal);
+	}
+	
+	public void setSpritePosition (float x, float y){
+		body.setSpritePosition (x, y);
 	}
 	
 	@Override
@@ -195,6 +200,7 @@ public class Box extends GameObject{
 	
 	@Override
 	public void clear (){
+		Pools.free (this);
 		triggeredBox = null;
 	}
 }

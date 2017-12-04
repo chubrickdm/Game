@@ -1,5 +1,7 @@
 package com.game.addition.parsers;
 
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 import com.game.GameSystem;
 import com.game.mesh.objects.*;
 import com.game.mesh.objects.character.Character;
@@ -54,7 +56,8 @@ public abstract class ParseLevel extends ParseBasis{
 	private static void createObject (String currObjectGroup){
 		switch (currObjectGroup){
 		case "wall":
-			Wall wall = new Wall (x, y);
+			Wall wall = Pools.obtain (Wall.class);
+			wall.setSpritePosition (x, y);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (wall));
 			LevelManager.getInstance ().level.addWall (x, y);
 			break;
@@ -72,15 +75,18 @@ public abstract class ParseLevel extends ParseBasis{
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (finish));
 			break;
 		case "box":
-			Box box = new Box (x, y);
+			Box box = Pools.obtain (Box.class);
+			box.setSpritePosition (x, y);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (box));
 			break;
 		case "hole":
-			Hole hole = new Hole (x, y);
+			Hole hole = Pools.obtain (Hole.class);
+			hole.setSpritePosition (x, y);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (hole));
 			break;
 		case "mushrooms":
-			Mushrooms mushrooms = new Mushrooms (x, y);
+			Mushrooms mushrooms = Pools.obtain (Mushrooms.class);
+			mushrooms.setSpritePosition (x, y);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (mushrooms));
 			break;
 		}

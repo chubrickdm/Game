@@ -67,6 +67,7 @@ public abstract class Body{
 	
 	public void setSpritePosition (float x, float y){
 		sprite.setPosition (x, y);
+		body.setPosition (x, y);
 	}
 	
 	public void setTriggeredZone (TriggeredZone zone){

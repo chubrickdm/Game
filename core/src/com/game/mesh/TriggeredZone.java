@@ -3,8 +3,8 @@ package com.game.mesh;
 import com.game.addition.math.BodyRectangle;
 
 public class TriggeredZone{
-	private float originY = 0;
-	private float originX = 0;
+	private float originY;
+	private float originX;
 	private BodyRectangle zone;
 	
 	

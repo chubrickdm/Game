@@ -1,5 +1,6 @@
 package com.game.mesh.objects;
 
+import com.badlogic.gdx.utils.Pools;
 import com.game.mesh.body.BodyObject;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.DestroyObjectMessage;
@@ -17,11 +18,15 @@ public class Hole extends GameObject{
 	private static final float HOLE_H = UNIT * ANGLE * 2;
 	
 	
-	public Hole (float x, float y){
+	public Hole (){
 		objectType = ObjectType.hole;
-		body = new BodyObject ("core/assets/images/other/hole.png", true, x, y, HOLE_W, HOLE_H, BODY_HOLE_W,
+		body = new BodyObject ("core/assets/images/other/hole.png", true, 0, 0, HOLE_W, HOLE_H, BODY_HOLE_W,
 				BODY_HOLE_H);
 		dataRender = new DataRender (body.getSprite (), LayerType.below);
+	}
+	
+	public void setSpritePosition (float x, float y){
+		body.setSpritePosition (x, y);
 	}
 	
 	@Override
@@ -37,5 +42,10 @@ public class Hole extends GameObject{
 	@Override
 	public void draw (){
 		Render.getInstance ().addDataForRender (dataRender);
+	}
+	
+	@Override
+	public void clear (){
+		Pools.free (this);
 	}
 }

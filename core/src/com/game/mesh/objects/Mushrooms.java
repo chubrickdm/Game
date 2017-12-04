@@ -5,6 +5,7 @@ import box2dLight.PointLight;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import com.badlogic.gdx.utils.Pools;
 import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.body.AnimatedObject;
 import com.game.mesh.objects.singletons.special.ObjectManager;
@@ -27,17 +28,25 @@ public class Mushrooms extends GameObject{
 	private ObjectAnimation hide;
 	private PointLight light;
 	
-	public Mushrooms (float x, float y){
+	public Mushrooms (){
 		objectType = ObjectType.mushrooms;
-		body = new AnimatedObject (x, y, MUSH_W, MUSH_H, BODY_MUSH_W, BODY_MUSH_H);
+		body = new AnimatedObject (0, 0, MUSH_W, MUSH_H, BODY_MUSH_W, BODY_MUSH_H);
 		
 		light = new PointLight (Render.getInstance ().handler,100, Color.OLIVE, (int) (100 * ASPECT_RATIO),
-				x + MUSH_W / 2, y + MUSH_H / 2);
+				MUSH_W / 2, MUSH_H / 2);
 		hide = new ObjectAnimation ("core/assets/images/other/mushrooms_hide.png", false, MUSH_W, MUSH_H,
 				1, 5, 0.1f);
 		currSprite = hide.getFirstFrame ();
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
 		dataRender = new DataRender (currSprite, LayerType.below);
+	}
+	
+	public void setSpritePosition (float x, float y){
+		body.setSpritePosition (x, y);
+		light.setPosition (x + MUSH_W / 2, y + MUSH_H / 2);
+		light.setActive (true);
+		hide.resetTime ();
+		currSprite = hide.getFirstFrame ();
 	}
 	
 	@Override
@@ -84,6 +93,11 @@ public class Mushrooms extends GameObject{
 	
 	@Override
 	public void clear (){
-		light.remove ();
+		isHide = false;
+		light.setActive (false);
+		gasWasCreated = false;
+		hide.resetTime ();
+		toxicGas = null;
+		Pools.free (this);
 	}
 }

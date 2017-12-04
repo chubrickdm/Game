@@ -1,6 +1,8 @@
 package com.game.mesh.objects.singletons.special;
 
-import com.game.mesh.objects.GameObject;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
+import com.game.mesh.objects.*;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
 import com.game.render.Render;
@@ -19,6 +21,31 @@ public class ObjectManager extends GameObject{
 	private ObjectManager (){
 		messages = new LinkedList <GameMessage> ();
 		objects = new LinkedList <GameObject> ();
+		
+		Pools.set (Wall.class, new Pool <Wall> (200, 400){
+			@Override
+			protected Wall newObject (){
+				return new Wall ();
+			}
+		});
+		Pools.set (Box.class, new Pool <Box> (15, 30){
+			@Override
+			protected Box newObject (){
+				return new Box ();
+			}
+		});
+		Pools.set (Mushrooms.class, new Pool <Mushrooms> (10, 20){
+			@Override
+			protected Mushrooms newObject (){
+				return new Mushrooms ();
+			}
+		});
+		Pools.set (Hole.class, new Pool <Hole> (15, 30){
+			@Override
+			protected Hole newObject (){
+				return new Hole ();
+			}
+		});
 	}
 	
 	

@@ -3,9 +3,9 @@ package com.game.mesh.body;
 import com.game.addition.math.BodyRectangle;
 
 public class AnimatedObject extends Body{ //спец. класс для анимированных объектов, в котором хранятся координаты спрайта
-	private float spriteX = 0;
-	private float spriteY = 0;
-	private float bodyShiftX = 0;
+	private float spriteX;
+	private float spriteY;
+	private float bodyShiftX;
 	private float spriteW;
 	private float spriteH;
 	
@@ -26,6 +26,16 @@ public class AnimatedObject extends Body{ //спец. класс для аним
 		body.setPosition (x, y);
 		if (triggeredZone != null){
 			triggeredZone.setPosition (x, y);
+		}
+	}
+	
+	@Override
+	public void setSpritePosition (float x, float y){
+		spriteX = x;
+		spriteY = y;
+		body.setPosition (x + bodyShiftX, y);
+		if (triggeredZone != null){
+			triggeredZone.setPosition (x + body.getW () / 2, y + body.getH () / 2);
 		}
 	}
 	

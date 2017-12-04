@@ -35,4 +35,10 @@ public class BodyObject extends Body{
 		sprite.setPosition (x - bodyShiftX, y - bodyShiftY);
 		body.setPosition (x, y);
 	}
+	
+	@Override
+	public void setSpritePosition (float x, float y){
+		sprite.setPosition (x, y);
+		body.setPosition (x + bodyShiftX, y + bodyShiftY);
+	}
 }

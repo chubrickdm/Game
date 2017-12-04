@@ -38,7 +38,7 @@ public class Floor{
 		coordinates = new ArrayList <> ();
 		int sprite;
 		for (int i = 0; i < LevelManager.getInstance ().level.getSize ().getKey () - 1; i++){
-			for (int j = 0; j < LevelManager.getInstance ().level.getSize ().getValue () - 1; j++){
+			for (int j = 0; j < 100; j++){
 				sprite = MathUtils.random (0, numRegions - 1);
 				coordinates.add (new Pair <Pair <Integer, Integer>, Integer> (new Pair <Integer, Integer>(i, j), sprite));
 			}
