@@ -16,11 +16,13 @@ public class NoBodyObject extends Body{
 	
 	@Override
 	public void setSpritePosition (float x, float y){
+		//пришлось делать так, т.к. в LibGDX криво реализован центр спрайта
 		sprite.setPosition (x - originX, y - originY);
 	}
 	
 	@Override
 	public void setOrigin (float originX, float originY){
+		//пришлось делать так, т.к. в LibGDX криво реализован центр спрайта
 		this.originX = originX;
 		this.originY = originY;
 		setSpritePosition (sprite.getX (), sprite.getY ());
@@ -35,15 +37,5 @@ public class NoBodyObject extends Body{
 	@Override
 	public void move (float deltaX, float deltaY){
 		sprite.setPosition (sprite.getX () + deltaX, sprite.getY () + deltaY);
-	}
-	
-	@Override
-	public float getBodyX (){
-		return sprite.getX ();
-	}
-	
-	@Override
-	public float getBodyY (){
-		return sprite.getY ();
 	}
 }

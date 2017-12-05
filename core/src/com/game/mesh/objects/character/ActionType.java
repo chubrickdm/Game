@@ -4,5 +4,4 @@ public enum ActionType{
 	leftWalk, rightWalk, forwardWalk, backWalk,
 	leftFall, rightFall, forwardFall, backFall,
 	leftChoke, rightChoke, forwardChoke, backChoke,
-	unknown
 }

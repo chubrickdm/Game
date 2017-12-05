@@ -2,8 +2,6 @@ package com.game.mesh.objects.character;
 
 import box2dLight.PointLight;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 
 import com.game.GameSystem;
