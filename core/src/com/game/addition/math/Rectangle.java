@@ -1,13 +1,13 @@
 package com.game.addition.math;
 
-public class BodyRectangle{
+public class Rectangle{
 	private float x;
 	private float y;
 	private float w;
 	private float h;
 	
 	
-	public BodyRectangle (float x, float y, float w, float h){
+	public Rectangle (float x, float y, float w, float h){
 		this.x = x;
 		this.y = y;
 		this.w = w;
@@ -78,9 +78,9 @@ public class BodyRectangle{
 	}
 	
 	public boolean contains (float xx, float yy, float ww, float hh){
-		int tmpI = 0;
 		//для того что б один один прямоугольник находился в другом необходимо и достаточно что бы
 		//все 4 вершины одного прямогоульника лежали в другом
+		int tmpI = 0;
 		if ((xx <= x + w) && (yy <= y + h) && (xx >= x) && (yy >= y)){
 			tmpI++;
 		}
@@ -110,10 +110,6 @@ public class BodyRectangle{
 		if ((x + w <= xx + ww) && (y + h <= yy + hh) && (x + w >= xx) && (y + h >= yy)){
 			tmpI++;
 		}
-		if (tmpI == 4){
-			return true;
-		}
-		
-		return false;
+		return tmpI == 4;
 	}
 }

@@ -33,11 +33,6 @@ public class NoBodyObject extends Body{
 	}
 	
 	@Override
-	public void setBodyPosition (float x, float y){
-		setSpritePosition (x, y);
-	}
-	
-	@Override
 	public void move (float deltaX, float deltaY){
 		sprite.setPosition (sprite.getX () + deltaX, sprite.getY () + deltaY);
 	}

@@ -4,23 +4,13 @@ import box2dLight.RayHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
-import com.game.GameSystem;
 import com.game.MyGame;
-import com.game.addition.parsers.ParseLevel;
 import com.game.mesh.Floor;
-import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.singletons.Camera;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Render{

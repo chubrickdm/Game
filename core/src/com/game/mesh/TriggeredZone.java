@@ -1,15 +1,15 @@
 package com.game.mesh;
 
-import com.game.addition.math.BodyRectangle;
+import com.game.addition.math.Rectangle;
 
 public class TriggeredZone{
 	private float originY;
 	private float originX;
-	private BodyRectangle zone;
+	private Rectangle zone;
 	
 	
 	public TriggeredZone (float x, float y, float w, float h){
-		zone = new BodyRectangle (x, y, w, h);
+		zone = new Rectangle (x, y, w, h);
 	}
 	
 	public boolean isTriggered (float x, float y, float w, float h){

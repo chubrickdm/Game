@@ -1,51 +1,32 @@
 package com.game.mesh.body;
 
-import com.game.addition.math.BodyRectangle;
+import com.game.addition.math.Rectangle;
 
 public class AnimatedObject extends Body{ //спец. класс для анимированных объектов, в котором хранятся координаты спрайта
-	private float spriteX;
-	private float spriteY;
-	private float spriteW;
-	private float spriteH;
 	private float bodyShiftX;
 	private float bodyShiftY;
+	private Rectangle sprite;
 	
 	
 	public AnimatedObject (float x, float y, float w, float h, float bodyW, float bodyH){
-		spriteX = x;
-		spriteY = y;
 		bodyShiftX = (w - bodyW) / 2;
-		body = new BodyRectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
-		spriteW = w;
-		spriteH = h;
+		sprite = new Rectangle (x, y, w, h);
+		body = new Rectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
 	}
 	
-	public AnimatedObject (float x, float y, float w, float h, float bodyW, float bodyH, boolean withSfitY){
-		spriteX = x;
-		spriteY = y;
-		bodyShiftY = (h - bodyH) / 2;
-		if (withSfitY){
-			bodyShiftX = (w - bodyW) / 2;
+	public AnimatedObject (float x, float y, float w, float h, float bodyW, float bodyH, boolean withShiftY){
+		bodyShiftX = (w - bodyW) / 2;
+		if (withShiftY){
+			bodyShiftY = (h - bodyH) / 2;
 		}
-		body = new BodyRectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
-		spriteW = w;
-		spriteH = h;
+		sprite = new Rectangle (x, y, w, h);
+		body = new Rectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
 	}
 	
-	@Override
-	public void setBodyPosition (float x, float y){
-		spriteX = x - bodyShiftX;
-		spriteY = y - bodyShiftY;
-		body.setPosition (x, y);
-		if (triggeredZone != null){
-			triggeredZone.setPosition (x, y);
-		}
-	}
 	
 	@Override
 	public void setSpritePosition (float x, float y){
-		spriteX = x;
-		spriteY = y;
+		sprite.setPosition (x, y);
 		body.setPosition (x + bodyShiftX, y + bodyShiftY);
 		if (triggeredZone != null){
 			triggeredZone.setPosition (x + body.getW () / 2, y + body.getH () / 2);
@@ -54,29 +35,28 @@ public class AnimatedObject extends Body{ //спец. класс для аним
 	
 	@Override
 	public float getSpriteX (){
-		return spriteX;
+		return sprite.getX ();
 	}
 	
 	@Override
 	public float getSpriteY (){
-		return spriteY;
+		return sprite.getY ();
 	}
 	
 	@Override
 	public float getSpriteW (){
-		return spriteW;
+		return sprite.getW ();
 	}
 	
 	@Override
 	public float getSpriteH (){
-		return spriteH;
+		return sprite.getH ();
 	}
 	
 	@Override
 	public void move (float deltaX, float deltaY){
 		body.move (deltaX, deltaY);
-		spriteX += deltaX;
-		spriteY += deltaY;
+		sprite.move (deltaX, deltaY);
 		if (triggeredZone != null){
 			triggeredZone.move (deltaX, deltaY);
 		}
