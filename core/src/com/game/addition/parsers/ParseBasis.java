@@ -14,13 +14,9 @@ import java.net.URLDecoder;
 
 public abstract class ParseBasis{
 	protected static boolean isFromIDEA = true; //флаг, хранящий откуда мы запускаем проект, с IDEA или с .jar архива
-	protected static String pathFromIDEA; //путь к папке с ресурсами для запуска с IDEA
-	protected static String pathFromDesktop; //путь к папке с ресурсами для запуска с .jar архива
 	
 	
 	protected static Document getDocument (String fromIDEA, String fromDesktop){
-		pathFromDesktop = fromDesktop;
-		pathFromIDEA = fromIDEA;
 		Document document;
 		try{
 			DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance ().newDocumentBuilder ();
