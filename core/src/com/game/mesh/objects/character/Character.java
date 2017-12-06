@@ -22,6 +22,7 @@ public class Character extends GameObject{
 	private static final float BODY_CHARACTER_H = CHARACTER_H / 4;
 	
 	protected boolean isSelected = false;
+	protected Direction currentDirection = Direction.forward;
 	protected State state = State.stand;
 	protected ActionType action = ActionType.forwardStand;
 	
