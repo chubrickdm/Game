@@ -97,7 +97,7 @@ public class CharacterControl extends Character{
 	}
 	
 	private void updateControl (){
-		character.isMove = false;
+		character.state = State.stand;
 		deltaX = 0;
 		deltaY = 0;
 		if (Gdx.input.isKeyPressed (Input.Keys.W)){
@@ -127,7 +127,7 @@ public class CharacterControl extends Character{
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (character));
 		}
 		else if (deltaX != 0 || deltaY != 0){
-			character.isMove = true;
+			character.state = State.move;
 			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (),
 					character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
 			character.move (deltaX, deltaY);
@@ -151,7 +151,7 @@ public class CharacterControl extends Character{
 	
 	@Override
 	public void update (){
-		if (character.isSelected & !character.isFall & !character.isChoke){
+		if (character.isSelected & character.state != State.fall & character.state != State.choke){
 			updateControl ();
 		}
 	}

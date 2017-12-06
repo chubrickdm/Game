@@ -21,11 +21,9 @@ public class Character extends GameObject{
 	private static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
 	private static final float BODY_CHARACTER_H = CHARACTER_H / 4;
 	
-	protected boolean isChoke = false;
-	protected boolean isFall = false;
-	protected boolean isMove = false;
 	protected boolean isSelected = false;
-	protected ActionType action;
+	protected State state = State.stand;
+	protected ActionType action = ActionType.forwardStand;
 	
 	private CharacterName name = CharacterName.unknown;
 	private PointLight flashLight;
@@ -39,7 +37,6 @@ public class Character extends GameObject{
 	
 	public Character (float x, float y){
 		objectType = ObjectType.character;
-		action = ActionType.forwardWalk;
 		if (x < GameSystem.SCREEN_W / 2){ //персонаж слева, всегда первый
 			isSelected = true;
 			name = CharacterName.first;
@@ -51,9 +48,9 @@ public class Character extends GameObject{
 		
 		body = new AnimatedObject (x, y, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
 		body.move (0, 0.25f);
+		
 		flashLight = new PointLight (Render.getInstance ().handler,100, Color.GRAY, (int) (300 * ASPECT_RATIO),
 				x + CHARACTER_W / 2, y + CHARACTER_H);
-		
 		parser = new CharacterMessageParser (this);
 		control = new CharacterControl (this);
 		inputProcessor = new CharacterInputProcessor (this);

@@ -14,8 +14,15 @@ public class CharacterAnimations extends Character{
 	private static final int FRAME_ROWS = 1;
 	private static final String path = "core/assets/images/character/";
 	
+	private int currentDirection;
 	private Character character;
 	private Sprite currSprite;
+	
+	private ObjectAnimation leftStand;
+	private ObjectAnimation rightStand;
+	private ObjectAnimation forwardStand;
+	private ObjectAnimation backStand;
+	
 	private ObjectAnimation leftWalk;
 	private ObjectAnimation rightWalk;
 	private ObjectAnimation forwardWalk;
@@ -33,7 +40,7 @@ public class CharacterAnimations extends Character{
 	
 	
 	private void updateMoveAnimation (){
-		if (character.isMove){
+		if (character.state == State.move){
 			switch (character.action){
 			case forwardWalk:
 				currSprite = forwardWalk.getCurrSprite ();
@@ -201,11 +208,11 @@ public class CharacterAnimations extends Character{
 	
 	@Override
 	public void update (){
-		if (character.isFall){
+		if (character.state == State.fall){
 			selectFallAnimation ();
 			updateFallAnimation ();
 		}
-		else if (character.isChoke){
+		else if (character.state == State.choke){
 			selectChokeAnimation ();
 			updateChokeAnimation ();
 		}

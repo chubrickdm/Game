@@ -13,6 +13,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import java.io.File;
+
 import java.net.URLDecoder;
 
 public class ParseSettings extends ParseBasis{
@@ -28,13 +29,12 @@ public class ParseSettings extends ParseBasis{
 			
 			URLDecoder decoder = new URLDecoder ();
 			StringBuilder path = new StringBuilder (decoder.decode (ParseBasis.class.getProtectionDomain ().getCodeSource ().getLocation ().getPath ()));
-			int index = path.lastIndexOf (GameSystem.NAME_JAR_ARCHIVE); //ищем в этом пути имя архива
-			if (index == -1){ //если не нашли, значит мы запускаем проект с IDEA
-				isFromIDEA = true;
+			
+			if (isFromIDEA){ //если не нашли, значит мы запускаем проект с IDEA
 				result = new StreamResult (new File (fromIDEA));
 			}
 			else{ //если нашли, значит запускаем с .jar архива
-				isFromIDEA = false;
+				int index = path.lastIndexOf (GameSystem.NAME_JAR_ARCHIVE); //ищем в этом пути имя архива
 				path.delete (index, path.length ()); //удаляем все начиная с имя архива
 				path.append (fromDesktop);
 				result = new StreamResult (new File (path.toString ()));

@@ -96,7 +96,6 @@ public abstract class ParseLevel extends ParseBasis{
 	
 	
 	public static void parseLVL (int level){
-		String currObjectGroup;
 		Document document = getDocument ("core/assets/xml/levels/lvl" + String.valueOf (level) + ".tmx",
 				"/resource/xml/levels/lvl" + String.valueOf (level) + ".tmx");
 		Node map = document.getDocumentElement ();
@@ -107,7 +106,7 @@ public abstract class ParseLevel extends ParseBasis{
 			Node objectGroup = objectGroups.item (i);
 			
 			if (objectGroup.getNodeType () != Node.TEXT_NODE){
-				currObjectGroup = objectGroup.getAttributes ().item (0).getTextContent (); //запоминаем имя группы
+				String currObjectGroup = objectGroup.getAttributes ().item (0).getTextContent (); //запоминаем имя группы
 				
 				NodeList objects = objectGroup.getChildNodes ();
 				for (int j = 0; j < objects.getLength (); j++){
