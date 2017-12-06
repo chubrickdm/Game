@@ -66,14 +66,14 @@ public class CharacterControl extends Character{
 	
 	private void keyWPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.S)){
-			character.action = ActionType.forwardWalk;
+			character.currentDirection = Direction.forward;
 			deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
 	
 	private void keySPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.W)){
-			character.action = ActionType.backWalk;
+			character.currentDirection = Direction.back;
 			deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
@@ -81,7 +81,7 @@ public class CharacterControl extends Character{
 	private void keyDPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.A)){
 			if (!Gdx.input.isKeyPressed (Input.Keys.W)){
-				character.action = ActionType.rightWalk;
+				character.currentDirection = Direction.right;
 			}
 			deltaX = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
@@ -90,7 +90,7 @@ public class CharacterControl extends Character{
 	private void keyAPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.D)){
 			if (!Gdx.input.isKeyPressed (Input.Keys.W)){
-				character.action = ActionType.leftWalk;
+				character.currentDirection = Direction.left;
 			}
 			deltaX = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
@@ -98,8 +98,7 @@ public class CharacterControl extends Character{
 	
 	private void updateControl (){
 		character.state = State.stand;
-		deltaX = 0;
-		deltaY = 0;
+		deltaX = 0; deltaY = 0;
 		if (Gdx.input.isKeyPressed (Input.Keys.W)){
 			keyWPressed ();
 			movedByComputer = false;
@@ -142,16 +141,16 @@ public class CharacterControl extends Character{
 	}
 	
 	public void setPath (ArrayList <ConcreteNode> path){
+		movedByComputer = true;
+		
 		this.path = path;
 		iterator = 0;
 		nextIteration ();
-		
-		movedByComputer = true;
 	}
 	
 	@Override
 	public void update (){
-		if (character.isSelected & character.state != State.fall & character.state != State.choke){
+		if (character.isSelected && (character.state == State.stand || character.state == State.move)){
 			updateControl ();
 		}
 	}

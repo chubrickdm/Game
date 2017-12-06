@@ -23,33 +23,6 @@ public class CharacterAnimations extends Character{
 	private ObjectAnimation[] choke;
 	
 	
-	private void updateStandAnimation (){
-		currSprite = stand[character.currentDirection.ordinal ()].getFirstFrame ();
-	}
-	
-	private void updateMoveAnimation (){
-		currSprite = walk[character.currentDirection.ordinal ()].getCurrSprite ();
-		
-	}
-	
-	private void updateFallAnimation (){
-		//игрок проиграл если он упал (т.е. закончилась прокрутка анимации падения)
-		if (fall[character.currentDirection.ordinal ()].isAnimationFinished ()){
-			ObjectManager.getInstance ().addMessage (new PlayerLostMessage ());
-		}
-		
-		currSprite = fall[character.currentDirection.ordinal ()].getCurrSprite ();
-	}
-	
-	private void updateChokeAnimation (){
-		if (choke[character.currentDirection.ordinal ()].isAnimationFinished ()){
-			ObjectManager.getInstance ().addMessage (new PlayerLostMessage ());
-		}
-		
-		currSprite = choke[character.currentDirection.ordinal ()].getCurrSprite ();
-	}
-	
-	
 	public CharacterAnimations (Character character){
 		this.character = character;
 		
@@ -63,10 +36,10 @@ public class CharacterAnimations extends Character{
 					FRAME_ROWS, FRAME_COLS, 0.15f);
 			walk[i] = new ObjectAnimation (path + "walking_" + Direction.values ()[i] + ".png", CHARACTER_W, CHARACTER_H,
 					FRAME_ROWS, FRAME_COLS, 0.15f);
-			fall[i] = new ObjectAnimation (path + "fall_" + Direction.values ()[i] + ".png", CHARACTER_W, CHARACTER_H,
+			fall[i] = new ObjectAnimation (path + "fall_" + Direction.values ()[i] + ".png", false, CHARACTER_W, CHARACTER_H,
 					FRAME_ROWS, FRAME_COLS, 0.15f);
-			choke[i] = new ObjectAnimation (path + "choke_" + Direction.values ()[i] + ".png", CHARACTER_W, CHARACTER_H,
-					FRAME_ROWS, FRAME_COLS, 0.3f);
+			choke[i] = new ObjectAnimation (path + "choke_" + Direction.values ()[i] + ".png", false, CHARACTER_W, CHARACTER_H,
+					FRAME_ROWS, 5, 0.3f);
 		}
 		
 		dataRender = new DataRender (currSprite, LayerType.normal);
@@ -76,16 +49,22 @@ public class CharacterAnimations extends Character{
 	public void update (){
 		switch (character.state){
 		case stand:
-			updateStandAnimation ();
+			currSprite = stand[character.currentDirection.ordinal ()].getFirstFrame ();
 			break;
 		case move:
-			updateMoveAnimation ();
+			currSprite = walk[character.currentDirection.ordinal ()].getCurrSprite ();
 			break;
 		case fall:
-			updateFallAnimation ();
+			if (fall[character.currentDirection.ordinal ()].isAnimationFinished ()){
+				ObjectManager.getInstance ().addMessage (new PlayerLostMessage ());
+			}
+			currSprite = fall[character.currentDirection.ordinal ()].getCurrSprite ();
 			break;
 		case choke:
-			updateChokeAnimation ();
+			if (choke[character.currentDirection.ordinal ()].isAnimationFinished ()){
+				ObjectManager.getInstance ().addMessage (new PlayerLostMessage ());
+			}
+			currSprite = choke[character.currentDirection.ordinal ()].getCurrSprite ();
 			break;
 		}
 		currSprite.setPosition (character.getSpriteX (), character.getSpriteY ());

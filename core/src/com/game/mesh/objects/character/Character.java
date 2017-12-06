@@ -24,7 +24,6 @@ public class Character extends GameObject{
 	protected boolean isSelected = false;
 	protected Direction currentDirection = Direction.forward;
 	protected State state = State.stand;
-	protected ActionType action = ActionType.forwardStand;
 	
 	private CharacterName name = CharacterName.unknown;
 	private PointLight flashLight;

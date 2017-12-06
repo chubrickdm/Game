@@ -12,23 +12,20 @@ import com.game.mesh.objects.singletons.special.LevelManager;
 import java.util.ArrayList;
 
 public class CharacterInputProcessor extends Character implements InputProcessor{
-	private static InputMultiplexer multiplexer;
-	private static boolean creteMultiplexer = false;
+	private static InputMultiplexer multiplexer = new InputMultiplexer ();
+	
 	private ConcreteNode start;
 	private ConcreteNode finish;
 	private Character character;
 	
 	
 	public CharacterInputProcessor (Character character){
-		if (!creteMultiplexer){
-			multiplexer = new InputMultiplexer ();
-			creteMultiplexer = true;
-		}
 		multiplexer.addProcessor (this);
 		Gdx.input.setInputProcessor (multiplexer);
-		this.character = character;
+		
 		start = new ConcreteNode ();
 		finish = new ConcreteNode ();
+		this.character = character;
 	}
 	
 	@Override
@@ -58,7 +55,6 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 	@Override
 	public void clear (){
 		multiplexer.clear ();
-		creteMultiplexer = false;
 	}
 	
 	@Override
