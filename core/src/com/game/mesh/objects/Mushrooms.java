@@ -16,8 +16,8 @@ import com.game.messages.MoveMessage;
 import com.game.render.*;
 
 public class Mushrooms extends GameObject{
-	private static final float BODY_MUSH_W = UNIT * 1.8f;
-	private static final float BODY_MUSH_H = UNIT * ANGLE * 1.8f;
+	private static final float BODY_MUSH_W = UNIT * 2;
+	private static final float BODY_MUSH_H = UNIT * ANGLE * 2;
 	private static final float MUSH_W = UNIT * 2;
 	private static final float MUSH_H = UNIT * ANGLE * 2;
 	
@@ -30,7 +30,7 @@ public class Mushrooms extends GameObject{
 	
 	public Mushrooms (){
 		objectType = ObjectType.mushrooms;
-		body = new AnimatedObject (0, 0, MUSH_W, MUSH_H, BODY_MUSH_W, BODY_MUSH_H, true);
+		body = new AnimatedObject (0, 0, MUSH_W, MUSH_H, BODY_MUSH_W, BODY_MUSH_H);
 		
 		light = new PointLight (Render.getInstance ().handler,100, Color.OLIVE, (int) (100 * ASPECT_RATIO),
 				MUSH_W / 2, MUSH_H / 2);

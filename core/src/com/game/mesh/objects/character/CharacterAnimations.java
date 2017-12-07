@@ -41,6 +41,10 @@ public class CharacterAnimations extends Character{
 			choke[i] = new ObjectAnimation (path + "choke_" + Direction.values ()[i] + ".png", false, CHARACTER_W, CHARACTER_H,
 					FRAME_ROWS, 5, 0.3f);
 		}
+		//stand[2] = new ObjectAnimation (path + "walking_" + Direction.values ()[2] + ".png", CHARACTER_W, CHARACTER_H,
+		//		FRAME_ROWS, 12, 0.1f);
+		//walk[2] = new ObjectAnimation (path + "walking_" + Direction.values ()[2] + ".png", CHARACTER_W, CHARACTER_H,
+		//		FRAME_ROWS, 12, 0.1f);
 		
 		dataRender = new DataRender (currSprite, LayerType.normal);
 	}

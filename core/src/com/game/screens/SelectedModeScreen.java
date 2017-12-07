@@ -30,7 +30,8 @@ public class SelectedModeScreen implements Screen{
 				MyGame.getInstance ().setScreen (PlayScreen.getInstance ());
 			}
 		});
-		newGame.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2, Gdx.graphics.getHeight () / 2 + 2 * MyGame.BUTTON_H + 2 * MyGame.DISTANCE_BETWEEN_BUTTONS, MyGame.BUTTON_W, MyGame.BUTTON_H);
+		newGame.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2,
+				Gdx.graphics.getHeight () / 2 + 2 * MyGame.BUTTON_H + 2 * MyGame.DISTANCE_BETWEEN_BUTTONS, MyGame.BUTTON_W, MyGame.BUTTON_H);
 		widgetGroup.addActor (newGame);
 	}
 	
@@ -60,14 +61,6 @@ public class SelectedModeScreen implements Screen{
 		if (GameSystem.IS_FIRST_GAME_START){
 			selectedLVL.setStyle (TextStyle.getInstance ().closedStyle);
 		}
-		selectedLVL.addListener (new ClickListener (){
-			@Override
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button){
-				if (!GameSystem.IS_FIRST_GAME_START){
-					/////////////////////
-				}
-			}
-		});
 		selectedLVL.setBounds (Gdx.graphics.getWidth () / 2 - MyGame.BUTTON_W / 2, Gdx.graphics.getHeight () / 2,
 				MyGame.BUTTON_W, MyGame.BUTTON_H);
 		widgetGroup.addActor (selectedLVL);

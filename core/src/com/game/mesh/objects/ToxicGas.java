@@ -12,8 +12,8 @@ import com.game.render.LayerType;
 import com.game.render.Render;
 
 public class ToxicGas extends GameObject{
-	private static final float BODY_GAS_W = UNIT * 2;
-	private static final float BODY_GAS_H = UNIT * ANGLE * 2;
+	private static final float BODY_GAS_W = UNIT * 1.5f;
+	private static final float BODY_GAS_H = UNIT * ANGLE * 1.5f;
 	private static final float GAS_W = UNIT * 2;
 	private static final float GAS_H = UNIT * ANGLE * 2;
 	
@@ -24,7 +24,7 @@ public class ToxicGas extends GameObject{
 	
 	public ToxicGas (float x, float y){
 		objectType = ObjectType.toxicGas;
-		body = new AnimatedObject (x, y, GAS_W, GAS_H, BODY_GAS_W, BODY_GAS_H);
+		body = new AnimatedObject (x, y, GAS_W, GAS_H, BODY_GAS_W, BODY_GAS_H, true);
 		animation = new ObjectAnimation ("core/assets/images/other/toxic_gas.png", GAS_W, GAS_H,
 				1, 4, 0.5f);
 		currSprite = animation.getFirstFrame ();
@@ -47,7 +47,7 @@ public class ToxicGas extends GameObject{
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move){
 			MoveMessage msg = (MoveMessage) message;
-			if (body.contains (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				ObjectManager.getInstance ().addMessage (new DestroyObjectMessage (msg.object, this));
 			}
 		}
