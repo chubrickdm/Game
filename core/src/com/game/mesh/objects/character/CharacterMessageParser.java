@@ -1,6 +1,7 @@
 package com.game.mesh.objects.character;
 
 import com.game.mesh.objects.ObjectType;
+import com.game.mesh.objects.State;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Pools;
 
 import com.game.GameSystem;
 import com.game.mesh.objects.*;
+import com.game.mesh.objects.box.Box;
 import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.singletons.special.LevelManager;
 import com.game.mesh.objects.singletons.special.ObjectManager;

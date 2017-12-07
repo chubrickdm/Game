@@ -2,6 +2,7 @@ package com.game.mesh.objects.singletons;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
+
 import com.game.GameSystem;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
@@ -68,11 +69,5 @@ public class Camera extends GameObject{
 				camera.position.set (camera.position.x, msg.spriteY + msg.spriteH / 2, 0);
 			}
 		}
-	}
-	
-	@Override
-	public void clear (){
-		camera = new OrthographicCamera (GameSystem.SCREEN_W, GameSystem.SCREEN_H);
-		camera.setToOrtho (false);
 	}
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 
 import com.game.mesh.objects.*;
+import com.game.mesh.objects.box.Box;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
 import com.game.render.Render;
@@ -102,8 +103,7 @@ public class ObjectManager extends GameObject{
 	
 	@Override
 	public void clear (){
-		//метод вызывается при закрытии уровня, или перехода к следующему, и служит для очистки перменных классов
-		//сиглентонов (менеджер, камера) или удалить динамический свет.
+		//метод вызывается при закрытии уровня, или перехода к следующему, и служит для очистки перменных классов.
 		for (GameObject obj : objects){
 			obj.clear ();
 		}

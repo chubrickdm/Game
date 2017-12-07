@@ -9,6 +9,7 @@ import com.game.addition.algorithms.aStar.realisation.ConcreteNode;
 import com.game.mesh.body.AnimatedObject;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
+import com.game.mesh.objects.State;
 import com.game.messages.GameMessage;
 import com.game.render.Render;
 
