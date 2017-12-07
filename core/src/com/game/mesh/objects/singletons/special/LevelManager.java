@@ -2,6 +2,7 @@ package com.game.mesh.objects.singletons.special;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
 import com.game.GameSystem;
 import com.game.MyGame;
 import com.game.addition.algorithms.aStar.realisation.ConcreteGraph;

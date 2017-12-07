@@ -32,7 +32,9 @@ public class Floor{
 		
 		floor = new ArrayList <> (numRegions);
 		for (int i = 0; i < numRegions; i++){
-			floor.add (new Sprite (regions[i]));
+			Sprite sprite = new Sprite (regions[i]);
+			sprite.setSize (GameObject.UNIT, GameObject.UNIT * GameObject.ANGLE);
+			floor.add (sprite);
 		}
 		
 		coordinates = new ArrayList <> ();
