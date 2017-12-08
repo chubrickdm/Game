@@ -27,10 +27,14 @@ public class CharacterMessageParser extends Character{
 		//он будет вытакливаться 2 раза, вместо 1
 		if (msg.deltaX != 0 && !pushOutHorizontal){
 			character.move (msg.deltaX, 0);
+			ObjectManager.getInstance ().addMessage (new MoveMessage (character, msg.deltaX, 0, character.getBodyX (),
+					character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
 			pushOutHorizontal = true;
 		}
 		if (msg.deltaY != 0 && !pushOutVertical){
 			character.move (0, msg.deltaY);
+			ObjectManager.getInstance ().addMessage (new MoveMessage (character, 0, msg.deltaY, character.getBodyX (),
+					character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
 			pushOutVertical = true;
 		}
 	}

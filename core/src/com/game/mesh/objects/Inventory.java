@@ -18,29 +18,10 @@ public class Inventory extends GameObject{
 	
 	private static CharacterName selectedCharacter = CharacterName.first; //имя персонажа которым происходит управление
 	
-	private boolean pushOutHorizontal = false;
-	private boolean pushOutVertical = false;
 	private boolean isVisible = false;
 	private float percentSize = 1;
 	private CharacterName ownerName; //имя персонажа за которым прикреплен инвентарь
 	
-	
-	private void pushOutMessage (GameMessage message){
-		//два флага нужны, что бы не было ситуации когда персонаж упирается в два объекта, и они его 2 раза выталкивают,
-		//вместо одного и сооствественно колесо выталкивается 2 раза.
-		Character character = (Character) message.object;
-		PushOutMessage msg = (PushOutMessage) message;
-		if (ownerName == character.getName ()){
-			if (msg.deltaX != 0 && !pushOutHorizontal){
-				body.move (msg.deltaX, 0);
-				pushOutHorizontal = true;
-			}
-			if (msg.deltaY != 0 && !pushOutVertical){
-				body.move (0, msg.deltaY);
-				pushOutVertical = true;
-			}
-		}
-	}
 	
 	private void updateSizeAnimation (){
 		if (Gdx.input.isKeyPressed (Input.Keys.F) && selectedCharacter == ownerName){
@@ -80,8 +61,6 @@ public class Inventory extends GameObject{
 	
 	@Override
 	public void update (){
-		pushOutHorizontal = false;
-		pushOutVertical = false;
 		updateSizeAnimation ();
 	}
 	
@@ -100,9 +79,6 @@ public class Inventory extends GameObject{
 			if (ownerName == character.getName ()){
 				body.setSpritePosition (msg.spriteX + msg.spriteW / 2, msg.spriteY + msg.spriteH / 2);
 			}
-		}
-		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
-			pushOutMessage (message);
 		}
 		else if (message.type == MessageType.characterSelected){
 			Character character = (Character) message.object;

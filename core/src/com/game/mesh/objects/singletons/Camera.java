@@ -11,7 +11,6 @@ import com.game.mesh.objects.character.CharacterName;
 import com.game.messages.*;
 
 public class Camera extends GameObject{
-	private boolean pushOutVertical = false;
 	private OrthographicCamera camera;
 	
 	
@@ -41,7 +40,6 @@ public class Camera extends GameObject{
 	
 	@Override
 	public void update (){
-		pushOutVertical = false;
 		camera.update ();
 	}
 	
@@ -54,13 +52,6 @@ public class Camera extends GameObject{
 		else if (message.type == MessageType.characterSelected){
 			CharacterSelectedMessage msg = (CharacterSelectedMessage) message;
 			camera.position.set (camera.position.x, msg.spriteY + msg.spriteH / 2, 0);
-		}
-		else if (message.type == MessageType.pushOut && message.objectType == ObjectType.character){
-			PushOutMessage msg = (PushOutMessage) message;
-			if (msg.deltaY != 0 && !pushOutVertical){
-				camera.translate (0, msg.deltaY);
-				pushOutVertical = true;
-			}
 		}
 		else if (message.type == MessageType.returnStartPosition && message.objectType == ObjectType.character){
 			Character character = (Character) message.object;
