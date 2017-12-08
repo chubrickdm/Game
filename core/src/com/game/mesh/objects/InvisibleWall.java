@@ -18,9 +18,6 @@ public class InvisibleWall extends GameObject{
 	}
 	
 	@Override
-	public void update (){ }
-	
-	@Override
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;

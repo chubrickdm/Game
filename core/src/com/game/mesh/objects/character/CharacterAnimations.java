@@ -79,4 +79,14 @@ public class CharacterAnimations extends Character{
 		dataRender.sprite = currSprite;
 		Render.getInstance ().addDataForRender (dataRender);
 	}
+	
+	@Override
+	public void clear (){
+		for (int i = 0; i < Direction.values ().length; i++){
+			stand[i].resetTime ();
+			walk[i].resetTime ();
+			fall[i].resetTime ();
+			choke[i].resetTime ();
+		}
+	}
 }

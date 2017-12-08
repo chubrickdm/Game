@@ -2,8 +2,8 @@ package com.game.mesh.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-
 import com.badlogic.gdx.utils.Pools;
+
 import com.game.mesh.body.NoBodyObject;
 import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.character.CharacterName;

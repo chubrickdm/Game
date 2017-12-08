@@ -64,6 +64,7 @@ public class Character extends GameObject{
 		body.setSpritePosition (x, y);
 		body.move (0, 0.25f);
 		
+		flashLight.setActive (true);
 		flashLight.setPosition (x + CHARACTER_W / 2, y + CHARACTER_H);
 		inputProcessor.setInputProcessor ();
 	}
@@ -94,8 +95,10 @@ public class Character extends GameObject{
 		state = State.stand;
 		currentDirection = Direction.forward;
 		
+		flashLight.setActive (false);
 		control.clear ();
 		inputProcessor.clear ();
+		animations.clear ();
 		Pools.free (this);
 	}
 	

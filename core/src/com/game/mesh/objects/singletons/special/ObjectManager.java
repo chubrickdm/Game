@@ -73,6 +73,12 @@ public class ObjectManager extends GameObject{
 				return new Character (true);
 			}
 		});
+		Pools.set (ToxicGas.class, new Pool <ToxicGas> (10, 20){
+			@Override
+			public ToxicGas newObject (){
+				return new ToxicGas ();
+			}
+		});
 	}
 	
 	
