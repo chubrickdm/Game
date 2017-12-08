@@ -2,6 +2,7 @@ package com.game.mesh.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
 import com.game.mesh.body.NoBodyObject;
 import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.character.CharacterName;
@@ -14,13 +15,14 @@ public class Inventory extends GameObject{
 	private static final float percentPerTick = 2;
 	private static final float INVENTORY_W = UNIT * 2;
 	private static final float INVENTORY_H = UNIT * 2;
+	
 	private static CharacterName selectedCharacter = CharacterName.first; //имя персонажа которым происходит управление
 	
 	private boolean pushOutHorizontal = false;
 	private boolean pushOutVertical = false;
 	private boolean isVisible = false;
 	private float percentSize = 1;
-	private CharacterName ownerName = CharacterName.unknown; //имя персонажа за которым прикреплен инвентарь
+	private CharacterName ownerName; //имя персонажа за которым прикреплен инвентарь
 	
 	
 	private void pushOutMessage (GameMessage message){
@@ -68,6 +70,7 @@ public class Inventory extends GameObject{
 	public Inventory (CharacterName ownerName){
 		objectType = ObjectType.actionWheel;
 		this.ownerName = ownerName;
+		
 		body = new NoBodyObject ("core/assets/images/other/action_wheel.png", 0, 0, INVENTORY_W, INVENTORY_H);
 		body.setOrigin (INVENTORY_W / 2, INVENTORY_H / 2);
 		body.setScale (percentSize / 100);

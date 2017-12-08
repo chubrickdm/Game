@@ -21,8 +21,8 @@ public class Hole extends GameObject{
 	
 	public Hole (){
 		objectType = ObjectType.hole;
-		body = new BodyObject ("core/assets/images/other/hole.png", true, 0, 0, HOLE_W, HOLE_H, BODY_HOLE_W,
-				BODY_HOLE_H);
+		body = new BodyObject ("core/assets/images/other/hole.png", true, 0, 0, HOLE_W, HOLE_H,
+				BODY_HOLE_W, BODY_HOLE_H);
 		dataRender = new DataRender (body.getSprite (), LayerType.below);
 	}
 	

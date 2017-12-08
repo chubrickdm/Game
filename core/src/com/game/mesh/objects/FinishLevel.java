@@ -2,7 +2,6 @@ package com.game.mesh.objects;
 
 import com.game.mesh.body.NoSpriteObject;
 import com.game.mesh.objects.character.Character;
-import com.game.mesh.objects.character.CharacterName;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.CompleteLevelMessage;
 import com.game.messages.GameMessage;
@@ -10,15 +9,16 @@ import com.game.messages.MessageType;
 import com.game.messages.MoveMessage;
 
 public class FinishLevel extends GameObject{
-	private static boolean firstOnFinish = false;
-	private static boolean secondOnFinish = false;
-	private static FinishLevel firstDetected = null; //ссылка на финиш, на который стал первый персонаж
-	private static FinishLevel secondDetected = null; //ссылка на финиш, на который стал второй персонаж
+	private static boolean[] onFinish;
+	private static FinishLevel[] detected;
 	
 	
 	public FinishLevel (){
 		objectType = ObjectType.finishLevel;
 		body = new NoSpriteObject (0, 0, 1, 1);
+		
+		onFinish = new boolean[2];
+		detected = new FinishLevel[2];
 	}
 	
 	public void setBodyBounds (float x, float y, float w, float h){
@@ -27,7 +27,7 @@ public class FinishLevel extends GameObject{
 	
 	@Override
 	public void update (){
-		if (firstOnFinish && secondOnFinish){
+		if (onFinish[0] && onFinish[1]){
 			ObjectManager.getInstance ().addMessage (new CompleteLevelMessage ());
 		}
 	}
@@ -37,31 +37,16 @@ public class FinishLevel extends GameObject{
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			MoveMessage msg = (MoveMessage) message;
 			Character character = (Character) message.object;
+			int index = character.getName ().ordinal ();
 			
-			if (character.getName () == CharacterName.first){
-				if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-					firstOnFinish = true;
-					firstDetected = this;
-				}
-				else{
-					//персонаж может уйти только с того финиша, на котором ранее находился
-					if (firstDetected == this || firstDetected == null){
-						firstOnFinish = false;
-						firstDetected = null;
-					}
-				}
+			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+				onFinish[index] = true;
+				detected[index] = this;
 			}
-			else if (character.getName () == CharacterName.second){
-				if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-					secondOnFinish = true;
-					secondDetected = this;
-				}
-				else{
-					//персонаж может уйти только с того финиша, на котором ранее находился
-					if (secondDetected == this || secondDetected == null){
-						secondOnFinish = false;
-						secondDetected = null;
-					}
+			else{
+				if (detected[index] == this || detected[index] == null){
+					onFinish[index] = false;
+					detected[index] = null;
 				}
 			}
 		}
@@ -69,9 +54,9 @@ public class FinishLevel extends GameObject{
 	
 	@Override
 	public void clear (){
-		firstOnFinish = false;
-		secondOnFinish = false;
-		firstDetected = null;
-		secondDetected = null;
+		onFinish[0] = false;
+		onFinish[1] = false;
+		detected[0] = null;
+		detected[1] = null;
 	}
 }
