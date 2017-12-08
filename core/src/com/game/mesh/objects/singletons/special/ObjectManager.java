@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Pools;
 
 import com.game.mesh.objects.*;
 import com.game.mesh.objects.box.Box;
+import com.game.mesh.objects.character.Character;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
 import com.game.render.Render;
@@ -58,6 +59,18 @@ public class ObjectManager extends GameObject{
 			@Override
 			protected InvisibleWall newObject (){
 				return new InvisibleWall ();
+			}
+		});
+		Pools.set (Inventory.class, new Pool <Inventory> (2, 2){
+			@Override
+			protected Inventory newObject (){
+				return new Inventory ();
+			}
+		});
+		Pools.set (Character.class, new Pool <Character> (2, 2){
+			@Override
+			protected Character newObject (){
+				return new Character (true);
 			}
 		});
 	}

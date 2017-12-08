@@ -20,12 +20,15 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 	
 	
 	public CharacterInputProcessor (Character character){
+		this.character = character;
+	}
+	
+	public void setInputProcessor (){
 		multiplexer.addProcessor (this);
 		Gdx.input.setInputProcessor (multiplexer);
 		
 		start = new ConcreteNode ();
 		finish = new ConcreteNode ();
-		this.character = character;
 	}
 	
 	@Override

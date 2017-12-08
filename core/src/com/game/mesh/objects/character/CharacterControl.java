@@ -155,4 +155,10 @@ public class CharacterControl extends Character{
 			updateControl ();
 		}
 	}
+	
+	@Override
+	public void clear (){
+		movedByComputer = false;
+		path = null;
+	}
 }

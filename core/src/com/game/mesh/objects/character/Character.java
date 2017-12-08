@@ -4,6 +4,7 @@ import box2dLight.PointLight;
 
 import com.badlogic.gdx.graphics.Color;
 
+import com.badlogic.gdx.utils.Pools;
 import com.game.GameSystem;
 import com.game.addition.algorithms.aStar.realisation.ConcreteNode;
 import com.game.mesh.body.AnimatedObject;
@@ -36,8 +37,21 @@ public class Character extends GameObject{
 	
 	public Character (){ }
 	
-	public Character (float x, float y){
+	public Character (boolean fictiv){
 		objectType = ObjectType.character;
+		
+		body = new AnimatedObject (0, 0, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
+		body.move (0, 0.25f);
+		
+		flashLight = new PointLight (Render.getInstance ().handler,100, Color.GRAY, (int) (300 * ASPECT_RATIO),
+				CHARACTER_W / 2, CHARACTER_H);
+		parser = new CharacterMessageParser (this);
+		control = new CharacterControl (this);
+		inputProcessor = new CharacterInputProcessor (this);
+		animations = new CharacterAnimations (this);
+	}
+	
+	public void setSpritePosition (float x, float y){
 		if (x < GameSystem.SCREEN_W / 2){ //персонаж слева, всегда первый
 			isSelected = true;
 			name = CharacterName.first;
@@ -47,15 +61,11 @@ public class Character extends GameObject{
 			name = CharacterName.second;
 		}
 		
-		body = new AnimatedObject (x, y, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
+		body.setSpritePosition (x, y);
 		body.move (0, 0.25f);
 		
-		flashLight = new PointLight (Render.getInstance ().handler,100, Color.GRAY, (int) (300 * ASPECT_RATIO),
-				x + CHARACTER_W / 2, y + CHARACTER_H);
-		parser = new CharacterMessageParser (this);
-		control = new CharacterControl (this);
-		inputProcessor = new CharacterInputProcessor (this);
-		animations = new CharacterAnimations (this);
+		flashLight.setPosition (x + CHARACTER_W / 2, y + CHARACTER_H);
+		inputProcessor.setInputProcessor ();
 	}
 	
 	public CharacterName getName (){
@@ -81,8 +91,12 @@ public class Character extends GameObject{
 	
 	@Override
 	public void clear (){
+		state = State.stand;
+		currentDirection = Direction.forward;
+		
+		control.clear ();
 		inputProcessor.clear ();
-		flashLight.remove ();
+		Pools.free (this);
 	}
 	
 	protected float getBodyX (){

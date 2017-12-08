@@ -3,6 +3,7 @@ package com.game.mesh.objects.singletons.special;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+import com.badlogic.gdx.utils.Pools;
 import com.game.GameSystem;
 import com.game.MyGame;
 import com.game.addition.algorithms.aStar.realisation.ConcreteGraph;
@@ -70,8 +71,12 @@ public class LevelManager extends GameObject{
 		level = new ConcreteGraph ();
 		ParseLevel.parseLVL (GameSystem.CURRENT_LEVEL);
 		
-		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (new Inventory (CharacterName.first)));
-		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (new Inventory (CharacterName.second)));
+		Inventory inventory = Pools.obtain (Inventory.class);
+		inventory.setOwnerName (CharacterName.first);
+		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (inventory));
+		inventory = Pools.obtain (Inventory.class);
+		inventory.setOwnerName (CharacterName.second);
+		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (inventory));
 		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (Camera.getInstance ()));
 		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (Chain.getInstance ()));
 		ObjectManager.getInstance ().sendMessage (new AddObjectMessage (this));

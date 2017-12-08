@@ -21,8 +21,6 @@ public abstract class ParseLevel extends ParseBasis{
 	private static float y;
 	private static float w;
 	private static float h;
-	
-	private static int levelW; //ширина уровня умноженная на аспект ратио
 	private static int levelH; //высота уровня умноженная на аспект ратио
 	
 	
@@ -32,7 +30,8 @@ public abstract class ParseLevel extends ParseBasis{
 		levelH *= height;
 		levelH *= ASPECT_RATIO;
 		
-		levelW = Integer.parseInt (map.getAttributes ().item (6).getTextContent ()); //tile width
+		//ширина уровня умноженная на аспект ратио
+		int levelW = Integer.parseInt (map.getAttributes ().item (6).getTextContent ()); //tile width
 		int width = Integer.parseInt (map.getAttributes ().item (8).getTextContent ());
 		levelW *= width;
 		levelW *= ASPECT_RATIO;
@@ -63,7 +62,8 @@ public abstract class ParseLevel extends ParseBasis{
 			LevelManager.getInstance ().level.addWall (x, y);
 			break;
 		case "characters":
-			Character character = new Character (x, y);
+			Character character = Pools.obtain (Character.class);
+			character.setSpritePosition (x, y);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (character));
 			break;
 		case "invisibleWall":

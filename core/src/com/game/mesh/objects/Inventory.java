@@ -3,6 +3,7 @@ package com.game.mesh.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+import com.badlogic.gdx.utils.Pools;
 import com.game.mesh.body.NoBodyObject;
 import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.character.CharacterName;
@@ -48,15 +49,19 @@ public class Inventory extends GameObject{
 	}
 	
 	
-	public Inventory (CharacterName ownerName){
+	public Inventory (){
 		objectType = ObjectType.actionWheel;
-		this.ownerName = ownerName;
+		this.ownerName = CharacterName.unknown;
 		
 		body = new NoBodyObject ("core/assets/images/other/action_wheel.png", 0, 0, INVENTORY_W, INVENTORY_H);
 		body.setOrigin (INVENTORY_W / 2, INVENTORY_H / 2);
 		body.setScale (percentSize / 100);
 		body.setSpritePosition (INVENTORY_W / 2, INVENTORY_H / 2);
 		dataRender = new DataRender (body.getSprite (), LayerType.over);
+	}
+	
+	public void setOwnerName (CharacterName ownerName){
+		this.ownerName = ownerName;
 	}
 	
 	@Override
@@ -68,23 +73,23 @@ public class Inventory extends GameObject{
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
 			Character character = (Character) message.object;
-			MoveMessage msg = (MoveMessage) message;
 			if (ownerName == character.getName ()){
+				MoveMessage msg = (MoveMessage) message;
 				body.move (msg.deltaX, msg.deltaY);
 			}
 		}
 		else if (message.type == MessageType.returnStartPosition && message.objectType == ObjectType.character){
 			Character character = (Character) message.object;
-			ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
 			if (ownerName == character.getName ()){
+				ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
 				body.setSpritePosition (msg.spriteX + msg.spriteW / 2, msg.spriteY + msg.spriteH / 2);
 			}
 		}
 		else if (message.type == MessageType.characterSelected){
 			Character character = (Character) message.object;
-			CharacterSelectedMessage msg = (CharacterSelectedMessage) message;
 			selectedCharacter = character.getName ();
 			if (ownerName == character.getName ()){
+				CharacterSelectedMessage msg = (CharacterSelectedMessage) message;
 				body.setSpritePosition (msg.spriteX + msg.spriteW / 2, msg.spriteY + msg.spriteH / 2);
 			}
 		}
@@ -100,5 +105,9 @@ public class Inventory extends GameObject{
 	@Override
 	public void clear (){
 		selectedCharacter = CharacterName.first;
+		
+		isVisible = false;
+		percentSize = 1;
+		Pools.free (this);
 	}
 }
