@@ -19,14 +19,15 @@ public class Box extends GameObject{
 	private static final float TRIGGERED_ZONE_W = 2 * BODY_BOX_W;
 	private static final float TRIGGERED_ZONE_H = 2 * BODY_BOX_H;
 	
-	protected boolean isTriggered;
 	protected State state = State.stand;
 	
 	private BoxMessageParser parser;
 	private BoxAnimations animations;
 	
 	
-	public Box (){
+	public Box (){ }
+	
+	public Box (boolean fictiv){ //нужен фиктивный параметр, что бы не зацикливалось создание ящика.
 		objectType = ObjectType.box;
 		body = new AnimatedObject (0, 0, BOX_W, BOX_H, BODY_BOX_W, BODY_BOX_H);
 		body.move (0, 0.5f);
@@ -45,7 +46,6 @@ public class Box extends GameObject{
 	
 	@Override
 	public void update (){
-		state = State.stand;
 		parser.update ();
 		animations.update ();
 	}
@@ -62,10 +62,8 @@ public class Box extends GameObject{
 	
 	@Override
 	public void clear (){
-		isTriggered = false;
 		state = State.stand;
 		triggeredBox = null;
-		animations.clear ();
 		Pools.free (this);
 	}
 	
@@ -95,10 +93,6 @@ public class Box extends GameObject{
 	
 	protected void move (float deltaX, float deltaY){
 		body.move (deltaX, deltaY);
-	}
-	
-	protected void updateMoveAnimation (){
-		animations.update ();
 	}
 	
 	protected boolean checkTriggered (float x, float y, float w, float h){

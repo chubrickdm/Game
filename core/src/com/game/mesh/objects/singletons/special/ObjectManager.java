@@ -33,7 +33,7 @@ public class ObjectManager extends GameObject{
 		Pools.set (Box.class, new Pool <Box> (15, 30){
 			@Override
 			protected Box newObject (){
-				return new Box ();
+				return new Box (true);
 			}
 		});
 		Pools.set (Mushrooms.class, new Pool <Mushrooms> (10, 20){

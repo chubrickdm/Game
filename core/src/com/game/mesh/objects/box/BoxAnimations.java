@@ -2,6 +2,7 @@ package com.game.mesh.objects.box;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.DeleteObjectMessage;
@@ -26,7 +27,7 @@ public class BoxAnimations extends Box{
 		fall = new ObjectAnimation ("core/assets/images/other/box_3_fall.png", false, BOX_W, BOX_H,
 				1, 5, 0.3f);
 		currSprite = fall.getFirstFrame ();
-		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
+		currSprite.setPosition (box.getSpriteX (), box.getSpriteY ());
 		
 		dataRender = new DataRender (currSprite, LayerType.normal);
 	}
@@ -45,11 +46,10 @@ public class BoxAnimations extends Box{
 			break;
 		case stand:
 			currSprite = fall.getFirstFrame ();
+			if (box == triggeredBox){
+				currSprite = triggeredSprite;
+			}
 			break;
-		}
-		
-		if (box.isTriggered){
-			currSprite = triggeredSprite;
 		}
 		
 		currSprite.setPosition (box.getSpriteX (), box.getSpriteY ());

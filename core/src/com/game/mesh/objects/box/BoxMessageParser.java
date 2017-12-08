@@ -17,28 +17,13 @@ public class BoxMessageParser extends Box{
 		MoveMessage msg = (MoveMessage) message;
 		if (box.state != State.fall){ //если этого условия не будет, то когда ящик падает и персонаж двигается возле триггеред зоны
 			// спрайт с анимации падения меняется на обычный
-			boolean triggered;
-			triggered = box.checkTriggered (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH);
-			if (triggered){
-				if (triggeredBox == null){
-					box.isTriggered = true;
-					//currSprite = triggeredBoxSprite;
-					triggeredBox = box;
-					//здесь по идеи должно создаваться сообщение о возбуждении объекта
-				}
-				else if (triggeredBox == box){
-					box.isTriggered = true;
-					//currSprite = triggeredBoxSprite;
-				}
+			boolean triggered = box.checkTriggered (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH);
+			if (triggered && triggeredBox == null){
+				triggeredBox = box;
 			}
-			else{
-				box.isTriggered = false;
-				//currSprite = fall.getFirstFrame ();
-				if (triggeredBox == box){
-					triggeredBox = null;
-				}
+			else if (!triggered && triggeredBox == box){
+				triggeredBox = null;
 			}
-			updateMoveAnimation ();
 		}
 	}
 	
@@ -48,23 +33,23 @@ public class BoxMessageParser extends Box{
 		//такое разделение движения на 2 направлени по оси Х и У не случайно, могут быть ситуации когда персонаж
 		//движется под углом к стене, но выталкиваться он будет только в одном направлении, что б он смог двигаться
 		//вдоль стены
-		if (msg.deltaX != 0 &&  box.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
+		if (msg.deltaX != 0 && box.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
 			if (character.getName () == CharacterName.first){ //первый не может двигать ящики
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, -msg.deltaX, 0));
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (character, -msg.deltaX, 0));
 			}
 			else if (character.getName () == CharacterName.second){
-				ObjectManager.getInstance ().addMessage (new MoveMessage (box, msg.deltaX, 0,
-						box.getBodyX (), box.getBodyY (), box.getSpriteX (), box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
+				ObjectManager.getInstance ().addMessage (new MoveMessage (box, msg.deltaX, 0, box.getBodyX (),
+						box.getBodyY (), box.getSpriteX (), box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
 				box.move (msg.deltaX, 0);
 			}
 		}
-		if (msg.deltaY != 0 &&  box.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+		if (msg.deltaY != 0 && box.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 			if (character.getName () == CharacterName.first){ //первый не может двигать ящики
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, 0, -msg.deltaY));
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (character, 0, -msg.deltaY));
 			}
 			else if (character.getName () == CharacterName.second){
-				ObjectManager.getInstance ().addMessage (new MoveMessage (box, 0, msg.deltaY,
-						box.getBodyX (), box.getBodyY (), box.getSpriteX (), box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
+				ObjectManager.getInstance ().addMessage (new MoveMessage (box, 0, msg.deltaY, box.getBodyX (),
+						box.getBodyY (), box.getSpriteX (), box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
 				box.move (0, msg.deltaY);
 			}
 		}
@@ -75,14 +60,14 @@ public class BoxMessageParser extends Box{
 		//вместо одного.
 		PushOutMessage msg = (PushOutMessage) message;
 		if (msg.deltaX != 0 && !pushOutHorizontal){
-			ObjectManager.getInstance ().addMessage (new MoveMessage (box, msg.deltaX, 0,
-					box.getBodyX (), box.getBodyY (), box.getSpriteX (), box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
+			ObjectManager.getInstance ().addMessage (new MoveMessage (box, msg.deltaX, 0, box.getBodyX (),
+					box.getBodyY (), box.getSpriteX (), box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
 			box.move (msg.deltaX, 0);
 			pushOutHorizontal = true;
 		}
 		if (msg.deltaY != 0 && !pushOutVertical){
-			ObjectManager.getInstance ().addMessage (new MoveMessage (box, 0, msg.deltaY,
-					box.getBodyX (), box.getBodyY (), box.getSpriteX (), box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
+			ObjectManager.getInstance ().addMessage (new MoveMessage (box, 0, msg.deltaY, box.getBodyX (),
+					box.getBodyY (), box.getSpriteX (), box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
 			box.move (0, msg.deltaY);
 			pushOutVertical = true;
 		}
