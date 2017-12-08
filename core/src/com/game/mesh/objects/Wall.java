@@ -1,7 +1,7 @@
 package com.game.mesh.objects;
 
 import com.badlogic.gdx.utils.Pools;
-import com.game.addition.parsers.ParseLevel;
+
 import com.game.mesh.body.BodyObject;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.GameMessage;
