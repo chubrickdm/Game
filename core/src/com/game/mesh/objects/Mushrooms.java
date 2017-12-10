@@ -32,10 +32,13 @@ public class Mushrooms extends GameObject{
 		objectType = ObjectType.mushrooms;
 		body = new AnimatedObject (0, 0, MUSH_W, MUSH_H, BODY_MUSH_W, BODY_MUSH_H);
 		
+		
+		float regionW = 2 * GameObject.UNIT / GameObject.ASPECT_RATIO;
+		float regionH = (2 * GameObject.ANGLE) * GameObject.UNIT / GameObject.ASPECT_RATIO;
+		hide = new ObjectAnimation ("core/assets/images/other/mushrooms_hide.png", false, regionW, regionH,
+				MUSH_W, MUSH_H, 0.1f);
 		light = new PointLight (Render.getInstance ().handler,100, Color.OLIVE, (int) (100 * ASPECT_RATIO),
 				MUSH_W / 2, MUSH_H / 2);
-		hide = new ObjectAnimation ("core/assets/images/other/mushrooms_hide.png", false, MUSH_W, MUSH_H,
-				1, 5, 0.1f);
 		currSprite = hide.getFirstFrame ();
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
 		dataRender = new DataRender (currSprite, LayerType.below);
@@ -64,6 +67,9 @@ public class Mushrooms extends GameObject{
 				light.setActive (true);
 			}
 			currSprite = hide.getReversedCurrSprite ();
+		}
+		else if (toxicGas == null){
+			currSprite = hide.getFirstFrame ();
 		}
 		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
 	}

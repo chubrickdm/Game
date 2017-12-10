@@ -27,8 +27,10 @@ public class ToxicGas extends GameObject{
 		objectType = ObjectType.toxicGas;
 		body = new AnimatedObject (0, 0, GAS_W, GAS_H, BODY_GAS_W, BODY_GAS_H, true);
 		
-		animation = new ObjectAnimation ("core/assets/images/other/toxic_gas.png", GAS_W, GAS_H,
-				1, 4, 0.5f);
+		float regionW = 2 * GameObject.UNIT / GameObject.ASPECT_RATIO;
+		float regionH = (2 * GameObject.ANGLE) * GameObject.UNIT / GameObject.ASPECT_RATIO;
+		animation = new ObjectAnimation ("core/assets/images/other/toxic_gas.png", regionW, regionH,
+				GAS_W, GAS_H, 0.5f);
 		currSprite = animation.getFirstFrame ();
 		currSprite.setPosition (0, 0);
 		dataRender = new DataRender (currSprite, LayerType.normal);

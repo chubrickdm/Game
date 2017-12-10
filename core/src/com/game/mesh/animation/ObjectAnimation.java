@@ -14,14 +14,14 @@ public class ObjectAnimation{
 	private Animation <TextureRegion> animation;
 	
 	
-	public ObjectAnimation (String fileName, float frameW, float frameH, int frameRows, int frameCols, float frameDuration){
+	public ObjectAnimation (String fileName, float regionW, float regionH, float frameW, float frameH, float frameDuration){
 		//frameDuration - время между кадрами
 		this.frameW = frameW;
 		this.frameH = frameH;
 		Texture texture = new Texture (fileName);
-		int regionW = texture.getWidth () / frameCols;
-		int regionH = texture.getHeight () / frameRows;
-		TextureRegion[][] tmp = TextureRegion.split (texture, regionW, regionH);
+		int frameCols = (int) (texture.getWidth () / regionW);
+		int frameRows = (int) (texture.getHeight () / regionH);
+		TextureRegion[][] tmp = TextureRegion.split (texture, (int) regionW, (int) regionH);
 		TextureRegion[] frames = new TextureRegion[frameCols * frameRows];
 		for (int i = 0, index = 0; i < frameRows; i++){
 			for (int j = 0; j < frameCols; j++){
@@ -31,8 +31,8 @@ public class ObjectAnimation{
 		animation = new Animation <TextureRegion> (frameDuration, frames);
 	}
 	
-	public ObjectAnimation (String fileName, boolean looping, float frameW, float frameH, int frameRows, int frameCols, float frameDuration){
-		this (fileName, frameW, frameH, frameRows, frameCols, frameDuration); //конструктор для задания повторения анимации
+	public ObjectAnimation (String fileName, boolean looping, float regionW, float regionH, float frameW, float frameH, float frameDuration){
+		this (fileName, regionW, regionH, frameW, frameH,frameDuration); //конструктор для задания повторения анимации
 		this.looping = looping;
 	}
 	
