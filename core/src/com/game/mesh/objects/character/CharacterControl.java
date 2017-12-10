@@ -9,6 +9,7 @@ import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.State;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.CharacterChangeMessage;
+import com.game.messages.ComeToMessage;
 import com.game.messages.MoveMessage;
 
 import java.util.ArrayList;
@@ -58,6 +59,11 @@ public class CharacterControl extends Character{
 		if (!moveX && !moveY){
 			if (iterator == path.size () - 1){
 				movedByComputer = false;
+				if (character.goToBox){
+					System.out.println ("Finish go to box.");
+					character.state = State.push;
+					ObjectManager.getInstance ().addMessage (new ComeToMessage (character));
+				}
 			}
 			else{
 				nextIteration ();
@@ -153,6 +159,10 @@ public class CharacterControl extends Character{
 	public void update (){
 		if (character.isSelected && (character.state == State.stand || character.state == State.move)){
 			updateControl ();
+		}
+		if (!movedByComputer && goToBox){
+			goToBox = false;
+			ObjectManager.getInstance ().addMessage (new ComeToMessage (character));
 		}
 	}
 	

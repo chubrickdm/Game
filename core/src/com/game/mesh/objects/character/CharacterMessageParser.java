@@ -2,6 +2,7 @@ package com.game.mesh.objects.character;
 
 import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.State;
+import com.game.mesh.objects.box.Box;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
 
@@ -86,6 +87,9 @@ public class CharacterMessageParser extends Character{
 		else if (message.type == MessageType.goTo && message.object == character){
 			GoToMessage msg = (GoToMessage) message;
 			character.goTo ((int) msg.whereX, (int) msg.whereY);
+		}
+		else if (message.type == MessageType.changeState && message.object == character){
+			character.state = State.push;
 		}
 	}
 }

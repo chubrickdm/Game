@@ -3,9 +3,8 @@ package com.game.mesh.objects.character;
 import box2dLight.PointLight;
 
 import com.badlogic.gdx.graphics.Color;
-
 import com.badlogic.gdx.utils.Pools;
-import com.game.GameSystem;
+
 import com.game.addition.algorithms.aStar.realisation.ConcreteNode;
 import com.game.mesh.body.AnimatedObject;
 import com.game.mesh.objects.GameObject;
@@ -23,6 +22,7 @@ public class Character extends GameObject{
 	private static final float BODY_CHARACTER_W = 2 * CHARACTER_W / 5;
 	private static final float BODY_CHARACTER_H = CHARACTER_H / 4;
 	
+	protected boolean goToBox = false;
 	protected boolean isSelected = false;
 	protected Direction currentDirection = Direction.forward;
 	protected State state = State.stand;

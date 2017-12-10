@@ -2,6 +2,7 @@ package com.game.mesh.objects.box;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
 import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.State;
 import com.game.mesh.objects.character.Character;
@@ -9,7 +10,7 @@ import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
 
 public class BoxMessageParser extends Box{
-	private boolean goToBox = false;
+	private boolean pushThis = false;
 	private boolean pushOutHorizontal = false;
 	private boolean pushOutVertical = false;
 	private Box box;
@@ -38,19 +39,12 @@ public class BoxMessageParser extends Box{
 		//такое разделение движения на 2 направлени по оси Х и У не случайно, могут быть ситуации когда персонаж
 		//движется под углом к стене, но выталкиваться он будет только в одном направлении, что б он смог двигаться
 		//вдоль стены
-		if (!goToBox && message.object != exciter){
-			if (msg.deltaX != 0 && box.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (character, -msg.deltaX, 0));
-			}
-			if (msg.deltaY != 0 && box.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (character, 0, -msg.deltaY));
-			}
+		if (msg.deltaX != 0 && box.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
+			ObjectManager.getInstance ().addMessage (new PushOutMessage (character, -msg.deltaX, 0));
 		}
-		/*else if (goToBox && message.object == exciter){
-			if (box.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-			
-			}
-		}*/
+		if (msg.deltaY != 0 && box.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+			ObjectManager.getInstance ().addMessage (new PushOutMessage (character, 0, -msg.deltaY));
+		}
 	}
 	
 	private void pushOutMessage (GameMessage message){
@@ -76,9 +70,8 @@ public class BoxMessageParser extends Box{
 		pushOutVertical = false;
 		
 		if (triggeredBox == box && Gdx.input.isKeyJustPressed (Input.Keys.E)){
-			goToBox = true;
-			ObjectManager.getInstance ().addMessage (new GoToMessage (exciter, box.getBodyX () + box.getBodyW () / 2,
-					box.getBodyY () + box.getBodyW () / 2));
+			ObjectManager.getInstance ().addMessage (new GoToMessage (exciter,
+					box.getBodyX () + box.getBodyW () / 2, box.getBodyY () + box.getBodyW () / 2));
 		}
 	}
 	
@@ -106,6 +99,10 @@ public class BoxMessageParser extends Box{
 			if (msg.destroyer == ObjectType.hole){
 				box.state = State.fall;
 			}
+		}
+		else if (message.type == MessageType.comeTo && message.object == exciter){
+			pushThis = true;
+			ObjectManager.getInstance ().addMessage (new ChangeStateMessage (exciter, box));
 		}
 	}
 }

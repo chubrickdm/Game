@@ -44,6 +44,7 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 			ArrayList <ConcreteNode> path = algorithm.findWay (LevelManager.getInstance ().level, start, finish);
 			
 			if (path != null && path.size () != 1){
+				character.goToBox = true;
 				character.setPath (path);
 			}
 		}
