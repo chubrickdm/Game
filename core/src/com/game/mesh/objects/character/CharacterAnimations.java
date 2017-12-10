@@ -3,6 +3,7 @@ package com.game.mesh.objects.character;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import com.game.mesh.animation.ObjectAnimation;
+import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.PlayerLostMessage;
 import com.game.render.DataRender;
@@ -10,10 +11,6 @@ import com.game.render.LayerType;
 import com.game.render.Render;
 
 public class CharacterAnimations extends Character{
-	private static final int FRAME_COLS = 7;
-	private static final int FRAME_ROWS = 1;
-	private static final String path = "core/assets/images/character/";
-	
 	private Character character;
 	private Sprite currSprite;
 	
@@ -25,26 +22,30 @@ public class CharacterAnimations extends Character{
 	
 	public CharacterAnimations (Character character){
 		this.character = character;
+		String path;
+		if (character.getName () == CharacterName.first){
+			path = "core/assets/images/character/first/";
+		}
+		else{
+			path = "core/assets/images/character/second/";
+		}
 		
 		stand = new ObjectAnimation[Direction.values ().length];
 		walk = new ObjectAnimation[Direction.values ().length];
 		fall = new ObjectAnimation[Direction.values ().length];
 		choke = new ObjectAnimation[Direction.values ().length];
 		
+		float region = GameObject.UNIT / GameObject.ASPECT_RATIO;
 		for (int i = 0; i < Direction.values ().length; i++){
-			stand[i] = new ObjectAnimation (path + "walking_" + Direction.values ()[i] + ".png", CHARACTER_W, CHARACTER_H,
-					FRAME_ROWS, FRAME_COLS, 0.15f);
-			walk[i] = new ObjectAnimation (path + "walking_" + Direction.values ()[i] + ".png", CHARACTER_W, CHARACTER_H,
-					FRAME_ROWS, FRAME_COLS, 0.15f);
-			fall[i] = new ObjectAnimation (path + "fall_" + Direction.values ()[i] + ".png", false, CHARACTER_W, CHARACTER_H,
-					FRAME_ROWS, FRAME_COLS, 0.15f);
-			choke[i] = new ObjectAnimation (path + "choke_" + Direction.values ()[i] + ".png", false, CHARACTER_W, CHARACTER_H,
-					FRAME_ROWS, 5, 0.3f);
+			stand[i] = new ObjectAnimation (path + "stand/stand_" + Direction.values ()[i] + ".png", region,
+					region, CHARACTER_W, CHARACTER_H, 0.15f);
+			walk[i] = new ObjectAnimation (path + "walk/walk_" + Direction.values ()[i] + ".png", region,
+					region, CHARACTER_W, CHARACTER_H, 0.15f);
+			fall[i] = new ObjectAnimation (path + "fall/fall_" + Direction.values ()[i] + ".png",
+					false, region, region, CHARACTER_W, CHARACTER_H, 0.15f);
+			choke[i] = new ObjectAnimation (path + "choke/choke_" + Direction.values ()[i] + ".png",
+					false, region, region, CHARACTER_W, CHARACTER_H, 0.3f);
 		}
-		stand[2] = new ObjectAnimation (path + "walking_" + Direction.values ()[2] + ".png", CHARACTER_W, CHARACTER_H,
-				FRAME_ROWS, 12, 0.1f);
-		walk[2] = new ObjectAnimation (path + "walking_" + Direction.values ()[2] + ".png", CHARACTER_W, CHARACTER_H,
-				FRAME_ROWS, 12, 0.1f);
 		
 		dataRender = new DataRender (currSprite, LayerType.normal);
 	}

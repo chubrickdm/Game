@@ -67,12 +67,6 @@ public class ObjectManager extends GameObject{
 				return new Inventory ();
 			}
 		});
-		Pools.set (Character.class, new Pool <Character> (2, 2){
-			@Override
-			protected Character newObject (){
-				return new Character (true);
-			}
-		});
 		Pools.set (ToxicGas.class, new Pool <ToxicGas> (10, 20){
 			@Override
 			public ToxicGas newObject (){

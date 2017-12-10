@@ -35,10 +35,9 @@ public class Character extends GameObject{
 	private CharacterAnimations animations;
 	
 	
-	public Character (){ }
-	
-	public Character (boolean fictiv){
+	private Character (CharacterName name){
 		objectType = ObjectType.character;
+		this.name = name;
 		
 		body = new AnimatedObject (0, 0, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
 		body.move (0, 0.25f);
@@ -51,15 +50,25 @@ public class Character extends GameObject{
 		animations = new CharacterAnimations (this);
 	}
 	
+	private static class CharacterHolder{
+		private final static Character first = new Character (CharacterName.first);
+		private final static Character second = new Character (CharacterName.second);
+	}
+	
+	protected Character (){ }
+	
+	
+	public static Character getFirstInstance (){
+		return CharacterHolder.first;
+	}
+	
+	public static Character getSecondInstance (){
+		return CharacterHolder.second;
+	}
+	
+	
 	public void setSpritePosition (float x, float y){
-		if (x < GameSystem.SCREEN_W / 2){ //персонаж слева, всегда первый
-			isSelected = true;
-			name = CharacterName.first;
-		}
-		else{ //а справа, всегда второй
-			isSelected = false;
-			name = CharacterName.second;
-		}
+		isSelected = (name == CharacterName.first);
 		
 		body.setSpritePosition (x, y);
 		body.move (0, 0.25f);
