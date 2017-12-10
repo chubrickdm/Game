@@ -155,4 +155,8 @@ public class Character extends GameObject{
 	protected void setPath (ArrayList <ConcreteNode> path){
 		control.setPath (path);
 	}
+	
+	protected void goTo (int x, int y){
+		inputProcessor.goTo (x, y);
+	}
 }

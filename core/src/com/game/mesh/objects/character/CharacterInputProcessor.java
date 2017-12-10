@@ -31,6 +31,24 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 		finish = new ConcreteNode ();
 	}
 	
+	public void goTo (int x, int y){
+		if (character.isSelected){
+			//обязательно надо к int делать преобразование, а то работать не будет.
+			start.x = (int) ((character.getBodyX () + character.getBodyW () / 2 - GameSystem.INDENT_BETWEEN_SCREEN_LEVEL) / GameObject.UNIT);
+			start.y = (int) ((character.getBodyY () + character.getBodyH () / 2) / (GameObject.UNIT * GameObject.ANGLE));
+			
+			finish.x = (int) ((x - GameSystem.INDENT_BETWEEN_SCREEN_LEVEL) / GameObject.UNIT);
+			finish.y = (int) (y / (GameObject.UNIT * GameObject.ANGLE));
+			
+			AlgorithmAStar <ConcreteNode> algorithm = new AlgorithmAStar <> ();
+			ArrayList <ConcreteNode> path = algorithm.findWay (LevelManager.getInstance ().level, start, finish);
+			
+			if (path != null && path.size () != 1){
+				character.setPath (path);
+			}
+		}
+	}
+	
 	@Override
 	public boolean touchDown (int screenX, int screenY, int pointer, int button){
 		if (character.isSelected){
