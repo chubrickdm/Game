@@ -68,7 +68,6 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 					list.add (map.get (x + i).get (y - 1));
 				}
 			}
-			
 			for (int i = -1; i < 2 && x > 0 && y < map.get (0).size () - 1; i++){
 				if (map.get (x + i).get (y + 1).type != TypeNode.wall){
 					list.add (map.get (x + i).get (y + 1));

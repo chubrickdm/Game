@@ -30,12 +30,20 @@ public class CharacterMessageParser extends Character{
 			ObjectManager.getInstance ().addMessage (new MoveMessage (character, msg.deltaX, 0, character.getBodyX (),
 					character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
 			pushOutHorizontal = true;
+			if (character.state == State.push){
+				character.state = State.stand;
+				ObjectManager.getInstance ().addMessage (new DisconnectMessage (character));
+			}
 		}
 		if (msg.deltaY != 0 && !pushOutVertical){
 			character.move (0, msg.deltaY);
 			ObjectManager.getInstance ().addMessage (new MoveMessage (character, 0, msg.deltaY, character.getBodyX (),
 					character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
 			pushOutVertical = true;
+			if (character.state == State.push){
+				character.state = State.stand;
+				ObjectManager.getInstance ().addMessage (new DisconnectMessage (character));
+			}
 		}
 	}
 	

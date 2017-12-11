@@ -10,6 +10,7 @@ import com.game.mesh.objects.State;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.CharacterChangeMessage;
 import com.game.messages.ComeToMessage;
+import com.game.messages.DisconnectMessage;
 import com.game.messages.MoveMessage;
 
 import java.util.ArrayList;
@@ -59,8 +60,8 @@ public class CharacterControl extends Character{
 		if (!moveX && !moveY){
 			if (iterator == path.size () - 1){
 				movedByComputer = false;
-				if (character.goToBox){
-					character.goToBox = false;
+				if (character.goToObject){
+					character.goToObject = false;
 					ObjectManager.getInstance ().addMessage (new ComeToMessage (character));
 				}
 			}
@@ -102,7 +103,7 @@ public class CharacterControl extends Character{
 		}
 	}
 	
-	private void updateControl (){
+	private void updateMoveControl (){
 		character.state = State.stand;
 		deltaX = 0; deltaY = 0;
 		if (Gdx.input.isKeyPressed (Input.Keys.W)){
@@ -122,8 +123,8 @@ public class CharacterControl extends Character{
 			movedByComputer = false;
 		}
 		
-		if (!movedByComputer && character.goToBox){
-			character.goToBox = false;
+		if (!movedByComputer && character.goToObject){
+			character.goToObject = false;
 		}
 		
 		if (movedByComputer){
@@ -137,6 +138,49 @@ public class CharacterControl extends Character{
 		}
 		else if (deltaX != 0 || deltaY != 0){
 			character.state = State.move;
+			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (),
+					character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
+			character.move (deltaX, deltaY);
+		}
+	}
+	
+	private void updatePushControl (){
+		character.state = State.abut;
+		deltaX = 0; deltaY = 0;
+		
+		switch (character.currentDirection){
+		case forward:
+			if (Gdx.input.isKeyPressed (Input.Keys.W)){
+				keyWPressed ();
+			}
+			break;
+		case right:
+			if (Gdx.input.isKeyPressed (Input.Keys.D)){
+				keyDPressed ();
+			}
+			break;
+		case back:
+			if (Gdx.input.isKeyPressed (Input.Keys.S)){
+				keySPressed ();
+			}
+			break;
+		case left:
+			if (Gdx.input.isKeyPressed (Input.Keys.A)){
+				keyAPressed ();
+			}
+			break;
+		}
+		
+		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
+			character.isSelected = false;
+			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (character));
+		}
+		else if (Gdx.input.isKeyJustPressed (Input.Keys.E)){
+			character.state = State.stand;
+			ObjectManager.getInstance ().addMessage (new DisconnectMessage (character));
+		}
+		else if (deltaX != 0 || deltaY != 0){
+			character.state = State.push;
 			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (),
 					character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
 			character.move (deltaX, deltaY);
@@ -161,7 +205,10 @@ public class CharacterControl extends Character{
 	@Override
 	public void update (){
 		if (character.isSelected && (character.state == State.stand || character.state == State.move)){
-			updateControl ();
+			updateMoveControl ();
+		}
+		else if (character.isSelected && (character.state == State.abut || character.state == State.push)){
+			updatePushControl ();
 		}
 	}
 	

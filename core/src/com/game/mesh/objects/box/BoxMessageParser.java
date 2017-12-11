@@ -39,11 +39,25 @@ public class BoxMessageParser extends Box{
 		//такое разделение движения на 2 направлени по оси Х и У не случайно, могут быть ситуации когда персонаж
 		//движется под углом к стене, но выталкиваться он будет только в одном направлении, что б он смог двигаться
 		//вдоль стены
-		if (msg.deltaX != 0 && box.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
-			ObjectManager.getInstance ().addMessage (new PushOutMessage (character, -msg.deltaX, 0));
+		if (!pushThis){
+			if (msg.deltaX != 0 && box.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (character, -msg.deltaX, 0));
+			}
+			if (msg.deltaY != 0 && box.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+				ObjectManager.getInstance ().addMessage (new PushOutMessage (character, 0, -msg.deltaY));
+			}
 		}
-		if (msg.deltaY != 0 && box.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-			ObjectManager.getInstance ().addMessage (new PushOutMessage (character, 0, -msg.deltaY));
+		else if (exciter == message.object){
+			if (msg.deltaX != 0 && box.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
+				ObjectManager.getInstance ().addMessage (new MoveMessage (box, msg.deltaX, 0, box.getBodyX (),
+						box.getBodyY (), box.getSpriteX (), box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
+				box.move (msg.deltaX, 0);
+			}
+			if (msg.deltaY != 0 && box.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+				ObjectManager.getInstance ().addMessage (new MoveMessage (box, 0, msg.deltaY, box.getBodyX (),
+						box.getBodyY (), box.getSpriteX (), box.getSpriteY (), BODY_BOX_W, BODY_BOX_H));
+				box.move (0, msg.deltaY);
+			}
 		}
 	}
 	
@@ -69,7 +83,7 @@ public class BoxMessageParser extends Box{
 		pushOutHorizontal = false;
 		pushOutVertical = false;
 		
-		if (triggeredBox == box && Gdx.input.isKeyJustPressed (Input.Keys.E)){
+		if (triggeredBox == box && !pushThis && Gdx.input.isKeyJustPressed (Input.Keys.E)){
 			ObjectManager.getInstance ().addMessage (new GoToMessage (exciter,
 					box.getBodyX () + box.getBodyW () / 2, box.getBodyY () + box.getBodyW () / 2));
 		}
@@ -103,6 +117,9 @@ public class BoxMessageParser extends Box{
 		else if (message.type == MessageType.comeTo && message.object == exciter){
 			pushThis = true;
 			ObjectManager.getInstance ().addMessage (new ChangeStateMessage (exciter, box));
+		}
+		else if (message.type == MessageType.disconnect && message.object == exciter){
+			pushThis = false;
 		}
 	}
 }
