@@ -48,7 +48,7 @@ public class BoxAnimations extends Box{
 			break;
 		case stand:
 			currSprite = fall.getFirstFrame ();
-			if (box == triggeredBox){
+			if (box == triggered[0] || box == triggered[1]){
 				currSprite = triggeredSprite;
 			}
 			break;

@@ -14,7 +14,6 @@ public class Box extends GameObject{
 	protected static final float BODY_BOX_H = UNIT * ANGLE - 1;
 	protected static final float BOX_W = UNIT;
 	protected static final float BOX_H = UNIT + UNIT * ANGLE;
-	protected static Box triggeredBox = null; //только один ящик может быть выбран
 	
 	private static final float TRIGGERED_ZONE_W = 2 * BODY_BOX_W;
 	private static final float TRIGGERED_ZONE_H = 2 * BODY_BOX_H;
@@ -64,7 +63,6 @@ public class Box extends GameObject{
 	@Override
 	public void clear (){
 		state = State.stand;
-		triggeredBox = null;
 		Pools.free (this);
 	}
 	

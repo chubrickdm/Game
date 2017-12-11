@@ -19,16 +19,17 @@ public class BoxMessageParser extends Box{
 	
 	private void checkTriggeredZone (GameMessage message){
 		MoveMessage msg = (MoveMessage) message;
+		Character character = (Character) msg.object;
 		if (box.state != State.fall){ //если этого условия не будет, то когда ящик падает и персонаж двигается возле триггеред зоны
 			// спрайт с анимации падения меняется на обычный
-			boolean triggered = box.checkTriggered (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH);
-			if (triggered && triggeredBox == null){
+			boolean trigger = box.checkTriggered (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH);
+			if (trigger && triggered[character.getName ().ordinal ()] == null){
 				exciter = (Character) message.object;
-				triggeredBox = box;
+				triggered[character.getName ().ordinal ()] = box;
 			}
-			else if (!triggered && triggeredBox == box){
+			else if (!trigger && triggered[character.getName ().ordinal ()] == box){
 				exciter = null;
-				triggeredBox = null;
+				triggered[character.getName ().ordinal ()] = null;
 			}
 		}
 	}
@@ -83,9 +84,11 @@ public class BoxMessageParser extends Box{
 		pushOutHorizontal = false;
 		pushOutVertical = false;
 		
-		if (triggeredBox == box && !pushThis && Gdx.input.isKeyJustPressed (Input.Keys.E)){
-			ObjectManager.getInstance ().addMessage (new GoToMessage (exciter,
-					box.getBodyX () + box.getBodyW () / 2, box.getBodyY () + box.getBodyW () / 2));
+		if (!pushThis && Gdx.input.isKeyJustPressed (Input.Keys.E)){
+			if (triggered[0] == box || triggered[1] == box){
+				ObjectManager.getInstance ().addMessage (new GoToMessage (exciter,
+						box.getBodyX () + box.getBodyW () / 2, box.getBodyY () + box.getBodyW () / 2));
+			}
 		}
 	}
 	
@@ -112,6 +115,8 @@ public class BoxMessageParser extends Box{
 			DestroyObjectMessage msg = (DestroyObjectMessage) message;
 			if (msg.destroyer == ObjectType.hole){
 				box.state = State.fall;
+				pushThis = false;
+				exciter = null;
 			}
 		}
 		else if (message.type == MessageType.comeTo && message.object == exciter){

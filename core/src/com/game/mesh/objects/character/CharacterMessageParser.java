@@ -101,5 +101,9 @@ public class CharacterMessageParser extends Character{
 				character.state = State.abut;
 			}
 		}
+		else if (message.type == MessageType.destroyObject && message.object == triggered[character.getName ().ordinal ()]){
+			triggered[character.getName ().ordinal ()] = null;
+			character.state = State.stand;
+		}
 	}
 }
