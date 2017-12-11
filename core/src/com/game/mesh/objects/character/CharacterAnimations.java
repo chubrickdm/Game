@@ -19,6 +19,7 @@ public class CharacterAnimations extends Character{
 	private ObjectAnimation[] fall;
 	private ObjectAnimation[] choke;
 	private ObjectAnimation[] push;
+	private ObjectAnimation[] abut;
 	
 	
 	public CharacterAnimations (Character character){
@@ -36,6 +37,7 @@ public class CharacterAnimations extends Character{
 		fall = new ObjectAnimation[Direction.values ().length];
 		choke = new ObjectAnimation[Direction.values ().length];
 		push = new ObjectAnimation[Direction.values ().length];
+		abut = new ObjectAnimation[Direction.values ().length];
 		
 		float region = GameObject.UNIT / GameObject.ASPECT_RATIO;
 		for (int i = 0; i < Direction.values ().length; i++){
@@ -48,6 +50,8 @@ public class CharacterAnimations extends Character{
 			choke[i] = new ObjectAnimation (path + "choke/choke_" + Direction.values ()[i] + ".png",
 					false, region, region, CHARACTER_W, CHARACTER_H, 0.3f);
 			push[i] = new ObjectAnimation (path + "push/push_" + Direction.values ()[i] + ".png", region,
+					region, CHARACTER_W, CHARACTER_H, 0.15f);
+			abut[i] = new ObjectAnimation (path + "abut/abut_" + Direction.values ()[i] + ".png", region,
 					region, CHARACTER_W, CHARACTER_H, 0.15f);
 		}
 		
@@ -78,6 +82,9 @@ public class CharacterAnimations extends Character{
 		case push:
 			currSprite = push[character.currentDirection.ordinal ()].getCurrSprite ();
 			break;
+		case abut:
+			currSprite = abut[character.currentDirection.ordinal ()].getCurrSprite ();
+			break;
 		}
 		currSprite.setPosition (character.getSpriteX (), character.getSpriteY ());
 	}
@@ -96,6 +103,7 @@ public class CharacterAnimations extends Character{
 			fall[i].resetTime ();
 			choke[i].resetTime ();
 			push[i].resetTime ();
+			abut[i].resetTime ();
 		}
 	}
 }

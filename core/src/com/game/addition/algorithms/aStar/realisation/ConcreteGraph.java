@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class ConcreteGraph implements Graph <ConcreteNode>{
+	private boolean withDiagonalNeighbors = true;
 	private LinkedList <LinkedList <ConcreteNode>> map;
 	
 	
@@ -46,6 +47,10 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 		}
 	}
 	
+	public void setWithDiagonalNeighbors (boolean withDiagonalNeighbors){
+		this.withDiagonalNeighbors = withDiagonalNeighbors;
+	}
+	
 	@Override
 	public double heuristic (ConcreteNode begin, ConcreteNode end){
 		return (int) (Math.pow (begin.x - end.x, 2) + Math.pow (begin.y - end.y, 2));
@@ -57,15 +62,25 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 		int x = (int) current.x;
 		int y = (int) current.y;
 		
-		for (int i = -1; i < 2 && x > 0 && y > 0; i++){
-			if (map.get (x + i).get (y - 1).type != TypeNode.wall){
-				list.add (map.get (x + i).get (y - 1));
+		if (withDiagonalNeighbors){
+			for (int i = -1; i < 2 && x > 0 && y > 0; i++){
+				if (map.get (x + i).get (y - 1).type != TypeNode.wall){
+					list.add (map.get (x + i).get (y - 1));
+				}
+			}
+			
+			for (int i = -1; i < 2 && x > 0 && y < map.get (0).size () - 1; i++){
+				if (map.get (x + i).get (y + 1).type != TypeNode.wall){
+					list.add (map.get (x + i).get (y + 1));
+				}
 			}
 		}
-		
-		for (int i = -1; i < 2 && x > 0 && y < map.get (0).size () - 1; i++){
-			if (map.get (x + i).get (y + 1).type != TypeNode.wall){
-				list.add (map.get (x + i).get (y + 1));
+		else{
+			if (map.get (x).get (y + 1).type != TypeNode.wall){
+				list.add (map.get (x).get (y + 1));
+			}
+			if (map.get (x).get (y - 1).type != TypeNode.wall){
+				list.add (map.get (x).get (y - 1));
 			}
 		}
 		

@@ -41,6 +41,7 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 			finish.y = (int) (y / (GameObject.UNIT * GameObject.ANGLE));
 			
 			AlgorithmAStar <ConcreteNode> algorithm = new AlgorithmAStar <> ();
+			LevelManager.getInstance ().level.setWithDiagonalNeighbors (false);
 			ArrayList <ConcreteNode> path = algorithm.findWay (LevelManager.getInstance ().level, start, finish);
 			
 			if (path != null && path.size () != 1){
@@ -63,6 +64,7 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 			finish.y = (int) (screenY / (GameObject.UNIT * GameObject.ANGLE));
 			
 			AlgorithmAStar <ConcreteNode> algorithm = new AlgorithmAStar <> ();
+			LevelManager.getInstance ().level.setWithDiagonalNeighbors (true);
 			ArrayList <ConcreteNode> path = algorithm.findWay (LevelManager.getInstance ().level, start, finish);
 			
 			if (path != null && path.size () != 1){

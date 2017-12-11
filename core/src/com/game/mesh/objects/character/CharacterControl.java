@@ -60,8 +60,7 @@ public class CharacterControl extends Character{
 			if (iterator == path.size () - 1){
 				movedByComputer = false;
 				if (character.goToBox){
-					System.out.println ("Finish go to box.");
-					character.state = State.push;
+					character.goToBox = false;
 					ObjectManager.getInstance ().addMessage (new ComeToMessage (character));
 				}
 			}
@@ -123,6 +122,10 @@ public class CharacterControl extends Character{
 			movedByComputer = false;
 		}
 		
+		if (!movedByComputer && character.goToBox){
+			character.goToBox = false;
+		}
+		
 		if (movedByComputer){
 			updatedMoveByComputer ();
 		}
@@ -159,10 +162,6 @@ public class CharacterControl extends Character{
 	public void update (){
 		if (character.isSelected && (character.state == State.stand || character.state == State.move)){
 			updateControl ();
-		}
-		if (!movedByComputer && goToBox){
-			goToBox = false;
-			ObjectManager.getInstance ().addMessage (new ComeToMessage (character));
 		}
 	}
 	
