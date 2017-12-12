@@ -18,13 +18,13 @@ import java.util.ArrayList;
 public class CharacterControl extends Character{
 	private static final float CHARACTER_SPEED = 80 * ASPECT_RATIO;
 	
-	private boolean movedByComputer = false;
-	private float deltaX = 0;
-	private float deltaY = 0;
+	protected boolean movedByComputer = false;
+	protected float deltaX = 0;
+	protected float deltaY = 0;
 	private int iterator;
 	private ConcreteNode next;
 	private ConcreteNode current;
-	private Character character;
+	protected Character character;
 	private ArrayList <ConcreteNode> path;
 	
 	
@@ -71,21 +71,21 @@ public class CharacterControl extends Character{
 		}
 	}
 	
-	private void keyWPressed (){
+	protected void keyWPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.S)){
 			character.currentDirection = Direction.forward;
 			deltaY = CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
 	
-	private void keySPressed (){
+	protected void keySPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.W)){
 			character.currentDirection = Direction.back;
 			deltaY = -CHARACTER_SPEED * Gdx.graphics.getDeltaTime ();
 		}
 	}
 	
-	private void keyDPressed (){
+	protected void keyDPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.A)){
 			if (!Gdx.input.isKeyPressed (Input.Keys.W)){
 				character.currentDirection = Direction.right;
@@ -94,7 +94,7 @@ public class CharacterControl extends Character{
 		}
 	}
 	
-	private void keyAPressed (){
+	protected void keyAPressed (){
 		if (!Gdx.input.isKeyPressed (Input.Keys.D)){
 			if (!Gdx.input.isKeyPressed (Input.Keys.W)){
 				character.currentDirection = Direction.left;
@@ -187,6 +187,8 @@ public class CharacterControl extends Character{
 		}
 	}
 	
+	
+	public CharacterControl (){}
 	
 	public CharacterControl (Character character){
 		next = new ConcreteNode ();

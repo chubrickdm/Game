@@ -39,7 +39,8 @@ public class Floor{
 		
 		coordinates = new ArrayList <> ();
 		int sprite;
-		for (int i = 0; i < LevelManager.getInstance ().level.getSize ().getKey () - 1; i++){
+		int numFloorW = (int) ((GameSystem.SCREEN_W - 2 * GameSystem.INDENT_BETWEEN_SCREEN_LEVEL) / GameObject.UNIT);
+		for (int i = 0; i < numFloorW; i++){
 			for (int j = 0; j < 100; j++){
 				sprite = MathUtils.random (0, numRegions - 1);
 				coordinates.add (new Pair <Pair <Integer, Integer>, Integer> (new Pair <Integer, Integer>(i, j), sprite));

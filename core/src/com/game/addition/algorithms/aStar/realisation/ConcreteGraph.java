@@ -4,7 +4,6 @@ import com.game.GameSystem;
 
 import com.game.addition.algorithms.aStar.Graph;
 import com.game.mesh.objects.GameObject;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -13,10 +12,6 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 	private boolean withDiagonalNeighbors = true;
 	private LinkedList <LinkedList <ConcreteNode>> map;
 	
-	
-	public Pair <Integer, Integer> getSize (){
-		return new Pair <Integer, Integer> (map.size (), map.get (0).size ());
-	}
 	
 	public void setSize (int x, int y){
 		map = new LinkedList <> ();
