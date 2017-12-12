@@ -57,7 +57,7 @@ public class Camera extends GameObject{
 			Character character = (Character) message.object;
 			if (character.getName () == CharacterName.first){
 				ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
-				camera.position.set (camera.position.x, msg.spriteY + msg.spriteH / 2, 0);
+				camera.position.set (camera.position.x, msg.sprite.getY () + msg.sprite.getH () / 2, 0);
 			}
 		}
 	}

@@ -77,7 +77,8 @@ public class CharacterMessageParser extends Character{
 		}
 		else if (message.type == MessageType.getStartPosition){
 			ObjectManager.getInstance ().addMessage (new ReturnStartPositionMessage (character, character.getSpriteX (),
-					character.getSpriteY (), character.getSpriteW (), character.getSpriteH ()));
+					character.getSpriteY (), character.getSpriteW (), character.getSpriteH (), character.getBodyX (),
+					character.getBodyY (), character.getBodyW (), character.getBodyH ()));
 		}
 		else if (message.type == MessageType.move && message.objectType == ObjectType.box){
 			boxMovedMessage (message);

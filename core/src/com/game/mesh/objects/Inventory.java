@@ -82,7 +82,7 @@ public class Inventory extends GameObject{
 			Character character = (Character) message.object;
 			if (ownerName == character.getName ()){
 				ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
-				body.setSpritePosition (msg.spriteX + msg.spriteW / 2, msg.spriteY + msg.spriteH / 2);
+				body.setSpritePosition (msg.sprite.getX () + msg.sprite.getW () / 2, msg.sprite.getY () + msg.sprite.getH () / 2);
 			}
 		}
 		else if (message.type == MessageType.characterSelected){

@@ -17,14 +17,12 @@ public class BoxMessageParser extends Box{
 	private Character exciter;
 	
 	
-	private void checkTriggeredZone (GameMessage message){
-		MoveMessage msg = (MoveMessage) message;
-		Character character = (Character) msg.object;
+	private void checkTriggeredZone (float bodyX, float bodyY, float bodyW, float bodyH, Character character){
 		if (box.state != State.fall){ //если этого условия не будет, то когда ящик падает и персонаж двигается возле триггеред зоны
 			// спрайт с анимации падения меняется на обычный
-			boolean trigger = box.checkTriggered (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH);
+			boolean trigger = box.checkTriggered (bodyX, bodyY, bodyW, bodyH);
 			if (trigger && triggered[character.getName ().ordinal ()] == null){
-				exciter = (Character) message.object;
+				exciter = character;
 				triggered[character.getName ().ordinal ()] = box;
 			}
 			else if (!trigger && triggered[character.getName ().ordinal ()] == box){
@@ -98,7 +96,10 @@ public class BoxMessageParser extends Box{
 	
 	public void parseMessage (GameMessage message){
 		if (message.type == MessageType.move && message.objectType == ObjectType.character){
-			checkTriggeredZone (message); //именно в таком порядке, иначе будет баг, спрайт будет заходить на стену
+			MoveMessage msg = (MoveMessage) message;
+			Character character = (Character) message.object;
+			//именно в таком порядке, иначе будет баг, спрайт будет заходить на стену
+			checkTriggeredZone (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH, character);
 			movedByCharacterMessage (message);
 		}
 		else if (message.type == MessageType.move && message.objectType == ObjectType.box && message.object != box){
@@ -125,6 +126,11 @@ public class BoxMessageParser extends Box{
 		}
 		else if (message.type == MessageType.disconnect && message.object == exciter){
 			pushThis = false;
+		}
+		else if (message.type == MessageType.returnStartPosition && message.objectType == ObjectType.character){
+			ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
+			Character character = (Character) message.object;
+			checkTriggeredZone (msg.body.getX (), msg.body.getY (), msg.body.getW (), msg.body.getH (), character);
 		}
 	}
 }
