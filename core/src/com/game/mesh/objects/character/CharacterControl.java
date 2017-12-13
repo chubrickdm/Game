@@ -37,8 +37,8 @@ public class CharacterControl extends Character{
 	}
 	
 	private void updatedMoveByComputer (){
-		boolean moveX = Math.abs (next.x - current.x) > 5;
-		boolean moveY = Math.abs (next.y - current.y) > 5;
+		boolean moveX = Math.abs (next.x - current.x) > CHARACTER_SPEED * 0.03;
+		boolean moveY = Math.abs (next.y - current.y) > CHARACTER_SPEED * 0.03;
 		if (moveX){
 			if (next.x > current.x){
 				keyDPressed ();
@@ -59,10 +59,15 @@ public class CharacterControl extends Character{
 		}
 		if (!moveX && !moveY){
 			if (iterator == path.size () - 1){
+				path.clear ();
 				movedByComputer = false;
 				if (character.goToObject){
 					character.goToObject = false;
 					ObjectManager.getInstance ().addMessage (new ComeToMessage (character));
+				}
+				else{
+					deltaX += next.x - current.x;
+					deltaY += next.y - current.y;
 				}
 			}
 			else{
@@ -105,7 +110,8 @@ public class CharacterControl extends Character{
 	
 	private void updateMoveControl (){
 		character.state = State.stand;
-		deltaX = 0; deltaY = 0;
+		deltaX = 0;
+		deltaY = 0;
 		if (Gdx.input.isKeyPressed (Input.Keys.W)){
 			keyWPressed ();
 			movedByComputer = false;
@@ -138,51 +144,74 @@ public class CharacterControl extends Character{
 		}
 		else if (deltaX != 0 || deltaY != 0){
 			character.state = State.move;
-			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (),
-					character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
+			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (), character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
 			character.move (deltaX, deltaY);
 		}
 	}
 	
 	private void updatePushControl (){
 		character.state = State.abut;
-		deltaX = 0; deltaY = 0;
+		deltaX = 0;
+		deltaY = 0;
 		
 		switch (character.currentDirection){
 		case forward:
-			if (Gdx.input.isKeyPressed (Input.Keys.W)){
-				keyWPressed ();
+			if (!movedByComputer && Gdx.input.isKeyPressed (Input.Keys.W)){
+				movedByComputer = true;
+				iterator = -1;
+				current.x = character.getBodyX () + character.getBodyW () / 2;
+				current.y = character.getBodyY () + character.getBodyH () / 2;
+				next.x = current.x;
+				next.y = current.y + GameObject.UNIT * GameObject.ANGLE;
 			}
 			break;
 		case right:
-			if (Gdx.input.isKeyPressed (Input.Keys.D)){
-				keyDPressed ();
+			if (!movedByComputer && Gdx.input.isKeyPressed (Input.Keys.D)){
+				movedByComputer = true;
+				iterator = -1;
+				current.x = character.getBodyX () + character.getBodyW () / 2;
+				current.y = character.getBodyY () + character.getBodyH () / 2;
+				next.x = current.x + GameObject.UNIT;
+				next.y = current.y;
 			}
 			break;
 		case back:
-			if (Gdx.input.isKeyPressed (Input.Keys.S)){
-				keySPressed ();
+			if (!movedByComputer && Gdx.input.isKeyPressed (Input.Keys.S)){
+				movedByComputer = true;
+				iterator = -1;
+				current.x = character.getBodyX () + character.getBodyW () / 2;
+				current.y = character.getBodyY () + character.getBodyH () / 2;
+				next.x = current.x;
+				next.y = current.y - GameObject.UNIT * GameObject.ANGLE;
 			}
 			break;
 		case left:
-			if (Gdx.input.isKeyPressed (Input.Keys.A)){
-				keyAPressed ();
+			if (!movedByComputer && Gdx.input.isKeyPressed (Input.Keys.A)){
+				movedByComputer = true;
+				iterator = -1;
+				current.x = character.getBodyX () + character.getBodyW () / 2;
+				current.y = character.getBodyY () + character.getBodyH () / 2;
+				next.x = current.x - GameObject.UNIT;
+				next.y = current.y;
 			}
 			break;
+		}
+		
+		if (movedByComputer){
+			updatedMoveByComputer ();
 		}
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
 			character.isSelected = false;
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (character));
 		}
-		else if (Gdx.input.isKeyJustPressed (Input.Keys.E)){
+		else if (Gdx.input.isKeyJustPressed (Input.Keys.E) && !movedByComputer){
 			character.state = State.stand;
 			ObjectManager.getInstance ().addMessage (new DisconnectMessage (character));
 		}
 		else if (deltaX != 0 || deltaY != 0){
 			character.state = State.push;
-			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (),
-					character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
+			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (), character.getBodyY (), character.getSpriteX (), character.getSpriteY (), character.getBodyW (), character.getBodyH ()));
 			character.move (deltaX, deltaY);
 		}
 	}

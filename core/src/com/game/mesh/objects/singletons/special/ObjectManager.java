@@ -5,7 +5,6 @@ import com.badlogic.gdx.utils.Pools;
 
 import com.game.mesh.objects.*;
 import com.game.mesh.objects.box.Box;
-import com.game.mesh.objects.character.Character;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
 import com.game.render.Render;

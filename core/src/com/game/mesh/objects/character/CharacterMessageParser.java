@@ -94,7 +94,7 @@ public class CharacterMessageParser extends Character{
 		}
 		else if (message.type == MessageType.goTo && message.object == character){
 			GoToMessage msg = (GoToMessage) message;
-			character.goTo ((int) msg.whereX, (int) msg.whereY);
+			character.goToObject ((int) msg.whereX, (int) msg.whereY);
 		}
 		else if (message.type == MessageType.changeState && message.object == character){
 			ChangeStateMessage msg = (ChangeStateMessage) message;

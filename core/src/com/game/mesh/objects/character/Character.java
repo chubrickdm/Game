@@ -156,7 +156,7 @@ public class Character extends GameObject{
 		control.setPath (path);
 	}
 	
-	protected void goTo (int x, int y){
-		inputProcessor.goTo (x, y);
+	protected void goToObject (int x, int y){
+		inputProcessor.goToObject (x, y);
 	}
 }

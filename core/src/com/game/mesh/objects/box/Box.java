@@ -41,7 +41,6 @@ public class Box extends GameObject{
 	
 	public void setSpritePosition (float x, float y){
 		body.setSpritePosition (x, y);
-		body.move (0, 0.5f);
 	}
 	
 	@Override

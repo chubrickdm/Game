@@ -31,7 +31,7 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 		finish = new ConcreteNode ();
 	}
 	
-	public void goTo (int x, int y){
+	public void goToObject (int x, int y){
 		if (character.isSelected){
 			//обязательно надо к int делать преобразование, а то работать не будет.
 			start.x = (int) ((character.getBodyX () + character.getBodyW () / 2 - GameSystem.INDENT_BETWEEN_SCREEN_LEVEL) / GameObject.UNIT);
