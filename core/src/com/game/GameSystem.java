@@ -9,8 +9,8 @@ public abstract class GameSystem{
 	//public static final boolean FULL_SCREEN = false;
 	public static final float SCREEN_W = getDefaultToolkit ().getScreenSize ().width;
 	public static final float SCREEN_H = getDefaultToolkit ().getScreenSize ().height;
-	//public static final float SCREEN_W = 800;
-	//public static final float SCREEN_H = 600;
+	//public static final float SCREEN_W = 1280;
+	//public static final float SCREEN_H = 1024;
 	public static float INDENT_BETWEEN_SCREEN_LEVEL = 0;
 	
 	public static boolean GAME_OVER = false;

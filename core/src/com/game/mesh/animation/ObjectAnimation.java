@@ -19,8 +19,8 @@ public class ObjectAnimation{
 		this.frameW = frameW;
 		this.frameH = frameH;
 		Texture texture = new Texture (fileName);
-		int frameCols = (int) (texture.getWidth () / regionW);
-		int frameRows = (int) (texture.getHeight () / regionH);
+		int frameCols = (int) Math.ceil (texture.getWidth () / regionW);
+		int frameRows = (int) Math.ceil (texture.getHeight () / regionH);
 		TextureRegion[][] tmp = TextureRegion.split (texture, (int) regionW, (int) regionH);
 		TextureRegion[] frames = new TextureRegion[frameCols * frameRows];
 		for (int i = 0, index = 0; i < frameRows; i++){

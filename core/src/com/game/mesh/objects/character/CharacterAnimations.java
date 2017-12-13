@@ -42,7 +42,7 @@ public class CharacterAnimations extends Character{
 		float region = GameObject.UNIT / GameObject.ASPECT_RATIO;
 		for (int i = 0; i < Direction.values ().length; i++){
 			stand[i] = new ObjectAnimation (path + "stand/stand_" + Direction.values ()[i] + ".png", region,
-					region, CHARACTER_W, CHARACTER_H, 0.15f);
+					region, CHARACTER_W, CHARACTER_H, 0.35f);
 			walk[i] = new ObjectAnimation (path + "walk/walk_" + Direction.values ()[i] + ".png", region,
 					region, CHARACTER_W, CHARACTER_H, 0.15f);
 			fall[i] = new ObjectAnimation (path + "fall/fall_" + Direction.values ()[i] + ".png",
@@ -62,7 +62,7 @@ public class CharacterAnimations extends Character{
 	public void update (){
 		switch (character.state){
 		case stand:
-			currSprite = stand[character.currentDirection.ordinal ()].getFirstFrame ();
+			currSprite = stand[character.currentDirection.ordinal ()].getCurrSprite ();
 			break;
 		case move:
 			currSprite = walk[character.currentDirection.ordinal ()].getCurrSprite ();
