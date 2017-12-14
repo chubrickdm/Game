@@ -1,6 +1,7 @@
 package com.game.mesh.objects.character;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.game.GameSystem;
@@ -53,7 +54,7 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 	
 	@Override
 	public boolean touchDown (int screenX, int screenY, int pointer, int button){
-		if (character.isSelected){
+		if (character.isSelected && !Gdx.input.isKeyPressed (Input.Keys.F)){
 			screenY = (int) (character.getSpriteY () + character.getSpriteH () / 2 - GameSystem.SCREEN_H / 2) + (int) GameSystem.SCREEN_H - screenY;
 			
 			//обязательно надо к int делать преобразование, а то работать не будет.
