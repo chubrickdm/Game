@@ -4,6 +4,7 @@ import com.game.GameSystem;
 
 import com.game.addition.algorithms.aStar.Graph;
 import com.game.mesh.objects.GameObject;
+import com.game.mesh.objects.character.Direction;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -34,6 +35,36 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 		map.get (i).add (j, new ConcreteNode (i, j, TypeNode.wall));
 	}
 	
+	public void moveBox (float oldX, float oldY, Direction direction){
+		oldX++;
+		oldY++;
+		oldX -= GameSystem.INDENT_BETWEEN_SCREEN_LEVEL;
+		int oldI = (int) (oldX / GameObject.UNIT);
+		int oldJ = (int) (oldY / (GameObject.UNIT * GameObject.ANGLE));
+		int newI = oldI;
+		int newJ = oldJ;
+		switch (direction){
+		case forward:
+			newJ++;
+			break;
+		case right:
+			newI++;
+			break;
+		case back:
+			newJ--;
+			break;
+		case left:
+			newI--;
+			break;
+		}
+		
+		map.get (oldI).remove (oldJ);
+		map.get (oldI).add (oldJ, new ConcreteNode (oldI, oldJ, TypeNode.empty));
+		
+		map.get (newI).remove (newJ);
+		map.get (newI).add (newJ, new ConcreteNode (newI, newJ, TypeNode.empty));
+	}
+	
 	public void addInvisibleWall (float x, float y, float w, float h){
 		for (int i = 0; i <= w / GameObject.UNIT; i++){
 			for (int j = 0; j < h / (GameObject.UNIT * GameObject.ANGLE); j++){
@@ -57,25 +88,32 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 		int x = (int) current.x;
 		int y = (int) current.y;
 		
+		
 		if (withDiagonalNeighbors){
-			for (int i = -1; i < 2 && x > 0 && y > 0; i++){
-				if (map.get (x + i).get (y - 1).type != TypeNode.wall){
-					list.add (map.get (x + i).get (y - 1));
-				}
+			if (map.get (x + 1).get (y + 1).type != TypeNode.wall && map.get (x).get (y + 1).type != TypeNode.wall
+					&& map.get (x + 1).get (y).type != TypeNode.wall){
+				list.add (map.get (x + 1).get (y + 1));
 			}
-			for (int i = -1; i < 2 && x > 0 && y < map.get (0).size () - 1; i++){
-				if (map.get (x + i).get (y + 1).type != TypeNode.wall){
-					list.add (map.get (x + i).get (y + 1));
-				}
+			if (map.get (x - 1).get (y + 1).type != TypeNode.wall && map.get (x).get (y + 1).type != TypeNode.wall
+					&& map.get (x - 1).get (y).type != TypeNode.wall){
+				list.add (map.get (x - 1).get (y + 1));
+			}
+			
+			if (map.get (x + 1).get (y - 1).type != TypeNode.wall && map.get (x).get (y - 1).type != TypeNode.wall
+					&& map.get (x + 1).get (y).type != TypeNode.wall){
+				list.add (map.get (x + 1).get (y - 1));
+			}
+			if (map.get (x - 1).get (y - 1).type != TypeNode.wall && map.get (x).get (y - 1).type != TypeNode.wall
+					&& map.get (x - 1).get (y).type != TypeNode.wall){
+				list.add (map.get (x - 1).get (y - 1));
 			}
 		}
-		else{
-			if (map.get (x).get (y + 1).type != TypeNode.wall){
-				list.add (map.get (x).get (y + 1));
-			}
-			if (map.get (x).get (y - 1).type != TypeNode.wall){
-				list.add (map.get (x).get (y - 1));
-			}
+		
+		if (map.get (x).get (y + 1).type != TypeNode.wall){
+			list.add (map.get (x).get (y + 1));
+		}
+		if (map.get (x).get (y - 1).type != TypeNode.wall){
+			list.add (map.get (x).get (y - 1));
 		}
 		
 		if (map.get (x + 1).get (y).type != TypeNode.wall){

@@ -6,6 +6,8 @@ import com.badlogic.gdx.Input;
 import com.game.GameSystem;
 import com.game.addition.algorithms.aStar.realisation.ConcreteNode;
 import com.game.mesh.objects.GameObject;
+import com.game.mesh.objects.State;
+import com.game.mesh.objects.singletons.special.LevelManager;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.ComeToMessage;
 
@@ -95,6 +97,7 @@ public class CharacterComputerControl extends CharacterControl{
 				current.y = control.character.getBodyY () + control.character.getBodyH () / 2;
 				next.x = current.x;
 				next.y = current.y + GameObject.UNIT * GameObject.ANGLE;
+				LevelManager.getInstance ().level.moveBox (next.x, next.y, control.character.currentDirection);
 			}
 			break;
 		case right:
@@ -105,6 +108,7 @@ public class CharacterComputerControl extends CharacterControl{
 				current.y = control.character.getBodyY () + control.character.getBodyH () / 2;
 				next.x = current.x + GameObject.UNIT;
 				next.y = current.y;
+				LevelManager.getInstance ().level.moveBox (next.x, next.y, control.character.currentDirection);
 			}
 			break;
 		case back:
@@ -115,6 +119,7 @@ public class CharacterComputerControl extends CharacterControl{
 				current.y = control.character.getBodyY () + control.character.getBodyH () / 2;
 				next.x = current.x;
 				next.y = current.y - GameObject.UNIT * GameObject.ANGLE;
+				LevelManager.getInstance ().level.moveBox (next.x, next.y, control.character.currentDirection);
 			}
 			break;
 		case left:
@@ -125,6 +130,7 @@ public class CharacterComputerControl extends CharacterControl{
 				current.y = control.character.getBodyY () + control.character.getBodyH () / 2;
 				next.x = current.x - GameObject.UNIT;
 				next.y = current.y;
+				LevelManager.getInstance ().level.moveBox (next.x, next.y, control.character.currentDirection);
 			}
 			break;
 		}

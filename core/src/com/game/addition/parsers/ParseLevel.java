@@ -87,6 +87,7 @@ public abstract class ParseLevel extends ParseBasis{
 			Box box = Pools.obtain (Box.class);
 			box.setSpritePosition (x, y);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (box));
+			//LevelManager.getInstance ().level.addWall (x, y);
 			break;
 		case "hole":
 			Hole hole = Pools.obtain (Hole.class);
