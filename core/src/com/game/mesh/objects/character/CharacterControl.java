@@ -3,7 +3,7 @@ package com.game.mesh.objects.character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-import com.game.addition.algorithms.aStar.realisation.ConcreteNode;
+import com.game.addition.algorithms.aStar.ConcreteNode;
 import com.game.mesh.objects.State;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.CharacterChangeMessage;

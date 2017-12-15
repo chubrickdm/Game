@@ -1,8 +1,8 @@
-package com.game.addition.algorithms.aStar.realisation;
+package com.game.addition.algorithms.aStar;
 
 import com.game.GameSystem;
 
-import com.game.addition.algorithms.aStar.Graph;
+import com.game.addition.algorithms.aStar.algorithm.Graph;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.character.Direction;
 
@@ -11,6 +11,8 @@ import java.util.LinkedList;
 
 public class ConcreteGraph implements Graph <ConcreteNode>{
 	private boolean withDiagonalNeighbors = true;
+	private boolean withIgnoreFinish = false;
+	private ConcreteNode finish;
 	private LinkedList <LinkedList <ConcreteNode>> map;
 	
 	
@@ -62,7 +64,7 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 		map.get (oldI).add (oldJ, new ConcreteNode (oldI, oldJ, TypeNode.empty));
 		
 		map.get (newI).remove (newJ);
-		map.get (newI).add (newJ, new ConcreteNode (newI, newJ, TypeNode.empty));
+		map.get (newI).add (newJ, new ConcreteNode (newI, newJ, TypeNode.wall));
 	}
 	
 	public void addInvisibleWall (float x, float y, float w, float h){
@@ -75,6 +77,14 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 	
 	public void setWithDiagonalNeighbors (boolean withDiagonalNeighbors){
 		this.withDiagonalNeighbors = withDiagonalNeighbors;
+	}
+	
+	public void setFinish (ConcreteNode finish){
+		this.finish = finish;
+	}
+	
+	public void setWithIgnoreFinish (boolean withIgnoreFinish){
+		this.withIgnoreFinish = withIgnoreFinish;
 	}
 	
 	@Override
@@ -109,17 +119,17 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 			}
 		}
 		
-		if (map.get (x).get (y + 1).type != TypeNode.wall){
+		if (map.get (x).get (y + 1).type != TypeNode.wall || (withIgnoreFinish && map.get (x).get (y + 1).equals (finish))){
 			list.add (map.get (x).get (y + 1));
 		}
-		if (map.get (x).get (y - 1).type != TypeNode.wall){
+		if (map.get (x).get (y - 1).type != TypeNode.wall || (withIgnoreFinish && map.get (x).get (y - 1).equals (finish))){
 			list.add (map.get (x).get (y - 1));
 		}
 		
-		if (map.get (x + 1).get (y).type != TypeNode.wall){
+		if (map.get (x + 1).get (y).type != TypeNode.wall || (withIgnoreFinish && map.get (x + 1).get (y).equals (finish))){
 			list.add (map.get (x + 1).get (y));
 		}
-		if (map.get (x - 1).get (y).type != TypeNode.wall){
+		if (map.get (x - 1).get (y).type != TypeNode.wall || (withIgnoreFinish && map.get (x - 1).get (y).equals (finish))){
 			list.add (map.get (x - 1).get (y));
 		}
 		

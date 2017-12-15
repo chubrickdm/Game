@@ -1,6 +1,6 @@
-package com.game.addition.algorithms.aStar.realisation;
+package com.game.addition.algorithms.aStar;
 
-import com.game.addition.algorithms.aStar.Node;
+import com.game.addition.algorithms.aStar.algorithm.Node;
 
 public class ConcreteNode extends Node{
 	public float x;

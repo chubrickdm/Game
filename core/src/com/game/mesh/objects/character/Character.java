@@ -5,7 +5,7 @@ import box2dLight.PointLight;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Pools;
 
-import com.game.addition.algorithms.aStar.realisation.ConcreteNode;
+import com.game.addition.algorithms.aStar.ConcreteNode;
 import com.game.mesh.body.AnimatedObject;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;

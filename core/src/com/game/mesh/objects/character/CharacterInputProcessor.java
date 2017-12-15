@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+
 import com.game.GameSystem;
-import com.game.addition.algorithms.aStar.AlgorithmAStar;
-import com.game.addition.algorithms.aStar.realisation.ConcreteNode;
+import com.game.addition.algorithms.aStar.ConcreteNode;
+import com.game.addition.algorithms.aStar.TypeNode;
+import com.game.addition.algorithms.aStar.algorithm.AlgorithmAStar;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.singletons.special.LevelManager;
 
@@ -41,7 +43,9 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 			finish.x = (int) ((x - GameSystem.INDENT_BETWEEN_SCREEN_LEVEL) / GameObject.UNIT);
 			finish.y = (int) (y / (GameObject.UNIT * GameObject.ANGLE));
 			
-			AlgorithmAStar <ConcreteNode> algorithm = new AlgorithmAStar <> ();
+			AlgorithmAStar<ConcreteNode> algorithm = new AlgorithmAStar<> ();
+			LevelManager.getInstance ().level.setWithIgnoreFinish (true);
+			LevelManager.getInstance ().level.setFinish (new ConcreteNode ((int) finish.x, (int) finish.y, TypeNode.wall));
 			LevelManager.getInstance ().level.setWithDiagonalNeighbors (false);
 			ArrayList <ConcreteNode> path = algorithm.findWay (LevelManager.getInstance ().level, start, finish);
 			
@@ -65,6 +69,7 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 			finish.y = (int) (screenY / (GameObject.UNIT * GameObject.ANGLE));
 			
 			AlgorithmAStar <ConcreteNode> algorithm = new AlgorithmAStar <> ();
+			LevelManager.getInstance ().level.setWithIgnoreFinish (false);
 			LevelManager.getInstance ().level.setWithDiagonalNeighbors (true);
 			ArrayList <ConcreteNode> path = algorithm.findWay (LevelManager.getInstance ().level, start, finish);
 			

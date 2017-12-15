@@ -1,4 +1,4 @@
-package com.game.addition.algorithms.aStar;
+package com.game.addition.algorithms.aStar.algorithm;
 
 public abstract class Node{
 	public int priority = 0;
@@ -7,3 +7,4 @@ public abstract class Node{
 	@Override
 	public abstract boolean equals (Object obj);
 }
+

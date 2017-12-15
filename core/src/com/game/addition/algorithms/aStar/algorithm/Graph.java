@@ -1,4 +1,4 @@
-package com.game.addition.algorithms.aStar;
+package com.game.addition.algorithms.aStar.algorithm;
 
 import java.util.ArrayList;
 

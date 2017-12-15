@@ -4,9 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import com.game.GameSystem;
-import com.game.addition.algorithms.aStar.realisation.ConcreteNode;
+import com.game.addition.algorithms.aStar.ConcreteNode;
 import com.game.mesh.objects.GameObject;
-import com.game.mesh.objects.State;
 import com.game.mesh.objects.singletons.special.LevelManager;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.ComeToMessage;

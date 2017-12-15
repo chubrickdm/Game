@@ -6,7 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Pools;
 import com.game.GameSystem;
 import com.game.MyGame;
-import com.game.addition.algorithms.aStar.realisation.ConcreteGraph;
+import com.game.addition.algorithms.aStar.ConcreteGraph;
 import com.game.addition.parsers.ParseLevel;
 import com.game.addition.parsers.ParseSettings;
 import com.game.mesh.objects.singletons.Chain;
