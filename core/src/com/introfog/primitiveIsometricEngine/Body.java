@@ -73,6 +73,10 @@ public class Body{
 		this.type = type;
 	}
 	
+	public void setPosition (float x, float y){
+		body.setPosition (x, y);
+	}
+	
 	public float getX (){
 		return body.getX ();
 	}

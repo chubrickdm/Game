@@ -17,6 +17,16 @@ public class Rectangle{
 		this.h = h;
 	}
 	
+	public void setSize (float w, float h){
+		this.w = w;
+		this.h = h;
+	}
+	
+	public void setPosition (float x, float y){
+		this.x = x;
+		this.y = y;
+	}
+	
 	public void move (float deltaX, float deltaY){
 		x += deltaX;
 		y += deltaY;

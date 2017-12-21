@@ -1,6 +1,7 @@
 package com.introfog.primitiveIsometricEngine;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Matrix4;
 
 import java.util.LinkedList;
 
@@ -24,7 +25,8 @@ public class RenderWorld{
 	}
 	
 	
-	public void renderScene (){
+	public void renderScene (Matrix4 matrix){
+		shapeRenderer.setProjectionMatrix (matrix);
 		shapeRenderer.begin (ShapeRenderer.ShapeType.Line);
 		for (Rectangle tmpR : rectangles){
 			shapeRenderer.setColor (tmpR.color);

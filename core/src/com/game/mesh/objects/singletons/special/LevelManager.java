@@ -18,6 +18,7 @@ import com.game.messages.GameMessage;
 import com.game.messages.GetStartPositionMessage;
 import com.game.messages.MessageType;
 import com.game.screens.SelectedModeScreen;
+import com.introfog.primitiveIsometricEngine.World;
 
 public class LevelManager extends GameObject{
 	private void completeLevel (){

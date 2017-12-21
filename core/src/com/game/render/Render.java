@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.game.MyGame;
 import com.game.mesh.Floor;
 import com.game.mesh.objects.singletons.Camera;
+import com.introfog.primitiveIsometricEngine.World;
 
 import java.util.LinkedList;
 
@@ -76,6 +77,7 @@ public class Render{
 			handler.setCombinedMatrix (Camera.getInstance ().getCamera ());
 			handler.updateAndRender ();
 		}
+		World.getInstance ().drawBody (Camera.getInstance ().getProjectionMatrix ());
 		
 		renderList.clear ();
 	}

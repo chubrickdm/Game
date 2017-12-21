@@ -1,5 +1,6 @@
 package com.introfog.primitiveIsometricEngine;
 
+import com.badlogic.gdx.math.Matrix4;
 import com.introfog.primitiveIsometricEngine.messages.WorldMessage;
 
 import java.util.LinkedList;
@@ -31,10 +32,14 @@ public class World{
 		}
 	}
 	
-	public void drawBody (){
+	public void drawBody (Matrix4 matrix){
 		for (Body tmpB : objects){
 			tmpB.drawBody ();
 		}
-		RenderWorld.getInstance ().renderScene ();
+		RenderWorld.getInstance ().renderScene (matrix);
+	}
+	
+	public void clear (){
+		objects.clear ();
 	}
 }

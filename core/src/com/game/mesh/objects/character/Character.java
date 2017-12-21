@@ -12,6 +12,8 @@ import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.State;
 import com.game.messages.GameMessage;
 import com.game.render.Render;
+import com.introfog.primitiveIsometricEngine.Body;
+import com.introfog.primitiveIsometricEngine.World;
 
 import java.util.ArrayList;
 
@@ -34,6 +36,8 @@ public class Character extends GameObject{
 	private CharacterInputProcessor inputProcessor;
 	private CharacterAnimations animations;
 	
+	private Body PIEBody;
+	
 	
 	private Character (CharacterName name){
 		objectType = ObjectType.character;
@@ -48,6 +52,9 @@ public class Character extends GameObject{
 		control = new CharacterControl (this);
 		inputProcessor = new CharacterInputProcessor (this);
 		animations = new CharacterAnimations (this);
+		
+		PIEBody = new Body (0, 0, BODY_CHARACTER_W, BODY_CHARACTER_H);
+		World.getInstance ().addObject (PIEBody);
 	}
 	
 	private static class CharacterHolder{
@@ -73,6 +80,8 @@ public class Character extends GameObject{
 		body.setSpritePosition (x, y);
 		body.move (0, 0.25f);
 		
+		PIEBody.setPosition (body.getBodyX (), body.getBodyY ());
+		
 		flashLight.setActive (true);
 		flashLight.setPosition (x + CHARACTER_W / 2, y + CHARACTER_H);
 		inputProcessor.setInputProcessor ();
@@ -97,6 +106,7 @@ public class Character extends GameObject{
 	@Override
 	public void draw (){
 		animations.draw ();
+		PIEBody.move (body.getBodyX () - PIEBody.getX (), body.getBodyY () - PIEBody.getY ());
 	}
 	
 	@Override
