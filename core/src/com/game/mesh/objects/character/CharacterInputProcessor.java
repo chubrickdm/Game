@@ -10,7 +10,8 @@ import com.game.addition.algorithms.aStar.ConcreteNode;
 import com.game.addition.algorithms.aStar.TypeNode;
 import com.game.addition.algorithms.aStar.algorithm.AlgorithmAStar;
 import com.game.mesh.objects.GameObject;
-import com.game.mesh.objects.singletons.special.LevelManager;
+import com.game.mesh.objects.State;
+import com.game.mesh.objects.singletons.special.Level;
 
 import java.util.ArrayList;
 
@@ -43,11 +44,11 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 			finish.x = (int) ((x - GameSystem.INDENT_BETWEEN_SCREEN_LEVEL) / GameObject.UNIT);
 			finish.y = (int) (y / (GameObject.UNIT * GameObject.ANGLE));
 			
-			AlgorithmAStar<ConcreteNode> algorithm = new AlgorithmAStar<> ();
-			LevelManager.getInstance ().level.setWithIgnoreFinish (true);
-			LevelManager.getInstance ().level.setFinish (new ConcreteNode ((int) finish.x, (int) finish.y, TypeNode.wall));
-			LevelManager.getInstance ().level.setWithDiagonalNeighbors (false);
-			ArrayList <ConcreteNode> path = algorithm.findWay (LevelManager.getInstance ().level, start, finish);
+			AlgorithmAStar <ConcreteNode> algorithm = new AlgorithmAStar <> ();
+			Level.getInstance ().setWithIgnoreFinish (true);
+			Level.getInstance ().setFinish (new ConcreteNode ((int) finish.x, (int) finish.y, TypeNode.wall));
+			Level.getInstance ().setWithDiagonalNeighbors (false);
+			ArrayList <ConcreteNode> path = algorithm.findWay (Level.getInstance (), start, finish);
 			
 			if (path != null && path.size () != 1){
 				character.goToObject = true;
@@ -58,7 +59,7 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 	
 	@Override
 	public boolean touchDown (int screenX, int screenY, int pointer, int button){
-		if (character.isSelected && !Gdx.input.isKeyPressed (Input.Keys.F)){
+		if (character.isSelected && !Gdx.input.isKeyPressed (Input.Keys.F) && character.state != State.push && character.state != State.abut){
 			screenY = (int) (character.getSpriteY () + character.getSpriteH () / 2 - GameSystem.SCREEN_H / 2) + (int) GameSystem.SCREEN_H - screenY;
 			
 			//обязательно надо к int делать преобразование, а то работать не будет.
@@ -69,9 +70,9 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 			finish.y = (int) (screenY / (GameObject.UNIT * GameObject.ANGLE));
 			
 			AlgorithmAStar <ConcreteNode> algorithm = new AlgorithmAStar <> ();
-			LevelManager.getInstance ().level.setWithIgnoreFinish (false);
-			LevelManager.getInstance ().level.setWithDiagonalNeighbors (true);
-			ArrayList <ConcreteNode> path = algorithm.findWay (LevelManager.getInstance ().level, start, finish);
+			Level.getInstance ().setWithIgnoreFinish (false);
+			Level.getInstance ().setWithDiagonalNeighbors (true);
+			ArrayList <ConcreteNode> path = algorithm.findWay (Level.getInstance (), start, finish);
 			
 			if (path != null && path.size () != 1){
 				character.setPath (path);

@@ -1,20 +1,34 @@
-package com.game.addition.algorithms.aStar;
+package com.game.mesh.objects.singletons.special;
 
 import com.game.GameSystem;
 
+import com.game.addition.algorithms.aStar.ConcreteNode;
+import com.game.addition.algorithms.aStar.TypeNode;
 import com.game.addition.algorithms.aStar.algorithm.Graph;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.character.Direction;
+import com.game.messages.GameMessage;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class ConcreteGraph implements Graph <ConcreteNode>{
+public class Level extends GameObject implements Graph <ConcreteNode>{
 	private boolean withDiagonalNeighbors = true;
 	private boolean withIgnoreFinish = false;
 	private ConcreteNode finish;
 	private LinkedList <LinkedList <ConcreteNode>> map;
 	
+	
+	private static class LevelHolder{
+		private final static Level instance = new Level ();
+	}
+	
+	private Level (){ }
+	
+	
+	public static Level getInstance (){
+		return LevelHolder.instance;
+	}
 	
 	public void setSize (int x, int y){
 		map = new LinkedList <> ();
@@ -139,5 +153,20 @@ public class ConcreteGraph implements Graph <ConcreteNode>{
 	@Override
 	public int cost (ConcreteNode current, ConcreteNode next){
 		return 1;
+	}
+	
+	@Override
+	public void update (){
+		super.update ();
+	}
+	
+	@Override
+	public void sendMessage (GameMessage message){
+		
+	}
+	
+	@Override
+	public void clear (){
+		super.clear ();
 	}
 }

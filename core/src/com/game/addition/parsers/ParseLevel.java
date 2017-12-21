@@ -6,8 +6,7 @@ import com.game.GameSystem;
 import com.game.mesh.objects.*;
 import com.game.mesh.objects.box.Box;
 import com.game.mesh.objects.character.Character;
-import com.game.mesh.objects.singletons.special.LevelManager;
-import com.game.mesh.objects.singletons.special.ObjectManager;
+import com.game.mesh.objects.singletons.special.*;
 import com.game.messages.AddObjectMessage;
 
 import org.w3c.dom.Document;
@@ -38,7 +37,7 @@ public abstract class ParseLevel extends ParseBasis{
 		
 		GameSystem.INDENT_BETWEEN_SCREEN_LEVEL = (GameSystem.SCREEN_W - levelW) / 2;
 		
-		LevelManager.getInstance ().level.setSize (width, height);
+		Level.getInstance ().setSize (width, height);
 	}
 	
 	private static void parseCoordinates (Node object){
@@ -59,7 +58,7 @@ public abstract class ParseLevel extends ParseBasis{
 			Wall wall = Pools.obtain (Wall.class);
 			wall.setSpritePosition (x, y);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (wall));
-			LevelManager.getInstance ().level.addWall (x, y);
+			Level.getInstance ().addWall (x, y);
 			break;
 		case "characters":
 			Character character;
@@ -76,7 +75,7 @@ public abstract class ParseLevel extends ParseBasis{
 			InvisibleWall invisibleWall = Pools.obtain (InvisibleWall.class);
 			invisibleWall.setBodyBounds (x, y, w, h);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (invisibleWall));
-			LevelManager.getInstance ().level.addInvisibleWall (x, y, w, h);
+			Level.getInstance ().addInvisibleWall (x, y, w, h);
 			break;
 		case "finishLevel":
 			FinishLevel finish = Pools.obtain (FinishLevel.class);
@@ -87,7 +86,7 @@ public abstract class ParseLevel extends ParseBasis{
 			Box box = Pools.obtain (Box.class);
 			box.setSpritePosition (x, y);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (box));
-			LevelManager.getInstance ().level.addWall (x, y);
+			Level.getInstance ().addWall (x, y);
 			break;
 		case "hole":
 			Hole hole = Pools.obtain (Hole.class);
