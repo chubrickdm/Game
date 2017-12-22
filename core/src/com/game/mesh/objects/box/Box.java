@@ -11,8 +11,8 @@ import com.game.messages.*;
 import com.introfog.primitiveIsometricEngine.*;
 
 public class Box extends GameObject{
-	protected static final float BODY_BOX_W = UNIT - 20;
-	protected static final float BODY_BOX_H = UNIT * ANGLE - 20;
+	protected static final float BODY_BOX_W = UNIT - 1;
+	protected static final float BODY_BOX_H = UNIT * ANGLE - 1;
 	protected static final float BOX_W = UNIT;
 	protected static final float BOX_H = UNIT + UNIT * ANGLE;
 	
@@ -53,6 +53,7 @@ public class Box extends GameObject{
 		triggeredZone.setGhost (false);
 		spriteRect.setPosition (x, y);
 		bodyPIE.setPosition (x + bodyShiftX, y);
+		bodyPIE.move (0, 0.5f);
 		triggeredZone.setPosition (bodyPIE.getX () + zoneShiftX, bodyPIE.getY () + zoneShiftY);
 	}
 	

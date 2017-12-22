@@ -54,12 +54,12 @@ public class ToxicGas extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move){
+		/*if (message.type == MessageType.move){
 			MoveMessage msg = (MoveMessage) message;
 			//if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				//ObjectManager.getInstance ().addMessage (new DestroyObjectMessage (msg.object, this));
 			//}
-		}
+		}*/
 	}
 	
 	@Override

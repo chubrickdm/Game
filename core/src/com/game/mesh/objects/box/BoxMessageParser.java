@@ -48,13 +48,7 @@ public class BoxMessageParser extends Box{
 	}
 	
 	public void parseMessage (GameMessage message){
-		if (message.type == MessageType.move && message.objectType == ObjectType.character){
-			MoveMessage msg = (MoveMessage) message;
-			Character character = (Character) message.object;
-			//именно в таком порядке, иначе будет баг, спрайт будет заходить на стену
-			checkTriggeredZone (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH, character);
-		}
-		else if (message.type == MessageType.destroyObject){
+		if (message.type == MessageType.destroyObject){
 			DestroyObjectMessage msg = (DestroyObjectMessage) message;
 			if (msg.objectType == ObjectType.hole && msg.bodyPIE == box.bodyPIE){
 				box.state = State.fall;

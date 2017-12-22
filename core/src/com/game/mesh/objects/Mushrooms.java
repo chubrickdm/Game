@@ -8,11 +8,8 @@ import com.badlogic.gdx.utils.Pools;
 
 import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.body.AnimatedObject;
-import com.game.mesh.objects.singletons.special.ObjectManager;
-import com.game.messages.AddObjectMessage;
 import com.game.messages.GameMessage;
 import com.game.messages.MessageType;
-import com.game.messages.MoveMessage;
 import com.game.render.*;
 
 public class Mushrooms extends GameObject{
@@ -76,14 +73,14 @@ public class Mushrooms extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move && toxicGas == null){
+		/*if (message.type == MessageType.move && toxicGas == null){
 			MoveMessage msg = (MoveMessage) message;
 			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
 				toxicGas = Pools.obtain (ToxicGas.class);
 				toxicGas.setSpritePosition (body.getSpriteX (), body.getSpriteY ());
 				ObjectManager.getInstance ().sendMessage (new AddObjectMessage (toxicGas));
 			}
-		}
+		}*/
 		if (message.type == MessageType.destroyObject && message.object == toxicGas){
 			toxicGas = null;
 			hide.resetTime ();

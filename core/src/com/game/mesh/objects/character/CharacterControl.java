@@ -8,7 +8,6 @@ import com.game.mesh.objects.State;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.CharacterChangeMessage;
 import com.game.messages.DisconnectMessage;
-import com.game.messages.MoveMessage;
 
 import java.util.ArrayList;
 

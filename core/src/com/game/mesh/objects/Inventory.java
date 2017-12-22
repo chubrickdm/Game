@@ -71,14 +71,7 @@ public class Inventory extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move && message.objectType == ObjectType.character){
-			Character character = (Character) message.object;
-			if (ownerName == character.getName ()){
-				MoveMessage msg = (MoveMessage) message;
-				body.move (msg.deltaX, msg.deltaY);
-			}
-		}
-		else if (message.type == MessageType.returnStartPosition && message.objectType == ObjectType.character){
+		if (message.type == MessageType.returnStartPosition && message.objectType == ObjectType.character){
 			Character character = (Character) message.object;
 			if (ownerName == character.getName ()){
 				ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;

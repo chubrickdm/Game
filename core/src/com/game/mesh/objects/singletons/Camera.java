@@ -6,8 +6,6 @@ import com.badlogic.gdx.math.Matrix4;
 import com.game.GameSystem;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
-import com.game.mesh.objects.character.Character;
-import com.game.mesh.objects.character.CharacterName;
 import com.game.messages.*;
 
 public class Camera extends GameObject{
@@ -45,20 +43,13 @@ public class Camera extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move && message.objectType == ObjectType.character){
-			MoveMessage msg = (MoveMessage) message;
-			camera.translate (0, msg.deltaY);
-		}
-		else if (message.type == MessageType.characterSelected){
+		if (message.type == MessageType.characterSelected){
 			CharacterSelectedMessage msg = (CharacterSelectedMessage) message;
 			camera.position.set (camera.position.x, msg.spriteY + msg.spriteH / 2, 0);
 		}
 		else if (message.type == MessageType.returnStartPosition && message.objectType == ObjectType.character){
-			//Character character = (Character) message.object;
-			//if (character.getName () == CharacterName.first){
-				ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
-				camera.position.set (camera.position.x, msg.sprite.getY () + msg.sprite.getH () / 2, 0);
-			//}
+			ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
+			camera.position.set (camera.position.x, msg.sprite.getY () + msg.sprite.getH () / 2, 0);
 		}
 	}
 }
