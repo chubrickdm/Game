@@ -70,6 +70,10 @@ public class TriggeredZone extends BodyPIE{
 		RenderWorld.getInstance ().addRectangle (body);
 	}
 	
+	public void clear (){
+		inZone.clear ();
+	}
+	
 	public LinkedList <BodyPIE> getInZone (){
 		return inZone;
 	}

@@ -15,6 +15,7 @@ import com.introfog.primitiveIsometricEngine.World;
 import java.util.LinkedList;
 
 public class Render{
+	private boolean showBody = false;
 	private boolean showLight = true;
 	private Floor floor;
 	private SpriteBatch batch;
@@ -62,6 +63,9 @@ public class Render{
 		if (Gdx.input.isKeyJustPressed (Input.Keys.L)){
 			showLight = !showLight;
 		}
+		if (Gdx.input.isKeyJustPressed (Input.Keys.B)){
+			showBody = !showBody;
+		}
 		
 		Camera.getInstance ().update ();
 		batch.setProjectionMatrix (Camera.getInstance ().getProjectionMatrix ());
@@ -77,7 +81,9 @@ public class Render{
 			handler.setCombinedMatrix (Camera.getInstance ().getCamera ());
 			handler.updateAndRender ();
 		}
-		World.getInstance ().drawBody (Camera.getInstance ().getProjectionMatrix ());
+		if (showBody){
+			World.getInstance ().drawBody (Camera.getInstance ().getProjectionMatrix ());
+		}
 		
 		renderList.clear ();
 	}

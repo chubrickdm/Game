@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Pools;
 
 import com.game.addition.algorithms.aStar.ConcreteNode;
-import com.game.mesh.body.AnimatedObject;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.State;
@@ -14,7 +13,7 @@ import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.GameMessage;
 import com.game.messages.ReturnStartPositionMessage;
 import com.game.render.Render;
-import com.introfog.primitiveIsometricEngine.BodyPIE;
+import com.introfog.primitiveIsometricEngine.*;
 
 import java.util.ArrayList;
 
@@ -31,19 +30,23 @@ public class Character extends GameObject{
 	protected State state = State.stand;
 	
 	private CharacterName name = CharacterName.unknown;
+	private float bodyShiftX;
 	private PointLight flashLight;
 	private CharacterMessageParser parser;
 	private CharacterControl control;
 	private CharacterInputProcessor inputProcessor;
 	private CharacterAnimations animations;
+	private BodyPIE bodyPIE;
+	private Rectangle spriteRect;
 	
 	
 	private Character (CharacterName name){
 		objectType = ObjectType.character;
 		this.name = name;
 		
-		body = new AnimatedObject (0, 0, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
-		
+		bodyShiftX = (CHARACTER_W - BODY_CHARACTER_W) / 2;
+		bodyPIE = new BodyPIE (0, 0, BODY_CHARACTER_W, BODY_CHARACTER_H, BodyType.dynamical, 1, Color.NAVY);
+		spriteRect = new Rectangle (0, 0, CHARACTER_W, CHARACTER_H);
 		flashLight = new PointLight (Render.getInstance ().handler,100, Color.GRAY, (int) (300 * ASPECT_RATIO),
 				CHARACTER_W / 2, CHARACTER_H);
 		parser = new CharacterMessageParser (this);
@@ -72,8 +75,8 @@ public class Character extends GameObject{
 	public void setSpritePosition (float x, float y){
 		isSelected = (name == CharacterName.first);
 		
-		body.setSpritePosition (x, y);
-		body.move (0, 0.25f);
+		bodyPIE.setPosition (x + bodyShiftX, y);
+		spriteRect.setPosition (x, y);
 		
 		flashLight.setActive (true);
 		flashLight.setPosition (x + CHARACTER_W / 2, y + CHARACTER_H);
@@ -105,7 +108,7 @@ public class Character extends GameObject{
 	@Override
 	public void draw (){
 		animations.draw ();
-		flashLight.setPosition (body.getSpriteX () + CHARACTER_W / 2,body.getSpriteY () + CHARACTER_H / 2);
+		flashLight.setPosition (spriteRect.getX () + CHARACTER_W / 2,spriteRect.getY () + CHARACTER_H / 2);
 	}
 	
 	@Override
@@ -121,43 +124,40 @@ public class Character extends GameObject{
 	}
 	
 	protected float getBodyX (){
-		return body.getBodyX ();
+		return bodyPIE.getX ();
 	}
 	
 	protected float getBodyY (){
-		return body.getBodyY ();
+		return bodyPIE.getY ();
 	}
 	
 	protected float getBodyW (){
-		return body.getBodyW ();
+		return bodyPIE.getW ();
 	}
 	
 	protected float getBodyH (){
-		return body.getBodyH ();
+		return bodyPIE.getH ();
 	}
 	
 	protected float getSpriteX (){
-		return body.getSpriteX ();
+		return spriteRect.getX ();
 	}
 	
 	protected float getSpriteY (){
-		return body.getSpriteY ();
+		return spriteRect.getY ();
 	}
 	
 	protected float getSpriteW (){
-		return body.getSpriteW ();
+		return spriteRect.getW ();
 	}
 	
 	protected float getSpriteH (){
-		return body.getSpriteH ();
+		return spriteRect.getH ();
 	}
 	
 	protected void move (float deltaX, float deltaY){
-		body.move (deltaX, deltaY);
-	}
-	
-	protected boolean intersects (float x, float y, float w, float h){
-		return body.intersects (x, y, w, h);
+		bodyPIE.move (deltaX, deltaY);
+		spriteRect.setPosition (bodyPIE.getX () - bodyShiftX, bodyPIE.getY ());
 	}
 	
 	protected void setPath (ArrayList <ConcreteNode> path){
@@ -169,6 +169,6 @@ public class Character extends GameObject{
 	}
 	
 	protected BodyPIE getBodyPIE (){
-		return body.getBodyPIE ();
+		return bodyPIE;
 	}
 }

@@ -29,13 +29,13 @@ public class FinishLevel extends GameObject{
 	@Override
 	public void update (){
 		if (triggeredZone.getInZone ().size () > 0){
-			triggeredZone.setColor (Color.OLIVE);
+			triggeredZone.setColor (Color.CHARTREUSE);
 			for (BodyPIE tmpB : triggeredZone.getInZone ()){
 				ObjectManager.getInstance ().addMessage (new WhoseBodyMessage (this, tmpB));
 			}
 		}
 		else{
-			triggeredZone.setColor (Color.PINK);
+			triggeredZone.setColor (Color.FIREBRICK);
 		}
 		
 		onFinish[0] = false;
@@ -57,6 +57,7 @@ public class FinishLevel extends GameObject{
 	public void clear (){
 		onFinish[0] = false;
 		onFinish[1] = false;
+		triggeredZone.clear ();
 		Pools.free (this);
 	}
 }
