@@ -22,13 +22,15 @@ public class CharacterMessageParser extends Character{
 					character.getSpriteY (), character.getSpriteW (), character.getSpriteH ()));
 			character.isSelected = true;
 		}
-		else if (message.type == MessageType.destroyObject && message.object == character){
+		else if (message.type == MessageType.destroyObject){
 			DestroyObjectMessage msg = (DestroyObjectMessage) message;
-			if (msg.destroyer == ObjectType.hole){
-				character.state = State.fall;
-			}
-			else if (msg.destroyer == ObjectType.toxicGas){
-				character.state = State.choke;
+			if (character.getBodyPIE () == msg.bodyPIE){
+				if (msg.objectType == ObjectType.hole && character.state != State.fall){
+					character.state = State.fall;
+				}
+				else if (msg.objectType == ObjectType.toxicGas && character.state != State.choke){
+					character.state = State.choke;
+				}
 			}
 		}
 		else if (message.type == MessageType.goTo && message.object == character){

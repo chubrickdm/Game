@@ -1,17 +1,18 @@
 package com.game.messages;
 
 import com.game.mesh.objects.GameObject;
-import com.game.mesh.objects.ObjectType;
+
+import com.introfog.primitiveIsometricEngine.BodyPIE;
 
 public class DestroyObjectMessage extends GameMessage{ //создается когда объект умирает, уничтожается
-	public ObjectType destroyer;
+	public BodyPIE bodyPIE;
 	
 	
-	public DestroyObjectMessage (GameObject object, GameObject destroyer){
+	public DestroyObjectMessage (GameObject destroyer, BodyPIE bodyPIE){
 		this.type = MessageType.destroyObject;
-		this.object = object;
-		this.objectType = object.objectType;
+		this.object = destroyer;
+		this.objectType = destroyer.objectType;
 		
-		this.destroyer = destroyer.objectType;
+		this.bodyPIE = bodyPIE;
 	}
 }

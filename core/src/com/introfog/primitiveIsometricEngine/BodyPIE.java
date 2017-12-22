@@ -54,7 +54,7 @@ public class BodyPIE{
 				}
 				else if (type == BodyType.dynamical){
 					move (msg.deltaX * friction, 0);
-					World.getInstance ().addMessage (new PushOutMessage (msg.bodyPIE, -msg.deltaX * friction, 0));
+					World.getInstance ().addMessage (new PushOutMessage (msg.bodyPIE, -msg.deltaX * (1 - friction), 0));
 				}
 			}
 			if (msg.deltaY != 0 && body.intersects (rect.getX (), rect.getY () + msg.deltaY, rect.getW (), rect.getH ())){
@@ -63,7 +63,7 @@ public class BodyPIE{
 				}
 				else if (type == BodyType.dynamical){
 					move (0, msg.deltaY * friction);
-					World.getInstance ().addMessage (new PushOutMessage (msg.bodyPIE, 0, -msg.deltaY * friction));
+					World.getInstance ().addMessage (new PushOutMessage (msg.bodyPIE, 0, -msg.deltaY * (1 - friction)));
 				}
 			}
 		}

@@ -1,16 +1,15 @@
 package com.game.mesh.objects;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Pools;
 
-import com.game.mesh.body.BodyObject;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.DestroyObjectMessage;
-import com.game.messages.GameMessage;
-import com.game.messages.MessageType;
-import com.game.messages.MoveMessage;
-import com.game.render.DataRender;
-import com.game.render.LayerType;
-import com.game.render.Render;
+import com.game.render.*;
+
+import com.introfog.primitiveIsometricEngine.*;
 
 public class Hole extends GameObject{
 	private static final float BODY_HOLE_W = UNIT * 2;
@@ -18,24 +17,35 @@ public class Hole extends GameObject{
 	private static final float HOLE_W = UNIT * 2;
 	private static final float HOLE_H = UNIT * ANGLE * 2;
 	
+	private float bodyShiftX;
+	private float bodyShiftY;
+	private TriggeredZone triggeredZone;
+	private Sprite sprite;
 	
 	public Hole (){
 		objectType = ObjectType.hole;
-		body = new BodyObject ("core/assets/images/other/hole.png", true, 0, 0, HOLE_W, HOLE_H,
-				BODY_HOLE_W, BODY_HOLE_H);
-		dataRender = new DataRender (body.getSprite (), LayerType.below);
+		
+		bodyShiftX = (BODY_HOLE_W - HOLE_W) / 2;
+		bodyShiftY = (BODY_HOLE_H - HOLE_H) / 2;
+		triggeredZone = new TriggeredZone (0, 0, BODY_HOLE_W, BODY_HOLE_H, ZoneType.contains, Color.SKY);
+		
+		Texture texture = new Texture ("core/assets/images/other/hole.png");
+		sprite = new Sprite (texture);
+		sprite.setBounds (0, 0, HOLE_W, HOLE_H);
+		
+		dataRender = new DataRender (sprite, LayerType.below);
 	}
 	
 	public void setSpritePosition (float x, float y){
-		body.setSpritePosition (x, y);
+		triggeredZone.setPosition (x + bodyShiftX, y + bodyShiftY);
+		sprite.setPosition (x, y);
 	}
 	
 	@Override
-	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move){
-			MoveMessage msg = (MoveMessage) message;
-			if (body.contains (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new DestroyObjectMessage (msg.object, this));
+	public void update (){
+		if (triggeredZone.getInZone ().size () > 0){
+			for (BodyPIE tmpB : triggeredZone.getInZone ()){
+				ObjectManager.getInstance ().addMessage (new DestroyObjectMessage (this, tmpB));
 			}
 		}
 	}
@@ -47,6 +57,7 @@ public class Hole extends GameObject{
 	
 	@Override
 	public void clear (){
+		triggeredZone.clear ();
 		Pools.free (this);
 	}
 }

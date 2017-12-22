@@ -74,6 +74,16 @@ public class TriggeredZone extends BodyPIE{
 		inZone.clear ();
 	}
 	
+	public boolean check (float x, float y, float w, float h){
+		if (type == ZoneType.intersects){
+			return body.intersects (x, y, w, h);
+		}
+		else if (type == ZoneType.contains){
+			return body.contains (x, y, w, h);
+		}
+		return false;
+	}
+	
 	public LinkedList <BodyPIE> getInZone (){
 		return inZone;
 	}

@@ -45,7 +45,7 @@ public class ToxicGas extends GameObject{
 		timer -= Gdx.graphics.getDeltaTime ();
 		if (timer <= 0){
 			ObjectManager.getInstance ().sendMessage (new DeleteObjectMessage (this));
-			ObjectManager.getInstance ().addMessage (new DestroyObjectMessage (this, this));
+			//ObjectManager.getInstance ().addMessage (new DestroyObjectMessage (this, this));
 			clear ();
 		}
 		currSprite = animation.getCurrSprite ();
@@ -56,9 +56,9 @@ public class ToxicGas extends GameObject{
 	public void sendMessage (GameMessage message){
 		if (message.type == MessageType.move){
 			MoveMessage msg = (MoveMessage) message;
-			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new DestroyObjectMessage (msg.object, this));
-			}
+			//if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
+				//ObjectManager.getInstance ().addMessage (new DestroyObjectMessage (msg.object, this));
+			//}
 		}
 	}
 	
