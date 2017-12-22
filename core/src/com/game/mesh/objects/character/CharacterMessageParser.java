@@ -32,6 +32,10 @@ public class CharacterMessageParser extends Character{
 					character.state = State.choke;
 				}
 			}
+			if (triggered[character.getName ().ordinal ()] == msg.bodyPIE){
+				triggered[character.getName ().ordinal ()] = null;
+				character.state = State.stand;
+			}
 		}
 		else if (message.type == MessageType.goTo && message.object == character){
 			GoToMessage msg = (GoToMessage) message;
@@ -42,10 +46,6 @@ public class CharacterMessageParser extends Character{
 			if (msg.fromWhom.objectType == ObjectType.box){
 				character.state = State.abut;
 			}
-		}
-		else if (message.type == MessageType.destroyObject && message.object == triggered[character.getName ().ordinal ()]){
-			triggered[character.getName ().ordinal ()] = null;
-			character.state = State.stand;
 		}
 		else if (message.type == MessageType.whoseBody){
 			WhoseBodyMessage msg = (WhoseBodyMessage) message;

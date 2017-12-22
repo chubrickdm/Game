@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.introfog.primitiveIsometricEngine.messages.*;
 
 public class BodyPIE{
+	protected boolean isGhost = false;
+	protected Rectangle body;
+	
 	private float friction = 1;
 	private BodyType type = BodyType.statical;
-	protected Rectangle body;
+	
 	
 	public BodyPIE (float x, float y, float w, float h){
 		body = new Rectangle (x, y, w, h);
@@ -35,6 +38,10 @@ public class BodyPIE{
 		World.getInstance ().addObject (this);
 	}
 	
+	public void setGhost (boolean isGhost){
+		this.isGhost = isGhost;
+	}
+	
 	public void move (float deltaX, float deltaY){
 		World.getInstance ().addMessage (new MoveMessage (this, deltaX, deltaY));
 		body.move (deltaX, deltaY);
@@ -45,6 +52,9 @@ public class BodyPIE{
 	}
 	
 	public void sendMessage (WorldMessage message){
+		if (isGhost){
+			return;
+		}
 		if (message.type == MessageType.move && message.bodyPIE != this){
 			MoveMessage msg = (MoveMessage) message;
 			Rectangle rect = msg.bodyPIE.body;

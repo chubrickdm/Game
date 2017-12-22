@@ -39,6 +39,9 @@ public class TriggeredZone extends BodyPIE{
 	
 	@Override
 	public void sendMessage (WorldMessage message){
+		if (isGhost){
+			return;
+		}
 		if (message.type == MessageType.move && message.bodyPIE != this){
 			MoveMessage msg = (MoveMessage) message;
 			Rectangle rect = msg.bodyPIE.body;

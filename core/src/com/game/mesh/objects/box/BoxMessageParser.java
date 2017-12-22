@@ -22,9 +22,9 @@ public class BoxMessageParser extends Box{
 			boolean trigger = box.checkTriggered (bodyX, bodyY, bodyW, bodyH);
 			if (trigger && triggered[character.getName ().ordinal ()] == null){
 				exciter = character;
-				triggered[character.getName ().ordinal ()] = box;
+				triggered[character.getName ().ordinal ()] = box.bodyPIE;
 			}
-			else if (!trigger && triggered[character.getName ().ordinal ()] == box){
+			else if (!trigger && triggered[character.getName ().ordinal ()] == box.bodyPIE){
 				exciter = null;
 				triggered[character.getName ().ordinal ()] = null;
 			}
@@ -35,7 +35,7 @@ public class BoxMessageParser extends Box{
 	@Override
 	public void update (){
 		if (!pushThis && Gdx.input.isKeyJustPressed (Input.Keys.E)){
-			if (triggered[0] == box || triggered[1] == box){
+			if (triggered[0] == box.bodyPIE || triggered[1] == box.bodyPIE){
 				ObjectManager.getInstance ().addMessage (
 						new GoToMessage (exciter, box.getBodyX () + box.getBodyW () / 2,
 										 box.getBodyY () + box.getBodyW () / 2));
@@ -54,7 +54,7 @@ public class BoxMessageParser extends Box{
 			//именно в таком порядке, иначе будет баг, спрайт будет заходить на стену
 			checkTriggeredZone (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH, character);
 		}
-		else if (message.type == MessageType.destroyObject && message.object == box){
+		else if (message.type == MessageType.destroyObject){
 			DestroyObjectMessage msg = (DestroyObjectMessage) message;
 			if (msg.objectType == ObjectType.hole && msg.bodyPIE == box.bodyPIE){
 				box.state = State.fall;

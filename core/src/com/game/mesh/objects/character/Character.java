@@ -49,6 +49,7 @@ public class Character extends GameObject{
 		spriteRect = new Rectangle (0, 0, CHARACTER_W, CHARACTER_H);
 		flashLight = new PointLight (Render.getInstance ().handler,100, Color.GRAY, (int) (300 * ASPECT_RATIO),
 				CHARACTER_W / 2, CHARACTER_H);
+		
 		parser = new CharacterMessageParser (this);
 		control = new CharacterControl (this);
 		inputProcessor = new CharacterInputProcessor (this);

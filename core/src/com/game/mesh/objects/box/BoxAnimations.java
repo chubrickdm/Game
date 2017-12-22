@@ -40,6 +40,8 @@ public class BoxAnimations extends Box{
 		case fall:
 			if (fall.isAnimationFinished ()){
 				ObjectManager.getInstance ().sendMessage (new DeleteObjectMessage (box));
+				box.bodyPIE.setGhost (true);
+				box.triggeredZone.setGhost (true);
 				box.clear ();
 			}
 			else{
@@ -48,7 +50,7 @@ public class BoxAnimations extends Box{
 			break;
 		case stand:
 			currSprite = fall.getFirstFrame ();
-			if (box == triggered[0] || box == triggered[1]){
+			if (box.bodyPIE == triggered[0] || box.bodyPIE == triggered[1]){
 				currSprite = triggeredSprite;
 			}
 			break;
