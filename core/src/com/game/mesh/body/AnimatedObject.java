@@ -27,6 +27,10 @@ public class AnimatedObject extends Body{ //спец. класс для аним
 		body = new Rectangle (x + bodyShiftX, y + bodyShiftY, bodyW, bodyH);
 	}
 	
+	@Override
+	public BodyPIE getBodyPIE (){
+		return bodyPIE;
+	}
 	
 	@Override
 	public void setSpritePosition (float x, float y){

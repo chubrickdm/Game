@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import com.game.addition.math.Rectangle;
 import com.game.mesh.TriggeredZone;
+import com.introfog.primitiveIsometricEngine.BodyPIE;
 
 public abstract class Body{
 	protected Rectangle body;
@@ -28,6 +29,9 @@ public abstract class Body{
 	
 	public void setOrigin (float originX, float originY){ }
 	
+	public BodyPIE getBodyPIE (){
+		return null;
+	}
 	
 	public void setBodyBounds (float x, float y, float w, float h){
 		body.setPosition (x, y);

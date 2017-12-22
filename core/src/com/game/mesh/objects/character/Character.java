@@ -14,6 +14,7 @@ import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.GameMessage;
 import com.game.messages.ReturnStartPositionMessage;
 import com.game.render.Render;
+import com.introfog.primitiveIsometricEngine.BodyPIE;
 
 import java.util.ArrayList;
 
@@ -165,5 +166,9 @@ public class Character extends GameObject{
 	
 	protected void goToObject (int x, int y){
 		inputProcessor.goToObject (x, y);
+	}
+	
+	protected BodyPIE getBodyPIE (){
+		return body.getBodyPIE ();
 	}
 }

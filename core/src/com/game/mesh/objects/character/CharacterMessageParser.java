@@ -106,5 +106,11 @@ public class CharacterMessageParser extends Character{
 			triggered[character.getName ().ordinal ()] = null;
 			character.state = State.stand;
 		}
+		else if (message.type == MessageType.whoseBody){
+			WhoseBodyMessage msg = (WhoseBodyMessage) message;
+			if (msg.bodyPIE == character.getBodyPIE ()){
+				ObjectManager.getInstance ().addMessage (new IsMyBodyMessage (character, character.getBodyPIE ()));
+			}
+		}
 	}
 }
