@@ -54,11 +54,11 @@ public class Camera extends GameObject{
 			camera.position.set (camera.position.x, msg.spriteY + msg.spriteH / 2, 0);
 		}
 		else if (message.type == MessageType.returnStartPosition && message.objectType == ObjectType.character){
-			Character character = (Character) message.object;
-			if (character.getName () == CharacterName.first){
+			//Character character = (Character) message.object;
+			//if (character.getName () == CharacterName.first){
 				ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
 				camera.position.set (camera.position.x, msg.sprite.getY () + msg.sprite.getH () / 2, 0);
-			}
+			//}
 		}
 	}
 }

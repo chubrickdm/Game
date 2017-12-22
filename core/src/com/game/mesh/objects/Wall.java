@@ -11,6 +11,8 @@ import com.game.messages.PushOutMessage;
 import com.game.render.DataRender;
 import com.game.render.LayerType;
 import com.game.render.Render;
+import com.introfog.primitiveIsometricEngine.Body;
+import com.introfog.primitiveIsometricEngine.World;
 
 public class Wall extends GameObject{
 	private static final float BODY_WALL_W = UNIT;
@@ -18,15 +20,21 @@ public class Wall extends GameObject{
 	private static final float WALL_W = UNIT;
 	private static final float WALL_H = UNIT * 2 + UNIT * ANGLE;
 	
+	private Body PIEBody;
+	
 	
 	public Wall (){
 		objectType = ObjectType.wall;
 		body = new BodyObject ("core/assets/images/other/wall_2.png", 0, 0, WALL_W, WALL_H, BODY_WALL_W, BODY_WALL_H);
 		dataRender = new DataRender (body.getSprite (), LayerType.normal);
+		
+		PIEBody = new Body (0, 0, BODY_WALL_W, BODY_WALL_H);
+		World.getInstance ().addObject (PIEBody);
 	}
 	
 	public void setSpritePosition (float x, float y){
 		body.setSpritePosition (x, y);
+		PIEBody.setPosition (body.getBodyX (), body.getBodyY ());
 	}
 	
 	@Override

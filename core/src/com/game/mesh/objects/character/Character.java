@@ -10,10 +10,10 @@ import com.game.mesh.body.AnimatedObject;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.State;
+import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.GameMessage;
+import com.game.messages.ReturnStartPositionMessage;
 import com.game.render.Render;
-import com.introfog.primitiveIsometricEngine.Body;
-import com.introfog.primitiveIsometricEngine.World;
 
 import java.util.ArrayList;
 
@@ -36,15 +36,12 @@ public class Character extends GameObject{
 	private CharacterInputProcessor inputProcessor;
 	private CharacterAnimations animations;
 	
-	private Body PIEBody;
-	
 	
 	private Character (CharacterName name){
 		objectType = ObjectType.character;
 		this.name = name;
 		
 		body = new AnimatedObject (0, 0, CHARACTER_W, CHARACTER_H, BODY_CHARACTER_W, BODY_CHARACTER_H);
-		body.move (0, 0.25f);
 		
 		flashLight = new PointLight (Render.getInstance ().handler,100, Color.GRAY, (int) (300 * ASPECT_RATIO),
 				CHARACTER_W / 2, CHARACTER_H);
@@ -52,9 +49,6 @@ public class Character extends GameObject{
 		control = new CharacterControl (this);
 		inputProcessor = new CharacterInputProcessor (this);
 		animations = new CharacterAnimations (this);
-		
-		PIEBody = new Body (0, 0, BODY_CHARACTER_W, BODY_CHARACTER_H);
-		World.getInstance ().addObject (PIEBody);
 	}
 	
 	private static class CharacterHolder{
@@ -80,8 +74,6 @@ public class Character extends GameObject{
 		body.setSpritePosition (x, y);
 		body.move (0, 0.25f);
 		
-		PIEBody.setPosition (body.getBodyX (), body.getBodyY ());
-		
 		flashLight.setActive (true);
 		flashLight.setPosition (x + CHARACTER_W / 2, y + CHARACTER_H);
 		inputProcessor.setInputProcessor ();
@@ -96,6 +88,12 @@ public class Character extends GameObject{
 		parser.update ();
 		animations.update ();
 		control.update ();
+		
+		if (isSelected){
+			ObjectManager.getInstance ().addMessage (
+					new ReturnStartPositionMessage (this, getSpriteX (), getSpriteY (), getSpriteW (), getSpriteH (),
+													getBodyX (), getBodyY (), getBodyW (), getBodyH ()));
+		}
 	}
 	
 	@Override
@@ -106,7 +104,7 @@ public class Character extends GameObject{
 	@Override
 	public void draw (){
 		animations.draw ();
-		PIEBody.move (body.getBodyX () - PIEBody.getX (), body.getBodyY () - PIEBody.getY ());
+		flashLight.setPosition (body.getSpriteX () + CHARACTER_W / 2,body.getSpriteY () + CHARACTER_H / 2);
 	}
 	
 	@Override
@@ -155,7 +153,6 @@ public class Character extends GameObject{
 	
 	protected void move (float deltaX, float deltaY){
 		body.move (deltaX, deltaY);
-		flashLight.setPosition (flashLight.getX () + deltaX, flashLight.getY () + deltaY);
 	}
 	
 	protected boolean intersects (float x, float y, float w, float h){

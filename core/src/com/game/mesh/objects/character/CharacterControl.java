@@ -91,10 +91,10 @@ public class CharacterControl extends Character{
 		}
 		else if (deltaX != 0 || deltaY != 0){
 			character.state = State.move;
-			ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (),
+			/*ObjectManager.getInstance ().addMessage (new MoveMessage (character, deltaX, deltaY, character.getBodyX (),
 																	  character.getBodyY (), character.getSpriteX (),
 																	  character.getSpriteY (), character.getBodyW (),
-																	  character.getBodyH ()));
+																	  character.getBodyH ()));*/
 			character.move (deltaX, deltaY);
 		}
 	}
