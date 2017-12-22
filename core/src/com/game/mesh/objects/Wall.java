@@ -6,8 +6,7 @@ import com.badlogic.gdx.utils.Pools;
 
 import com.game.render.*;
 
-import com.introfog.primitiveIsometricEngine.Body;
-import com.introfog.primitiveIsometricEngine.World;
+import com.introfog.primitiveIsometricEngine.BodyPIE;
 
 public class Wall extends GameObject{
 	private static final float BODY_WALL_W = UNIT;
@@ -15,7 +14,7 @@ public class Wall extends GameObject{
 	private static final float WALL_W = UNIT;
 	private static final float WALL_H = UNIT * 2 + UNIT * ANGLE;
 	
-	private Body PIEBody;
+	private BodyPIE bodyPIE;
 	private Sprite sprite;
 	
 	
@@ -27,13 +26,12 @@ public class Wall extends GameObject{
 		sprite.setBounds (0, 0, WALL_W, WALL_H);
 		dataRender = new DataRender (sprite, LayerType.normal);
 		
-		PIEBody = new Body (0, 0, BODY_WALL_W, BODY_WALL_H);
-		World.getInstance ().addObject (PIEBody);
+		bodyPIE = new BodyPIE (0, 0, BODY_WALL_W, BODY_WALL_H);
 	}
 	
 	public void setPosition (float x, float y){
 		sprite.setPosition (x, y);
-		PIEBody.setPosition (x, y);
+		bodyPIE.setPosition (x, y);
 	}
 	
 	@Override

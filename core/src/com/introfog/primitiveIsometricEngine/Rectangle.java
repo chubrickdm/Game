@@ -27,6 +27,13 @@ public class Rectangle{
 		this.y = y;
 	}
 	
+	public void setBounds (float x, float y, float w, float h){
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+	}
+	
 	public void move (float deltaX, float deltaY){
 		x += deltaX;
 		y += deltaY;
