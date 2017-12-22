@@ -20,8 +20,11 @@ public abstract class GameObject{
 	protected Body body;
 	
 	
-	public void update (){ }
-	abstract public void sendMessage (GameMessage message); //обязательный метод у объекта
-	public void draw (){ }
-	public void clear (){ }
+	public void update (){}
+	
+	public void sendMessage (GameMessage message){}
+	
+	public void draw (){}
+	
+	public void clear (){}
 }

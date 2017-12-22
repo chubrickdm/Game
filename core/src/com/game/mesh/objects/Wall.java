@@ -1,16 +1,11 @@
 package com.game.mesh.objects;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Pools;
 
-import com.game.mesh.body.BodyObject;
-import com.game.mesh.objects.singletons.special.ObjectManager;
-import com.game.messages.GameMessage;
-import com.game.messages.MessageType;
-import com.game.messages.MoveMessage;
-import com.game.messages.PushOutMessage;
-import com.game.render.DataRender;
-import com.game.render.LayerType;
-import com.game.render.Render;
+import com.game.render.*;
+
 import com.introfog.primitiveIsometricEngine.Body;
 import com.introfog.primitiveIsometricEngine.World;
 
@@ -21,35 +16,24 @@ public class Wall extends GameObject{
 	private static final float WALL_H = UNIT * 2 + UNIT * ANGLE;
 	
 	private Body PIEBody;
+	private Sprite sprite;
 	
 	
 	public Wall (){
 		objectType = ObjectType.wall;
-		body = new BodyObject ("core/assets/images/other/wall_2.png", 0, 0, WALL_W, WALL_H, BODY_WALL_W, BODY_WALL_H);
-		dataRender = new DataRender (body.getSprite (), LayerType.normal);
+		
+		Texture texture = new Texture ("core/assets/images/other/wall_2.png");
+		sprite = new Sprite (texture);
+		sprite.setBounds (0, 0, WALL_W, WALL_H);
+		dataRender = new DataRender (sprite, LayerType.normal);
 		
 		PIEBody = new Body (0, 0, BODY_WALL_W, BODY_WALL_H);
 		World.getInstance ().addObject (PIEBody);
 	}
 	
-	public void setSpritePosition (float x, float y){
-		body.setSpritePosition (x, y);
-		PIEBody.setPosition (body.getBodyX (), body.getBodyY ());
-	}
-	
-	@Override
-	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.move && (message.objectType == ObjectType.character ||
-				message.objectType == ObjectType.box)){
-			MoveMessage msg = (MoveMessage) message;
-			if (msg.deltaX != 0 &&  body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, -msg.deltaX, 0));
-			}
-			if (msg.deltaY != 0 &&  body.intersects (msg.oldBodyX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				ObjectManager.getInstance ().addMessage (new PushOutMessage (msg.object, 0, -msg.deltaY));
-			}
-			
-		}
+	public void setPosition (float x, float y){
+		sprite.setPosition (x, y);
+		PIEBody.setPosition (x, y);
 	}
 	
 	@Override
