@@ -10,10 +10,16 @@ public class InvisibleWall extends GameObject{
 	
 	public InvisibleWall (){
 		objectType = ObjectType.invisibleWall;
-		bodyPIE = new BodyPIE (0, 0, 1, 1, Color.CORAL);
+		bodyPIE = new BodyPIE (0, 0, 1, 1, Color.FOREST);
 	}
 	
 	public void setBodyBounds (float x, float y, float w, float h){
 		bodyPIE.setBounds (x, y, w, h);
+		bodyPIE.setGhost (false);
+	}
+	
+	@Override
+	public void clear (){
+		bodyPIE.setGhost (true);
 	}
 }

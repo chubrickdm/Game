@@ -24,6 +24,7 @@ public class FinishLevel extends GameObject{
 	
 	public void setBodyBounds (float x, float y, float w, float h){
 		triggeredZone.setBounds (x, y, w, h);
+		triggeredZone.setGhost (false);
 	}
 	
 	@Override
@@ -58,6 +59,7 @@ public class FinishLevel extends GameObject{
 		onFinish[0] = false;
 		onFinish[1] = false;
 		triggeredZone.clear ();
+		triggeredZone.setGhost (true);
 		Pools.free (this);
 	}
 }

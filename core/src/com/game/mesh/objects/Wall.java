@@ -32,6 +32,7 @@ public class Wall extends GameObject{
 	public void setPosition (float x, float y){
 		sprite.setPosition (x, y);
 		bodyPIE.setPosition (x, y);
+		bodyPIE.setGhost (false);
 	}
 	
 	@Override
@@ -41,6 +42,7 @@ public class Wall extends GameObject{
 	
 	@Override
 	public void clear (){
+		bodyPIE.setGhost (true);
 		Pools.free (this);
 	}
 }
