@@ -11,7 +11,7 @@ import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.State;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.GameMessage;
-import com.game.messages.ReturnStartPositionMessage;
+import com.game.messages.ReturnPositionMessage;
 import com.game.render.Render;
 import com.introfog.primitiveIsometricEngine.*;
 
@@ -97,8 +97,8 @@ public class Character extends GameObject{
 		
 		if (isSelected){
 			ObjectManager.getInstance ().addMessage (
-					new ReturnStartPositionMessage (this, getSpriteX (), getSpriteY (), getSpriteW (), getSpriteH (),
-													getBodyX (), getBodyY (), getBodyW (), getBodyH ()));
+					new ReturnPositionMessage (this, getSpriteX (), getSpriteY (), getSpriteW (), getSpriteH (),
+											   getBodyX (), getBodyY (), getBodyW (), getBodyH ()));
 		}
 	}
 	

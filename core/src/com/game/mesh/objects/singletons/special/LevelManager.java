@@ -8,17 +8,13 @@ import com.game.GameSystem;
 import com.game.MyGame;
 import com.game.addition.parsers.ParseLevel;
 import com.game.addition.parsers.ParseSettings;
-import com.game.mesh.objects.singletons.Chain;
-import com.game.mesh.objects.GameObject;
-import com.game.mesh.objects.Inventory;
+import com.game.mesh.objects.*;
 import com.game.mesh.objects.character.CharacterName;
-import com.game.mesh.objects.singletons.Camera;
+import com.game.mesh.objects.singletons.*;
 import com.game.messages.AddObjectMessage;
 import com.game.messages.GameMessage;
-import com.game.messages.GetStartPositionMessage;
 import com.game.messages.MessageType;
 import com.game.screens.SelectedModeScreen;
-import com.introfog.primitiveIsometricEngine.World;
 
 public class LevelManager extends GameObject{
 	private void completeLevel (){
@@ -85,9 +81,6 @@ public class LevelManager extends GameObject{
 			GameSystem.IS_FIRST_GAME_START = false;
 			ParseSettings.writeSettings ();
 		}
-		
-		//важно здесь отослать это сообщение, что б инвентари и камера смогли получить начальные позиции персонажей.
-		ObjectManager.getInstance ().addMessage (new GetStartPositionMessage ());
 	}
 	
 	public void updateLevel (){

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Pools;
 
 import com.game.mesh.animation.ObjectAnimation;
-import com.game.mesh.body.AnimatedObject;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
 import com.game.render.*;

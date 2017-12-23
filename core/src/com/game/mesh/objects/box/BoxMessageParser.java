@@ -63,14 +63,13 @@ public class BoxMessageParser extends Box{
 		else if (message.type == MessageType.comeTo && message.object == exciter){
 			pushThis = true;
 			box.bodyPIE.setBodyType (BodyType.dynamical);
-			ObjectManager.getInstance ().addMessage (new ChangeStateMessage (exciter, box));
 		}
 		else if (message.type == MessageType.disconnect && message.object == exciter){
 			box.bodyPIE.setBodyType (BodyType.statical);
 			pushThis = false;
 		}
-		else if (message.type == MessageType.returnStartPosition && message.objectType == ObjectType.character){
-			ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
+		else if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
+			ReturnPositionMessage msg = (ReturnPositionMessage) message;
 			Character character = (Character) message.object;
 			checkTriggeredZone (msg.body.getX (), msg.body.getY (), msg.body.getW (), msg.body.getH (), character);
 		}

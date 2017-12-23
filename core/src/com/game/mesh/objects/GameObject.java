@@ -1,6 +1,5 @@
 package com.game.mesh.objects;
 
-import com.game.mesh.body.Body;
 import com.game.messages.GameMessage;
 import com.game.render.DataRender;
 import com.introfog.primitiveIsometricEngine.BodyPIE;
@@ -18,7 +17,6 @@ public abstract class GameObject{
 	public ObjectType objectType = ObjectType.unknown;
 	
 	protected DataRender dataRender;
-	protected Body body;
 	
 	
 	public void update (){}

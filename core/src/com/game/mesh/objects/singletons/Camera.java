@@ -43,8 +43,8 @@ public class Camera extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.returnStartPosition && message.objectType == ObjectType.character){
-			ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
+		if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
+			ReturnPositionMessage msg = (ReturnPositionMessage) message;
 			camera.position.set (camera.position.x, msg.sprite.getY () + msg.sprite.getH () / 2, 0);
 		}
 	}

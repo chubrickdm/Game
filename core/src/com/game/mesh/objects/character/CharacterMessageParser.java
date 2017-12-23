@@ -39,12 +39,6 @@ public class CharacterMessageParser extends Character{
 			GoToMessage msg = (GoToMessage) message;
 			character.goToObject ((int) msg.whereX, (int) msg.whereY);
 		}
-		else if (message.type == MessageType.changeState && message.object == character){
-			ChangeStateMessage msg = (ChangeStateMessage) message;
-			if (msg.fromWhom.objectType == ObjectType.box){
-				character.state = State.abut;
-			}
-		}
 		else if (message.type == MessageType.whoseBody){
 			WhoseBodyMessage msg = (WhoseBodyMessage) message;
 			if (msg.bodyPIE == character.getBodyPIE ()){

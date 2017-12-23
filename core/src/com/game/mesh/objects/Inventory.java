@@ -2,9 +2,10 @@ package com.game.mesh.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Pools;
 
-import com.game.mesh.body.NoBodyObject;
 import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.character.CharacterName;
 import com.game.messages.*;
@@ -20,29 +21,37 @@ public class Inventory extends GameObject{
 	private static CharacterName selectedCharacter = CharacterName.first; //имя персонажа которым происходит управление
 	
 	private boolean isVisible = false;
+	private float originX;
+	private float originY;
 	private float percentSize = 1;
 	private CharacterName ownerName; //имя персонажа за которым прикреплен инвентарь
+	private Sprite sprite;
 	
+	
+	private void setScale (float scale){
+		sprite.setScale (scale);
+		sprite.setOriginCenter ();
+	}
 	
 	private void updateSizeAnimation (){
 		if (Gdx.input.isKeyPressed (Input.Keys.F) && selectedCharacter == ownerName){
 			isVisible = true;
 			if (percentSize >= 100){
-				body.setScale (1);
+				setScale (1);
 			}
 			else{
-				body.setScale (percentSize / 100);
+				setScale (percentSize / 100);
 				percentSize += percentPerTick;
 			}
 		}
 		else{
 			if (percentSize <= 1 + percentPerTick){
 				isVisible = false;
-				body.setScale (percentSize / 100);
+				setScale (percentSize / 100);
 			}
 			else{
 				isVisible = true;
-				body.setScale (percentSize / 100);
+				setScale (percentSize / 100);
 				percentSize -= percentPerTick;
 			}
 		}
@@ -53,11 +62,13 @@ public class Inventory extends GameObject{
 		objectType = ObjectType.actionWheel;
 		this.ownerName = CharacterName.unknown;
 		
-		body = new NoBodyObject ("core/assets/images/other/action_wheel.png", 0, 0, INVENTORY_W, INVENTORY_H);
-		body.setOrigin (INVENTORY_W / 2, INVENTORY_H / 2);
-		body.setScale (percentSize / 100);
-		body.setSpritePosition (INVENTORY_W / 2, INVENTORY_H / 2);
-		dataRender = new DataRender (body.getSprite (), LayerType.over);
+		Texture texture = new Texture ("core/assets/images/other/action_wheel.png");
+		sprite = new Sprite (texture);
+		sprite.setBounds (0, 0, INVENTORY_W, INVENTORY_H);
+		originX = INVENTORY_W / 2;
+		originY = INVENTORY_H / 2;
+		setScale (percentSize / 100);
+		dataRender = new DataRender (sprite, LayerType.over);
 	}
 	
 	public void setOwnerName (CharacterName ownerName){
@@ -71,12 +82,13 @@ public class Inventory extends GameObject{
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		if (message.type == MessageType.returnStartPosition && message.objectType == ObjectType.character){
+		if (message.type == MessageType.returnPosition && message.objectType == ObjectType.character){
 			Character character = (Character) message.object;
 			selectedCharacter = character.getName ();
 			if (ownerName == character.getName ()){
-				ReturnStartPositionMessage msg = (ReturnStartPositionMessage) message;
-				body.setSpritePosition (msg.sprite.getX () + msg.sprite.getW () / 2, msg.sprite.getY () + msg.sprite.getH () / 2);
+				ReturnPositionMessage msg = (ReturnPositionMessage) message;
+				sprite.setPosition (msg.sprite.getX () + msg.sprite.getW () / 2 - originX,
+									msg.sprite.getY () + msg.sprite.getH () / 2 - originY);
 			}
 		}
 	}

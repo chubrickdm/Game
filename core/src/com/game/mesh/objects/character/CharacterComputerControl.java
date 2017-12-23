@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 
 import com.game.GameSystem;
 import com.game.addition.algorithms.aStar.ConcreteNode;
-import com.game.mesh.objects.GameObject;
+import com.game.mesh.objects.*;
 import com.game.mesh.objects.singletons.special.*;
 import com.game.messages.ComeToMessage;
 
@@ -55,12 +55,13 @@ public class CharacterComputerControl extends CharacterControl{
 			current.y += control.deltaY;
 		}
 		if (!moveX && !moveY){
-			if (iterator == path.size () - 1){
+			if (iterator == path.size () - 1){ //персонаж дошел до конца
 				path.clear ();
 				control.movedByComputer = false;
 				if (control.character.goToObject){
 					control.character.goToObject = false;
 					ObjectManager.getInstance ().addMessage (new ComeToMessage (control.character));
+					character.state = State.abut;
 				}
 				else{
 					control.deltaX += next.x - current.x;
