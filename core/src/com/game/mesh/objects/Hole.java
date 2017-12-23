@@ -12,8 +12,8 @@ import com.game.render.*;
 import com.introfog.primitiveIsometricEngine.*;
 
 public class Hole extends GameObject{
-	private static final float BODY_HOLE_W = UNIT * 2;
-	private static final float BODY_HOLE_H = UNIT * ANGLE * 2;
+	private static final float BODY_HOLE_W = UNIT * 2 + 2;
+	private static final float BODY_HOLE_H = UNIT * ANGLE * 2 + 2;
 	private static final float HOLE_W = UNIT * 2;
 	private static final float HOLE_H = UNIT * ANGLE * 2;
 	
@@ -25,8 +25,8 @@ public class Hole extends GameObject{
 	public Hole (){
 		objectType = ObjectType.hole;
 		
-		bodyShiftX = (BODY_HOLE_W - HOLE_W) / 2;
-		bodyShiftY = (BODY_HOLE_H - HOLE_H) / 2;
+		bodyShiftX = -(BODY_HOLE_W - HOLE_W) / 2;
+		bodyShiftY = -(BODY_HOLE_H - HOLE_H) / 2;
 		triggeredZone = new TriggeredZone (0, 0, BODY_HOLE_W, BODY_HOLE_H, ZoneType.contains, Color.SKY);
 		
 		Texture texture = new Texture ("core/assets/images/other/hole.png");

@@ -14,13 +14,14 @@ import com.game.render.*;
 import com.introfog.primitiveIsometricEngine.*;
 
 public class Mushrooms extends GameObject{
-	private static final float BODY_MUSH_W = UNIT * 2;
-	private static final float BODY_MUSH_H = UNIT * ANGLE * 2;
+	private static final float BODY_MUSH_W = UNIT * 2 - 2;
+	private static final float BODY_MUSH_H = UNIT * ANGLE * 2 - 2;
 	private static final float MUSH_W = UNIT * 2;
 	private static final float MUSH_H = UNIT * ANGLE * 2;
 	
 	private boolean isHide = false;
 	private float zoneShiftX;
+	private float zoneShiftY;
 	private ToxicGas toxicGas = null;
 	private Sprite currSprite;
 	private ObjectAnimation hide;
@@ -32,6 +33,7 @@ public class Mushrooms extends GameObject{
 		objectType = ObjectType.mushrooms;
 		
 		zoneShiftX = (MUSH_W - BODY_MUSH_W) / 2;
+		zoneShiftY = (MUSH_H - BODY_MUSH_H) / 2;
 		triggeredZone = new TriggeredZone (0, 0, BODY_MUSH_W, BODY_MUSH_H, ZoneType.intersects, Color.TAN);
 		
 		float regionW = 2 * GameObject.UNIT / GameObject.ASPECT_RATIO;
@@ -45,7 +47,7 @@ public class Mushrooms extends GameObject{
 	}
 	
 	public void setSpritePosition (float x, float y){
-		triggeredZone.setPosition (x + zoneShiftX, y);
+		triggeredZone.setPosition (x + zoneShiftX, y + zoneShiftY);
 		triggeredZone.setGhost (false);
 		
 		light.setPosition (x + MUSH_W / 2, y + MUSH_H / 2);
@@ -56,8 +58,9 @@ public class Mushrooms extends GameObject{
 	public void update (){
 		if (toxicGas == null && triggeredZone.getInZone ().size () > 0){
 			toxicGas = Pools.obtain (ToxicGas.class);
-			toxicGas.setSpritePosition (triggeredZone.getX () - zoneShiftX, triggeredZone.getY ());
+			toxicGas.setSpritePosition (triggeredZone.getX () - zoneShiftX, triggeredZone.getY () - zoneShiftY);
 			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (toxicGas));
+			triggeredZone.setGhost (true);
 		}
 		
 		if (toxicGas != null && !isHide){
@@ -78,7 +81,7 @@ public class Mushrooms extends GameObject{
 		else if (toxicGas == null){
 			currSprite = hide.getFirstFrame ();
 		}
-		currSprite.setPosition (triggeredZone.getX () - zoneShiftX, triggeredZone.getY ());
+		currSprite.setPosition (triggeredZone.getX () - zoneShiftX, triggeredZone.getY () - zoneShiftY);
 	}
 	
 	@Override
@@ -86,6 +89,8 @@ public class Mushrooms extends GameObject{
 		if (message.type == MessageType.destroyObject && message.object == toxicGas){
 			DestroyObjectMessage msg = (DestroyObjectMessage) message;
 			if (msg.bodyPIE == null){
+				triggeredZone.setGhost (false);
+				triggeredZone.getInZone ().clear ();
 				toxicGas = null;
 				hide.resetTime ();
 			}
