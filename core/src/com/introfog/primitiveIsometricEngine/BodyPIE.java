@@ -38,11 +38,18 @@ public class BodyPIE{
 		World.getInstance ().addObject (this);
 	}
 	
+	public boolean isGhost (){
+		return isGhost;
+	}
+	
 	public void setGhost (boolean isGhost){
 		this.isGhost = isGhost;
 	}
 	
 	public void move (float deltaX, float deltaY){
+		if (isGhost){
+			return;
+		}
 		World.getInstance ().addMessage (new MoveMessage (this, deltaX, deltaY));
 		body.move (deltaX, deltaY);
 	}
@@ -52,13 +59,13 @@ public class BodyPIE{
 	}
 	
 	public void sendMessage (WorldMessage message){
-		if (isGhost){
-			return;
-		}
 		if (message.type == MessageType.move && message.bodyPIE != this){
 			MoveMessage msg = (MoveMessage) message;
 			Rectangle rect = msg.bodyPIE.body;
 			if (msg.deltaX != 0 && body.intersects (rect.getX () + msg.deltaX, rect.getY (), rect.getW (), rect.getH ())){
+				if (body.contains (rect.getX () + msg.deltaX, rect.getY (), rect.getW (), rect.getH ())){
+					return;
+				}
 				if (type == BodyType.statical){
 					World.getInstance ().addMessage (new PushOutMessage (msg.bodyPIE, -msg.deltaX, 0));
 				}
@@ -68,6 +75,9 @@ public class BodyPIE{
 				}
 			}
 			if (msg.deltaY != 0 && body.intersects (rect.getX (), rect.getY () + msg.deltaY, rect.getW (), rect.getH ())){
+				if (body.contains (rect.getX (), rect.getY () + msg.deltaY, rect.getW (), rect.getH ())){
+					return;
+				}
 				if (type == BodyType.statical){
 					World.getInstance ().addMessage (new PushOutMessage (msg.bodyPIE, 0, -msg.deltaY));
 				}
