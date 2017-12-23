@@ -26,12 +26,15 @@ public class BoxMessageParser extends Box{
 				triggered[character.getName ().ordinal ()] = box.bodyPIE;
 			}
 			else if (!trigger && triggered[character.getName ().ordinal ()] == box.bodyPIE){
-				exciter = null;
 				triggered[character.getName ().ordinal ()] = null;
 			}
 		}
 	}
 	
+	
+	public BoxMessageParser (Box box){
+		this.box = box;
+	}
 	
 	@Override
 	public void update (){
@@ -43,8 +46,9 @@ public class BoxMessageParser extends Box{
 		}
 	}
 	
-	public BoxMessageParser (Box box){
-		this.box = box;
+	@Override
+	public void clear (){
+		pushThis = false;
 	}
 	
 	public void parseMessage (GameMessage message){

@@ -30,7 +30,7 @@ public class CharacterMessageParser extends Character{
 					character.state = State.choke;
 				}
 			}
-			if (triggered[character.getName ().ordinal ()] == msg.bodyPIE){
+			else if (msg.objectType != ObjectType.toxicGas && triggered[character.getName ().ordinal ()] == msg.bodyPIE){
 				triggered[character.getName ().ordinal ()] = null;
 				character.state = State.stand;
 			}

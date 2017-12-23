@@ -38,6 +38,7 @@ public class Hole extends GameObject{
 	
 	public void setSpritePosition (float x, float y){
 		triggeredZone.setPosition (x + bodyShiftX, y + bodyShiftY);
+		triggeredZone.setGhost (false);
 		sprite.setPosition (x, y);
 	}
 	
@@ -58,6 +59,7 @@ public class Hole extends GameObject{
 	@Override
 	public void clear (){
 		triggeredZone.clear ();
+		triggeredZone.setGhost (true);
 		Pools.free (this);
 	}
 }

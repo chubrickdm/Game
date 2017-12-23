@@ -79,10 +79,12 @@ public class Box extends GameObject{
 	@Override
 	public void clear (){
 		state = State.stand;
+		parser.clear ();
+		
 		triggeredZone.clear ();
+		triggeredZone.setGhost (true);
 		bodyPIE.setBodyType (BodyType.statical);
 		bodyPIE.setGhost (true);
-		triggeredZone.setGhost (true);
 		Pools.free (this);
 	}
 	

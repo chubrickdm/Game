@@ -8,9 +8,10 @@ import com.badlogic.gdx.utils.Pools;
 
 import com.game.mesh.animation.ObjectAnimation;
 import com.game.mesh.body.AnimatedObject;
-import com.game.messages.GameMessage;
-import com.game.messages.MessageType;
+import com.game.mesh.objects.singletons.special.ObjectManager;
+import com.game.messages.*;
 import com.game.render.*;
+import com.introfog.primitiveIsometricEngine.*;
 
 public class Mushrooms extends GameObject{
 	private static final float BODY_MUSH_W = UNIT * 2;
@@ -19,30 +20,33 @@ public class Mushrooms extends GameObject{
 	private static final float MUSH_H = UNIT * ANGLE * 2;
 	
 	private boolean isHide = false;
+	private float zoneShiftX;
 	private ToxicGas toxicGas = null;
 	private Sprite currSprite;
 	private ObjectAnimation hide;
 	private PointLight light;
+	private TriggeredZone triggeredZone;
 	
 	
 	public Mushrooms (){
 		objectType = ObjectType.mushrooms;
-		body = new AnimatedObject (0, 0, MUSH_W, MUSH_H, BODY_MUSH_W, BODY_MUSH_H);
 		
+		zoneShiftX = (MUSH_W - BODY_MUSH_W) / 2;
+		triggeredZone = new TriggeredZone (0, 0, BODY_MUSH_W, BODY_MUSH_H, ZoneType.intersects, Color.TAN);
 		
 		float regionW = 2 * GameObject.UNIT / GameObject.ASPECT_RATIO;
 		float regionH = (2 * GameObject.ANGLE) * GameObject.UNIT / GameObject.ASPECT_RATIO;
-		hide = new ObjectAnimation ("core/assets/images/other/mushrooms_hide.png", false, regionW, regionH,
-				MUSH_W, MUSH_H, 0.1f);
-		light = new PointLight (Render.getInstance ().handler,100, Color.OLIVE, (int) (100 * ASPECT_RATIO),
-				MUSH_W / 2, MUSH_H / 2);
+		hide = new ObjectAnimation ("core/assets/images/other/mushrooms_hide.png", false, regionW, regionH, MUSH_W,
+									MUSH_H, 0.1f);
+		light = new PointLight (Render.getInstance ().handler, 100, Color.OLIVE, (int) (100 * ASPECT_RATIO), MUSH_W / 2,
+								MUSH_H / 2);
 		currSprite = hide.getFirstFrame ();
-		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
 		dataRender = new DataRender (currSprite, LayerType.below);
 	}
 	
 	public void setSpritePosition (float x, float y){
-		body.setSpritePosition (x, y);
+		triggeredZone.setPosition (x + zoneShiftX, y);
+		triggeredZone.setGhost (false);
 		
 		light.setPosition (x + MUSH_W / 2, y + MUSH_H / 2);
 		light.setActive (true);
@@ -50,6 +54,12 @@ public class Mushrooms extends GameObject{
 	
 	@Override
 	public void update (){
+		if (toxicGas == null && triggeredZone.getInZone ().size () > 0){
+			toxicGas = Pools.obtain (ToxicGas.class);
+			toxicGas.setSpritePosition (triggeredZone.getX () - zoneShiftX, triggeredZone.getY ());
+			ObjectManager.getInstance ().sendMessage (new AddObjectMessage (toxicGas));
+		}
+		
 		if (toxicGas != null && !isHide){
 			if (hide.isAnimationFinished ()){
 				isHide = true;
@@ -68,22 +78,17 @@ public class Mushrooms extends GameObject{
 		else if (toxicGas == null){
 			currSprite = hide.getFirstFrame ();
 		}
-		currSprite.setPosition (body.getSpriteX (), body.getSpriteY ());
+		currSprite.setPosition (triggeredZone.getX () - zoneShiftX, triggeredZone.getY ());
 	}
 	
 	@Override
 	public void sendMessage (GameMessage message){
-		/*if (message.type == MessageType.move && toxicGas == null){
-			MoveMessage msg = (MoveMessage) message;
-			if (body.intersects (msg.oldBodyX + msg.deltaX, msg.oldBodyY + msg.deltaY, msg.bodyW, msg.bodyH)){
-				toxicGas = Pools.obtain (ToxicGas.class);
-				toxicGas.setSpritePosition (body.getSpriteX (), body.getSpriteY ());
-				ObjectManager.getInstance ().sendMessage (new AddObjectMessage (toxicGas));
-			}
-		}*/
 		if (message.type == MessageType.destroyObject && message.object == toxicGas){
-			toxicGas = null;
-			hide.resetTime ();
+			DestroyObjectMessage msg = (DestroyObjectMessage) message;
+			if (msg.bodyPIE == null){
+				toxicGas = null;
+				hide.resetTime ();
+			}
 		}
 	}
 	
@@ -99,6 +104,8 @@ public class Mushrooms extends GameObject{
 		toxicGas = null;
 		currSprite = hide.getFirstFrame ();
 		
+		triggeredZone.clear ();
+		triggeredZone.setGhost (true);
 		light.setActive (false);
 		Pools.free (this);
 	}
