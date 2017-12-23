@@ -8,6 +8,7 @@ import com.game.mesh.objects.State;
 import com.game.mesh.objects.character.Character;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.*;
+
 import com.introfog.primitiveIsometricEngine.BodyType;
 
 public class BoxMessageParser extends Box{
@@ -36,8 +37,7 @@ public class BoxMessageParser extends Box{
 	public void update (){
 		if (!pushThis && Gdx.input.isKeyJustPressed (Input.Keys.E)){
 			if (triggered[0] == box.bodyPIE || triggered[1] == box.bodyPIE){
-				ObjectManager.getInstance ().addMessage (
-						new GoToMessage (exciter, box.getBodyX () + box.getBodyW () / 2,
+				ObjectManager.getInstance ().addMessage (new GoToMessage (exciter, box.getBodyX () + box.getBodyW () / 2,
 										 box.getBodyY () + box.getBodyW () / 2));
 			}
 		}

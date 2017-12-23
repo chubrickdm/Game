@@ -1,6 +1,6 @@
 package com.game.messages;
 
-import com.game.mesh.objects.GameObject;
+import com.game.mesh.objects.*;
 
 import com.introfog.primitiveIsometricEngine.BodyPIE;
 

@@ -49,12 +49,12 @@ public class Box extends GameObject{
 	}
 	
 	public void setSpritePosition (float x, float y){
-		bodyPIE.setGhost (false);
-		triggeredZone.setGhost (false);
 		spriteRect.setPosition (x, y);
 		bodyPIE.setPosition (x + bodyShiftX, y);
 		bodyPIE.move (0, 0.5f);
+		bodyPIE.setGhost (false);
 		triggeredZone.setPosition (bodyPIE.getX () + zoneShiftX, bodyPIE.getY () + zoneShiftY);
+		triggeredZone.setGhost (false);
 	}
 	
 	@Override
@@ -81,6 +81,8 @@ public class Box extends GameObject{
 		state = State.stand;
 		triggeredZone.clear ();
 		bodyPIE.setBodyType (BodyType.statical);
+		bodyPIE.setGhost (true);
+		triggeredZone.setGhost (true);
 		Pools.free (this);
 	}
 	

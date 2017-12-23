@@ -77,6 +77,7 @@ public class Character extends GameObject{
 		isSelected = (name == CharacterName.first);
 		
 		bodyPIE.setPosition (x + bodyShiftX, y);
+		bodyPIE.setGhost (false);
 		spriteRect.setPosition (x, y);
 		
 		flashLight.setActive (true);
@@ -121,6 +122,7 @@ public class Character extends GameObject{
 		control.clear ();
 		inputProcessor.clear ();
 		animations.clear ();
+		bodyPIE.setGhost (true);
 		Pools.free (this);
 	}
 	
