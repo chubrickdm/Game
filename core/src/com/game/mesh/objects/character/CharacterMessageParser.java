@@ -17,8 +17,8 @@ public class CharacterMessageParser extends Character{
 	public void update (){}
 	
 	public void parseMessage (GameMessage message){
-		if (message.type == MessageType.characterChange && message.object != character){
-			character.isSelected = true;
+		if (message.type == MessageType.characterChange){
+			character.isSelected = message.object != character;
 		}
 		else if (message.type == MessageType.destroyObject){
 			DestroyObjectMessage msg = (DestroyObjectMessage) message;

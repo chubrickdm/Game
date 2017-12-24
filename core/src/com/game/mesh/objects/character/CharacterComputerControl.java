@@ -61,7 +61,7 @@ public class CharacterComputerControl extends CharacterControl{
 				if (control.character.goToObject){
 					control.character.goToObject = false;
 					ObjectManager.getInstance ().addMessage (new ComeToMessage (control.character));
-					character.state = State.abut;
+					control.character.state = State.abut;
 				}
 				else{
 					control.deltaX += next.x - current.x;

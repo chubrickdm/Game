@@ -78,14 +78,12 @@ public class CharacterControl extends Character{
 		if (!movedByComputer && character.goToObject){
 			character.goToObject = false;
 		}
-		
-		if (movedByComputer){
+		else if (movedByComputer){
 			computerControl.updatedMoveByComputer ();
 		}
 		
 		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
 			movedByComputer = false;
-			character.isSelected = false;
 			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (character));
 		}
 		else if (deltaX != 0 || deltaY != 0){
@@ -103,11 +101,6 @@ public class CharacterControl extends Character{
 		
 		if (movedByComputer){
 			computerControl.updatedMoveByComputer ();
-		}
-		
-		if (Gdx.input.isKeyJustPressed (Input.Keys.TAB)){
-			character.isSelected = false;
-			ObjectManager.getInstance ().addMessage (new CharacterChangeMessage (character));
 		}
 		else if (Gdx.input.isKeyJustPressed (Input.Keys.E) && !movedByComputer){
 			character.state = State.stand;

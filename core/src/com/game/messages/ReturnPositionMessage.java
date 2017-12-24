@@ -1,7 +1,7 @@
 package com.game.messages;
 
-import com.game.addition.math.Rectangle;
 import com.game.mesh.objects.GameObject;
+import com.introfog.primitiveIsometricEngine.Rectangle;
 
 public class ReturnPositionMessage extends GameMessage{ //создается в ответ на сообщение о получение позиций
 	public Rectangle body;
