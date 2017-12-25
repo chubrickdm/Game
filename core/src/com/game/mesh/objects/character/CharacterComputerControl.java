@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import com.game.GameSystem;
-import com.game.addition.algorithms.aStar.ConcreteNode;
+import com.game.addition.algorithms.aStar.Tile;
 import com.game.mesh.objects.*;
 import com.game.mesh.objects.singletons.special.*;
 import com.game.messages.ComeToMessage;
@@ -13,15 +13,15 @@ import java.util.ArrayList;
 
 public class CharacterComputerControl extends CharacterControl{
 	private int iterator;
-	private ConcreteNode next;
-	private ConcreteNode current;
+	private Tile next;
+	private Tile current;
 	private CharacterControl control;
-	private ArrayList<ConcreteNode> path;
+	private ArrayList<Tile> path;
 	
 	
 	public CharacterComputerControl (CharacterControl control){
-		next = new ConcreteNode ();
-		current = new ConcreteNode ();
+		next = new Tile ();
+		current = new Tile ();
 		this.control = control;
 	}
 	
@@ -74,7 +74,7 @@ public class CharacterComputerControl extends CharacterControl{
 		}
 	}
 	
-	public void setPath (ArrayList <ConcreteNode> path){
+	public void setPath (ArrayList <Tile> path){
 		control.movedByComputer = true;
 		
 		this.path = path;

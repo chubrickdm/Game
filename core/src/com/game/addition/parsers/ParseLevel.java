@@ -25,13 +25,13 @@ public abstract class ParseLevel extends ParseBasis{
 	
 	private static void additionalCalculates (Node map){
 		levelH = Integer.parseInt (map.getAttributes ().item (5).getTextContent ()); //tile height
-		int height = Integer.parseInt (map.getAttributes ().item (0).getTextContent ());
+		int height = Integer.parseInt (map.getAttributes ().item (0).getTextContent ()); //number of tiles in height
 		levelH *= height;
 		levelH *= ASPECT_RATIO;
 		
 		//ширина уровня умноженная на аспект ратио
 		int levelW = Integer.parseInt (map.getAttributes ().item (6).getTextContent ()); //tile width
-		int width = Integer.parseInt (map.getAttributes ().item (8).getTextContent ());
+		int width = Integer.parseInt (map.getAttributes ().item (8).getTextContent ()); //number of tiles in width
 		levelW *= width;
 		levelW *= ASPECT_RATIO;
 		

@@ -1,5 +1,5 @@
 package com.game.addition.algorithms.aStar;
 
-public enum TypeNode{
+public enum TileType{
 	wall, empty
 }

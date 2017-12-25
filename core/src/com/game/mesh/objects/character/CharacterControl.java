@@ -3,7 +3,7 @@ package com.game.mesh.objects.character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-import com.game.addition.algorithms.aStar.ConcreteNode;
+import com.game.addition.algorithms.aStar.Tile;
 import com.game.mesh.objects.State;
 import com.game.mesh.objects.singletons.special.ObjectManager;
 import com.game.messages.CharacterChangeMessage;
@@ -102,7 +102,8 @@ public class CharacterControl extends Character{
 		if (movedByComputer){
 			computerControl.updatedMoveByComputer ();
 		}
-		else if (Gdx.input.isKeyJustPressed (Input.Keys.E) && !movedByComputer){
+		
+		if (Gdx.input.isKeyJustPressed (Input.Keys.E) && !movedByComputer){
 			character.state = State.stand;
 			ObjectManager.getInstance ().addMessage (new DisconnectMessage (character));
 		}
@@ -120,7 +121,7 @@ public class CharacterControl extends Character{
 		computerControl = new CharacterComputerControl (this);
 	}
 	
-	public void setPath (ArrayList <ConcreteNode> path){
+	public void setPath (ArrayList <Tile> path){
 		computerControl.setPath (path);
 	}
 	

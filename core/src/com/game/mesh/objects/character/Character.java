@@ -5,7 +5,7 @@ import box2dLight.PointLight;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Pools;
 
-import com.game.addition.algorithms.aStar.ConcreteNode;
+import com.game.addition.algorithms.aStar.Tile;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.ObjectType;
 import com.game.mesh.objects.State;
@@ -163,7 +163,7 @@ public class Character extends GameObject{
 		spriteRect.setPosition (bodyPIE.getX () - bodyShiftX, bodyPIE.getY ());
 	}
 	
-	protected void setPath (ArrayList <ConcreteNode> path){
+	protected void setPath (ArrayList <Tile> path){
 		control.setPath (path);
 	}
 	

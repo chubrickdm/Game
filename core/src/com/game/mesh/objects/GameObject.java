@@ -11,8 +11,10 @@ public abstract class GameObject{
 	public static BodyPIE triggered[] = new BodyPIE[2];
 	
 	public static final float ASPECT_RATIO = (float) ((SCREEN_W / 2 < SCREEN_H) ? SCREEN_W / 1366 : SCREEN_H / 768);
-	public static final float UNIT = 64 * ASPECT_RATIO; //условный метр в игре
 	public static final float ANGLE = 0.75f;
+	public static final float UNIT = 64 * ASPECT_RATIO; //условный метр в игре
+	public static final float TILE_W = UNIT / 2;
+	public static final float TILE_H = UNIT * ANGLE / 2;
 	
 	public ObjectType objectType = ObjectType.unknown;
 	

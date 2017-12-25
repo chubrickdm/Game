@@ -6,8 +6,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 
 import com.game.GameSystem;
-import com.game.addition.algorithms.aStar.ConcreteNode;
-import com.game.addition.algorithms.aStar.TypeNode;
+import com.game.addition.algorithms.aStar.Tile;
+import com.game.addition.algorithms.aStar.TileType;
 import com.game.addition.algorithms.aStar.algorithm.AlgorithmAStar;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.State;
@@ -18,8 +18,8 @@ import java.util.ArrayList;
 public class CharacterInputProcessor extends Character implements InputProcessor{
 	private static InputMultiplexer multiplexer = new InputMultiplexer ();
 	
-	private ConcreteNode start;
-	private ConcreteNode finish;
+	private Tile start;
+	private Tile finish;
 	private Character character;
 	
 	
@@ -31,8 +31,8 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 		multiplexer.addProcessor (this);
 		Gdx.input.setInputProcessor (multiplexer);
 		
-		start = new ConcreteNode ();
-		finish = new ConcreteNode ();
+		start = new Tile ();
+		finish = new Tile ();
 	}
 	
 	public void goToObject (int x, int y){
@@ -44,11 +44,11 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 			finish.x = (int) ((x - GameSystem.INDENT_BETWEEN_SCREEN_LEVEL) / GameObject.UNIT);
 			finish.y = (int) (y / (GameObject.UNIT * GameObject.ANGLE));
 			
-			AlgorithmAStar <ConcreteNode> algorithm = new AlgorithmAStar <> ();
+			AlgorithmAStar <Tile> algorithm = new AlgorithmAStar <> ();
 			Level.getInstance ().setWithIgnoreFinish (true);
-			Level.getInstance ().setFinish (new ConcreteNode ((int) finish.x, (int) finish.y, TypeNode.wall));
+			Level.getInstance ().setFinish (new Tile ((int) finish.x, (int) finish.y, TileType.wall));
 			Level.getInstance ().setWithDiagonalNeighbors (false);
-			ArrayList <ConcreteNode> path = algorithm.findWay (Level.getInstance (), start, finish);
+			ArrayList <Tile> path = algorithm.findWay (Level.getInstance (), start, finish);
 			
 			if (path != null && path.size () != 1){
 				character.goToObject = true;
@@ -69,10 +69,10 @@ public class CharacterInputProcessor extends Character implements InputProcessor
 			finish.x = (int) ((screenX - GameSystem.INDENT_BETWEEN_SCREEN_LEVEL) / GameObject.UNIT);
 			finish.y = (int) (screenY / (GameObject.UNIT * GameObject.ANGLE));
 			
-			AlgorithmAStar <ConcreteNode> algorithm = new AlgorithmAStar <> ();
+			AlgorithmAStar <Tile> algorithm = new AlgorithmAStar <> ();
 			Level.getInstance ().setWithIgnoreFinish (false);
 			Level.getInstance ().setWithDiagonalNeighbors (true);
-			ArrayList <ConcreteNode> path = algorithm.findWay (Level.getInstance (), start, finish);
+			ArrayList <Tile> path = algorithm.findWay (Level.getInstance (), start, finish);
 			
 			if (path != null && path.size () != 1){
 				character.setPath (path);

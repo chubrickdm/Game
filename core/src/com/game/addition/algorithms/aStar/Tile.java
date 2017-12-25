@@ -2,18 +2,18 @@ package com.game.addition.algorithms.aStar;
 
 import com.game.addition.algorithms.aStar.algorithm.Node;
 
-public class ConcreteNode extends Node{
+public class Tile extends Node{
 	public float x;
 	public float y;
-	public TypeNode type = TypeNode.empty;
+	public TileType type = TileType.empty;
 	
 	
-	public ConcreteNode (){
+	public Tile (){
 		x = 0;
 		y = 0;
 	}
 	
-	public ConcreteNode (int x, int y, TypeNode type){
+	public Tile (int x, int y, TileType type){
 		this.type = type;
 		this.x = x;
 		this.y = y;
@@ -21,8 +21,8 @@ public class ConcreteNode extends Node{
 	
 	@Override
 	public boolean equals (Object obj){
-		if (obj instanceof ConcreteNode){
-			ConcreteNode tmpP = (ConcreteNode) obj;
+		if (obj instanceof Tile){
+			Tile tmpP = (Tile) obj;
 			return tmpP.x == x && tmpP.y == y;
 		}
 		return false;

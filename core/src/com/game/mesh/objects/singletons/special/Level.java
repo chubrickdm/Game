@@ -2,8 +2,8 @@ package com.game.mesh.objects.singletons.special;
 
 import com.game.GameSystem;
 
-import com.game.addition.algorithms.aStar.ConcreteNode;
-import com.game.addition.algorithms.aStar.TypeNode;
+import com.game.addition.algorithms.aStar.Tile;
+import com.game.addition.algorithms.aStar.TileType;
 import com.game.addition.algorithms.aStar.algorithm.Graph;
 import com.game.mesh.objects.GameObject;
 import com.game.mesh.objects.character.Direction;
@@ -12,11 +12,11 @@ import com.game.messages.GameMessage;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Level extends GameObject implements Graph <ConcreteNode>{
+public class Level extends GameObject implements Graph <Tile>{
 	private boolean withDiagonalNeighbors = true;
 	private boolean withIgnoreFinish = false;
-	private ConcreteNode finish;
-	private LinkedList <LinkedList <ConcreteNode>> map;
+	private Tile finish;
+	private LinkedList <LinkedList <Tile>> map;
 	
 	
 	private static class LevelHolder{
@@ -35,7 +35,7 @@ public class Level extends GameObject implements Graph <ConcreteNode>{
 		for (int i = 0; i < x; i++){
 			map.add (new LinkedList <> ());
 			for (int j = 0; j < y; j++){
-				map.get (i).add (new ConcreteNode (i, j, TypeNode.empty));
+				map.get (i).add (new Tile (i, j, TileType.empty));
 			}
 		}
 	}
@@ -47,8 +47,14 @@ public class Level extends GameObject implements Graph <ConcreteNode>{
 		
 		int i = (int) (x / GameObject.UNIT);
 		int j = (int) (y / (GameObject.UNIT * GameObject.ANGLE));
+		/*if (i + 1 > map.size ()){
+			i = map.size () - 1;
+		}
+		if (j + 1 > map.get (i).size ()){
+			j = map.get (i).size () - 1;
+		}*/
 		map.get (i).remove (j);
-		map.get (i).add (j, new ConcreteNode (i, j, TypeNode.wall));
+		map.get (i).add (j, new Tile (i, j, TileType.wall));
 	}
 	
 	public void moveBox (float oldX, float oldY, Direction direction){
@@ -75,10 +81,10 @@ public class Level extends GameObject implements Graph <ConcreteNode>{
 		}
 		
 		map.get (oldI).remove (oldJ);
-		map.get (oldI).add (oldJ, new ConcreteNode (oldI, oldJ, TypeNode.empty));
+		map.get (oldI).add (oldJ, new Tile (oldI, oldJ, TileType.empty));
 		
 		map.get (newI).remove (newJ);
-		map.get (newI).add (newJ, new ConcreteNode (newI, newJ, TypeNode.wall));
+		map.get (newI).add (newJ, new Tile (newI, newJ, TileType.wall));
 	}
 	
 	public void addInvisibleWall (float x, float y, float w, float h){
@@ -93,7 +99,7 @@ public class Level extends GameObject implements Graph <ConcreteNode>{
 		this.withDiagonalNeighbors = withDiagonalNeighbors;
 	}
 	
-	public void setFinish (ConcreteNode finish){
+	public void setFinish (Tile finish){
 		this.finish = finish;
 	}
 	
@@ -102,48 +108,48 @@ public class Level extends GameObject implements Graph <ConcreteNode>{
 	}
 	
 	@Override
-	public double heuristic (ConcreteNode begin, ConcreteNode end){
+	public double heuristic (Tile begin, Tile end){
 		return (int) (Math.pow (begin.x - end.x, 2) + Math.pow (begin.y - end.y, 2));
 	}
 	
 	@Override
-	public ArrayList <ConcreteNode> neighbors (ConcreteNode current){
-		ArrayList <ConcreteNode> list = new ArrayList <> ();
+	public ArrayList <Tile> neighbors (Tile current){
+		ArrayList <Tile> list = new ArrayList <> ();
 		int x = (int) current.x;
 		int y = (int) current.y;
 		
 		
 		if (withDiagonalNeighbors){
-			if (map.get (x + 1).get (y + 1).type != TypeNode.wall && map.get (x).get (y + 1).type != TypeNode.wall
-					&& map.get (x + 1).get (y).type != TypeNode.wall){
+			if (map.get (x + 1).get (y + 1).type != TileType.wall && map.get (x).get (y + 1).type != TileType.wall
+					&& map.get (x + 1).get (y).type != TileType.wall){
 				list.add (map.get (x + 1).get (y + 1));
 			}
-			if (map.get (x - 1).get (y + 1).type != TypeNode.wall && map.get (x).get (y + 1).type != TypeNode.wall
-					&& map.get (x - 1).get (y).type != TypeNode.wall){
+			if (map.get (x - 1).get (y + 1).type != TileType.wall && map.get (x).get (y + 1).type != TileType.wall
+					&& map.get (x - 1).get (y).type != TileType.wall){
 				list.add (map.get (x - 1).get (y + 1));
 			}
 			
-			if (map.get (x + 1).get (y - 1).type != TypeNode.wall && map.get (x).get (y - 1).type != TypeNode.wall
-					&& map.get (x + 1).get (y).type != TypeNode.wall){
+			if (map.get (x + 1).get (y - 1).type != TileType.wall && map.get (x).get (y - 1).type != TileType.wall
+					&& map.get (x + 1).get (y).type != TileType.wall){
 				list.add (map.get (x + 1).get (y - 1));
 			}
-			if (map.get (x - 1).get (y - 1).type != TypeNode.wall && map.get (x).get (y - 1).type != TypeNode.wall
-					&& map.get (x - 1).get (y).type != TypeNode.wall){
+			if (map.get (x - 1).get (y - 1).type != TileType.wall && map.get (x).get (y - 1).type != TileType.wall
+					&& map.get (x - 1).get (y).type != TileType.wall){
 				list.add (map.get (x - 1).get (y - 1));
 			}
 		}
 		
-		if (map.get (x).get (y + 1).type != TypeNode.wall || (withIgnoreFinish && map.get (x).get (y + 1).equals (finish))){
+		if (map.get (x).get (y + 1).type != TileType.wall || (withIgnoreFinish && map.get (x).get (y + 1).equals (finish))){
 			list.add (map.get (x).get (y + 1));
 		}
-		if (map.get (x).get (y - 1).type != TypeNode.wall || (withIgnoreFinish && map.get (x).get (y - 1).equals (finish))){
+		if (map.get (x).get (y - 1).type != TileType.wall || (withIgnoreFinish && map.get (x).get (y - 1).equals (finish))){
 			list.add (map.get (x).get (y - 1));
 		}
 		
-		if (map.get (x + 1).get (y).type != TypeNode.wall || (withIgnoreFinish && map.get (x + 1).get (y).equals (finish))){
+		if (map.get (x + 1).get (y).type != TileType.wall || (withIgnoreFinish && map.get (x + 1).get (y).equals (finish))){
 			list.add (map.get (x + 1).get (y));
 		}
-		if (map.get (x - 1).get (y).type != TypeNode.wall || (withIgnoreFinish && map.get (x - 1).get (y).equals (finish))){
+		if (map.get (x - 1).get (y).type != TileType.wall || (withIgnoreFinish && map.get (x - 1).get (y).equals (finish))){
 			list.add (map.get (x - 1).get (y));
 		}
 		
@@ -151,7 +157,7 @@ public class Level extends GameObject implements Graph <ConcreteNode>{
 	}
 	
 	@Override
-	public int cost (ConcreteNode current, ConcreteNode next){
+	public int cost (Tile current, Tile next){
 		return 1;
 	}
 	
